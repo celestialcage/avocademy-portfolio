@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- summer note -->
+<script src="/js/summernote/summernote-lite.js"></script>
+<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/css/summernote/summernote-lite.css">
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<meta charset="UTF-8">
+<title>온라인 상담</title>
+</head>
+<body>
+<form method="post">
+	<textarea id="summernote" name="editordata"></textarea>
+</form>
+	<h1>온라인 상담</h1>
+	<div>
+	<table border="1">
+		<thead>
+				<tr>
+				<th th:text="NO."></th>
+				<th th:text="제목"></th>
+				<th th:text="글쓴이"></th>
+				<th th:text="날짜"></th>
+				<th th:text="답변상태"></th>
+				<th th:text="조회수"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="name : ${list}">
+				<td th:text="${name.id }"></td>
+				<td th:text="${name.testint }"></td>
+				<td th:text="${name.testvarchar }"></td>
+				<td th:text="${name.testvarchar }"></td>
+				<td th:text="${name.testvarchar }"></td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	<script>
+$(document).ready(function() {
+	//여기 아래 부분
+	$('#summernote').summernote({
+		  height: 300,                 // 에디터 높이
+		  minHeight: null,             // 최소 높이
+		  maxHeight: null,             // 최대 높이
+		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+		  lang: "ko-KR",					// 한글 설정
+		  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
+          
+	});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Avocado 상담</title>
+</head>
+<body>
+	<h1>제가 보이나요...?</h1>
+	나는 관대하다
+	나도 관대하다
+	[[${message}]]
+	
+	<div>
+	<table border="1">
+		<thead>
+			<tr>
+				<th th:text="id"></th>
+				<th th:text="int"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="name : ${list}">
+				<td th:text="${name.uno }"></td>
+				<td th:text="${name.uid }"></td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</body>
+</html>
