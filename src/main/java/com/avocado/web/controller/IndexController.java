@@ -33,7 +33,10 @@ public class IndexController {
 
 	@Resource(name="testService")
 	private TestService testService;
-
+	
+	@Resource
+	private OnlineService onlineService;
+	
 	@GetMapping({"/", "/main"})
 	public String main(Model model) {
 		model.addAttribute("message", "메인 페이지");
@@ -60,7 +63,8 @@ public class IndexController {
 
 	@GetMapping("/online") // 온라인 상담
 	public String online(Model model) {
-		model.addAttribute("message", "온라인 상담");
+		List<OnlineDTO> list = onlineService.online();
+		model.addAttribute("list", list);
 		return "online";
 	}
 

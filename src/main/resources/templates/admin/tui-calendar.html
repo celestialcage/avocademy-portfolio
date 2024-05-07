@@ -3,9 +3,7 @@
 
 <head>
 	<th:block th:insert="~{./admin/thfragments/fragments.html :: headTag}"></th:block>
-	<!-- Custom CSS -->
-    <link href="/admin/assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
-    <link href="/admin/assets/extra-libs/calendar/calendar.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />
 </head>
 
 <body>
@@ -108,6 +106,7 @@
                                     </div>
                                     <div class="col-lg-9">
                                         <div class="card-body b-l calender-sidebar">
+                                        <!-- 캘린더 위치 -->
                                             <div id="calendar"></div>
                                         </div>
                                     </div>
@@ -205,10 +204,8 @@
     <!-- All Jquery -->
     <!-- ============================================================== -->
     <th:block th:insert="~{./admin/thfragments/fragments.html :: jqueryScript}"></th:block>
-    <!-- this page js -->
-    <script src="/admin/assets/libs/moment/min/moment.min.js"></script>
-    <script src="/admin/assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
-    <script src="/admin/dist/js/pages/calendar/cal-init.js"></script>
+    <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.js"></script>
+    <script type="text/javascript" src="/admin/custom/calendarcustom.js"></script>
 </body>
 
 </html>
