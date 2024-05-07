@@ -1,5 +1,6 @@
 package com.avocado.web.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -8,7 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.avocado.web.entity.TestDTO;
+import com.avocado.web.service.GroupService;
 import com.avocado.web.service.IndexService;
+import com.avocado.web.service.TestService;
 
 import jakarta.annotation.Resource;
 
@@ -17,6 +21,9 @@ public class IndexController {
 
 	@Resource(name="indexService")
 	private IndexService indexService;
+
+	@Resource(name="testService")
+	private TestService testService;
 	
 	@GetMapping({"/", "/main"})
 	public String main(Model model) {
@@ -66,4 +73,11 @@ public class IndexController {
 		return "login";
 	}
 	
+	@GetMapping("/group") //집단 상담
+	public String group (Model model) {
+		List<TestDTO> list = testService.staff();
+		System.out.println(list);
+		model.addAttribute("list", list);
+		return "group";
+	}
 }
