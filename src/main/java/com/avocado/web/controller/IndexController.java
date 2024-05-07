@@ -1,5 +1,6 @@
 package com.avocado.web.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -8,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.avocado.web.entity.OnlineDTO;
 import com.avocado.web.service.IndexService;
+import com.avocado.web.service.OnlineService;
 
 import jakarta.annotation.Resource;
 
@@ -17,6 +20,9 @@ public class IndexController {
 
 	@Resource(name="indexService")
 	private IndexService indexService;
+	
+	@Resource
+	private OnlineService onlineService;
 	
 	@GetMapping({"/", "/main"})
 	public String main(Model model) {
@@ -44,7 +50,8 @@ public class IndexController {
 	
 	@GetMapping("/online") // 온라인 상담
 	public String online(Model model) {
-		model.addAttribute("message", "온라인 상담");
+		List<OnlineDTO> list = onlineService.online();
+		model.addAttribute("list", list);
 		return "online";
 	}
 	
