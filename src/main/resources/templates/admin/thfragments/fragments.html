@@ -16,15 +16,7 @@
 	    <!-- Favicon icon -->
 	    <link rel="icon" type="image/png" sizes="16x16" href="/admin/assets/images/favicon.png">
 	    <!-- Custom CSS -->
-	    <link href="/admin/assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
-	    <link href="/admin/assets/extra-libs/calendar/calendar.css" rel="stylesheet" />
-	    <link href="/admin/dist/css/style.min.css" rel="stylesheet">
-	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	    <!--[if lt IE 9]>
-	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-	    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
+    	<link href="/admin/dist/css/style.min.css" rel="stylesheet">
 	</th:block>
 	
 	<th:block th:fragment="preloader">
@@ -241,38 +233,38 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" class="pt-4">
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="index.html" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
+                                href="./index" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
                                     class="hide-menu">Dashboard</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="charts.html" aria-expanded="false"><i class="mdi mdi-chart-bar"></i><span
+                                href="./index2" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span
+                                    class="hide-menu">Dashboard2</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="./calendar" aria-expanded="false"><i
+                                    class="mdi mdi-relative-scale"></i><span class="hide-menu">Calendar</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="./charts" aria-expanded="false"><i class="mdi mdi-chart-bar"></i><span
                                     class="hide-menu">Charts</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="widgets.html" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span
-                                    class="hide-menu">Widgets</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="tables.html" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span
+                                href="./tables" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span
                                     class="hide-menu">Tables</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="grid.html" aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span
+                                href="./full-width" aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span
                                     class="hide-menu">Full Width</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
                                 href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-receipt"></i><span
                                     class="hide-menu">Forms </span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
-                                <li class="sidebar-item"><a href="form-basic.html" class="sidebar-link"><i
+                                <li class="sidebar-item"><a href="./form-basic" class="sidebar-link"><i
                                             class="mdi mdi-note-outline"></i><span class="hide-menu"> Form Basic
                                         </span></a></li>
-                                <li class="sidebar-item"><a href="form-wizard.html" class="sidebar-link"><i
+                                <li class="sidebar-item"><a href="./form-wizard" class="sidebar-link"><i
                                             class="mdi mdi-note-plus"></i><span class="hide-menu"> Form Wizard
                                         </span></a></li>
                             </ul>
                         </li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="pages-buttons.html" aria-expanded="false"><i
-                                    class="mdi mdi-relative-scale"></i><span class="hide-menu">Buttons</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
                                 href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-face"></i><span
-                                    class="hide-menu">Icons </span></a>
+                                    class="hide-menu">Icons(없음) </span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
                                 <li class="sidebar-item"><a href="icon-material.html" class="sidebar-link"><i
                                             class="mdi mdi-emoticon"></i><span class="hide-menu"> Material Icons
@@ -284,10 +276,10 @@
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="pages-elements.html" aria-expanded="false"><i class="mdi mdi-pencil"></i><span
-                                    class="hide-menu">Elements</span></a></li>
+                                    class="hide-menu">Elements(없음)</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
                                 href="javascript:void(0)" aria-expanded="false"><i
-                                    class="mdi mdi-move-resize-variant"></i><span class="hide-menu">Addons </span></a>
+                                    class="mdi mdi-move-resize-variant"></i><span class="hide-menu">Addons(없음) </span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
                                 <li class="sidebar-item"><a href="index2.html" class="sidebar-link"><i
                                             class="mdi mdi-view-dashboard"></i><span class="hide-menu"> Dashboard-2
@@ -308,7 +300,7 @@
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
                                 href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-key"></i><span
-                                    class="hide-menu">Authentication </span></a>
+                                    class="hide-menu">Authentication(없음) </span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
                                 <li class="sidebar-item"><a href="authentication-login.html" class="sidebar-link"><i
                                             class="mdi mdi-all-inclusive"></i><span class="hide-menu"> Login </span></a>
@@ -320,7 +312,7 @@
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
                                 href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-alert"></i><span
-                                    class="hide-menu">Errors </span></a>
+                                    class="hide-menu">Errors(없음) </span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
                                 <li class="sidebar-item"><a href="error-403.html" class="sidebar-link"><i
                                             class="mdi mdi-alert-octagon"></i><span class="hide-menu"> Error 403
@@ -349,6 +341,23 @@
             All Rights Reserved by Matrix-admin. Designed and Developed by <a
                 href="https://www.wrappixel.com">WrapPixel</a>.
         </footer>
+	</th:block>
+	
+	<th:block th:fragment="jqueryScript">
+		<script src="/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+	    <script src="/admin/dist/js/jquery.ui.touch-punch-improved.js"></script>
+	    <script src="/admin/dist/js/jquery-ui.min.js"></script>
+	    <!-- Bootstrap tether Core JavaScript -->
+	    <script src="/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	    <!-- slimscrollbar scrollbar JavaScript -->
+	    <script src="/admin/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+	    <script src="/admin/assets/extra-libs/sparkline/sparkline.js"></script>
+	    <!--Wave Effects -->
+	    <script src="/admin/dist/js/waves.js"></script>
+	    <!--Menu sidebar -->
+	    <script src="/admin/dist/js/sidebarmenu.js"></script>
+	    <!--Custom JavaScript -->
+	    <script src="/admin/dist/js/custom.min.js"></script>
 	</th:block>
 </body>
 </html>

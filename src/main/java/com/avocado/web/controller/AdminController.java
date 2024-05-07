@@ -18,6 +18,11 @@ public class AdminController {
 		return "admin/index2";
 	}
 	
+	@GetMapping("/charts")
+	public String charts() {
+		return "admin/charts";
+	}
+	
 	@GetMapping("/tables")
 	public String tables() {
 		return "admin/tables";
@@ -38,9 +43,14 @@ public class AdminController {
 		return "admin/form-wizard";
 	}
 	
+	@GetMapping("/full-calendar")
+	public String fullCalendar() {
+		return "admin/pages-calendar";
+	}
+	
 	@GetMapping("/calendar")
 	public String calendar() {
-		return "admin/pages-calendar";
+		return "admin/tui-calendar";
 	}
 	
 }
