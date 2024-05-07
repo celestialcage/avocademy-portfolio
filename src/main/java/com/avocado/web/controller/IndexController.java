@@ -20,6 +20,9 @@ public class IndexController {
 
 	@Resource(name="indexService")
 	private IndexService indexService;
+
+	@Resource(name="testService")
+	private TestService testService;
 	
 	@Resource
 	private OnlineService onlineService;
@@ -73,4 +76,11 @@ public class IndexController {
 		return "login";
 	}
 	
+	@GetMapping("/group") //집단 상담
+	public String group (Model model) {
+		List<TestDTO> list = testService.staff();
+		System.out.println(list);
+		model.addAttribute("list", list);
+		return "group";
+	}
 }
