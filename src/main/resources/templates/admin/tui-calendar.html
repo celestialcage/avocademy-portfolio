@@ -4,6 +4,7 @@
 <head>
 	<th:block th:insert="~{./admin/thfragments/fragments.html :: headTag}"></th:block>
 	<link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />
+	<link rel="stylesheet" href="/admin/custom/calendarcustom.css" />
 </head>
 
 <body>
@@ -106,8 +107,8 @@
                                     </div>
                                     <div class="col-lg-9">
                                         <div class="card-body b-l calender-sidebar">
-                                        <!-- 캘린더 위치 -->
-                                            <div id="calendar"></div>
+                                        <!-- ================캘린더 위치============== -->
+                                            <div id="calendar" class="calendar-wrapper"></div>
                                         </div>
                                     </div>
                                 </div>

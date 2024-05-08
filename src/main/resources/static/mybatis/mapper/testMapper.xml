@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.avocado.web.repository.TestDAO">
 	
-	<select id="staff" resultType="com.avocado.web.entity.TestDTO">
+	<select id="staff" resultType="TestDTO">
 		SELECT uno, uid FROM user
 	</select>
 </mapper>
