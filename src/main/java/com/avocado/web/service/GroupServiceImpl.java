@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("groupService")
 public class GroupServiceImpl implements GroupService {
 
 	@Override
