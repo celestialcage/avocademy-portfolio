@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.avocado.web.entity.OnlineDTO;
 import com.avocado.web.service.IndexService;
 import com.avocado.web.service.OnlineService;
+import com.avocado.web.service.TestService;
 
 import jakarta.annotation.Resource;
 
@@ -76,11 +77,11 @@ public class IndexController {
 		return "login";
 	}
 	
-	@GetMapping("/group") //집단 상담
-	public String group (Model model) {
-		List<TestDTO> list = testService.staff();
-		System.out.println(list);
-		model.addAttribute("list", list);
-		return "group";
-	}
+//	@GetMapping("/group") //집단 상담
+//	public String group (Model model) {
+//		//List<TestDTO> list = testService.staff();
+//		System.out.println(list);
+//		model.addAttribute("list", list);
+//		return "group";
+//	}
 }
