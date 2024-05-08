@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.avocado.web.entity.OnlineDTO;
 import com.avocado.web.entity.TestDTO;
 import com.avocado.web.service.IndexService;
+import com.avocado.web.service.OnlineService;
 import com.avocado.web.service.UserService;
 import com.avocado.web.service.TestService;
 import com.avocado.web.util.Util;
@@ -34,7 +36,7 @@ public class IndexController {
 	@Resource(name="testService")
 	private TestService testService;
 	
-	@Resource
+	@Resource(name="onlineService")
 	private OnlineService onlineService;
 	
 	@GetMapping({"/", "/main"})
