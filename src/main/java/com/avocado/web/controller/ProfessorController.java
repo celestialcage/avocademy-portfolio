@@ -12,13 +12,13 @@ public class ProfessorController {
 	@Resource (name = "professorService")
 	private ProfessorService professorService;
 	
-	@GetMapping("/professor")
+	@GetMapping("/professor") // 지도교수상담
 	public String professor() {
 		
 		return "program/professor";
 	}
 	
-	@GetMapping("/professorCSR")
+	@GetMapping("/professorCSR") // 지도교수상담신청
 	public String professorCSR() {
 		return "program/professorCSR";
 	}
