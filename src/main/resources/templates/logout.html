@@ -13,10 +13,6 @@
 
 <script type="text/javascript">
 $(function(){
-	//로그인 상태 확인
-	checkLoginStatus();
-	
-	//로그인 버튼 클릭시 
 	$('.check').click(function(){
 		let id = $('#id').val();
 		let pw = $('#pw').val();
@@ -41,108 +37,45 @@ $(function(){
 				delCookie('setCookieYN');
 			}
 			$('#loginForm').submit();
-			
-			loginSuccess();
 	});
 });
-
-
-// 여기에 JavaScript 코드를 추가합니다.
-function loginSuccess() {
-    // 사용자가 로그인되어 있는지 확인
-    checkLoginStatus();
-    // 이후 필요한 작업을 수행
-}
-
-function checkLoginStatus() {
-    let sessionID = getCookie('sessionID'); // 쿠키에서 세션 ID를 가져옴
-    if (sessionID) {
-        // 세션 ID가 존재하면 로그인된 상태
-        alert('사용자는 로그인되어 있습니다.');
-    } else {
-        // 세션 ID가 존재하지 않으면 로그인되지 않은 상태
-        alert('사용자는 로그인되어 있지 않습니다.');
-    }
-}
 
 //쿠키 저장하는 함수(쿠키 이름, 값, 기한)
 function setCookie(cookieName, value, exdays){
 	let date = new Date();
+	//alert(date.setDate(date.getDate()));
+	//alert(date.setDate(date.getDate() + exdays));
 	date.setDate(date.getDate()+exdays);
 	let value2 = escape(value)+"; exires=" + date.toGMTString();
 	document.cookie = cookieName + "=" + value;
 }
 
-
-//쿠키 가져오는 함수
 function getCookie(cookeName){
 	let x,y;
 	let val = document.cookie.split(';');
 	for(let i = 0; i < val.length; i++){
-		x = val[i].substr(0,val[i].indexOf('='));
-		y = val[i].substr(val[i].indexOf('=')+1);
-		x = x.replace(/^\s+|\s+$/g,'');
-		if(x == cookieName){
-			return y;
-		}
+			x = val[i].substr(0,val[i].indexOf('='));
+			y = val[i].substr(val[i].indexOf('=')+1);
+			x = x.replace(/^\s+|\s+$/g,'');
+			if(x == cookieName){
+				return y;
+			}
+			
 	}
 }
 
 $(function(){
-	let sessionID = getCookie('sessionID');
+	let userInputId = getCookie('userInputId');
 	$('#id').val(userInputId);
 });
 
-//쿠키 삭제
 function delCookie(cookieName){
+	//let date = new Date();
+	//date.setDate(date.getDate()-1);
+	//document.cookie = cookieName + "=; expires="+date.toGMTSritng();
 	document.cookie = cookieName + "=; max-age=0";
 }
 
-//로그인 상태 확인 함수
-function checkLoginStatus(){
-	let sessionID = getCookie('sessionID');
-	if(sessionUid){
-		} else {
-			
-			logout();
-	}
-}
-
-//로그아웃 처리 함수
-function logout(){
-	delCookie('sessionUid');
-	}
-
-//세션 만료 시간 설정
-const sessionExpirationTime = 60*60*1000;
-setInterval(checkSessionExpiration, sessionExpirationTime);
-
-//세션 만료 여부 확인 함수
-function checkSessionExpiration(){
-	let lastLoginTime = localStorage.getItem('lastLoginTime');
-	if(lastLoginTime){
-		let currentTime = new Date().getTime();
-		if(currentTime - lastLoginTime > sessionExpirationTime){
-			logout();
-		}
-	}
-}
-
-//페이지 로딩 시간 기록 및 세션 만료까지 남은 시간 표시
-$(document).ready(function(){
-	let lastLoginTime = localStorage.getItem('lastLoginTime');
-	if(lastLoginTime) {
-		let currentTime = new Date().getTime();
-		let timeDiff = sessionExpirationTime  -(currentTime - lastLoginTime);
-		let minutes = Math.floor((timeDiff % (1000 * 60 *60)) / (1000 * 60));
-		let seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-		$('#sessionTimeLeft').text(minutes + "분 " + seconds + "초 남음");
-	}
-	localStorage.setItem('lastLoginTime', new Date().getTime());
-	
-	//페이지 로드 후 매 초마다 업데이트
-	setInterval(updateSessionTimeLeft, 1000);
-});
 
 </script>
 </head>
@@ -163,8 +96,8 @@ $(document).ready(function(){
                     <li class="nav-item"><a class="nav-link active" href="#">교육프로그램</a></li>
                     <li class="nav-item"><a class="nav-link active" href="#">커뮤니티</a></li>
                     <li class="nav-item"><a class="nav-link active" href="#">상담신청</a></li>
-                    <li class="nav-item" th:if="${session.uid == null}"><a class="nav-link active" href="/login">로그인</a></li>
-                    <li class="nav-item" th:if="${session.uid != null}"><a class="nav-link active" href="/logout">로그아웃</a></li></ul>
+                    <li class="nav-item" th:if="${session.mid == null}"><a class="nav-link active" href="/login">로그인</a></li>
+                    <li class="nav-item" th:if="${session.mid != null}"><a class="nav-link active" href="/logout">로그아웃</a></li></ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
@@ -173,9 +106,7 @@ $(document).ready(function(){
         </div>
     </nav>
 </header>
-
  <section class="page-section" id="login" style="margin-top: 100px;">
-
       <div class="container">
          <div class="row">
             <div class="col-md-4 mx-auto">
@@ -205,7 +136,7 @@ $(document).ready(function(){
                      <div class="col-sm-12">
                         <div class="form-group text-center">
                            <button type="reset" class="btn btn-danger mr-2">초기화</button>
-                           <button type="submit" class="btn btn-primary check">로그인</button>
+                           <button type="button" class="btn btn-primary check">로그인</button>
                         </div>                       
                      </div>
                  </div>	

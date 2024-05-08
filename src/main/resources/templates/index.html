@@ -160,48 +160,39 @@
 
     
 <header data-bs-theme="dark">
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">아보카데미</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">센터소개</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">상담안내</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">교육프로그램</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">커뮤니티</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">상담신청</a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">아보카데미</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/main">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">센터소개</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">상담안내</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">교육프로그램</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">커뮤니티</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">상담신청</a></li>
+                    <li class="nav-item" th:if="${session.uid == null}"><a class="nav-link active" href="/login">로그인</a></li>
+                    <li class="nav-item" th:if="${session.uid != null}"><a class="nav-link active" href="/logout">로그아웃</a></li></ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
 </header>
 
 <main>
+
   <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#myCaro usel" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
@@ -251,7 +242,7 @@
   <!-- Wrap the rest of the page in another container to center all the content. -->
 
   <div class="container marketing">
-
+ <div>세션 만료까지 남은 시간 : <span id="sessionTimeLeft"></span></div>
     <!-- Three columns of text below the carousel -->
     <div class="row">
       <div class="col-lg-4">
