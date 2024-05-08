@@ -18,5 +18,11 @@ public class OnlineServiceImpl implements OnlineService {
 		List<OnlineDTO> list = onlineDAO.online();
 		return list;
 	}
+
+	@Override
+	public List<OnlineDTO> online(int bno) {
+		List<OnlineDTO> list = onlineDAO.online(bno);
+		return list;
+	}
 	
 }

@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OnlineDTO {
-	private int bno, user_no, bno2, fno;
-	private String btitle, bcontent,bdate, bdel;
+	private int bno, user_no, bno2, fno, commentYN;
+	private String btitle, bcontent,bdate, secret, bdel, comment;
 }

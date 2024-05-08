@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.avocado.web.entity.OnlineDTO;
 import com.avocado.web.entity.TestDTO;
@@ -22,7 +23,7 @@ public class OnlineController {
 	private OnlineService onlineService;
 	
 	@GetMapping("/detail")
-	public String detail(Model model) {
+	public String detail(@RequestParam(name="bno", required= false, defaultValue = "1") int bno, Model model) {
 		List<OnlineDTO> list = onlineService.online();
 		model.addAttribute("list",list);
 		return "online/detail";

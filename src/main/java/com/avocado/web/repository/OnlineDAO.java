@@ -13,4 +13,6 @@ public interface OnlineDAO {
 
 	List<OnlineDTO> online();
 
+	List<OnlineDTO> online(int bno);
+
 }
