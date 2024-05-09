@@ -26,9 +26,9 @@
 	</th:block>
 		
 	<th:block th:fragment="menu">
-		<header data-bs-theme="dark">
-			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-	        	<div class="container-fluid">
+		<header data-bs-theme="dark" style="position:relative; height:80px;">
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" style="height: 80px;">
+	        	<div class="container">
 	            	<a class="navbar-brand" href="/main">아보카데미</a>
 		            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
 		                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,8 +47,16 @@
 		                    <li class="nav-item" th:if="${session.uid != null}"><a class="nav-link active" href="/logout">로그아웃</a></li></ul>
 		            </div>
 		        </div>
-	    	</nav>
-	    </header>	
+	    	</nav>	
+	    </header>
+	</th:block>
+	
+	<th:block th:fragment="headerImg">
+		<div class="container-fluid header_img" 
+			style="background-image: url('/index/assets/img/headerImg(1).jpg'); height:190px; position:relative; 
+			font-size: 60px; text-align: center; line-height: 190px; color: white; text-shadow: 2px 2px grey;">
+			아보카대학교 상담센터
+		</div>
 	</th:block>
 	
 	<th:block th:fragment="footer">
@@ -57,9 +65,9 @@
 	    <p class="float-end"><a href="#">Back to top</a></p>
 	    <p>&copy; Avocado Univercity, since 1924. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
 	  </footer>
+	  <script src="/index/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 	</th:block>
 	
-	<th:block></th:block>
 	<th:block></th:block>
 	<th:block></th:block>
 	
