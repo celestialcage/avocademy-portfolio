@@ -18,6 +18,8 @@ import com.avocado.web.service.UserService;
 import com.avocado.web.util.Util;
 
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -84,20 +86,31 @@ public class IndexController {
 	}
 	
 	@PostMapping("/login") // 로그인 post
-	public String login(@RequestParam Map<String, Object>map) {
+	public String login(@RequestParam Map<String, Object> map, HttpServletResponse response) {
+	    
+		
 		System.out.println(map);
-		 String id = (String) map.get("id");
-		 String pw = (String) map.get("pw");
-		 map.put("uid", id);
-		 map.put("pw", pw);
-
+		String id = (String) map.get("id");
+		String pw = (String) map.get("pw");
+		map.put("uid", id);
+		map.put("pw", pw);
+	    
 		 Map<String, Object> result = userService.login(map);
 		    
+		 
 		 if (util.str2Int(result.get("count")) == 1) { // mapper 에서 오는 count(*) 의 별칭
 		     HttpSession session = util.getSession();
 		     session.setAttribute("uid", result.get("uid"));
 		     session.setAttribute("uname", result.get("uname"));
 		     session.setAttribute("uno", result.get("uno"));
+		     
+
+		     // 쿠키 생성
+		     Cookie loginCookie = new Cookie("loginCookie", session.getId());
+		     loginCookie.setMaxAge(60 * 60 * 24); // 쿠키 유효 시간 설정 (예: 24시간)
+		     loginCookie.setPath("/"); // 쿠키의 유효 경로 설정
+		     response.addCookie(loginCookie);
+
 		     return "redirect:/main";
 		     
 		 } else {
@@ -107,16 +120,15 @@ public class IndexController {
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		if(session.getAttribute("mid") !=null) {
-			session.removeAttribute("mid");
+		if (session.getAttribute("uid") != null) {
+			session.removeAttribute("uid");
 		}
-		if(session.getAttribute("mname") !=null) {
-			session.removeAttribute("mname");
+		if (session.getAttribute("uname") != null) {
+			session.removeAttribute("uname");
+
 		}
 		session.invalidate();
-		
+
 		return "redirect:/login";
 	}
-	
-
 }
