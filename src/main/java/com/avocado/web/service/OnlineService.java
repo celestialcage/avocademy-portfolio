@@ -8,6 +8,6 @@ public interface OnlineService {
 
 	public List<OnlineDTO> online();
 
-	public List<OnlineDTO> online(int bno);
+	public OnlineDTO detail(int bno);
 	
 }

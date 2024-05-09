@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.avocado.web.entity.OnlineDTO;
-import com.avocado.web.entity.TestDTO;
 import com.avocado.web.service.OnlineService;
-import com.avocado.web.service.TestService;
 
 import jakarta.annotation.Resource;
 
@@ -24,8 +22,9 @@ public class OnlineController {
 	
 	@GetMapping("/detail")
 	public String detail(@RequestParam(name="bno", required= false, defaultValue = "1") int bno, Model model) {
-		List<OnlineDTO> list = onlineService.online();
-		model.addAttribute("list",list);
+		System.out.println(bno);
+		OnlineDTO detail = onlineService.detail(bno);
+		model.addAttribute("detail",detail);
 		return "online/detail";
 		
 	}

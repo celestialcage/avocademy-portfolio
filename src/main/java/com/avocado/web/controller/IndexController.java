@@ -56,8 +56,8 @@ public class IndexController {
 	}
 	
 	@GetMapping("/online") // 온라인 상담
-	public String online(@RequestParam(name="bno", required= false, defaultValue = "1") int bno, Model model) {
-		List<OnlineDTO> list = onlineService.online(bno);
+	public String online(Model model) {
+		List<OnlineDTO> list = onlineService.online();
 		//System.out.println(list.get(0).getCommentYN());
 		model.addAttribute("list", list);
 		

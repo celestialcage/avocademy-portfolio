@@ -32,7 +32,7 @@ h3 {
 			</thead>
 			<tbody>
 				<tr th:each="name : ${list}"
-					th:onclick="|location.href='@{/detail(bno=${name.bno}, pageNo=${pageNo})}'|">
+					th:onclick="|location.href='@{/online/detail(bno=${name.bno}, pageNo=${pageNo})}'|">
 					<td th:text="${name.bno}"></td>
 					<td th:text="${name.btitle}"></td>
 					<td th:text="${name.bcontent}"></td>
