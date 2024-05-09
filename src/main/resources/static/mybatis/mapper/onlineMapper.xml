@@ -12,4 +12,9 @@
 		SELECT * FROM online WHERE bno = #{bno}; 
 	</select>
 	
+	<insert id="write" parameterType="Map"> 
+		INSERT INTO online
+		(btitle, bcontent, user_no) VALUES (#{btitle}, #{bcontent}, 3);
+	</insert>
+	
 </mapper>
