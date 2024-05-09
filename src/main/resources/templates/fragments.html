@@ -36,15 +36,21 @@
 		            </button>
 		            <div class="collapse navbar-collapse" id="navbarCollapse">
 		                <ul class="navbar-nav me-auto mb-2 mb-md-0">
-		                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/main">Home</a></li>
-		                    <li class="nav-item"><a class="nav-link active" href="#">센터소개</a></li>
-		                    <li class="nav-item"><a class="nav-link active" href="#">상담안내</a></li>
-		                    <li class="nav-item"><a class="nav-link active" href="#">교육프로그램</a></li>
-		                    <li class="nav-item"><a class="nav-link active" href="#">커뮤니티</a></li>
-		                    <li class="nav-item"><a class="nav-link active" href="#">상담신청</a></li>
-		                    <li class="nav-item"><a class="nav-link active" href="#">Q&A</a></li>
-		                    <li class="nav-item" th:if="${session.uid == null}"><a class="nav-link active" href="/login">로그인</a></li>
-		                    <li class="nav-item" th:if="${session.uid != null}"><a class="nav-link active" href="/logout">로그아웃</a></li></ul>
+		                    <li class="nav-item"><a class="nav-link" aria-current="page" href="/main">Home</a></li>
+		                    <li class="nav-item"><a class="nav-link" href="#">센터소개</a></li>
+		                    <li class="nav-item"><a class="nav-link" href="#">상담안내</a></li>
+		                    <li class="nav-item"><a class="nav-link" href="#">교육프로그램</a></li>
+		                    <li class="nav-item"><a class="nav-link" href="#">커뮤니티</a></li>
+		                    <li class="nav-item"><a class="nav-link" href="#">상담신청</a></li>
+		                    <li class="nav-item"><a class="nav-link" href="#">Q&A</a></li>
+		                    <th:block th:if="${session.uid eq null}">
+                           	<li class="nav-item"><a class="nav-link me-lg-3" href="/login">로그인</a></li>
+                           	</th:block>
+                           	<th:block th:unless="${session.uid ne null}">
+                           	<li class="nav-item"><a class="nav-link" href="/myInfo">[[${session.uname}]]님</a></li>
+                           	<li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
+                           	</th:block>
+                         </ul>
 		            </div>
 		        </div>
 	    	</nav>	
