@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ko" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:insert="~{./fragments.html :: headTag}"></th:block>   
+  <!-- Custom styles for this template -->
+	<style type="text/css">
+  	.mainContents {
+  		margin: 0 auto;
+  		height: auto;
+  		min-height: 600px;
+  		}
+  	</style>
+</head>
+<body>
+	<th:block th:insert="~{./fragments.html :: menu}"></th:block>	
+	<main class="container">
+		<div class="mainContents">
+		</div>
+	</main>
+	<!-- FOOTER -->
+	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
+<script src="/index/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>
