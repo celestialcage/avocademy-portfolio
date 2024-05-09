@@ -5,14 +5,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import com.avocado.web.entity.OnlineDTO;
+import com.avocado.web.entity.GroupDTO;
 
-@Repository
 @Mapper
-public interface OnlineDAO {
-
-	List<OnlineDTO> online();
-
-	List<OnlineDTO> online(int bno);
-
+@Repository
+public interface GroupDAO {
+	
+	List<GroupDTO> programList();
 }

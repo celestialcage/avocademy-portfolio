@@ -3,6 +3,14 @@
 <mapper namespace="com.avocado.web.repository.OnlineDAO">
 	
 	<select id="online" resultType="com.avocado.web.entity.OnlineDTO">
-		SELECT bno, btitle, bcontent, bdate, bdel FROM online
+		SELECT bno, btitle, bcontent, bdate, secret, commentYN, bdel FROM online
 	</select>
+	
+	<select id="detail" parameterType="int" resultType="OnlineDTO"> 
+		SELECT bno,
+		btitle, bcontent, bdate
+		FROM online
+		WHERE bno=#{bno} 
+	</select>
+	
 </mapper>

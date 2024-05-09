@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <!-- include libraries(jQuery, bootstrap) -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -18,8 +18,7 @@
 <form method="post">
 	<textarea id="summernote" name="editordata"></textarea>
 </form>
-
-	
+<button type="button" class="btn btn-outline-dark" onclick="location.href='/detail?='">작성하기</button>
 	<script>
 $(document).ready(function() {
 	// 여기서 아이디 선택자로 변경
