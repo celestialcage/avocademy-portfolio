@@ -6,15 +6,16 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import com.avocado.web.entity.OnlineDTO;
+import com.avocado.web.entity.ProfessorDTO;
 
 @Repository
 @Mapper
-public interface OnlineDAO {
 
-	List<OnlineDTO> online();
+public interface ProfessorDAO {
 
-	OnlineDTO detail(int bno);
+	List<ProfessorDTO> studentInfo();
 
-	int write(Map<String, String> map);
+
+	int savePs(Map<String, String> map);
+		
 }

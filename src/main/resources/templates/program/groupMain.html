@@ -3,6 +3,9 @@
 <head>
   <th:block th:insert="~{./fragments.html :: headTag}"></th:block>
   <style type="text/css">
+  main {
+  	display:row;
+  }
   .mainContents {
   	margin: 0 auto;
   	height: auto;
@@ -10,9 +13,10 @@
   }
   </style>
 </head>
-<body>
-	<th:block th:insert="~{./fragments.html :: menu}"></th:block>	
-	<main class="container">
+<body>	
+	<main class="container">		
+		<th:block th:insert="~{./fragments.html :: menu}"></th:block>	
+		<th:block th:insert="~{./fragments.html :: headerImg}"></th:block>
 		<div class="mainContents">
 			<h1>집단 상담</h1>	
 			<div>
@@ -43,6 +47,5 @@
 	</main>
 	<!-- FOOTER -->
 	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
-<script src="/index/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
