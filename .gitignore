@@ -36,3 +36,5 @@ out/
 ### VS Code ###
 .vscode/
 application.properties
+src/main/java/com/avocado/web/util/SecureInfo.java
+src/main/java/com/avocado/web/util/AESEncryption.java

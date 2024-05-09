@@ -3,6 +3,7 @@ package com.avocado.web.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,23 +11,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.avocado.web.entity.OnlineDTO;
-import com.avocado.web.entity.TestDTO;
 import com.avocado.web.service.IndexService;
 import com.avocado.web.service.OnlineService;
 import com.avocado.web.service.TestService;
 import com.avocado.web.service.UserService;
-import com.avocado.web.util.SecureInfo;
 import com.avocado.web.util.Util;
 
 import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class IndexController {
 	
+	@Autowired
+	private Util util;
 	
-
+	@Autowired
+	private UserService userService;
+	
 	@Resource(name="indexService")
 	private IndexService indexService;
 
