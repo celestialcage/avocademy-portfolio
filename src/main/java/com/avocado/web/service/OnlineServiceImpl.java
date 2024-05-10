@@ -30,4 +30,15 @@ public class OnlineServiceImpl implements OnlineService {
 		return onlineDAO.write(map);
 	}
 
+	@Override
+	public List<OnlineDTO> findAll(Map<String, Integer> map) {
+		return onlineDAO.findAll(map);
+	}
+
+	@Override
+	public int count() {
+		return onlineDAO.count();
+	}
+
+
 }

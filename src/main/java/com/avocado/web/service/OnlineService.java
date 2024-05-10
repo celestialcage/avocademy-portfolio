@@ -12,5 +12,9 @@ public interface OnlineService {
 	public OnlineDTO detail(int bno);
 
 	public int write(Map<String, String> map);
+
+	public int count();
+
+	public List<OnlineDTO> findAll(Map<String, Integer> map);
 	
 }
