@@ -17,4 +17,8 @@ public interface OnlineDAO {
 	OnlineDTO detail(int bno);
 
 	int write(Map<String, String> map);
+
+	int count();
+
+	List<OnlineDTO> findAll(Map<String, Integer> map);
 }

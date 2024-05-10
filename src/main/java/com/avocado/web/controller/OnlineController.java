@@ -1,7 +1,6 @@
 package com.avocado.web.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.avocado.web.entity.OnlineDTO;
 import com.avocado.web.service.OnlineService;
@@ -55,6 +52,9 @@ public class OnlineController {
 		String url = "online";
 		return "redirect:/online";
 	}
+	
+	
+
 }
 	
 
