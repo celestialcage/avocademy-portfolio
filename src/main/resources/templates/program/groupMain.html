@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:insert="~{./fragments.html :: headTag}"></th:block>
+  <style type="text/css">
+  main {
+  	display:row;
+  }
+  .mainContents {
+  	margin: 0 auto;
+  	height: auto;
+  	min-height: 600px;
+  }
+  </style>
+</head>
+<body>	
+	<main class="container">		
+		<th:block th:insert="~{./fragments.html :: menu}"></th:block>	
+		<th:block th:insert="~{./fragments.html :: headerImg}"></th:block>
+		<div class="mainContents">
+			<h1>집단 상담</h1>	
+			<div>
+				<table border="1">
+					<thead>
+						<tr>
+							<th>프로그램명</th>
+							<th>담당 상담자</th>
+							<th>정원</th>
+							<th>분류</th>
+							<th>날짜</th>
+							<th>장소</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="r : ${list}">
+							<td><a th:href="@{/programApply(no=${r.prg_no})}" th:text="${r.prg_nm}"></a></td>
+							<td th:text="${r.cns_no}"></td>
+							<td th:text="${r.prg_nope}"></td>
+							<td th:text="${r.prg_cd}"></td>
+							<td th:text="${r.prg_ymd}"></td>
+							<td th:text="${r.prg_place}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>		
+		</div>
+	</main>
+	<!-- FOOTER -->
+	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
+</body>
+</html>

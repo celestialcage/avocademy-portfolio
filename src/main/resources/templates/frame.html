@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:insert="~{./fragments.html :: headTag}"></th:block>
+  
+  	<!-- 추가 script -->
+	<script type="text/javascript">
+	
+	</script>
+  
+  	<!-- 추가 css -->
+	<style type="text/css">
+	main {
+  		display:row;
+  	}
+  	.mainContents {
+  		margin: 0 auto;
+  		height: auto;
+  		min-height: 600px;
+  	}
+  	</style>
+</head>
+<body>	
+	<main class="container">
+		<th:block th:insert="~{./fragments.html :: menu}"></th:block>	
+		<th:block th:insert="~{./fragments.html :: headerImg}"></th:block>
+		<!-- 여기가 본문 -->
+		<div class="mainContents">
+		
+		</div>
+		<!-- 본문 끝 -->
+	</main>
+	<!-- FOOTER -->
+	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
+</body>
+</html>
