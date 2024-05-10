@@ -1,6 +1,7 @@
 package com.avocado.web.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,13 @@ public class OnlineServiceImpl implements OnlineService {
 	}
 
 	@Override
-	public List<OnlineDTO> online(int bno) {
-		List<OnlineDTO> list = onlineDAO.online(bno);
-		return list;
+	public OnlineDTO detail(int bno) {
+		return onlineDAO.detail(bno);
 	}
-	
+
+	@Override
+	public int write(Map<String, String> map) {
+		return onlineDAO.write(map);
+	}
+
 }

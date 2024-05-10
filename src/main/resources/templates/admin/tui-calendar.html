@@ -4,7 +4,7 @@
 <head>
 	<th:block th:insert="~{./admin/thfragments/fragments.html :: headTag}"></th:block>
 	<link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />
-	<link rel="stylesheet" href="/admin/custom/calendarcustom.css" />
+	<link rel="stylesheet" href="/admin/custom/calendar-custom.css" />
 </head>
 
 <body>
@@ -107,7 +107,25 @@
                                     </div>
                                     <div class="col-lg-9">
                                         <div class="card-body b-l calender-sidebar">
-                                        <!-- ================캘린더 위치============== -->
+              <!-- =================================캘린더 메뉴==================================== -->
+                                        	<div id="calendarMenu" class="d-flex justify-content-between align-items-center">
+                                        	<span>
+                                        		<button type="button" id="monthViewBtn" class="calendar-btn calendar-move-today">Month</button>
+                                        		<button type="button" id="twoWeeksViewBtn" class="calendar-btn calendar-move-today">2Weeks</button>
+                                        		<button type="button" id="weekViewBtn" class="calendar-btn calendar-move-today">Week</button>
+                                        	</span>
+                                        	<span class="calendar-render-range">2024.05</span>
+                                        	<span>
+                                        		<button type="button" id="todayBtn" class="calendar-btn calendar-move-today">Today</button>
+                                        		<button type="button" id="prevBtn" class="calendar-btn calendar-move-day">
+                                        			<i class="calendar-icon ic-arrow-line-left"></i>
+                                        		</button>
+                                        		<button type="button" id="nextBtn" class="calendar-btn calendar-move-day">
+                                        			<i class="calendar-icon ic-arrow-line-right"></i>
+                                        		</button>
+                                        	</span>
+                                        	</div>
+             <!-- =================================캘린더 위치==================================== -->
                                             <div id="calendar" class="calendar-wrapper"></div>
                                         </div>
                                     </div>
@@ -205,8 +223,11 @@
     <!-- All Jquery -->
     <!-- ============================================================== -->
     <th:block th:insert="~{./admin/thfragments/fragments.html :: jqueryScript}"></th:block>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
     <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.js"></script>
-    <script type="text/javascript" src="/admin/custom/calendarcustom.js"></script>
+    <script type="text/javascript" src="/admin/custom/calendar-data.js"></script>
+    <script type="text/javascript" src="/admin/custom/utils.js"></script>
+    <script type="text/javascript" src="/admin/custom/calendar-app.js"></script>
 </body>
 
 </html>
