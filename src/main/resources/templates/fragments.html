@@ -57,22 +57,24 @@
 							    <li class="nav-item"><a class="nav-link active" href="/logout">로그아웃</a></li>
 							</th:block>
 							</ul>
-
 					</div>
 				</div>
 			</nav>
 		</header>
 	</th:block>
 
+
 	<th:block th:fragment="footer">
 	  <footer class="container">
-	   <div>세션 만료까지 남은 시간 : <span id="sessionTimeLeft"></span></div>
+	   <p>Session expires at: <span th:text="${expireTime}"></span></p>
 	    <p class="float-end"><a href="#">Back to top</a></p>
 	    <p>&copy; Avocado Univercity, since 1924. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
 	  </footer>
+	  
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	  <script src="/index/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 	</th:block>
-
+	
 	<th:block></th:block>
 	<th:block></th:block>
 	

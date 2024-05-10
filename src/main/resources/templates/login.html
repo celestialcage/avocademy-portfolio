@@ -89,42 +89,6 @@ $(function(){
 	$('#id').val(userInputId);
 });
 
-
-// 페이지 로딩 시간 기록
-localStorage.setItem('lastLoginTime', new Date().getTime());
-
-// 세션 만료 시간 설정 (밀리초 단위)
-const sessionExpirationTime = 60 * 60 * 1000; // 1시간
-
-// 세션 만료 여부 확인 함수
-function checkSessionExpiration() {
-    let lastLoginTime = localStorage.getItem('lastLoginTime');
-    if (lastLoginTime) {
-        let currentTime = new Date().getTime();
-        if (currentTime - lastLoginTime > sessionExpirationTime) {
-            logout();
-        }
-    }
-}
-
-// 세션 만료까지 남은 시간 표시 함수
-function updateSessionTimeLeft() {
-    let lastLoginTime = localStorage.getItem('lastLoginTime');
-    if (lastLoginTime) {
-        let currentTime = new Date().getTime();
-        let timeDiff = sessionExpirationTime - (currentTime - lastLoginTime);
-        let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-        $('#sessionTimeLeft').text(minutes + "분 " + seconds + "초 남음");
-    }
-}
-
-// 페이지 로드 후 매 초마다 업데이트
-$(document).ready(function () {
-    updateSessionTimeLeft();
-    setInterval(updateSessionTimeLeft, 1000);
-    setInterval(checkSessionExpiration, 1000);
-});
 </script>
   	
 </head>
