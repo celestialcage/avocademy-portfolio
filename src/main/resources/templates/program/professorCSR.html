@@ -1,235 +1,315 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>Avocado 상담</title>
-<script src="/index/assets/js/color-modes.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-<meta name="generator" content="Hugo 0.122.0">
-<link rel="canonical" href="https://getbootstrap.kr/docs/5.3/examples/carousel/">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-<link href="/index/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="/index/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<link rel="apple-touch-icon" href="/index/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-<link rel="icon" href="/index/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="/index/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-<link rel="manifest" href="/index/assets/img/favicons/manifest.json">
-<link rel="mask-icon" href="/index/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
-<link rel="icon" href="/index/assets/img/favicons/favicon.ico">
-<meta name="theme-color" content="#712cf9">
-<style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
+  <meta charset="UTF-8">
+  <title>Avocado 상담</title>
+  <script src="/index/assets/js/color-modes.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.122.0">
+  <meta name="theme-color" content="#712cf9">
+  <link rel="canonical" href="https://getbootstrap.kr/docs/5.3/examples/carousel/">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+  <link href="/index/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <script src="/index/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <link rel="apple-touch-icon" href="/index/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+  <link rel="icon" href="/index/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/index/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+  <link rel="manifest" href="/index/assets/img/favicons/manifest.json">
+  <link rel="mask-icon" href="/index/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
+  <link rel="icon" href="/index/assets/img/favicons/favicon.ico">
+
+  <!-- jquery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- fullcalendar CDN -->
+  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
+  <!-- fullcalendar 언어 CDN -->
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> <!-- moment.js 로드 -->
+	
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
       }
+    }
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
+    .b-example-divider {
+      width: 100%;
+      height: 3rem;
+      background-color: rgba(0, 0, 0, .1);
+      border: solid rgba(0, 0, 0, .15);
+      border-width: 1px 0;
+      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    }
 
-      .b-example-divider {
-        width: 100%;
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-      }
+    .b-example-vr {
+      flex-shrink: 0;
+      width: 1.5rem;
+      height: 100vh;
+    }
 
-      .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-      }
+    .bi {
+      vertical-align: -.125em;
+      fill: currentColor;
+    }
 
-      .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-      }
+    .nav-scroller {
+      position: relative;
+      z-index: 2;
+      height: 2.75rem;
+      overflow-y: hidden;
+    }
 
-      .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
-      }
+    .nav-scroller .nav {
+      display: flex;
+      flex-wrap: nowrap;
+      padding-bottom: 1rem;
+      margin-top: -1px;
+      overflow-x: auto;
+      text-align: center;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
 
-      .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
+    .btn-bd-primary {
+      --bd-violet-bg: #712cf9;
+      --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
 
-      .btn-bd-primary {
-        --bd-violet-bg: #712cf9;
-        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+      --bs-btn-font-weight: 600;
+      --bs-btn-color: var(--bs-white);
+      --bs-btn-bg: var(--bd-violet-bg);
+      --bs-btn-border-color: var(--bd-violet-bg);
+      --bs-btn-hover-color: var(--bs-white);
+      --bs-btn-hover-bg: #6528e0;
+      --bs-btn-hover-border-color: #6528e0;
+      --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+      --bs-btn-active-color: var(--bs-btn-hover-color);
+      --bs-btn-active-bg: #5a23c8;
+      --bs-btn-active-border-color: #5a23c8;
+    }
 
-        --bs-btn-font-weight: 600;
-        --bs-btn-color: var(--bs-white);
-        --bs-btn-bg: var(--bd-violet-bg);
-        --bs-btn-border-color: var(--bd-violet-bg);
-        --bs-btn-hover-color: var(--bs-white);
-        --bs-btn-hover-bg: #6528e0;
-        --bs-btn-hover-border-color: #6528e0;
-        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-        --bs-btn-active-color: var(--bs-btn-hover-color);
-        --bs-btn-active-bg: #5a23c8;
-        --bs-btn-active-border-color: #5a23c8;
-      }
+    .bd-mode-toggle {
+      z-index: 1500;
+    }
 
-      .bd-mode-toggle {
-        z-index: 1500;
-      }
+    .bd-mode-toggle .dropdown-menu .active .bi {
+      display: block !important;
+    }
+  </style>
 
-      .bd-mode-toggle .dropdown-menu .active .bi {
-        display: block !important;
-      }
-</style>
 
-    
-<!-- Custom styles for this template -->
-<link href="/index/carousel/carousel.css" rel="canonical">
+  <!-- Custom styles for this template -->
+  <link href="/index/carousel/carousel.css" rel="canonical">
 
 </head>
+
 <body>
 
-<header data-bs-theme="dark">
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">아보카데미</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">센터소개</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">상담안내</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">교육프로그램</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">커뮤니티</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">상담신청</a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+  <header data-bs-theme="dark">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">아보카데미</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">센터소개</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">상담안내</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">교육프로그램</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">커뮤니티</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">상담신청</a>
+            </li>
+          </ul>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
       </div>
-    </div>
-  </nav>
-</header>
-	
-<br>
-<br>
-<br>
-<br>
-	
-<div class="container">
-	<div class="card">
-		<form action="/professorCSR" method="post">
-		<div class="card-body">
-			<th:block th:each="item : ${list}">
+    </nav>
+  </header>
+
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <div class="container">
+    <div class="card">
+      <form action="/professorCSR" method="post">
+        <div class="card-body">
+          <th:block th:each="item : ${list}">
             <h5 class="card-title mb-0">지도교수 상담 신청서</h5>
-            	<div class="form-group mt-3">
-                                    <label>이름 <small class="text-muted"></small></label>
-                                    	<input type="text" class="form-control name-inputmask" id="name" name="name" onfocus="this.value" th:value="${item.stud_nm}" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label>학번 <small class="text-muted"></small></label>
-                                    <input type="text" class="form-control studentNumber-inputmask" id="studentNumber" name="studentNumber" onfocus="this.value" th:value="${item.stud_no}" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label>전화번호 <small class="text-muted"></small></label>
-                                    <input type="text" class="form-control phone-inputmask" id="phone" onfocus="this.value" name="phone" th:value="${item.stud_telno}" readonly>
-                                </div>
-                                </th:block>
-                                <div class="form-group">
-                                    <label>상담 종류 <small class="text-muted">(한가지 선택해주세요)</small></label>
-                                     <div class="card">
-                                     <div class="form-check">
-                                            <input type="radio" class="form-check-input" id="customControlValidation1" name="radio-stacked" value="적응문제" required>
-                                            <label class="form-check-label mb-0" for="customControlValidation1">적응문제</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input" id="customControlValidation2" name="radio-stacked" value="경제적 또는 현실의 문제" required>
-                                            <label class="form-check-label mb-0" for="customControlValidation2">경제적 또는 현실의 문제</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input"
-                                                id="customControlValidation3" name="radio-stacked" value="교우 및 대인관계" required>
-                                            <label class="form-check-label mb-0" for="customControlValidation3">교우 및 대인관계</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input"
-                                                id="customControlValidation4" name="radio-stacked" value="이성 및 성문제" required>
-                                            <label class="form-check-label mb-0" for="customControlValidation4">이성 및 성문제</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input"
-                                                id="customControlValidation5" name="radio-stacked" value="가정 문제" required>
-                                            <label class="form-check-label mb-0" for="customControlValidation5">가정 문제</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input"
-                                                id="customControlValidation6" name="radio-stacked" value="정서적 문제" required>
-                                            <label class="form-check-label mb-0" for="customControlValidation6">정서적 문제</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input" id="customControlValidation7" name="radio-stacked" value="성격 문제" required>
-                                            <label class="form-check-label mb-0" for="customControlValidation7">성격 문제</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input" id="customControlValidation8" name="radio-stacked" value="실존적 문제" required>
-                                            <label class="form-check-label mb-0" for="customControlValidation8">실존적 문제</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input" id="customControlValidation9" name="radio-stacked" value="학업 및 진로상담" required>
-                                            <label class="form-check-label mb-0" for="customControlValidation9">학업 및 진로상담</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input" id="customControlValidation10" name="radio-stacked" value="정신건강, 행동 및 습관의 문제" required>
-                                            <label class="form-check-label mb-0" for="customControlValidation10">정신건강, 행동 및 습관의 문제</label>
-                                        </div>
-                                </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>추가상담내용 <small class="text-muted">(있다면 구체적으로)</small></label>
-                                    	<div class="">
-                                            <textarea class="form-control" name="content"></textarea>
-                                        </div>
-                                </div>
-                            </div>
-                            <div class="border-top">
-                                    <div class="card-body">
-                                        <button type="submit" class="btn btn-primary">제출하기</button>
-                                    </div>
-                                </div>
-                            </form>
-       </div>
-	</div>
+            <div class="form-group mt-3">
+              <label>이름 <small class="text-muted"></small></label>
+              <input type="text" class="form-control name-inputmask" id="name" name="name" onfocus="this.value"
+                th:value="${item.stud_nm}" readonly>
+            </div>
+            <div class="form-group">
+              <label>학번 <small class="text-muted"></small></label>
+              <input type="text" class="form-control studentNumber-inputmask" id="studentNumber" name="studentNumber"
+                onfocus="this.value" th:value="${item.stud_no}" readonly>
+            </div>
+            <div class="form-group">
+              <label>전화번호 <small class="text-muted"></small></label>
+              <input type="text" class="form-control phone-inputmask" id="phone" onfocus="this.value" name="phone"
+                th:value="${item.stud_telno}" readonly>
+            </div>
+          </th:block>
+          <div class="form-group">
+            <label>상담 종류 <small class="text-muted">(한가지 선택해주세요)</small></label>
+            <div class="card">
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="customControlValidation1" name="radio-stacked"
+                  value="적응문제" required>
+                <label class="form-check-label mb-0" for="customControlValidation1">적응문제</label>
+              </div>
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="customControlValidation2" name="radio-stacked"
+                  value="경제적 또는 현실의 문제" required>
+                <label class="form-check-label mb-0" for="customControlValidation2">경제적 또는 현실의 문제</label>
+              </div>
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="customControlValidation3" name="radio-stacked"
+                  value="교우 및 대인관계" required>
+                <label class="form-check-label mb-0" for="customControlValidation3">교우 및 대인관계</label>
+              </div>
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="customControlValidation4" name="radio-stacked"
+                  value="이성 및 성문제" required>
+                <label class="form-check-label mb-0" for="customControlValidation4">이성 및 성문제</label>
+              </div>
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="customControlValidation5" name="radio-stacked"
+                  value="가정 문제" required>
+                <label class="form-check-label mb-0" for="customControlValidation5">가정 문제</label>
+              </div>
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="customControlValidation6" name="radio-stacked"
+                  value="정서적 문제" required>
+                <label class="form-check-label mb-0" for="customControlValidation6">정서적 문제</label>
+              </div>
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="customControlValidation7" name="radio-stacked"
+                  value="성격 문제" required>
+                <label class="form-check-label mb-0" for="customControlValidation7">성격 문제</label>
+              </div>
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="customControlValidation8" name="radio-stacked"
+                  value="실존적 문제" required>
+                <label class="form-check-label mb-0" for="customControlValidation8">실존적 문제</label>
+              </div>
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="customControlValidation9" name="radio-stacked"
+                  value="학업 및 진로상담" required>
+                <label class="form-check-label mb-0" for="customControlValidation9">학업 및 진로상담</label>
+              </div>
+              <div class="form-check">
+                <input type="radio" class="form-check-input" id="customControlValidation10" name="radio-stacked"
+                  value="정신건강, 행동 및 습관의 문제" required>
+                <label class="form-check-label mb-0" for="customControlValidation10">정신건강, 행동 및 습관의 문제</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>추가상담내용 <small class="text-muted">(있다면 구체적으로)</small></label>
+            <div class="">
+              <textarea class="form-control" name="content"></textarea>
+            </div>
+          </div>
+
+          <!-- calendar 태그 -->
+          <div id='calendar-container'>
+            <div id='calendar'></div>
+          </div>
+
+        </div>
+        <div class="border-top">
+          <div class="card-body">
+            <button type="submit" class="btn btn-primary">제출하기</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </body>
+<script>
+  (function () {
+    $(function () {
+      // calendar element 취득      
+      var calendarEl = $('#calendar')[0];
+      // full-calendar 생성하기      
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        height: '700px', // calendar 높이 설정        
+        expandRows: true, // 화면에 맞게 높이 재설정        
+        //slotMinTime: '09:00', // Day 캘린더에서 시작 시간        
+        //slotMaxTime: '17:50', // Day 캘린더에서 종료 시간        
+        // 해더에 표시할 툴바        
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek'
+        },
+        initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)        
+        //initialDate: '2021-07-15', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)        
+        navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크        
+        editable: true, // 수정 가능?        
+        selectable: false, // 달력 일자 드래그 설정가능        
+        //nowIndicator: true, // 현재 시간 마크        
+        //dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)        
+        locale: 'ko', // 한국어 설정        
+        fixedWeekCount: false, // 해당 달에 포함된 일주일 외 저번 달이나 다음 달의 주는 표시되지 않게 하기
+        dateClick: function(info) {
+            var selectedDate = info.dateStr; // 클릭한 날짜 정보 획득
+			//나루토 나씨 나모바지 스폰지밥씨 나모를 찾아서 나선환 어디갔어 줄여야해 건강에 안좋아 그치만 존중
+            // 시간 선택을 위한 입력 모달 또는 다른 인터페이스를 제공
+            var selectedTime = prompt('Enter the time (HH:mm):');
+            if (selectedTime) {
+                // 시간을 입력받았다면 이를 이용하여 이벤트를 추가
+                var startTime = selectedDate + 'T' + selectedTime + ':00';
+                var endTime = moment(startTime).add(50, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
+
+                var title = prompt('Event Title:');
+                if (title) {
+                    calendar.addEvent({
+                        title: title,
+                        start: startTime,
+                        end: endTime,
+                        allDay: false // 시간 범위로 설정
+                    });
+                }
+            }
+        }
+    });
+      // 캘린더 랜더링      
+      calendar.render();
+    });
+  })();</script>
 
 </html>

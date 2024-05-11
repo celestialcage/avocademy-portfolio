@@ -18,33 +18,50 @@ import jakarta.annotation.Resource;
 
 @Controller
 public class ProfessorController {
-	@Resource (name = "professorService")
+	@Resource(name = "professorService")
 	private ProfessorService professorService;
-	
+
 	@GetMapping("/professor") // 지도교수상담안내
 	public String professor() {
-		
+
 		return "program/professor";
 	}
-	
 
 	@GetMapping("/professorCSR") // 지도교수 상담 신청 시 학생 개인정보(이름, 학번, 전화번호) 가져오기
-	public String test1(Model model) {
+	public String professorCSR(Model model) {
 		List<ProfessorDTO> list = professorService.studentInfo();
 		model.addAttribute("list", list);
 		return "program/professorCSR";
 	}
 
-	@PostMapping("/professorCSR") 
-	public String savePs(@RequestParam("studentNumber" ) String studentNumber,
-						@RequestParam("radio-stacked") String value,
-						@RequestParam("content") String content) {
+	@GetMapping("/test1") // 지도교수 상담 신청 시 학생 개인정보(이름, 학번, 전화번호) 가져오기
+	public String professorCSR1(Model model) {
+		List<ProfessorDTO> list = professorService.studentInfo();
+		model.addAttribute("list", list);
+		return "program/test1";
+	}
+
+	@PostMapping("/professorSCR")
+	public String savePs(@RequestParam("studentNumber") String studentNumber,
+			@RequestParam("radio-stacked") String value, @RequestParam("content") String content) {
 		System.out.println(studentNumber + value + content);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("studentNumber", studentNumber);
 		map.put("value", value);
 		map.put("content", content);
 		int result = professorService.savePs(map);
-	return "redirect:/";
-}
+		return "redirect:/";
+	}
+
+	@PostMapping("/test1")
+	public String savePs1(@RequestParam("studentNumber") String studentNumber,
+			@RequestParam("radio-stacked") String value, @RequestParam("content") String content) {
+		System.out.println(studentNumber + value + content);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("studentNumber", studentNumber);
+		map.put("value", value);
+		map.put("content", content);
+		int result = professorService.savePs(map);
+		return "redirect:/";
+	}
 }
