@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+
+<head>
+    <th:block th:insert="~{./admin/thfragments/fragments.html :: headTag}"></th:block>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="/admin/assets/libs/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/admin/assets/libs/jquery-minicolors/jquery.minicolors.css">
+    <link rel="stylesheet" type="text/css"
+        href="/admin/assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <style type="text/css">
+    .datepicker > .input-group {
+    	align-content: center;
+    	width: 75%;
+    }
+
+    </style>
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+ 	<th:block th:insert="~{./admin/thfragments/fragments.html :: preloader}"></th:block>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+        data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <th:block th:insert="~{./admin/thfragments/fragments.html :: topbarHeader}"></th:block>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <th:block th:insert="~{./admin/thfragments/fragments.html :: leftSidebar}"></th:block>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">집단상담 프로그램 관리 페이지</h4>
+                        <div class="ms-auto text-end">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-md-flex align-items-center">
+                                	<h4 class="card-title">프로그램 등록</h4>
+                                </div>
+                                <!-- form -->
+                                <form action="@{/admin/group/registProgram}" th:action th:object="${groupDto}" method="post">	                                
+	                                <div class="form-group row">
+	                                	<label for="prg_nm" class="col-sm-3 text-end control-label col-form-label">프로그램명</label>
+	                                    <div class="col-sm-9">
+	                                    	<input type="text" class="form-control" id="prg_nm" th:field="*{prg_nm}" placeholder="제목을 입력하세요."></div>
+									</div>
+	                                <div class="form-group row">
+	                                    <label for="prg_cd" class="col-sm-3 text-end control-label col-form-label">상담 분야</label>
+	                                    <div class="col-sm-9">
+	                                        <select class="select2 form-select shadow-none" id="prg_cd" th:field="*{prg_cd}" style="width:100%; height:36px;">
+	                                            <option value="">분야 선택</option>
+	                                            <option value="P210">대인관계</option>
+	                                            <option value="P220">명상</option>
+	                                            <option value="P230">진로탐색</option>
+	                                        </select>
+	                                    </div>
+	                                </div>
+	                                <div class="form-group row">
+	                                	<label th:for="prg_content" class="col-sm-3 text-end control-label col-form-label">프로그램 내용</label>
+	                                	<div class="col-sm-9">
+	                                		<textarea class="form-control" id="prg_content" th:field="*{prg_content}"></textarea>
+	                                	</div>
+	                                </div>
+	                                
+	                                <div class="form-group row">
+	                                	<label for="prg_nope" class="col-sm-3 text-end control-label col-form-label">참여인원</label>
+	                                    <div class="col-sm-9">
+	                                    	<input type="number" class="form-control" id="prg_nope" th:field="*{prg_nope}" min='5' max='15'></div>
+	                                </div>
+	                                
+	                                <div class="form-group row">
+	                                	<label for="prg_nmtm" class="col-sm-3 text-end control-label col-form-label">회차</label>
+	                                    <div class="col-sm-9">
+	                                    	<input type="number" class="form-control" id="prg_nmtm" th:field="*{prg_nmtm}" min='5' max='10'></div>                                
+	                                </div>
+	                                
+	                                <!-- 기간 -->
+	                                <div class="form-group row datepicker">
+		                                <label class="col-sm-3 text-end control-label col-form-label">시작일</label>
+		                                <div class="col-sm-9 input-group">
+		                                    <input type="text" class="form-control" id="datepicker-start" th:field="*{prg_start}" placeholder="mm/dd/yyyy">
+		                                    <div class="input-group-append">
+		                                        <span class="input-group-text h-100"><i class="fa fa-calendar"></i></span>
+		                                    </div>
+		                                </div>
+	                                </div>
+	                                <div class="form-group row datepicker">
+		                                <label class="col-sm-3 text-end control-label col-form-label">종료일</label>
+		                                <div class="col-sm-9 input-group">
+		                                    <input type="text" class="form-control" id="datepicker-end" th:field="*{prg_end}" placeholder="mm/dd/yyyy">
+		                                    <div class="input-group-append">
+		                                        <span class="input-group-text h-100"><i class="fa fa-calendar"></i></span>
+		                                    </div>
+		                                </div>
+	                                </div>
+	                                
+		                            <div class="border-top">
+		                                <div class="card-body">
+		                                    <button type="submit" id="updatePRG" class="btn btn-primary">Submit</button>
+		                                </div>
+		                            </div>
+	                            </form>
+                                
+                                <!-- form -->
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <th:block th:insert="~{./admin/thfragments/fragments.html :: footer}"></th:block>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <th:block th:insert="~{./admin/thfragments/fragments.html :: jqueryScript}"></th:block>
+	<!--This page JavaScript -->
+    <!-- Charts js Files -->
+    <script src="/admin/assets/libs/inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="/admin/dist/js/pages/mask/mask.init.js"></script>
+    <script src="/admin/assets/libs/select2/dist/js/select2.full.min.js"></script>
+    <script src="/admin/assets/libs/select2/dist/js/select2.min.js"></script>
+    <script src="/admin/assets/libs/jquery-asColor/dist/jquery-asColor.min.js"></script>
+    <script src="/admin/assets/libs/jquery-asGradient/dist/jquery-asGradient.js"></script>
+    <script src="/admin/assets/libs/jquery-asColorPicker/dist/jquery-asColorPicker.min.js"></script>
+    <script src="/admin/assets/libs/jquery-minicolors/jquery.minicolors.min.js"></script>	
+   	<script src="/admin/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+   	<script type="text/javascript">
+    /*datwpicker*/
+    jQuery('#datepicker-start').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+    jQuery('#datepicker-end').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+
+   	</script>
+</body>
+
+</html>

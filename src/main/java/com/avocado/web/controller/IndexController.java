@@ -1,9 +1,12 @@
 package com.avocado.web.controller;
 
+import java.awt.print.Pageable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,10 +68,21 @@ public class IndexController {
 	}
 	
 	@GetMapping("/online") // 온라인 상담
-	public String online(Model model) {
-		List<OnlineDTO> list = onlineService.online();
+	public String online(Model model,
+			@RequestParam(name="page", defaultValue = "0") int page,
+			@RequestParam(name="size", defaultValue = "10") int size) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("page", page);
+		map.put("size", size);
+		//List<OnlineDTO> list = onlineService.online();
+		List<OnlineDTO> list = onlineService.findAll(map);
+		
 		//System.out.println(list.get(0).getCommentYN());
+		
+		int total = onlineService.count();
 		model.addAttribute("list", list);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", (total + size - 1) / size);
 		
 		return "online";
 	}

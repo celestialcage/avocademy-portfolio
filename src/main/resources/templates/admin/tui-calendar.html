@@ -3,6 +3,9 @@
 
 <head>
 	<th:block th:insert="~{./admin/thfragments/fragments.html :: headTag}"></th:block>
+	<link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+	<link rel="stylesheet" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.css"/>
 	<link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />
 	<link rel="stylesheet" href="/admin/custom/calendar-custom.css" />
 </head>
@@ -70,34 +73,15 @@
                                 <div class="row">
                                     <div class="col-lg-3 border-right pe-0">
                                         <div class="card-body border-bottom">
-                                            <h4 class="card-title mt-2">Drag & Drop Event</h4>
+                                            <h4 class="card-title mt-2">상담 시간 열기</h4>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div id="calendar-events" class="">
-                                                        <div class="calendar-events mb-3" data-class="bg-info"><i
-                                                                class="fa fa-circle text-info me-2"></i>Event One
-                                                        </div>
-                                                        <div class="calendar-events mb-3" data-class="bg-success"><i
-                                                                class="fa fa-circle text-success me-2"></i> Event Two
-                                                        </div>
-                                                        <div class="calendar-events mb-3" data-class="bg-danger"><i
-                                                                class="fa fa-circle text-danger me-2"></i>Event Three
-                                                        </div>
-                                                        <div class="calendar-events mb-3" data-class="bg-warning"><i
-                                                                class="fa fa-circle text-warning me-2"></i>Event Four
-                                                        </div>
                                                     </div>
                                                     <!-- checkbox -->
-                                                    <div class="form-check">
-                                                        <input type="checkbox" class="form-check-input"
-                                                            id="drop-remove">
-                                                        <label class="cform-check-label" for="drop-remove">Remove
-                                                            after drop</label>
-                                                    </div>
-                                                    <a href="javascript:void(0)" data-toggle="modal"
-                                                        data-target="#add-new-event"
+                                                    <a href="javascript:void(0)" id="addEventBtn"
                                                         class="btn mt-3 btn-info d-block waves-effect waves-light">
                                                         <i class="ti-plus"></i> Add New Event
                                                     </a>
@@ -114,7 +98,7 @@
                                         		<button type="button" id="twoWeeksViewBtn" class="calendar-btn calendar-move-today">2Weeks</button>
                                         		<button type="button" id="weekViewBtn" class="calendar-btn calendar-move-today">Week</button>
                                         	</span>
-                                        	<span class="calendar-render-range">2024.05</span>
+                                        	<span class="calendar-render-range"></span>
                                         	<span>
                                         		<button type="button" id="todayBtn" class="calendar-btn calendar-move-today">Today</button>
                                         		<button type="button" id="prevBtn" class="calendar-btn calendar-move-day">
@@ -223,11 +207,18 @@
     <!-- All Jquery -->
     <!-- ============================================================== -->
     <th:block th:insert="~{./admin/thfragments/fragments.html :: jqueryScript}"></th:block>
+    <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
-    <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.1.8/chance.min.js"></script>
+    <script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.js"></script>
+    <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
+    <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.js"></script>
+    <!-- <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script> -->
     <script type="text/javascript" src="/admin/custom/calendar-data.js"></script>
     <script type="text/javascript" src="/admin/custom/utils.js"></script>
     <script type="text/javascript" src="/admin/custom/calendar-app.js"></script>
+    <!-- <script type="text/javascript" src="/admin/custom/grid-app.js"></script> -->
+    <script type="text/javascript" src="/admin/custom/app.js"></script>
 </body>
 
 </html>

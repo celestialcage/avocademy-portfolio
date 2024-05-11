@@ -5,7 +5,7 @@
 	<select id="online" resultType="com.avocado.web.entity.OnlineDTO">
 		SELECT bno, btitle, bcontent, bdate, secret, commentYN, bdel 
 		FROM online
-		ORDER BY bdate DESC LIMIT 10; 
+		ORDER BY bno DESC LIMIT 10; 
 	</select>
 	
 	<select id="detail" parameterType="Integer" resultType="OnlineDTO"> 
@@ -17,4 +17,13 @@
 		(btitle, bcontent, user_no) VALUES (#{btitle}, #{bcontent}, 3);
 	</insert>
 	
+	<select id="count">
+		select count(1) from online
+	</select>
+	
+	<select id="findAll" parameterType="Map">
+		select  bno, btitle, bcontent, bdate, secret, commentYN, bdel, uname 
+		FROM onlineview 
+		ORDER BY bno DESC LIMIT #{page},#{size}
+	</select>
 </mapper>
