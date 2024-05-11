@@ -36,11 +36,11 @@ public class GroupAdminController {
 	
 	@PostMapping("/registProgram")
 	private String registProgram(@ModelAttribute("groupDto") GroupDTO dto) {
-		System.out.println(dto.getPrg_cd());
-		System.out.println(dto.getPrg_nmtm());
-		System.out.println(dto.getPrg_start());
-		System.out.println(dto.getPrg_nm());
-		System.out.println(dto.getPrg_content());
+		System.out.println("프로그램 코드 : " + dto.getPrg_cd());
+		System.out.println("프로그램 회차 : " + dto.getPrg_nmtm());
+		System.out.println("프로그램 시작일 : " + dto.getPrg_start());
+		System.out.println("프로그램 제목 : " + dto.getPrg_nm());
+		System.out.println("프로그램 내용 : " + dto.getPrg_content());
 		return "redirect:/admin/registProgram";
 	}
 	
