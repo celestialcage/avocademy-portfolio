@@ -4,6 +4,7 @@
 <head>
 	<th:block th:insert="~{./admin/thfragments/fragments.html :: headTag}"></th:block>
 	<link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+	<link rel="stylesheet" type="text/css" href="/admin/assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 	<link rel="stylesheet" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.css"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.css"/>
 	<link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />
@@ -79,6 +80,78 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div id="calendar-events" class="">
+                                                    <div class="card">
+                            <form class="form-horizontal">
+                                <div class="card-body">
+                                    <h4 class="card-title">상담 시간 입력 폼</h4>
+                                    <div class="form-group row">
+                                        <label for="fname"
+                                            class="col-sm-3 text-end control-label col-form-label">상담사명</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="csName"
+                                                placeholder="상담사 이름">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="csLoc"
+                                            class="col-sm-3 text-end control-label col-form-label">상담실</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="csLoc"
+                                                placeholder="상담실 정보">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="datepicker-autoclose"
+                                            class="col-sm-3 text-end control-label col-form-label">날짜</label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+			                                    <input type="text" class="form-control" id="datepicker-autoclose"
+			                                        placeholder="yyyy-mm-dd">
+			                                    <div class="input-group-append">
+			                                        <span class="input-group-text h-100"><i class="fa fa-calendar"></i></span>
+			                                    </div>
+			                                </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group row">
+                                    <label class="col-md-3 text-end">시간 단위</label>
+                                    <div class="col-md-9">
+                                        <div class="form-check mr-sm-2">
+                                            <input type="checkbox" class="form-check-input"
+                                                id="customControlAutosizing1">
+                                            <label class="form-check-label mb-0" for="customControlAutosizing1">First
+                                                One</label>
+                                        </div>
+                                        <div class="form-check mr-sm-2">
+                                            <input type="checkbox" class="form-check-input"
+                                                id="customControlAutosizing2">
+                                            <label class="form-check-label mb-0" for="customControlAutosizing2">Second
+                                                One</label>
+                                        </div>
+                                        <div class="form-check mr-sm-2">
+                                            <input type="checkbox" class="form-check-input"
+                                                id="customControlAutosizing3">
+                                            <label class="form-check-label mb-0" for="customControlAutosizing3">Third
+                                                One</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="form-group row">
+                                        <label for="cono1"
+                                            class="col-sm-3 text-end control-label col-form-label">코멘트</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-top">
+                                    <div class="card-body">
+                                        <button type="button" class="btn btn-success text-white" style="width:100%;">입력</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                                                     </div>
                                                     <!-- checkbox -->
                                                     <a href="javascript:void(0)" id="addEventBtn"
@@ -210,6 +283,7 @@
     <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.1.8/chance.min.js"></script>
+    <script src="/admin/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.js"></script>
     <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
     <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.js"></script>
@@ -219,6 +293,17 @@
     <script type="text/javascript" src="/admin/custom/calendar-app.js"></script>
     <!-- <script type="text/javascript" src="/admin/custom/grid-app.js"></script> -->
     <script type="text/javascript" src="/admin/custom/app.js"></script>
+    <script type="text/javascript">
+	    /*datwpicker*/
+	    jQuery('#datepicker-autoclose').datepicker({
+	    	format: 'yyyy-mm-dd',
+	    	startDate: '-d',
+	    	calendarWeeks: true,
+	        autoclose: true,
+	        todayHighlight: true
+	    });
+	    
+    </script>
 </body>
 
 </html>
