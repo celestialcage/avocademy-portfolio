@@ -42,7 +42,7 @@
 								aria-current="page" href="/main">Home</a></li>
 							<li class="nav-item"><a class="nav-link" href="#">센터소개</a></li>
 							<li class="nav-item"><a class="nav-link" href="#">상담안내</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">교육프로그램</a></li>
+							<li class="nav-item"><a class="nav-link" href="#">교육프 로그램</a></li>
 							<li class="nav-item"><a class="nav-link" href="#">커뮤니티</a></li>
 							<li class="nav-item"><a class="nav-link" href="/online">온라인상담</a></li>
 							
@@ -73,15 +73,83 @@
 
 	<th:block th:fragment="footer">
 	  <footer class="container">
-	   <p>Session expires at: <span th:text="${expireTime}"></span></p>
+	   <p>Session expires at: <span id="sessionTimeLeft"></span></p>
 	    <p class="float-end"><a href="#">Back to top</a></p>
 	    <p>&copy; Avocado Univercity, since 1924. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
 	  </footer>
 	  
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	  <script src="/index/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-	</th:block>
 	
+	
+  <script type="text/javascript"> 
+    // 페이지 로딩 시간 기록
+    localStorage.setItem('lastLoginTime', new Date().getTime());
+
+    // 세션 만료 시간 설정 (밀리초 단위) - 30분으로 변경
+    const sessionExpirationTime = 30 * 60 * 1000; // 30분
+    
+    // 세션 만료 여부 확인 함수
+    function checkSessionExpiration() {
+        let lastLoginTime = localStorage.getItem('lastLoginTime');
+        
+        if (lastLoginTime) {
+            let currentTime = new Date().getTime();
+            if (currentTime - lastLoginTime > sessionExpirationTime) {
+                logout();
+            }
+        }
+    }
+
+    // 세션 만료까지 남은 시간 표시 함수
+    function updateSessionTimeLeft() {
+    	//console.log("함수가 호출되었습니다.");
+        let lastLoginTime = localStorage.getItem('lastLoginTime');
+        //console.log("Last Login Time from Storage: ", lastLoginTime); 
+        
+        // 사용자가 로그인한 경우에만 세션 남은 시간을 표시합니다.
+        if (lastLoginTime && isLoggedIn()) {
+            let currentTime = new Date().getTime();
+            console.log("Test")
+            //console.log("Current Time: ", currentTime); // 현재 시간 로그 출력
+            //console.log("isLoggedIn(): ", isLoggedIn());
+            let timeDiff = sessionExpirationTime - (currentTime - lastLoginTime);
+            //console.log("Time Difference: ", timeDiff); // 남은 시간 로그 출력
+            if (timeDiff > 0) {
+            	//console.log("Session expired."); // 세션 만료 메시지 로그 출력
+                let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+                //console.log("Minutes: ", minutes+"분", "Seconds: ", seconds); // 남은 분과 초 로그 출력
+                $('#sessionTimeLeft').text(minutes + "분 " + seconds + "초 남음");
+                //console.log("sessionTimeLeft:", minutes + "분 " + seconds + "초 남음");
+            } else {
+                $('#sessionTimeLeft').text("Session has expired");
+            }
+        } else {
+            $('#sessionTimeLeft').text(""); // 사용자가 로그인하지 않은 경우에는 세션 남은 시간을 숨깁니다.
+        }
+    }
+	// 페이지 로드 후 매 초마다 업데이트
+	$(document).ready(function () {
+	    updateSessionTimeLeft();
+	    setInterval(updateSessionTimeLeft, 1000);
+	    setInterval(checkSessionExpiration, 1000);
+	});
+
+	
+	//로그아웃 버튼 클릭
+	$('.logout').click(function(){
+		delCookie('loginCookie');
+		logout();
+	});
+	
+	// 로그인 여부 확인 함수
+	function isLoggedIn() {
+	    return sessionStorage.getItem('uid') !== null;
+	}
+    </script>
+    
+</th:block>
 	<th:block></th:block>
 	<th:block></th:block>
 	

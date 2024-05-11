@@ -19,33 +19,19 @@ public class GroupController {
 	private GroupService groupService;
 	
 	//프로그램 확인 페이지 (학생)
-	@GetMapping("/groupMain")
+	@GetMapping("/group")
 	public String groupMain(Model model) {
-		List<GroupDTO> list = groupService.programList();
-		model.addAttribute("list", list);
-		return "program/groupMain";
+		//List<GroupDTO> list = groupService.programList();
+		//model.addAttribute("list", list);
+		return "program/group";
 	}
 	
-	//프로그램 신청
-	@GetMapping("/programApply")
-	public String programApply() {
+	//프로그램 신청(학생)
+	@GetMapping("/groupApply")
+	public String groupApply() {
 		
-		return "program/programApply";
+		return "program/groupApply";
 	}
 	
-	
-	//프로그램 확인 페이지 (상담사)
-	@GetMapping("/admin/groupPrograms")
-	private String groupPrograms() {
-		
-		return "admin/groupPrograms";
-	}
-	
-	//프로그램 등록 페이지(상담사)
-	@PostMapping("/admin/registProgram")
-	private String registProgram() {
-		
-		return "admin/registProgram";
-	}
 	
 }
