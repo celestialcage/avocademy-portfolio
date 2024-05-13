@@ -26,4 +26,6 @@
 		FROM onlineview 
 		ORDER BY bno DESC LIMIT #{page},#{size}
 	</select>
+	
+
 </mapper>
