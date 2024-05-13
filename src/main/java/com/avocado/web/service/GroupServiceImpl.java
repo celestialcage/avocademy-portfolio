@@ -18,5 +18,32 @@ public class GroupServiceImpl implements GroupService {
 	public List<GroupDTO> programList() {
 		return groupDAO.programList();
 	}
+
+	@Override
+	public void registProgram(GroupDTO dto) {
+		groupDAO.registProgram(dto);		
+	}
+
+	@Override
+	public List<GroupDTO> adminPRGList() {
+		return groupDAO.adminPRGList();
+	}
+
+	@Override
+	public void approvePRG(int prg_no) {
+		groupDAO.approvePRG(prg_no);
+		
+	}
+
+	@Override
+	public void disApprovePRG(int prg_no) {
+		groupDAO.disApprovePRG(prg_no);
+		
+	}
+
+	@Override
+	public GroupDTO updateprg(int prg_no) {
+		return groupDAO.updatePrg(prg_no);
+	}
 	
 }
