@@ -5,6 +5,35 @@
 	<select id="programList" resultType="GroupDTO">
 		SELECT prg_no, prg_nm, cns_no, prg_nope, prg_cd, prg_ymd, prg_hr, prg_place 
 		FROM grprograms 
-		WHERE prg_ymd > DATE_FORMAT(NOW(),'%Y%m%d')
+		WHERE req_end > DATE_FORMAT(NOW(),'%Y%m%d')
+	</select>
+	
+	<insert id="registProgram" parameterType="GroupDTO">
+		INSERT INTO grprograms (prg_nm, cns_no, prg_cd, prg_nope, prg_content, prg_schdl, req_end, prg_dow, prg_nmtm)
+		VALUES (#{prg_nm}, #{cns_no}, #{prg_cd}, #{prg_nope}, #{prg_content}, #{prg_schdl}, #{req_end}, #{prg_dow}, #{prg_nmtm})
+	</insert>
+	
+	<select id="adminPRGList" resultType="GroupDTO">
+		SELECT * 
+		FROM grprograms
+	</select>
+	
+	<update id="approvePRG" parameterType="int">
+		UPDATE grprograms 
+		SET prg_aprv = 1 
+		WHERE prg_no = #{prg_no} 
+	</update>
+
+
+	<update id="disApprovePRG" parameterType="int">
+		UPDATE grprograms 
+		SET prg_aprv = 0 
+		WHERE prg_no = #{prg_no} 
+	</update>
+	
+	<select id="updatePrg" parameterType="int" resultType="GroupDTO">
+		SELECT * 
+		FROM grprograms 
+		WHERE prg_no = #{prg_no} 
 	</select>
 </mapper>

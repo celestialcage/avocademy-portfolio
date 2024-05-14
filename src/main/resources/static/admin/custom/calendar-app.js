@@ -1,13 +1,12 @@
 (function(Calendar) {
 	// const Calendar = tui.Calendar;
-	
 	const container = document.getElementById('calendar');
 	const options = {
 	  gridSelection: {
 		enableDblClick: false,
 		enableClick: true,
 	  },
-	  // useFormPopup: true,
+	  useFormPopup: true,
 	  usageStatistics: false, 
 	  defaultView: 'month',
 	  timezone: {
@@ -15,6 +14,7 @@
 	      {
 	        timezoneName: 'Asia/Seoul',
 	        displayLabel: 'Seoul',
+			timeHeight: 60,
 	      },
 	    ],
 	  },
@@ -29,6 +29,17 @@
 	    visibleWeeksCount: 2,
 	    workweek: true,
 	    dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+	  },
+	  template: {
+		titlePlaceholder: function () {
+			return '예약 가능';
+		  },
+		allday: function (event) {
+		  return getEventTemplate(event, true);
+		},
+		time: function (event) {
+		  return getEventTemplate(event, false);
+		},
 	  },
 	  // week: {
 	  //   eventView: false,
@@ -57,8 +68,8 @@
     calendar.clear();
     eventsList = getDBEvents(
       calendar.getViewName(),
-      calendar.getDateRangeStart(),
-      calendar.getDateRangeEnd()
+      calendar.getDateRangeStart(), // data_TZDate 리턴
+      calendar.getDateRangeEnd() // data_TZDate 리턴
     );
     calendar.createEvents(eventsList);
   }
@@ -77,6 +88,7 @@
 		  },
 		  clickEvent: function (eventInfo) {
 			console.log('clickEvent', eventInfo);
+			
 		  },
 		  clickDayName: function (dayNameInfo) {
 			console.log('clickDayName', dayNameInfo);
@@ -109,7 +121,31 @@
 		});
 	  }
 
-	  function bindAppEvents() {
+	  function getEventTemplate(event, isAllday) {
+		let html = [];
+		let start = moment(event.start.toDate().toUTCString());
+		if (!isAllday) {
+		  html.push('<strong>' + start.format('HH:mm') + '</strong> ');
+		}
+	
+		if (event.isPrivate) {
+		  html.push('<span class="calendar-font-icon ic-lock-b"></span>');
+		  html.push(' Private');
+		} else {
+		  if (event.recurrenceRule) {
+			html.push('<span class="calendar-font-icon ic-repeat-b"></span>');
+		  } else if (event.attendees.length > 0) {
+			html.push('<span class="calendar-font-icon ic-user-b"></span>');
+		  } else if (event.location) {
+			html.push('<span class="calendar-font-icon ic-location-b"></span>');
+		  }
+		  html.push(' ' + event.title);
+		}
+	
+		return html.join('');
+	  }
+
+	//   function bindAppEvents() {
 		// dropdownTrigger.addEventListener('click', toggleDropdownState);
 	
 		// prevButton.addEventListener('click', function () {
@@ -175,7 +211,7 @@
 		// 	}
 		//   }
 		// });
-	  }
+	//   }
 	
 	
 	// 캘린더 메뉴
@@ -287,15 +323,45 @@
 	// calendar.on('');
 	// .toastui-calendar-grid-selection
 
-	calendar.on('beforeCreateSchedule', function(e) {
-		console.log('Date clicked:', e.start.toDate());
-	});
+	// calendar.on('beforeCreateSchedule', function(e) {
+	// 	console.log('Date clicked:', e.start.toDate());
+	// });
 	
 	console.log(calendar);
+
+	// fetch('/cs-schedule')
+    //     .then(response => response.json())
+	// 	.then(data => console.log(data))
+    //     .catch(e => console.log("에러: " + e));
+
+	// let dbList = [];
+	// // db 통신 ajax
+	// fetch('/cs-schedule')
+	// .then(response => response.json())
+	// .then(data => {
+	// 	// console.log(data.schedules);
+	// 	data.schedules.forEach(e => {
+	// 		e.scheduleDate = moment(e.scheduleDate, "YYYYMMDD").format('YYYY-MM-DD');
+	// 	});
+	// 	dbList = data.schedules;
+	// })
+	// .catch(e => console.log("에러: " + e));
+	// console.log(dbList);
+	
+	let dbList = [];
+      // db 통신 ajax
+	let dbData = getData('/cs-schedule');
+	dbData.then(data => {
+		data.schedules.forEach(e => {
+			e.scheduleDate = moment(e.scheduleDate, "YYYYMMDD").format('YYYY-MM-DD');
+		});
+		dbList = data.schedules;
+		// console.log(dbList);
+	}).then(dbList => console.log(dbList));
 	
 	// Init
 	bindInstanceEvents();
-	bindAppEvents();
+	// bindAppEvents();
 	update();
 	
 })(tui.Calendar);
