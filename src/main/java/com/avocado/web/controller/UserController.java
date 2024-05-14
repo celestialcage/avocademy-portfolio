@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -15,6 +16,7 @@ import com.avocado.web.util.Util;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.server.PathParam;
 
 @Controller
 public class UserController {
@@ -35,26 +37,30 @@ public class UserController {
 	public String login(@RequestParam Map<String, Object> map, HttpServletResponse response) {
 
 
-		System.out.println(map);
+		System.out.println("map : " + map);
 		String id = (String) map.get("id");
 		String pw = (String) map.get("pw");
+		Integer grade = (Integer) map.get("grade");
 		map.put("uid", id);
-		map.put("pw", pw);
-		System.out.println("활용하자 "  );
+		map.put("upw", pw);
+		map.put("ugrade", grade);
+		
 		
 		Map<String, Object> result = userService.login(map);
+		
 		System.out.println("활용하자 "  + result);
 
 		if (util.str2Int(result.get("count")) == 1) { // mapper 에서 오는 count(*) 의 별칭
 			HttpSession session = util.getSession();
 			session.setAttribute("uid", result.get("uid"));
 			session.setAttribute("uname", result.get("uname"));
-			session.setAttribute("uno", result.get("uno"));
 			session.setAttribute("ugrade", result.get("ugrade"));
+			session.setAttribute("uno", result.get("uno"));
 		
 			
 			// 출력하여 uid 확인
 		    System.out.println("UID: " + result.get("uid"));
+		    System.out.println("UGRADE: " + result.get("ugrade"));
 
 			// 쿠키 생성
 			Cookie loginCookie = new Cookie("loginCookie", session.getId());
@@ -63,24 +69,21 @@ public class UserController {
 			response.addCookie(loginCookie);
 			
 			// 사용자 등급 변수를 맵에서 추출
-	        String role = (String) result.get("ugrade");
+			Integer role = (Integer) result.get("ugrade");
 	        System.out.println("사용자 등급: " + role);
-	        System.out.println("쨘");
-
+	        
 			// 사용자의 등급에 따라 리다이렉트할 페이지 결정
-			if ("5".equals(role)) {
-			    return "redirect:/admin/index"; // 관리자 페이지로 리다이렉트
-			} else if ("1".equals(role)) {
-			    return "redirect:/main"; // 일반 사용자 페이지로 리다이렉트
-			}
-			else {
-			return "redirect:/login"; // 만약 role 값이 1이나 5가 아니면 오류 페이지나 기본 페이지로 리다이렉트
-			}
+	        if (role != null) {
+	            if (role == 5) {
+	                return "redirect:/admin/index"; // 관리자 페이지로 리다이렉트
+	            } else if (role == 1) {
+	                return "redirect:/main"; // 일반 사용자 페이지로 리다이렉트
+	            }
+	        }
 		}
-		// 로그인 실패시 로그인 페이지로 다시 리다이렉트
-	    return "redirect:/login"; 
+	        return "redirect:/login"; // 등급 정보가 없거나 올바르지 않은 경우 로그인 페이지로 리다이렉트
 	}
-		
+
 		
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
@@ -95,4 +98,5 @@ public class UserController {
 
 		return "redirect:/login";
 	}
+	
 }
