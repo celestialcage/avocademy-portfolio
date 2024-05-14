@@ -1,7 +1,6 @@
 package com.avocado.web.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.avocado.web.entity.GroupDTO;
 
@@ -17,6 +16,7 @@ public interface GroupService {
 
 	void disApprovePRG(int prg_no);
 
-	GroupDTO updateprg(int prg_no);
+	void createSchedule(GroupDTO dto);
+	
 
 }

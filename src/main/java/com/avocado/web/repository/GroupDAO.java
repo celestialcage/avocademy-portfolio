@@ -21,5 +21,6 @@ public interface GroupDAO {
 
 	void disApprovePRG(int prg_no);
 
-	GroupDTO updatePrg(int prg_no);
+	void createSchedule(GroupDTO dto);
+
 }

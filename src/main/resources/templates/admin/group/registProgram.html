@@ -181,6 +181,15 @@
 	                                	</div>
 	                                </div>
 	                                
+	                                <div class="form-group row">
+	                                	<div class="input-group">
+	                                		<input type="text" class="form-control" id="choseDate" th:field="*{groupSCHDL}">
+                             				<div class="input-group-append">
+		                                        <span class="input-group-text h-100"><i class="fa fa-calendar"></i></span>
+		                                    </div>		
+	                                	</div>
+	                                </div>
+	                                
 		                            <div class="border-top">
 		                                <div class="card-body">
 		                                    <button type="submit" id="updatePRG" class="btn btn-primary">Submit</button>
@@ -235,8 +244,31 @@
     
     $(function(){
         /*datepicker*/
-        var startDate, endDate;
+        var startDate, endDate, choseDate;
         var dayOfWeek;
+        
+        $('#choseDate').datepicker({
+        	format: "yyyy-mm-dd",
+    	    startDate: '+14d', 
+    	    endDate: '+2m',
+            autoclose: true,
+            todayHighlight: true,
+            calendarWeeks : true,
+    	    multidate : true,
+    	    multidateSeparator :",",
+    	    templates : {
+    	        leftArrow: '&laquo;',
+    	        rightArrow: '&raquo;'
+    	    }, 
+    	    showWeekDays : true ,
+    	    todayHighlight : true ,
+    	    toggleActive : true,
+    	    title: "상담 시작 일자",
+    	    weekStart : 0 ,
+    	    language : "ko",
+    	    forceParse: false
+        });
+
         
         $('#startDate').datepicker({
         	format: "yyyy-mm-dd",
@@ -255,7 +287,7 @@
     	    language : "ko",
     	    forceParse: false
         }).on("changeDate", function(e){
-            startDate = e.date;
+        	startDate = e.date;
             //console.log(startDate);
            var reqEnd = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - 3);
            //var reqEndDate = reqEnd.getFullYear() + '-0' + (reqEnd.getMonth() + 1) + '-' + reqEnd.getDate();
@@ -263,28 +295,6 @@
            $('#req_end').val(reqEnd.getFullYear() + '-0' + (reqEnd.getMonth() + 1) + '-' + reqEnd.getDate());
         });
 
-        
-        $('#endDate').datepicker({
-        	format: "yyyy-mm-dd",
-            autoclose: true,
-            todayHighlight: true,
-            calendarWeeks : true,
-    	    templates : {
-    	        leftArrow: '&laquo;',
-    	        rightArrow: '&raquo;'
-    	    }, 
-    	    showWeekDays : true ,
-    	    title: "상담 종료 일자",
-    	    weekStart : 0 ,
-    	    language : "ko",
-    	    forceParse: false
-        }).on("changeDate", function(e){
-            endDate = e.date;
-            //console.log(endDate);
-            var difference = Math.abs(endDate - startDate);
-            var daysDifference = Math.ceil(difference / (1000 * 60 * 60 * 24));
-            var weeks = Math.ceil(daysDifference / 7);
-        });
     	
        	$('#endDate').datepicker({
         	format: "yyyy-mm-dd",
