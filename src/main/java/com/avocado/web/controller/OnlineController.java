@@ -53,6 +53,19 @@ public class OnlineController {
 		return "redirect:/online";
 	}
 	
+	@GetMapping("/online")
+	public String getOnlinePage(@RequestParam(defaultValue="1")int page, Model model) {
+		
+		 int totalPages = 10;
+	       
+
+	        model.addAttribute("currentPage", page);
+	        model.addAttribute("totalPages", totalPages);
+
+		return "online";
+	}
+	
+	
 	
 
 }

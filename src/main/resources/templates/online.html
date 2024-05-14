@@ -85,7 +85,7 @@ h5 {
 	<!-- 페이지네이션 부트스트랩 -->
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
-    <li class="page-item">
+    <li class="page-item" id="prev-page">
       <a class="page-link" href="#" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
@@ -93,7 +93,10 @@ h5 {
     <li class="page-item"><a class="page-link" href="/online?page=1">1</a></li>
     <li class="page-item"><a class="page-link" href="/online?page=2">2</a></li>
     <li class="page-item"><a class="page-link" href="/online?page=3">3</a></li>
-    <li class="page-item">
+    <li class="page-item"><a class="page-link" href="/online?page=4">4</a></li>
+    <li class="page-item"><a class="page-link" href="/online?page=5">5</a></li>
+    <li class="page-item"><a class="page-link" href="/online?page=6">6</a></li>
+    <li class="page-item" id="next-page">
       <a class="page-link" href="#" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
@@ -101,7 +104,57 @@ h5 {
   </ul>
 </nav>
 
-	<!-- FOOTER -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const totalPages = 10; // 총 페이지 수 설정
+      const pagination = document.querySelector('.pagination');
+      let prevPage = document.getElementById('prev-page');
+      let nextPage = document.getElementById('next-page');
+
+      function updatePagination(currentPage) {
+        // 이전 페이지 및 다음 페이지 링크 업데이트
+        prevPage.classList.toggle('disabled', currentPage === 1);
+        nextPage.classList.toggle('disabled', currentPage === totalPages);
+
+        prevPage.querySelector('a').href = currentPage > 1 ? `/online?page=${currentPage - 1}` : '#';
+        nextPage.querySelector('a').href = currentPage < totalPages ? `/online?page=${currentPage + 1}` : '#';
+
+
+        // 페이지 번호 갱신
+        let pageItems = '';
+        for (let i = 1; i <= totalPages; i++) {
+          if (i === currentPage) {
+            pageItems += `<li class="page-item active"><a class="page-link" href="/online?page=${i}">${i}</a></li>`;
+          } else {
+            pageItems += `<li class="page-item"><a class="page-link" href="/online?page=${i}">${i}</a></li>`;
+          }
+        }
+        pagination.innerHTML = prevPage.outerHTML + pageItems + nextPage.outerHTML;
+
+        // 다시 요소를 찾고 클릭 이벤트 리스너 추가
+       prevPage = document.getElementById('prev-page');
+       nextPage = document.getElementById('next-page'); 
+        
+        // 페이지 링크 클릭 이벤트 리스너 추가
+        pagination.querySelectorAll('.page-link').forEach(link => {
+          link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const selectedPage = parseInt(this.getAttribute('href').split('=')[1]);
+            updatePagination(selectedPage);
+          });
+        });
+      }
+
+      updatePagination(1); // 초기 페이지를 1로 설정
+    });
+  </script>
+  
+  <!-- FOOTER -->
 	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
+  
+	
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
