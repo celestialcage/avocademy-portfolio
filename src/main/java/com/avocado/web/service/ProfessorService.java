@@ -1,5 +1,6 @@
 package com.avocado.web.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,18 @@ public interface ProfessorService {
 
 
 	int savePs(Map<String, String> map);
+
+
+	List<ProfessorDTO> psSchedule();
+
+
+	List<Map<String, Object>> getAll(String selectedDate);
+
+
+	int pscReserved(Map<String, String> map2);
+
+
+
 
 
 }
