@@ -40,16 +40,16 @@ public class IndexController {
 		return "index";
 	}
 	
-	@GetMapping("/programGuide") // 상담 안내
-	public String programGuide(Model model) {
+	@GetMapping("/counselingGuide") // 상담 안내
+	public String counselingGuide(Model model) {
 		model.addAttribute("message", "상담 안내");
-		return "index";
+		return "counseling";
 	}
 	
-	@GetMapping("/lecture") // 교육 프로그램
-	public String lecture(Model model) {
+	@GetMapping("/program") // 교육 프로그램
+	public String program(Model model) {
 		model.addAttribute("message", "교육 프로그램");
-		return "index";
+		return "program";
 	}
 	
 	@GetMapping("/online") // 온라인 상담

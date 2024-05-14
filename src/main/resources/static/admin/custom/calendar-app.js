@@ -4,11 +4,11 @@
 	const options = {
 	  gridSelection: {
 		enableDblClick: false,
-		enableClick: true,
+		enableClick: false,
 	  },
-	  useFormPopup: true,
+	  useFormPopup: false,
 	  usageStatistics: false, 
-	  defaultView: 'month',
+	  defaultView: 'week',
 	  timezone: {
 	    zones: [
 	      {
@@ -25,10 +25,18 @@
 	      backgroundColor: '#03bd9e',
 	    },
 	  ],
-	  month: {
-	    visibleWeeksCount: 2,
-	    workweek: true,
-	    dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+	//   month: {
+	//     visibleWeeksCount: 2,
+	//     workweek: true,
+	//     dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+	//   },
+	  week: {
+        workweek: true,
+	      eventView: true,
+	      taskView: false,
+	      hourStart: 9, 
+	      hourEnd: 18, 
+	      dayNames: ['일', '월', '화', '수', '목', '금', '토'],
 	  },
 	  template: {
 		titlePlaceholder: function () {
@@ -41,13 +49,6 @@
 		  return getEventTemplate(event, false);
 		},
 	  },
-	  // week: {
-	  //   eventView: false,
-	  //   // taskView: false,
-	  //   hourStart: 9, 
-	  //   hourEnd: 18, 
-	  //   dayNames: ['월', '화', '수', '목', '금', '토', '일'],
-	  // },
 	};
 	
 	const calendar = new Calendar(container, options);
@@ -59,26 +60,23 @@
 	  let rangeEnd = calendar.getDateRangeEnd();
 	
 	  navbarRange.textContent = getNavbarRange(rangeStart, rangeEnd, calendar.getViewName());
-	  //console.log('displayRenderRange() 실행');
 	}
 
   function reloadEvents() {
-    let eventsList;
-
     calendar.clear();
-    eventsList = getDBEvents(
-      calendar.getViewName(),
-      calendar.getDateRangeStart(), // data_TZDate 리턴
-      calendar.getDateRangeEnd() // data_TZDate 리턴
-    );
-    calendar.createEvents(eventsList);
+    getDBEvents(
+      calendar.getViewName()//,
+      //calendar.getDateRangeStart(), // data_TZDate 리턴
+      //calendar.getDateRangeEnd() // data_TZDate 리턴
+    ).then(data => {
+		calendar.createEvents(data);
+	});
   }
 	
 	function update() {
 		//setDropdownTriggerText();
 	    displayRenderRange();
 	    reloadEvents();
-		//console.log('update() 실행');
 	}
 
 	function bindInstanceEvents() {
@@ -145,73 +143,6 @@
 		return html.join('');
 	  }
 
-	//   function bindAppEvents() {
-		// dropdownTrigger.addEventListener('click', toggleDropdownState);
-	
-		// prevButton.addEventListener('click', function () {
-		//   cal.prev();
-		//   update();
-		// });
-	
-		// nextButton.addEventListener('click', function () {
-		//   cal.next();
-		//   update();
-		// });
-	
-		// todayButton.addEventListener('click', function () {
-		//   cal.today();
-		//   update();
-		// });
-	
-		// dropdownContent.addEventListener('click', function (e) {
-		//   var targetViewName;
-	
-		//   if ('viewName' in e.target.dataset) {
-		// 	targetViewName = e.target.dataset.viewName;
-		// 	cal.changeView(targetViewName);
-		// 	checkboxCollapse.disabled = targetViewName === 'month';
-		// 	toggleDropdownState();
-		// 	update();
-		//   }
-		// });
-	
-		// checkboxCollapse.addEventListener('change', function (e) {
-		//   if ('checked' in e.target) {
-		// 	cal.setOptions({
-		// 	  week: {
-		// 		collapseDuplicateEvents: !!e.target.checked,
-		// 	  },
-		// 	  useDetailPopup: !e.target.checked,
-		// 	});
-		//   }
-		// });
-	
-		// sidebar.addEventListener('click', function (e) {
-		//   if ('value' in e.target) {
-		// 	if (e.target.value === 'all') {
-		// 	  if (appState.activeCalendarIds.length > 0) {
-		// 		cal.setCalendarVisibility(appState.activeCalendarIds, false);
-		// 		appState.activeCalendarIds = [];
-		// 		setAllCheckboxes(false);
-		// 	  } else {
-		// 		appState.activeCalendarIds = MOCK_CALENDARS.map(function (calendar) {
-		// 		  return calendar.id;
-		// 		});
-		// 		cal.setCalendarVisibility(appState.activeCalendarIds, true);
-		// 		setAllCheckboxes(true);
-		// 	  }
-		// 	} else if (appState.activeCalendarIds.indexOf(e.target.value) > -1) {
-		// 	  appState.activeCalendarIds.splice(appState.activeCalendarIds.indexOf(e.target.value), 1);
-		// 	  cal.setCalendarVisibility(e.target.value, false);
-		// 	  setCheckboxBackgroundColor(e.target);
-		// 	} else {
-		// 	  appState.activeCalendarIds.push(e.target.value);
-		// 	  cal.setCalendarVisibility(e.target.value, true);
-		// 	  setCheckboxBackgroundColor(e.target);
-		// 	}
-		//   }
-		// });
-	//   }
 	
 	
 	// 캘린더 메뉴
@@ -224,50 +155,50 @@
 	const weekViewBtn = document.querySelector('#weekViewBtn');
 	
 	todayBtn.addEventListener("click", () => {
-    calendar.today();
-    update();
-	calendar.clearGridSelections();
-  });
+		calendar.today();
+		update();
+		calendar.clearGridSelections();
+	});
 	prevBtn.addEventListener("click", () => {
-    calendar.prev();
-    update();
-	calendar.clearGridSelections();
-  });
+		calendar.prev();
+		update();
+		calendar.clearGridSelections();
+	});
 	nextBtn.addEventListener("click", () => {
-    calendar.next();
-    update();
-	calendar.clearGridSelections();
-  });
+		calendar.next();
+		update();
+		calendar.clearGridSelections();
+	});
 	
 	monthViewBtn.addEventListener("click", () => {
-    calendar.changeView('month');
-    update();
-    calendar.setOptions({
-      month: {
-        visibleWeeksCount: 0,
-        workweek: false,
-        narrowWeekend: true,
-        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-      },
-    });
-	calendar.clearGridSelections();
-  });
-  twoWeeksViewBtn.addEventListener("click", () => {
-    calendar.changeView('month');
-    update();
-    calendar.setOptions({
-      month: {
-        visibleWeeksCount: 2,
-        workweek: true,
-        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-      },
-    });
-	calendar.clearGridSelections();
-  });
+		calendar.changeView('month');
+		update();
+		calendar.setOptions({
+		month: {
+			visibleWeeksCount: 0,
+			workweek: false,
+			narrowWeekend: true,
+			dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+		},
+		});
+		calendar.clearGridSelections();
+	});
+    twoWeeksViewBtn.addEventListener("click", () => {
+		calendar.changeView('month');
+		update();
+		calendar.setOptions({
+		month: {
+			visibleWeeksCount: 2,
+			workweek: true,
+			dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+		},
+		});
+		calendar.clearGridSelections();
+	});
 
 	weekViewBtn.addEventListener("click", () => {
 	  calendar.changeView('week');
-    update();
+      update();
 	  calendar.setOptions({
 	    week: {
         workweek: true,
@@ -281,84 +212,8 @@
 	  calendar.clearGridSelections();
 	});
 
-
-	
-	// const rangepicker = DatePicker.createRangePicker({
-	// 	     startpicker: {
-	// 	         input: '#start-input',
-	// 	         container: '#start-container'
-	// 	     },
-	// 	     endpicker: {
-	// 	         input: '#end-input',
-	// 	         container: '#end-container'
-	// 	     },
-	// 	     type: 'date',
-	// 	     format: 'yyyy-MM-dd',
-	// 	     selectableRanges: [
-	// 	         [new Date(2017, 3, 1), new Date(2017, 5, 1)],
-	// 	         [new Date(2017, 6, 3), new Date(2017, 10, 5)]
-	// 	     ]
-	// 	 });
-
-	// calendar.on('clickDayname', function(event) {
-	// 	let date = event.date;
-	// 	console.log(date);
-	// });
-	// calendar.on('beforeCreateSchedule', function(event) {
-	// 	const { start } = event;
-	// 	console.log('Clicked date: ', start);
-	// });
-
-	// function addDateClickEvent() {
-	// 	const dateElements = document.querySelectorAll('.toastui-calendar-daygrid-cell');
-	// 	dateElements.forEach(function(dateElement) {
-	// 		dateElement.addEventListener('click', function() {
-	// 			const date = dateElement.getAttribute('data-date');
-	// 			console.log(date);
-	// 		});
-	// 	});
-	// }
-	
-	// calendar.on('afterRender', addDateClickEvent);
-	// calendar.on('');
-	// .toastui-calendar-grid-selection
-
-	// calendar.on('beforeCreateSchedule', function(e) {
-	// 	console.log('Date clicked:', e.start.toDate());
-	// });
-	
 	console.log(calendar);
 
-	// fetch('/cs-schedule')
-    //     .then(response => response.json())
-	// 	.then(data => console.log(data))
-    //     .catch(e => console.log("에러: " + e));
-
-	// let dbList = [];
-	// // db 통신 ajax
-	// fetch('/cs-schedule')
-	// .then(response => response.json())
-	// .then(data => {
-	// 	// console.log(data.schedules);
-	// 	data.schedules.forEach(e => {
-	// 		e.scheduleDate = moment(e.scheduleDate, "YYYYMMDD").format('YYYY-MM-DD');
-	// 	});
-	// 	dbList = data.schedules;
-	// })
-	// .catch(e => console.log("에러: " + e));
-	// console.log(dbList);
-	
-	let dbList = [];
-      // db 통신 ajax
-	let dbData = getData('/cs-schedule');
-	dbData.then(data => {
-		data.schedules.forEach(e => {
-			e.scheduleDate = moment(e.scheduleDate, "YYYYMMDD").format('YYYY-MM-DD');
-		});
-		dbList = data.schedules;
-		// console.log(dbList);
-	}).then(dbList => console.log(dbList));
-	
 	// Init
 	bindInstanceEvents();
 	// bindAppEvents();
