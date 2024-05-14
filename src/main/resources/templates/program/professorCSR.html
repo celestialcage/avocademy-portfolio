@@ -28,8 +28,8 @@
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
   <!-- fullcalendar 언어 CDN -->
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> <!-- moment.js 로드 -->
-	
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> <!-- moment.js 로드 -->
+
   <style>
     .bd-placeholder-img {
       font-size: 1.125rem;
@@ -107,6 +107,64 @@
     .bd-mode-toggle .dropdown-menu .active .bi {
       display: block !important;
     }
+
+
+
+
+    label {
+      font-size: 18px;
+      line-height: 2rem;
+      padding: 0.2em 0.4em;
+    }
+
+    [type="radio"],
+    span {
+      vertical-align: middle;
+    }
+
+    [type="radio"] {
+      appearance: none;
+      border: max(2px, 0.1em) solid gray;
+      border-radius: 50%;
+      width: 1.25em;
+      height: 1.25em;
+      transition: border 0.5s ease-in-out;
+    }
+
+    [type="radio"]:checked {
+      border: 0.4em solid tomato;
+    }
+
+    [type="radio"]:focus-visible {
+      outline-offset: max(2px, 0.1em);
+      outline: max(2px, 0.1em) dotted tomato;
+    }
+
+    [type="radio"]:hover {
+      box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+      cursor: pointer;
+    }
+
+    [type="radio"]:hover+span {
+      cursor: pointer;
+    }
+
+    [type="radio"]:disabled {
+      background-color: lightgray;
+      box-shadow: none;
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    [type="radio"]:disabled+span {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .form-check-input:checked+.form-check-label {
+      font-weight: bold;
+      color: black;
+    }
   </style>
 
 
@@ -148,7 +206,7 @@
           </ul>
           <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            
           </form>
         </div>
       </div>
@@ -249,6 +307,19 @@
             <div id='calendar'></div>
           </div>
 
+          <!-- 콜랩스 -->
+          <div class="collapse" id="eventDetails">
+            <div class="card card-body">
+              <h5 id="eventTitle">상담시간선택</h5>
+              <p id="eventDate"></p>
+              <div id="selectedTime">
+                <!-- 동적으로 생성된 라디오 버튼들이 여기에 추가될 것입니다. -->
+              </div>
+              <input type="hidden" id="selectedDate" name="selectedDate">
+            </div>
+          </div>
+
+
         </div>
         <div class="border-top">
           <div class="card-body">
@@ -259,6 +330,8 @@
     </div>
   </div>
 </body>
+
+
 <script>
   (function () {
     $(function () {
@@ -278,38 +351,84 @@
         },
         initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)        
         //initialDate: '2021-07-15', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)        
-        navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크        
+        navLinks: false, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크        
         editable: true, // 수정 가능?        
         selectable: false, // 달력 일자 드래그 설정가능        
         //nowIndicator: true, // 현재 시간 마크        
         //dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)        
         locale: 'ko', // 한국어 설정        
         fixedWeekCount: false, // 해당 달에 포함된 일주일 외 저번 달이나 다음 달의 주는 표시되지 않게 하기
-        dateClick: function(info) {
-            var selectedDate = info.dateStr; // 클릭한 날짜 정보 획득
-			//나루토 나씨 나모바지 스폰지밥씨 나모를 찾아서 나선환 어디갔어 줄여야해 건강에 안좋아 그치만 존중
-            // 시간 선택을 위한 입력 모달 또는 다른 인터페이스를 제공
-            var selectedTime = prompt('Enter the time (HH:mm):');
-            if (selectedTime) {
-                // 시간을 입력받았다면 이를 이용하여 이벤트를 추가
-                var startTime = selectedDate + 'T' + selectedTime + ':00';
-                var endTime = moment(startTime).add(50, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
 
-                var title = prompt('Event Title:');
-                if (title) {
-                    calendar.addEvent({
-                        title: title,
-                        start: startTime,
-                        end: endTime,
-                        allDay: false // 시간 범위로 설정
-                    });
-                }
+        // 과거 날짜 없애버리기~! & 오늘부터 ㄷㅈ한달까지만 보이게하기
+        validRange: {
+          start: Date.now(),
+          end: Date.now() + 2592000000,
+        },
+
+
+        dateClick: function (info) {
+          var selectedDate = info.dateStr; // 클릭한 날짜 정보 획득
+          console.log(selectedDate);
+          //나루토 나씨 나모바지 스폰지밥씨 나모를 찾아서 나선환 어디갔어 줄여야해 건강에 안좋아 그치만 존중
+
+          var selectedTime;
+          // 해당 날짜의 이벤트 정보 획득
+          var events = calendar.getEvents();
+          var eventInfo = events.find(event => event.start.toISOString() === info.date.toISOString());
+
+          $('#selectedDate').val(selectedDate);
+
+          // 날짜를 ajax로 보내 DB조회 후 시간 가져오기
+          $.ajax({
+            type: "post",
+            url: "/timeList",
+            dataType: "json",
+            data: {
+              "selectedDate": selectedDate
+            },
+            success: function (response) {
+              console.log('되네요', response);
+              // 콜랩스 열기
+              $('#eventDetails').collapse('show');
+
+              // 콜랩스 내용 갱신
+              $('#eventDate').text(info.dateStr);
+
+              // 값이 있는지 확인
+              if (response.length === 0) {
+                $('#selectedTime').empty(); // 기존 라디오 버튼 삭제
+                $('#selectedTime').append('<p id="noDataMessage">예약 가능한 시간이 없습니다.</p>');
+              } else {
+                $('#noDataMessage').remove(); // 값이 있으면 메시지 삭제
+                var timeList = response; // AJAX 응답으로 받은 시간 목록
+                var radioGroup = $('#selectedTime'); // 라디오 버튼 그룹을 담을 div
+                radioGroup.empty(); // 기존 라디오 버튼 삭제
+
+                $.each(timeList, function (index, time) {
+                  // 각 시간별 라디오 버튼 생성
+                  var radioId = 'time' + index; // 유니크한 ID 생성
+                  var radioBtn = $('<input type="radio" class="form-check-input" name="selectedTime" value="' + time.hr + '" id="' + radioId + '" required>');
+                  var label = $('<label class="form-check-label" for="' + radioId + '"><span>' + time.hr_nm + '</span></label>');
+                  radioGroup.append(radioBtn);
+                  radioGroup.append(label);
+                  radioGroup.append('<br>');
+                });
+              }
+            },
+
+            error: function (xhr, status, error) {
+              console.log('ajax에러 : ', status, error);
             }
+          });
+
         }
-    });
+      });
       // 캘린더 랜더링      
       calendar.render();
+
     });
-  })();</script>
+  })();
+
+</script>
 
 </html>

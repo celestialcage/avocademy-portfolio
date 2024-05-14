@@ -7,6 +7,18 @@
 	</select>
 	
 	<insert id="savePs" parameterType="Map">
-		INSERT INTO pscounsel (stud_no, ps_class, ps_cn, psc_no, ps_hr) VALUES (#{studentNumber}, #{value}, #{content}, 1, '09');
+		INSERT INTO pscounsel (stud_no, ps_class, ps_cn, psc_no, ps_hr, ps_ymd) VALUES (#{studentNumber}, #{value}, #{content}, 1, #{time}, #{date});
 	</insert>
+	
+	<select id="psSchedule" resultType="ProfessorDTO">
+		SELECT psc_no, ps_no, ymd, hr FROM psschedule;
+	</select>
+	
+	<select id="getAll" parameterType="String" resultType="Map">
+    	SELECT psc_no, ps_no, ymd, hr, GET_CD_NM('CO0010', hr) AS hr_nm FROM psschedule WHERE ymd = #{selectedDate} AND psc_reserved = '0';
+	</select>
+	
+	<update id="pscReserved" parameterType="Map">
+		UPDATE psschedule SET psc_reserved = '1' WHERE ymd = #{date} AND hr = #{time};
+	</update>
 </mapper>
