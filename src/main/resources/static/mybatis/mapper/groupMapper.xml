@@ -31,9 +31,9 @@
 		WHERE prg_no = #{prg_no} 
 	</update>
 	
-	<select id="updatePrg" parameterType="int" resultType="GroupDTO">
-		SELECT * 
-		FROM grprograms 
-		WHERE prg_no = #{prg_no} 
-	</select>
+	<insert id="createSchedule" parameterType="GroupDTO">
+		INSERT INTO grschedule (prg_no)
+		VALUES (#{prg_no})
+	</insert>
+	
 </mapper>

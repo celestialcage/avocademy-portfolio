@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.service.GroupService;
+import com.google.gson.JsonArray;
 
 import jakarta.annotation.Resource;
 
@@ -42,13 +43,20 @@ public class GroupAdminController {
 	@PostMapping("/registProgram")
 	private String registProgram(@ModelAttribute("groupDto") GroupDTO dto) {
 		//System.out.println("제목 : " + dto.getPrg_nm());
-		//System.out.println("분류 : " + dto.getPrg_cd());
-		dto.setPrg_schdl(dto.getPrg_start() + " - " + dto.getPrg_end());
-		dto.setCns_no(1);
-		dto.setPrg_place("201호");
+		//System.out.println("분류 : " + dto.getGroupSCHDL() );
+		//dto.setPrg_schdl(dto.getPrg_start() + " - " + dto.getPrg_end());
+		//dto.setCns_no(1);
+		//dto.setPrg_place("201호");
 		groupService.registProgram(dto);
 		
+		//세션
+		//groupService.getProgramNo(dto.get);
+		
+		//스케줄 업데이트
+		groupService.createSchedule(dto);
 		//dto.setGroupSCHDL(null)
+		
+		//groupService.createSchedule(prg_no);
 
 		return "redirect:/admin/registProgram";
 	}
@@ -73,7 +81,8 @@ public class GroupAdminController {
 		
 		if(approv.equals("0")) {
 			System.out.println("승인하기");
-			groupService.approvePRG(prg_no);
+			groupService.approvePRG(prg_no);			
+			
 		} else if (approv.equals("1")) {
 			System.out.println("승인취소하기");
 			groupService.disApprovePRG(prg_no);			
@@ -81,10 +90,9 @@ public class GroupAdminController {
 			System.out.println("땡");
 		}
 		
-		GroupDTO dto = groupService.updateprg(prg_no);
-		
-		model.addAttribute("list", dto);
-		return "/admin/group/programList :: #prgTable";
+		model.addAttribute("list", groupService.adminPRGList());
+
+		return "admin/group/programList :: #prgList";
 	}
 	
 }

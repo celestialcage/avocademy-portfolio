@@ -42,8 +42,10 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public GroupDTO updateprg(int prg_no) {
-		return groupDAO.updatePrg(prg_no);
+	public void createSchedule(GroupDTO dto) {
+		groupDAO.createSchedule(dto);
 	}
-	
+
+
+
 }
