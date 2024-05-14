@@ -40,11 +40,11 @@
 						<ul class="navbar-nav me-auto mb-2 mb-md-0">
 							<li class="nav-item"><a class="nav-link active"
 								aria-current="page" href="/main">Home</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">센터소개</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">상담안내</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">교육프 로그램</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">커뮤니티</a></li>
-							<li class="nav-item"><a class="nav-link" href="/online">온라인상담</a></li>
+							<li class="nav-item"><a class="nav-link" href="/centerInfo">센터 소개</a></li>
+							<li class="nav-item"><a class="nav-link" href="/counselingGuide">상담 안내</a></li>
+							<li class="nav-item"><a class="nav-link" href="/program">교육 프로그램</a></li>
+							<li class="nav-item"><a class="nav-link" href="/community">커뮤니티</a></li>
+							<li class="nav-item"><a class="nav-link" href="/online">온라인 상담</a></li>
 							
     						<th:block th:if="${session.uname eq null}">
     						<!-- session.uid가 null일 때, 즉 로그아웃 상태일 때는 로그인 링크를 보여줍니다. -->
@@ -150,7 +150,62 @@
     </script>
     
 </th:block>
-	<th:block></th:block>
+
+<th:block th:fragment="counselSidebarHead">
+	<link rel="stylesheet" href="/index/css/sidebars.css">
+	<script defer src="/index/js/sidebars.js"></script>
+</th:block>
+
+<th:block  th:fragment="counselSidebar">
+	  <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
+    <a href="/counselingGuide" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+      <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+      <span class="fs-4">상담 프로그램</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="/personal" class="nav-link active" aria-current="page">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+          개인 상담
+        </a>
+      </li>
+      <li>
+        <a href="/professor" class="nav-link link-body-emphasis">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+          지도교수 상담
+        </a>
+      </li>
+      <li>
+        <a href="/group" class="nav-link link-body-emphasis">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+          집단 상담
+        </a>
+      </li>
+      <li>
+        <a href="/testProgram" class="nav-link link-body-emphasis">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+          심리 검사(준비중)
+        </a>
+      </li>
+    </ul>
+    <hr>
+    <!-- <div class="dropdown">
+      <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+        <strong>mdo</strong>
+      </a>
+      <ul class="dropdown-menu text-small shadow">
+        <li><a class="dropdown-item" href="#">New project...</a></li>
+        <li><a class="dropdown-item" href="#">Settings</a></li>
+        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Sign out</a></li>
+      </ul>
+    </div> -->
+  </div>
+	
+	</th:block>
 	<th:block></th:block>
 	
 </body>
