@@ -68,8 +68,8 @@
     calendar.clear();
     eventsList = getDBEvents(
       calendar.getViewName(),
-      calendar.getDateRangeStart(),
-      calendar.getDateRangeEnd()
+      calendar.getDateRangeStart(), // data_TZDate 리턴
+      calendar.getDateRangeEnd() // data_TZDate 리턴
     );
     calendar.createEvents(eventsList);
   }
@@ -145,7 +145,7 @@
 		return html.join('');
 	  }
 
-	  function bindAppEvents() {
+	//   function bindAppEvents() {
 		// dropdownTrigger.addEventListener('click', toggleDropdownState);
 	
 		// prevButton.addEventListener('click', function () {
@@ -211,7 +211,7 @@
 		// 	}
 		//   }
 		// });
-	  }
+	//   }
 	
 	
 	// 캘린더 메뉴
@@ -328,10 +328,40 @@
 	// });
 	
 	console.log(calendar);
+
+	// fetch('/cs-schedule')
+    //     .then(response => response.json())
+	// 	.then(data => console.log(data))
+    //     .catch(e => console.log("에러: " + e));
+
+	// let dbList = [];
+	// // db 통신 ajax
+	// fetch('/cs-schedule')
+	// .then(response => response.json())
+	// .then(data => {
+	// 	// console.log(data.schedules);
+	// 	data.schedules.forEach(e => {
+	// 		e.scheduleDate = moment(e.scheduleDate, "YYYYMMDD").format('YYYY-MM-DD');
+	// 	});
+	// 	dbList = data.schedules;
+	// })
+	// .catch(e => console.log("에러: " + e));
+	// console.log(dbList);
+	
+	let dbList = [];
+      // db 통신 ajax
+	let dbData = getData('/cs-schedule');
+	dbData.then(data => {
+		data.schedules.forEach(e => {
+			e.scheduleDate = moment(e.scheduleDate, "YYYYMMDD").format('YYYY-MM-DD');
+		});
+		dbList = data.schedules;
+		// console.log(dbList);
+	}).then(dbList => console.log(dbList));
 	
 	// Init
 	bindInstanceEvents();
-	bindAppEvents();
+	// bindAppEvents();
 	update();
 	
 })(tui.Calendar);
