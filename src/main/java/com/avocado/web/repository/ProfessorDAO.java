@@ -1,5 +1,6 @@
 package com.avocado.web.repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,5 +18,19 @@ public interface ProfessorDAO {
 
 
 	int savePs(Map<String, String> map);
+
+
+	List<ProfessorDTO> psSchedule();
+
+
+	Map<String, Object> timeList(HashMap<String, Object> map);
+
+
+	List<Map<String, Object>> getAll(String selectedDate);
+
+
+	int pscReserved(Map<String, String> map2);
+
+
 		
 }

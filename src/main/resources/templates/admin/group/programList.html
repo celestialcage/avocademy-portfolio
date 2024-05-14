@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+
+<head>
+    <th:block th:insert="~{./admin/thfragments/fragments.html :: headTag}"></th:block>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="/admin/assets/extra-libs/multicheck/multicheck.css">
+    <link href="/admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <style type="text/css">
+	#contentModal {
+	  width: 100%;
+	  height: 100%;
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  background: rgba(0, 0, 0, 0.5);
+	}
+	
+	#contentModal.hidden {
+	  display: none;
+	}
+    </style>
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+ 	<th:block th:insert="~{./admin/thfragments/fragments.html :: preloader}"></th:block>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+        data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <th:block th:insert="~{./admin/thfragments/fragments.html :: topbarHeader}"></th:block>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <th:block th:insert="~{./admin/thfragments/fragments.html :: leftSidebar}"></th:block>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">집단상담 프로그램 관리 페이지</h4>
+                        <div class="ms-auto text-end">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-md-flex align-items-center">
+                                	<h4 class="card-title">프로그램 목록</h4>
+                                </div>
+                                <!-- table -->
+                                <div class="table-responsive">
+                                    <table id="zero_config" class="table table-striped table-bordered">
+                                    	<thead>
+                                    		<tr>
+                                    			<th>no</th>
+                                    			<th>프로그램 제목</th>
+                                    			<th>프로그램 내용</th>
+                                    			<th>시간</th>
+                                    			<th>장소</th>
+                                    			<th>상태</th>
+                                    			<th>승인</th>
+                                    		</tr>
+                                    	</thead>
+                                    	<tbody id="prgList">
+                                    		<tr th:each="r : ${list}" id="prgTable">
+                                    			<td th:text="${r.prg_no}" id="no"></td>
+                                    			<td th:attr="onclick=|showContent('${r.prg_no}', '${r.prg_nm}', '${r.prg_content}')|">[[${r.prg_nm}]]</td>
+                                    			<td th:text="${r.prg_content}"></td>
+                                    			<td th:text="${r.prg_schdl}"></td>
+                                    			<td th:text="${r.prg_place}"></td>
+                                    			<td th:switch="${r.prg_aprv}">
+                                    				<span th:case="1">승인</span>
+                                    				<span th:case="0">미승인</span>
+                                    			</td>
+                                    			<td>
+                                    				<input type="hidden" id="apprv" th:value="${r.prg_aprv}">
+                                    				<span class="apr" th:if="${r.prg_aprv} == 0"><button class="btn btn-success text-white">승인</button></span>
+                                    				<span class="apr" th:if="${r.prg_aprv} == 1"><button class="btn btn-danger text-white">취소</button></span>
+                                    			</td>
+                                    		</tr>
+                                    	</tbody>
+                                    </table>
+                                </div>
+                                    
+                                <!-- table -->
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal hidden" id="contentModal">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title fs-5" id="modalTitle">상세보기</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				      	<div class="mt-2" id="modalContent">
+					        <p>Modal body text goes here.</p>
+				      	</div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-primary" id="sub">승인</button>
+				        <button type="button" class="btn btn-secondary" id="closeModal">취소</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <th:block th:insert="~{./admin/thfragments/fragments.html :: footer}"></th:block>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <th:block th:insert="~{./admin/thfragments/fragments.html :: jqueryScript}"></th:block>
+    <!-- this page js -->
+    <script src="/admin/assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+    <script src="/admin/assets/extra-libs/multicheck/jquery.multicheck.js"></script>
+    <script src="/admin/assets/extra-libs/DataTables/datatables.min.js"></script>
+    <script>
+        /****************************************
+         *       Basic Table                   *
+         ****************************************/
+	    $('#zero_config').DataTable();     
+		
+		const contentModal = document.getElementById("contentModal");
+		const closeModal = document.getElementById("closeModal");
+        
+        $(document).on("click", ".apr", function(){
+       		let val = $(this).siblings('#apprv').val();
+       		let no = $(this).parents('#prgTable').children('#no').text();      		
+       		
+       		$.ajax({
+       			url: "./approveProgram",
+       			type: "POST",
+       			data: {"no" : no, "val" : val}
+       		}).done(function (fragment){
+       			console.log(fragment);
+       			$('#prgList').replaceWith(fragment);
+
+       		});
+        	
+        });
+
+        
+		function showContent(no, title, contents){
+			$("#modalTitle").text(title);
+			$("#modalContent").text(contents);
+			contentModal.classList.remove('hidden');
+			
+		}
+	    
+		closeModal.addEventListener('click', () => {
+			contentModal.classList.add('hidden');
+		})
+        
+    </script>
+</body>
+
+</html>

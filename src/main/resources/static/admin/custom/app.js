@@ -1,3 +1,5 @@
+
+
 const addEventBtn = document.querySelector('#addEventBtn');
 
 function addEBHandler() {
@@ -6,4 +8,6 @@ function addEBHandler() {
 }
 
 addEventBtn.addEventListener("click", addEBHandler);
+
+
 

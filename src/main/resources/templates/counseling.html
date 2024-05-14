@@ -2,23 +2,20 @@
 <html lang="ko" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
 <head>
   <th:block th:insert="~{./fragments.html :: headTag}"></th:block>
-  
-  	<!-- 추가 script -->
-	<script type="text/javascript">
-	
-	</script>
-  
-  	<!-- 추가 css -->
-	<style type="text/css">
+  <title>상담안내</title>
+  <link href="/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<th:block th:insert="~{./fragments.html :: counselSidebarHead}"></th:block>
+<!-- 추가 css -->
+<style type="text/css">
 	main {
-  		display:row;
-  	}
-  	.mainContents {
-  		margin: 0 auto;
-  		height: auto;
-  		min-height: 600px;
-  	}
-  	</style>
+		display:row;
+	}
+	.mainContents {
+		margin: 0 auto;
+		height: auto;
+		min-height: 600px;
+	}
+</style>
 </head>
 <body>	
 	<main class="container">
