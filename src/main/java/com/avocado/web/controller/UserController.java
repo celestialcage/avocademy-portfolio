@@ -34,13 +34,16 @@ public class UserController {
 	@PostMapping("/login") // 로그인 post
 	public String login(@RequestParam Map<String, Object> map, HttpServletResponse response) {
 
+
 		System.out.println(map);
 		String id = (String) map.get("id");
 		String pw = (String) map.get("pw");
 		map.put("uid", id);
 		map.put("pw", pw);
-
+		System.out.println("활용하자 "  );
+		
 		Map<String, Object> result = userService.login(map);
+		System.out.println("활용하자 "  + result);
 
 		if (util.str2Int(result.get("count")) == 1) { // mapper 에서 오는 count(*) 의 별칭
 			HttpSession session = util.getSession();
@@ -58,17 +61,27 @@ public class UserController {
 			loginCookie.setMaxAge(60 * 60 * 24); // 쿠키 유효 시간 설정 (예: 24시간)
 			loginCookie.setPath("/"); // 쿠키의 유효 경로 설정
 			response.addCookie(loginCookie);
+			
+			// 사용자 등급 변수를 맵에서 추출
+	        String role = (String) result.get("ugrade");
+	        System.out.println("사용자 등급: " + role);
+	        System.out.println("쨘");
 
 			// 사용자의 등급에 따라 리다이렉트할 페이지 결정
-			/*
-			 * if (role.equals("1")) { return "redirect:/admin/index"; // 관리자 페이지로 리다이렉트 }
-			 * else if (role.equals("5")) { return "redirect:/main"; // 일반 사용자 페이지로 리다이렉트
-			 * 
-			 * }
-			 */
+			if ("5".equals(role)) {
+			    return "redirect:/admin/index"; // 관리자 페이지로 리다이렉트
+			} else if ("1".equals(role)) {
+			    return "redirect:/main"; // 일반 사용자 페이지로 리다이렉트
+			}
+			else {
+			return "redirect:/login"; // 만약 role 값이 1이나 5가 아니면 오류 페이지나 기본 페이지로 리다이렉트
+			}
 		}
-		return "redirect:/login"; // 그 외의 경우 로그인 페이지로 리다이렉트
+		// 로그인 실패시 로그인 페이지로 다시 리다이렉트
+	    return "redirect:/login"; 
 	}
+		
+		
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		if (session.getAttribute("uid") != null) {
