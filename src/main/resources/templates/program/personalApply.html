@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:insert="~{./fragments.html :: headTag}"></th:block>
+  
+  	<!-- 추가 script -->
+	<script type="text/javascript">
+	
+	</script>
+  
+  	<!-- 추가 css -->
+	<style type="text/css">
+	main {
+  		display:row;
+  	}
+  	.mainContents {
+  		margin: 0 auto;
+  		height: auto;
+  		min-height: 600px;
+  		display: flex;
+  	}
+  	section {
+  		display: row;
+  	}
+  	</style>
+</head>
+<body>	
+	<main class="container">
+		<th:block th:insert="~{./fragments.html :: menu}"></th:block>	
+		<th:block th:insert="~{./fragments.html :: headerImg}"></th:block>
+
+		<!-- 여기가 본문 -->
+		<div class="mainContents">
+		
+		<!-- =============사이드바============== -->
+		<th:block th:insert="~{./fragments.html :: counselSidebar}"></th:block>	
+		
+		<section>
+		<h2>상담신청 폼</h2>
+		  <div class="mb-3 row">
+		    <label for="staticEmail" class="col-sm-2 col-form-label">상담사</label>
+		    <div class="col-sm-10">
+		      <input type="text" readonly class="form-control-plaintext" id="staticEmail" th:value="${cns_nm}">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+		    <label for="inputPassword" class="col-sm-2 col-form-label">날짜</label>
+		    <div class="col-sm-10">
+		      <input type="password" class="form-control" id="inputPassword">
+		    </div>
+		  </div>
+		  <div class="mb-3 row">
+		    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+		    <div class="col-sm-10">
+		      <input type="password" class="form-control" id="inputPassword">
+		    </div>
+		  </div>
+		
+		</div>
+		</section>
+		<!-- 본문 끝 -->
+	</main>
+	<!-- FOOTER -->
+	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
+</body>
+</html>
