@@ -46,6 +46,16 @@ public class GroupServiceImpl implements GroupService {
 		groupDAO.createSchedule(dto);
 	}
 
+	@Override
+	public int getProgramNo(String cns_no) {
+		return groupDAO.getProgramNo(cns_no);
+	}
+
+	@Override
+	public void openPRG(int prg_no) {
+		groupDAO.openPRG(prg_no);
+	}
+
 
 
 }

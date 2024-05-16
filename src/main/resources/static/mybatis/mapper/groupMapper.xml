@@ -3,19 +3,20 @@
 <mapper namespace="com.avocado.web.repository.GroupDAO">
 	
 	<select id="programList" resultType="GroupDTO">
-		SELECT prg_no, prg_nm, cns_no, prg_nope, prg_cd, prg_ymd, prg_hr, prg_place 
+		SELECT prg_no, prg_nm, prg_content, cns_no, prg_nope, prg_cd, prg_schdl, prg_nmtm, prg_dow
 		FROM grprograms 
-		WHERE req_end > DATE_FORMAT(NOW(),'%Y%m%d')
+		WHERE prg_aprv = 1
 	</select>
 	
 	<insert id="registProgram" parameterType="GroupDTO">
-		INSERT INTO grprograms (prg_nm, cns_no, prg_cd, prg_nope, prg_content, prg_schdl, req_end, prg_dow, prg_nmtm)
-		VALUES (#{prg_nm}, #{cns_no}, #{prg_cd}, #{prg_nope}, #{prg_content}, #{prg_schdl}, #{req_end}, #{prg_dow}, #{prg_nmtm})
+		INSERT INTO grprograms (prg_nm, cns_no, prg_cd, prg_nope, prg_content, req_end, prg_dow, prg_nmtm, prg_schdl)
+		VALUES (#{prg_nm}, #{cns_no}, #{prg_cd}, #{prg_nope}, #{prg_content}, #{req_end}, #{prg_dow}, #{prg_nmtm}, #{prg_schdl})
 	</insert>
 	
 	<select id="adminPRGList" resultType="GroupDTO">
 		SELECT * 
-		FROM grprograms
+		FROM grprograms 
+		ORDER BY prg_no DESC; 
 	</select>
 	
 	<update id="approvePRG" parameterType="int">
@@ -24,6 +25,11 @@
 		WHERE prg_no = #{prg_no} 
 	</update>
 
+	<update id="openPRG" parameterType="int">
+		UPDATE grschedule 
+		SET req_open = 1 
+		WHERE prg_no = #{prg_no} 
+	</update>
 
 	<update id="disApprovePRG" parameterType="int">
 		UPDATE grprograms 
@@ -32,8 +38,15 @@
 	</update>
 	
 	<insert id="createSchedule" parameterType="GroupDTO">
-		INSERT INTO grschedule (prg_no)
-		VALUES (#{prg_no})
+		INSERT INTO grschedule (prg_no, prg_ymd, prg_hr) 
+		VALUES (#{prg_no}, #{prg_ymd}, #{prg_hr}) 
 	</insert>
+	
+	<select id="getProgramNo" parameterType="String" resultType="int">
+		SELECT prg_no 
+		FROM grprograms 
+		WHERE cns_no = #{cns_no} 
+		ORDER BY prg_no DESC LIMIT 1 
+	</select>
 	
 </mapper>
