@@ -35,10 +35,14 @@ public class OnlineController {
 			HttpSession session) {
 		System.out.println(bno);
 		OnlineDTO detail = onlineService.detail(bno);
-		model.addAttribute("detail", detail);
-
-		return "online/detail";
-
+		System.out.println(detail.toString());
+		if (detail.getUname().equals(session.getAttribute("uname"))
+				|| (int)session.getAttribute("ugrade") == 5) {
+			model.addAttribute("detail", detail);
+			return "online/detail";
+		} else {
+			return "redirect:/online";
+		}
 	}
 
 	@GetMapping("/write")
@@ -55,27 +59,30 @@ public class OnlineController {
 	}
 
 	@PostMapping("/write")
-	public String write(@RequestParam(name = "btitle") String btitle,
-			HttpSession session,
-			@RequestParam(name = "bcontent") String bcontent) {
+	public String write(
+			@RequestParam(name = "btitle") String btitle,
+			@RequestParam(name = "bcontent") String bcontent,
+			HttpSession session) {
 		System.out.println(btitle + bcontent);
 		// 글 작성 로직 실행
 
 		// 로그인 검사해주세요
 
-		if (session.getAttribute("uname") != null) {
-			Map<String, Object> map = new HashMap<String, Object>();
+		 String uname = (String) session.getAttribute("uname");
+		
+		if (uname != null) {
+			Map<String, Object> map = new HashMap<>();
 			map.put("btitle", btitle);
 			map.put("bcontent", bcontent);
-			map.put("uname", session.getAttribute("uname"));
-			// map.put("uno", session.getAttribute("uno"));
+			map.put("uname", uname);
+			map.put("uno", session.getAttribute("uno"));
 			
 			System.out.println(map);
 
 			int result = onlineService.write(map);
 
 			// 성공시 목록 페이지로 리디렉션
-			String url = "online";
+			/* String url = "online"; */
 			return "redirect:/online";
 
 		} else {
@@ -90,4 +97,5 @@ public class OnlineController {
 		int result = onlineService.deletecd(bno);
 		return "redirect:/online";
 	}
+	
 }

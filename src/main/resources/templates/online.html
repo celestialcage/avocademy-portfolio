@@ -53,17 +53,19 @@ h5 {
 						<tr>
 							<th class="col-1 text-center">번호</th>
 							<th class="col-5 text-center">제목</th>
-							<th class="col-1 text-center">글쓴이</th>
+							<th class="col-1 text-center">작성자</th>
 							<th class="col-3 text-center">날짜</th>
 							<th class="col-1 text-center">답변상태</th>
-							<th class="col-1 text-center">삭제여부</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="name : ${list}"
 							th:onclick="|location.href='@{/online/detail(bno=${name.bno}, pageNo=${pageNo})}'|">
 							<td class="text-center" th:text="${name.bno}"></td>
-							<td class="text-center" th:text="${name.btitle}"></td>
+							<td class="text-center">
+								<span th:text="${name.btitle}"></span>
+								<img th:src="@{/img/자물쇠.png}" alt="Lock Icon">
+							</td>
 							<td class="text-center" th:text="${name.uname}"></td>
 							<td class="text-center" th:text="${name.bdate}"></td>
 							<td class="text-center"><span th:if="${name.commentYN == 0}" th:text="답변대기"

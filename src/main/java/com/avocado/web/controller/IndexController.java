@@ -61,12 +61,13 @@ public class IndexController {
 		map.put("page", page);
 		map.put("size", size);
 		List<OnlineDTO> list = onlineService.online();
-		//List<OnlineDTO> list = onlineService.findAll(map);
+		List<OnlineDTO> list2 = onlineService.findAll(map);
 		
 		//System.out.println(list.get(0).getCommentYN());
 		
 		int total = onlineService.count();
 		model.addAttribute("list", list);
+		model.addAttribute("list2", list2);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPages", (total + size - 1) / size);
 		
