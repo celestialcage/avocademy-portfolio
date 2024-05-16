@@ -16,7 +16,7 @@ public interface OnlineDAO {
 
 	OnlineDTO detail(int bno);
 
-	int write(Map<String, String> map);
+	int write(Map<String, Object> map);
 
 	int count();
 

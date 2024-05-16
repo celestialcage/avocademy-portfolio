@@ -26,7 +26,7 @@ public class OnlineServiceImpl implements OnlineService {
 	}
 
 	@Override
-	public int write(Map<String, String> map) {
+	public int write(Map<String, Object> map) {
 		return onlineDAO.write(map);
 	}
 

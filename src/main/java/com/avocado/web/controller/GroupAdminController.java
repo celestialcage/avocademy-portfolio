@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.service.GroupService;
-import com.google.gson.JsonArray;
 
 import jakarta.annotation.Resource;
 

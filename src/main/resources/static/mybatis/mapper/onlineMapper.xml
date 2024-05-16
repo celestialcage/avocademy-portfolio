@@ -10,12 +10,15 @@
 	</select>
 	
 	<select id="detail" parameterType="Integer" resultType="OnlineDTO"> 
-		SELECT * FROM onlineview WHERE bno = #{bno}; 
+		SELECT * 
+		FROM onlineview 
+		WHERE bno = #{bno}; 
 	</select>
 	
 	<insert id="write" parameterType="Map"> 
 		INSERT INTO online
-		(btitle, bcontent, user_no) VALUES (#{btitle}, #{bcontent}, (select uno from user where uname=#{uname}));
+		(btitle, bcontent, user_no) 
+		VALUES (#{btitle}, #{bcontent}, #{uno});
 	</insert>
 	
 	<select id="count">

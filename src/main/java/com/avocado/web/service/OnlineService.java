@@ -11,7 +11,7 @@ public interface OnlineService {
 
 	public OnlineDTO detail(int bno);
 
-	public int write(Map<String, String> map);
+	public int write(Map<String, Object> map);
 
 	public int count();
 

@@ -29,7 +29,10 @@ public class OnlineController {
 	private OnlineService onlineService;
 
 	@GetMapping("/detail")
-	public String detail(@RequestParam(name = "bno", required = false, defaultValue = "1") int bno, Model model, HttpSession session) {
+	public String detail(Model model,
+			@RequestParam(name = "bno", 
+			required = false, defaultValue = "1") int bno, 
+			HttpSession session) {
 		System.out.println(bno);
 		OnlineDTO detail = onlineService.detail(bno);
 		model.addAttribute("detail", detail);
@@ -53,19 +56,21 @@ public class OnlineController {
 
 	@PostMapping("/write")
 	public String write(@RequestParam(name = "btitle") String btitle,
+			HttpSession session,
 			@RequestParam(name = "bcontent") String bcontent) {
 		System.out.println(btitle + bcontent);
 		// 글 작성 로직 실행
 
-		HttpSession session = util.getSession();
-
 		// 로그인 검사해주세요
 
 		if (session.getAttribute("uname") != null) {
-			Map<String, String> map = new HashMap<String, String>();
+			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("btitle", btitle);
 			map.put("bcontent", bcontent);
-			map.put("uname", (session.getAttribute("uname")).toString());
+			map.put("uname", session.getAttribute("uname"));
+			// map.put("uno", session.getAttribute("uno"));
+			
+			System.out.println(map);
 
 			int result = onlineService.write(map);
 
