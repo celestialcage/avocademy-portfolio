@@ -38,7 +38,7 @@
 						</thead>
 						<tbody>
 							<tr th:each="r : ${list}">
-								<td><a th:href="@{/programApply(no=${r.prg_no})}" th:text="${r.prg_nm}"></a></td>
+								<td><a th:href="@{/group/programApply(no=${r.prg_no})}" th:text="${r.prg_nm}"></a></td>
 								<td th:text="${r.cns_no}"></td>
 								<td th:text="${r.prg_nope}"></td>
 								<td th:text="${r.prg_cd}"></td>
