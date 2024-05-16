@@ -15,6 +15,7 @@ import com.avocado.web.service.OnlineService;
 import com.avocado.web.service.TestService;
 
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class IndexController {
@@ -53,14 +54,14 @@ public class IndexController {
 	}
 	
 	@GetMapping("/online") // 온라인 상담
-	public String online(Model model,
-			@RequestParam(name="page", defaultValue = "0") int page,
+	public String online(Model model, HttpSession session,
+			@RequestParam(name="page", defaultValue = "1") int page,
 			@RequestParam(name="size", defaultValue = "10") int size) {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("page", page);
 		map.put("size", size);
-		//List<OnlineDTO> list = onlineService.online();
-		List<OnlineDTO> list = onlineService.findAll(map);
+		List<OnlineDTO> list = onlineService.online();
+		//List<OnlineDTO> list = onlineService.findAll(map);
 		
 		//System.out.println(list.get(0).getCommentYN());
 		

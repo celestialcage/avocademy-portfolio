@@ -21,4 +21,8 @@ public interface OnlineDAO {
 	int count();
 
 	List<OnlineDTO> findAll(Map<String, Integer> map);
+
+	int deletecd(String bno);
+
+
 }

@@ -2,19 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.avocado.web.repository.OnlineDAO">
 	
-	<select id="online" resultType="com.avocado.web.entity.OnlineDTO">
+	<select id="online" resultType="OnlineDTO">
 		SELECT bno, btitle, bcontent, bdate, secret, commentYN, bdel 
 		FROM online
-		ORDER BY bno DESC LIMIT 10; 
+		WHERE bdel = "1" 
+		ORDER BY bno DESC LIMIT 0, 10; 
 	</select>
 	
 	<select id="detail" parameterType="Integer" resultType="OnlineDTO"> 
-		SELECT * FROM online WHERE bno = #{bno}; 
+		SELECT * FROM onlineview WHERE bno = #{bno}; 
 	</select>
 	
 	<insert id="write" parameterType="Map"> 
 		INSERT INTO online
-		(btitle, bcontent, user_no) VALUES (#{btitle}, #{bcontent}, 3);
+		(btitle, bcontent, user_no) VALUES (#{btitle}, #{bcontent}, (select uno from user where uname=#{uname}));
 	</insert>
 	
 	<select id="count">
@@ -26,6 +27,12 @@
 		FROM onlineview 
 		ORDER BY bno DESC LIMIT #{page},#{size}
 	</select>
+	
+	<update id="deletecd" parameterType="String">
+ 		update online 
+ 		set bdel = '0'
+  		where bno = #{bno}
+	</update>
 	
 
 </mapper>

@@ -40,5 +40,11 @@ public class OnlineServiceImpl implements OnlineService {
 		return onlineDAO.count();
 	}
 
+	@Override
+	public int deletecd(String bno) {
+		return onlineDAO.deletecd(bno);
+		
+	}
+
 
 }

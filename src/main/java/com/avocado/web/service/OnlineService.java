@@ -16,5 +16,7 @@ public interface OnlineService {
 	public int count();
 
 	public List<OnlineDTO> findAll(Map<String, Integer> map);
-	
+
+	public int deletecd(String bno);
+
 }
