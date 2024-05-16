@@ -17,12 +17,12 @@ public class ProfessorServiceImpl implements ProfessorService {
 	private ProfessorDAO professorDAO;
 	
 	@Override 
-	public List<ProfessorDTO> studentInfo() {
-		return professorDAO.studentInfo();
+	public List<ProfessorDTO> studentInfo(String uname) {
+		return professorDAO.studentInfo(uname);
 	}
 
 	@Override
-	public int savePs(Map<String, String> map) {
+	public int savePs(Map<String, Object> map) {
 		return professorDAO.savePs(map);
 	}
 
@@ -31,15 +31,18 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return professorDAO.psSchedule();
 	}
 
+
 	@Override
-	public List<Map<String, Object>> getAll(String selectedDate) {
-		return professorDAO.getAll(selectedDate);
+	public int pscReserved(Map<String, Object> map2) {
+		return professorDAO.pscReserved(map2);
 	}
 
 	@Override
-	public int pscReserved(Map<String, String> map2) {
-		return professorDAO.pscReserved(map2);
+	public List<Map<String, Object>> getAll(Map<String, Object> map) {
+		return professorDAO.getAll(map);
 	}
+
+	
 
 
 

@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.avocado.web.repository.ProfessorDAO">
 
-	<select id="studentInfo" resultType="ProfessorDTO">
-		SELECT stud_no, user_no, stud_nm, scsbjt_cd, ps_no, stud_telno FROM student WHERE stud_nm = "나우석";
+	<select id="studentInfo" parameterType="String" resultType="ProfessorDTO">
+		SELECT stud_no, user_no, stud_nm, scsbjt_cd, ps_no, stud_telno FROM student WHERE user_no = (SELECT uno FROM user WHERE uname = #{uname});
 	</select>
 	
 	<insert id="savePs" parameterType="Map">
@@ -14,11 +14,12 @@
 		SELECT psc_no, ps_no, ymd, hr FROM psschedule;
 	</select>
 	
-	<select id="getAll" parameterType="String" resultType="Map">
-    	SELECT psc_no, ps_no, ymd, hr, GET_CD_NM('CO0010', hr) AS hr_nm FROM psschedule WHERE ymd = #{selectedDate} AND psc_reserved = '0';
+	<select id="getAll" parameterType="Map" resultType="Map">
+    	SELECT psc_no, ps_no, ymd, hr, GET_CD_NM('CO0010', hr) AS hr_nm FROM psschedule WHERE ymd = #{selectedDate} AND psc_reserved = '0' 
+    	AND ps_no = (SELECT ps_no FROM professor WHERE scsbjt_cd = (SELECT scsbjt_cd FROM student WHERE user_no = (SELECT uno FROM user WHERE uname = #{uname})));
 	</select>
 	
 	<update id="pscReserved" parameterType="Map">
-		UPDATE psschedule SET psc_reserved = '1' WHERE ymd = #{date} AND hr = #{time};
+		UPDATE psschedule SET psc_reserved = '1' WHERE ymd = #{date} AND hr = #{time} AND psc_no = #{psc_no};
 	</update>
 </mapper>

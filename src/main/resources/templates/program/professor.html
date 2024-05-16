@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Avocado 상담</title>
@@ -19,7 +19,20 @@
 <link rel="mask-icon" href="/index/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
 <link rel="icon" href="/index/assets/img/favicons/favicon.ico">
 <meta name="theme-color" content="#712cf9">
+
+<th:block th:insert="~{./fragments.html :: headTag}"></th:block>
+
 <style>
+
+main {
+  	display:row;
+}
+.mainContents {
+  	margin: 0 auto;
+  	height: auto;
+  	min-height: 600px;
+}
+
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -104,49 +117,13 @@
 
 </head>
 <body>
-
-<header data-bs-theme="dark">
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">아보카데미</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">센터소개</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">상담안내</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">교육프로그램</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">커뮤니티</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">상담신청</a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav>
-</header>
-
-	<br>
-	<br>
-	<br>
-	<br>
-	<div class="container">
+<main class="container">
+<th:block th:insert="~{./fragments.html :: menu}"></th:block>	
+<th:block th:insert="~{./fragments.html :: headerImg}"></th:block>
+	
+	
+	<!-- 본문시작 -->
+	<div class="mainContents">
 		<div>
 		<h2>지도교수 상담이란?</h2>
 			학생이 지도교수와 대학생활, 대인관계, 학업, 진로, 취업 등의 내용으로 상담을 실시하며 스스로 삶의 목표를 설정하고 달성할 수 있도록 도와드립니다.
@@ -164,6 +141,10 @@
 		
 		<button onclick="location.href='/professorCSR'" >지도교수 상담신청 바로가기</button> <!-- 로그인 안했으면 로그인창으로 보내기 추가 -->
 	</div>
-	
+	<!-- 본문 끝 -->
+</main>	
+
+<!-- FOOTER -->
+<th:block th:insert="~{./fragments.html :: footer}"></th:block>
 </body>
 </html>
