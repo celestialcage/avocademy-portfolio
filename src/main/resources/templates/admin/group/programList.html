@@ -7,6 +7,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/admin/assets/extra-libs/multicheck/multicheck.css">
     <link href="/admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <script type="text/javascript">
+    	
+    </script>
     <style type="text/css">
 	#contentModal {
 	  width: 100%;
@@ -182,7 +185,10 @@
         /****************************************
          *       Basic Table                   *
          ****************************************/
-	    $('#zero_config').DataTable();     
+	    $('#zero_config').DataTable({
+	    	order:[0, 'desc'],
+	    	ordering:true
+	    });     
 		
 		const contentModal = document.getElementById("contentModal");
 		const closeModal = document.getElementById("closeModal");

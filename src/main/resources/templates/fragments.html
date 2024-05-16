@@ -156,7 +156,8 @@
 	<script defer src="/index/js/sidebars.js"></script>
 </th:block>
 
-<th:block  th:fragment="counselSidebar">
+<th:block th:fragment="counselSidebar">
+	<script defer src="/index/js/sidebars.js"></script>
 	  <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
     <a href="/counselingGuide" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
       <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
@@ -165,24 +166,24 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a href="/personal" class="nav-link active" aria-current="page">
+        <a href="/personal" class="nav-link link-body-emphasis">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
           개인 상담
         </a>
       </li>
-      <li>
+      <li class="nav-item">
         <a href="/professor" class="nav-link link-body-emphasis">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
           지도교수 상담
         </a>
       </li>
-      <li>
+      <li class="nav-item">
         <a href="/group" class="nav-link link-body-emphasis">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+          <svg class="bi pe-none me-2" width="16" height="16"></svg>
           집단 상담
         </a>
       </li>
-      <li>
+      <li class="nav-item">
         <a href="/testProgram" class="nav-link link-body-emphasis">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
           심리 검사(준비중)
@@ -205,7 +206,7 @@
     </div> -->
   </div>
 	
-	</th:block>
+</th:block>
 	<th:block></th:block>
 	
 </body>

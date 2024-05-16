@@ -23,4 +23,8 @@ public interface GroupDAO {
 
 	void createSchedule(GroupDTO dto);
 
+	int getProgramNo(String cns_no);
+
+	void openPRG(int prg_no);
+
 }

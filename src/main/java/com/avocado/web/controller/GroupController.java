@@ -21,9 +21,15 @@ public class GroupController {
 	//프로그램 확인 페이지 (학생)
 	@GetMapping("/group")
 	public String groupMain(Model model) {
-		//List<GroupDTO> list = groupService.programList();
-		//model.addAttribute("list", list);
+		List<GroupDTO> list = groupService.programList();
+		model.addAttribute("list", list);
 		return "program/group";
+	}
+	
+	@GetMapping("/programList")
+	public String programList(Model model) {
+		
+		return "program/programList";
 	}
 	
 	//프로그램 신청(학생)
