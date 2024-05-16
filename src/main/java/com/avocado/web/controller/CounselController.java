@@ -11,8 +11,13 @@ public class CounselController {
 		return "program/personal";
 	}
 	
-	@GetMapping("/testProgram")
+	@GetMapping("/personal/apply")
+	public String personalApply() {
+		return "program/personalApply";
+	}
+	
+	@GetMapping("/test")
 	public String test() {
-		return "program/test";
+		return "program/testPage";
 	}
 }
