@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:insert="~{./fragments.html :: headTag}"></th:block>
+
+<!-- 추가 script -->
+<script type="text/javascript">
+	
+</script>
+
+<!-- 추가 css -->
+<style type="text/css">
+main {
+	display: row;
+}
+
+.mainContents {
+	margin: 0 auto;
+	height: auto;
+	min-height: 600px;
+}
+</style>
+</head>
+<body>
+	<main class="container">
+		<th:block th:insert="~{./fragments.html :: menu}"></th:block>
+		<th:block th:insert="~{./fragments.html :: headerImg}"></th:block>
+
+		<!-- 여기가 본문 -->
+
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 mx-auto">
+						<h2 class="text-center text-uppercase text-primary mb-4">myInfo</h2>
+						<h3>메일알림</h3>
+						<div class="d-flex justify-content-center">
+							<div class="text-center">
+								<form action="/mail" method="post">
+									받는 사람 : <input type="email" name="email"><br>
+									제목 : <input type="text" name="title"> <br>
+									본문 : <textarea name="content"></textarea><br>
+									<button type="submit">보내기</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- 본문 끝 -->
+	</main>
+	<!-- FOOTER -->
+	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
+</body>
+</html>

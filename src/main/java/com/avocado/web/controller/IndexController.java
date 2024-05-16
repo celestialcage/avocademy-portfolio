@@ -72,11 +72,7 @@ public class IndexController {
 		return "online";
 	}
 	
-	@GetMapping("/community") // 커뮤니티
-	public String community(Model model) {
-		model.addAttribute("message", "커뮤니티");
-		return "index";
-	}
+
 	
 
 }

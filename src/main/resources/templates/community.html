@@ -27,17 +27,15 @@
 
 		<!-- 여기가 본문 -->
 		<div class="mainContents">
-		      <div class="container">
-         <div class="row">
-            <div class="col-md-4 mx-auto">
-                  <h2 class="text-center text-uppercase text-primary mb-4">myInfo</h2>
-					<h3>상담현황</h3>
-					<a th:href="@{/mail}">
-					<h3>메일보내기</h3>
-					
-            </div>
-         </div>
-      </div>
+		<h3>파일업로드</h3>
+
+		<div class="">
+			<form action="/fileUp" method="post" enctype="multipart/form-data">
+
+				<input type="file" name="fileUp">
+				<button type="submit">파일업로드</button>
+			</form>
+		</div>
 		
 		</div>
 		<!-- 본문 끝 -->

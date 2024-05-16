@@ -26,6 +26,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 	implementation 'com.google.code.gson:gson:2.10.1'
+	implementation 'org.apache.commons:commons-email:1.5'
 	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.1' 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
