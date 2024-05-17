@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.avocado.web.service.MyInfoServiceImpl;
-import com.avocado.web.util.Util;
 @Controller
 public class MyInfoController {
 
@@ -22,11 +21,11 @@ public class MyInfoController {
 		return "myInfo";   
 	}
 	
-	
 	@GetMapping("/mail")
 	public String mail() {
 		return "mail";
 	}
+	
 	@PostMapping("/mail")
 	public String mail(@RequestParam("email") String email, 
 					   @RequestParam("title")String title, 
@@ -38,6 +37,5 @@ public class MyInfoController {
 		
 		myInfoService.sendMail(email, title, content);
 		return "redirect:/mail";
-
 	}
 }

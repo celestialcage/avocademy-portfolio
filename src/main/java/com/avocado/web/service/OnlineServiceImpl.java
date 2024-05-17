@@ -15,8 +15,14 @@ public class OnlineServiceImpl implements OnlineService {
 	private OnlineDAO onlineDAO;
 
 	@Override
-	public List<OnlineDTO> online() {
-		List<OnlineDTO> list = onlineDAO.online();
+	public List<OnlineDTO> online(int pageNo, int post) {
+		// 1페이지면 글이 0번부터 ~ 9번까지
+		// 2페이지면 10번부터 ~ 19번까지 => 10개씩
+		// 기본 pageNo는 1로 시작
+		// limit 을 설정 할 수 있게
+		pageNo = (pageNo - 1) * post;
+		
+		List<OnlineDTO> list = onlineDAO.online(pageNo, post);
 		return list;
 	}
 
@@ -31,11 +37,6 @@ public class OnlineServiceImpl implements OnlineService {
 	}
 
 	@Override
-	public List<OnlineDTO> findAll(Map<String, Integer> map) {
-		return onlineDAO.findAll(map);
-	}
-
-	@Override
 	public int count() {
 		return onlineDAO.count();
 	}
@@ -45,5 +46,4 @@ public class OnlineServiceImpl implements OnlineService {
 		return onlineDAO.deletecd(bno);
 
 	}
-
 }

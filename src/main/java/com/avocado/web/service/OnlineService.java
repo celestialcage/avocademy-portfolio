@@ -7,7 +7,7 @@ import com.avocado.web.entity.OnlineDTO;
 
 public interface OnlineService {
 
-	public List<OnlineDTO> online();
+	public List<OnlineDTO> online(int pageNo, int post);
 
 	public OnlineDTO detail(int bno);
 
@@ -15,8 +15,7 @@ public interface OnlineService {
 
 	public int count();
 
-	public List<OnlineDTO> findAll(Map<String, Integer> map);
-
 	public int deletecd(String bno);
+
 
 }

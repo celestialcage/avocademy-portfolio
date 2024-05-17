@@ -60,9 +60,24 @@ public class IndexController {
 	@GetMapping("/online") // 온라인 상담
 	public String online(Model model, HttpSession session,
 			@RequestParam(name = "pageNo", required = false, defaultValue = "1") int pageNo) {
-	
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		List<OnlineDTO> list = onlineService.online();
+		// 한번에 보여주고 싶은 글 개수
+		int post = 10;
+		
+		// 총 글 갯수 확인해서 페이지 개수 계산
+		int totalCount = onlineService.count();
+		int totalPage = 1;
+		if (totalCount % post == 0) {
+			totalPage = totalCount / post;
+		} else {
+			totalPage = (totalCount / post) + 1;
+		}
+		model.addAttribute("totalPage", totalPage);
+		
+		
+		List<OnlineDTO> list = onlineService.online(pageNo, post);
+		
+		
+		// List<OnlineDTO> list = onlineService.online();
 		
 		//System.out.println(list.get(0).getCommentYN());
 		
