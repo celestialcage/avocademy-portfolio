@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.avocado.web.service.MyInfoServiceImpl;
-import com.avocado.web.util.Util;
 @Controller
 public class MyInfoController {
 

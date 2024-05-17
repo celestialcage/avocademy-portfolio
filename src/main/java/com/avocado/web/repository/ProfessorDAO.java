@@ -31,5 +31,8 @@ public interface ProfessorDAO {
 	List<Map<String, Object>> getAll(Map<String, Object> map);
 
 
+	List<ProfessorDTO> professorInfo(String uname);
+
+
 		
 }

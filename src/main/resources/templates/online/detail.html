@@ -35,14 +35,13 @@ main {
 			<div class="container mt-5">
 				<div class="card text-center">
 					<div class="card-header d-flex  align-items-center">
-						<h3 class="card-title" th:text="${detail.btitle}">게시글 제목</h3>
+						<h3 class="card-title" >
+							<span th:text="${detail.btitle}" >제목</span>	
+							<img th:src="@{/img/자물쇠.png}" alt="Lock Icon">
+						</h3>
 						<div th:if="${session.uname eq detail.uname}">
-						<img th:src="@{/img/작은수정.png}" onclick="updatecd()"> 
+						<img th:src="@{/img/작은수정.png}" th:attr="onclick=|updatecd('${detail.bno}')|"> 
 						<img th:src="@{/img/작은삭제.png}" th:attr="onclick=|deletecd('${detail.bno}')|">
-							
-				<!-- 			<i class="bi bi-arrow-up" th:id="${detail.bno}" onclick="update(this.id)"></i>
-							<i class="bi bi-arrow-down" th:id="${detail.bno}" onclick="deleltecd(this.id)"></i> -->
-							
 						</div>
 						<samll class="text-muted " th:text="${detail.bdate}">게시 날짜</samll>
 					</div>

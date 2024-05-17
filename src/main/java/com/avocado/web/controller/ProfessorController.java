@@ -72,11 +72,12 @@ public class ProfessorController {
 		int result = professorService.savePs(map);
 		System.out.println("스케쥴 저장됬나요? " + result);
 		
-		// 저장됬으면 교수스케쥴 테이블에서 예약완료로 바꾸기
+		// 저장됬으면 교수스케쥴 테이블에서 예약완료로 바꾸기 (0->1)
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		map2.put("date", date);
 		map2.put("time", time);
 		map2.put("psc_no", psc_no);
+		System.out.println("date : " + date + " time : " + time + " psc_no: " + psc_no );
 		int result2 = professorService.pscReserved(map2);
 		System.out.println("교수테이블 바꼈나요 " + result2);
 		

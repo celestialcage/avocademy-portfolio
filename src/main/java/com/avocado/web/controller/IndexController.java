@@ -36,15 +36,19 @@ public class IndexController {
 	}
 
 	@GetMapping("/centerInfo") // 센터 소개
-	public String centerInfo(Model model) {
-		model.addAttribute("message", "센터 소개");
-		return "index";
+	public String centerInfo() {
+		return "introduce";
+	}
+	
+	@GetMapping("/location")
+	public String location() {
+		return "location";
 	}
 	
 	@GetMapping("/counselingGuide") // 상담 안내
 	public String counselingGuide(Model model) {
 		model.addAttribute("message", "상담 안내");
-		return "counseling";
+		return "redirect:/personal";
 	}
 	
 	@GetMapping("/program") // 교육 프로그램
@@ -55,20 +59,15 @@ public class IndexController {
 	
 	@GetMapping("/online") // 온라인 상담
 	public String online(Model model, HttpSession session,
-			@RequestParam(name="page", defaultValue = "1") int page,
-			@RequestParam(name="size", defaultValue = "10") int size) {
+			@RequestParam(name = "pageNo", required = false, defaultValue = "1") int pageNo) {
+	
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("page", page);
-		map.put("size", size);
 		List<OnlineDTO> list = onlineService.online();
-		//List<OnlineDTO> list = onlineService.findAll(map);
 		
 		//System.out.println(list.get(0).getCommentYN());
 		
-		int total = onlineService.count();
 		model.addAttribute("list", list);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("totalPages", (total + size - 1) / size);
+		model.addAttribute("pageNo", pageNo);
 		
 		return "online";
 	}
