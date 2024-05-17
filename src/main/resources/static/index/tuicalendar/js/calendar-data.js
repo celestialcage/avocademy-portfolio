@@ -1,3 +1,46 @@
+let COUNSEL_CALENDARS = [
+    {
+      id: 'job1', // 1 블베빔
+      name: '취업1 - 블베빔',
+      color: '#ffffff',
+      borderColor: '#9e5fff',
+      backgroundColor: '#9e5fff',
+      dragBackgroundColor: '#9e5fff',
+    },
+    {
+      id: 'job2', // 7 최행복
+      name: '취업2 - 최행복',
+      color: '#ffffff',
+      borderColor: '#00a9ff',
+      backgroundColor: '#00a9ff',
+      dragBackgroundColor: '#00a9ff',
+    },
+    {
+      id: 'mental1', // 2 크랜박
+      name: '심리1 - 크랜박',
+      color: '#ffffff',
+      borderColor: '#DB473F',
+      backgroundColor: '#DB473F',
+      dragBackgroundColor: '#DB473F',
+    },
+    {
+      id: 'mental2', // 3 라이미
+      name: '심리2 - 라이미',
+      color: '#ffffff',
+      borderColor: '#03bd9e',
+      backgroundColor: '#03bd9e',
+      dragBackgroundColor: '#03bd9e',
+    },
+    {
+      id: 'mental3', // 8 박지혜
+      name: '심리3 - 박지혜',
+      color: '#ffffff',
+      borderColor: '#bbdc00',
+      backgroundColor: '#bbdc00',
+      dragBackgroundColor: '#bbdc00',
+    },
+  ];
+
 function getDBEvent(calendar, dbEle) {
     let id, title, body, location, state;
     id = dbEle.scheduleNo;
@@ -32,7 +75,7 @@ function getDBEvent(calendar, dbEle) {
 
     let event = {
         id: id, // 스케줄번호
-        calendarId: 'job1', // 캘린더 id...
+        calendarId: 'cal1', // 캘린더 id...
         // start: start, // 시작날짜나 끝날짜나.. 하루씩 할거라
         // end: end, // 같을거같다. 근데 시각만 다름.
         title: title, // 일정 제목 -> db Free일 때 (상담사 이름) 상담 가능

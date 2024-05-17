@@ -36,15 +36,19 @@ public class IndexController {
 	}
 
 	@GetMapping("/centerInfo") // 센터 소개
-	public String centerInfo(Model model) {
-		model.addAttribute("message", "센터 소개");
-		return "index";
+	public String centerInfo() {
+		return "introduce";
+	}
+	
+	@GetMapping("/location")
+	public String location() {
+		return "location";
 	}
 	
 	@GetMapping("/counselingGuide") // 상담 안내
 	public String counselingGuide(Model model) {
 		model.addAttribute("message", "상담 안내");
-		return "counseling";
+		return "redirect:/personal";
 	}
 	
 	@GetMapping("/program") // 교육 프로그램

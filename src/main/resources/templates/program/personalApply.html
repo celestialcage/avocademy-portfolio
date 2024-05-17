@@ -2,7 +2,12 @@
 <html lang="ko" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
 <head>
   <th:block th:insert="~{./fragments.html :: headTag}"></th:block>
-  
+  <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="/admin/assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"> -->
+	<link rel="stylesheet" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.css"/>
+	<link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />
+	<link rel="stylesheet" href="/index/tuicalendar/css/calendar-app.css" />
   	<!-- 추가 script -->
 	<script type="text/javascript">
 	
@@ -19,8 +24,8 @@
   		min-height: 600px;
   		display: flex;
   	}
-  	section {
-  		display: row;
+  	.calendar-wrapper {
+  		height: 600px;
   	}
   	</style>
 </head>
@@ -35,32 +40,86 @@
 		<!-- =============사이드바============== -->
 		<th:block th:insert="~{./fragments.html :: counselSidebar}"></th:block>	
 		
-		<section>
-		<h2>상담신청 폼</h2>
-		  <div class="mb-3 row">
-		    <label for="staticEmail" class="col-sm-2 col-form-label">상담사</label>
-		    <div class="col-sm-10">
-		      <input type="text" readonly class="form-control-plaintext" id="staticEmail" th:value="${cns_nm}">
-		    </div>
-		  </div>
-		  <div class="mb-3 row">
-		    <label for="inputPassword" class="col-sm-2 col-form-label">날짜</label>
-		    <div class="col-sm-10">
-		      <input type="password" class="form-control" id="inputPassword">
-		    </div>
-		  </div>
-		  <div class="mb-3 row">
-		    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-		    <div class="col-sm-10">
-		      <input type="password" class="form-control" id="inputPassword">
-		    </div>
-		  </div>
-		
+		<div class="container-fluid">
+			<div class="card-body border-bottom">
+				<h4 class="card-title my-3">상담 예약</h4>
+			</div>
+			<div class="card-body mt-3">
+	<!-- =================================캘린더 메뉴==================================== -->
+				<div id="calendarMenu">
+					<!-- 여기 드롭다운으로 -->
+					<nav class="navbar d-flex justify-content-between align-items-center">
+					<div class="dropdown">
+	      			<div class="dropdown-trigger">
+		                <button class="button is-rounded" aria-haspopup="true" aria-controls="dropdown-menu">
+		                  <span class="button-text"></span>
+		                  <span class="dropdown-icon toastui-calendar-icon toastui-calendar-ic-dropdown-arrow"></span>
+		                </button>
+		              </div>
+		              <div class="dropdown-menu">
+		                <div class="dropdown-content">
+		                  <a href="#" class="dropdown-item" data-counsel-field="job1">취업1</a>
+		                  <a href="#" class="dropdown-item" data-counsel-field="job2">취업2</a>
+		                  <a href="#" class="dropdown-item" data-counsel-field="mental1">심리1</a>
+		                  <a href="#" class="dropdown-item" data-counsel-field="mental2">심리2</a>
+		                  <a href="#" class="dropdown-item" data-counsel-field="mental3">심리3</a>
+		                </div>
+		              </div>
+		            </div>
+				<span class="calendar-render-range"></span>
+				<span>
+					<button type="button" id="todayBtn" class="calendar-btn calendar-move-today">Today</button>
+					<button type="button" id="prevBtn" class="calendar-btn calendar-move-day">
+						<i class="calendar-icon ic-arrow-line-left"></i>
+					</button>
+					<button type="button" id="nextBtn" class="calendar-btn calendar-move-day">
+						<i class="calendar-icon ic-arrow-line-right"></i>
+					</button>
+				</span>
+				</nav>
+			</div> <!-- 캘린더 메뉴 끝 -->
+<!-- =================================캘린더 위치==================================== -->
+			<div id="calendar" class="calendar-wrapper"></div>
+			
+			<!-- <h2>상담신청 폼</h2>
+			  <div class="mb-3 row">
+			    <label for="staticEmail" class="col-sm-2 col-form-label">상담사</label>
+			    <div class="col-sm-10">
+			      <input type="text" readonly class="form-control-plaintext" id="staticEmail" th:value="${cns_nm}">
+			    </div>
+			  </div>
+			  <div class="mb-3 row">
+			    <label for="inputPassword" class="col-sm-2 col-form-label">날짜</label>
+			    <div class="col-sm-10">
+			      <input type="password" class="form-control" id="inputPassword">
+			    </div>
+			  </div>
+			  <div class="mb-3 row">
+			    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+			    <div class="col-sm-10">
+			      <input type="password" class="form-control" id="inputPassword">
+			    </div>
+			  </div> -->
+			
+			</div> <!-- 캘린더 card-body 끝 -->
+		</div> <!-- container-fluid 끝 -->
 		</div>
-		</section>
-		<!-- 본문 끝 -->
+		<!-- 본문 mainContents 끝 -->
 	</main>
 	<!-- FOOTER -->
 	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
+	<script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.1.8/chance.min.js"></script>
+    <!-- <script src="/admin/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script> -->
+    <script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.js"></script>
+    <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
+    <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.js"></script>
+    <!-- <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script> -->
+    <script type="text/javascript" src="/index/tuicalendar/js/calendar-data.js"></script>
+    <script type="text/javascript" src="/admin/custom/utils.js"></script>
+    <script type="text/javascript" src="/index/tuicalendar/js/calendar-app.js"></script>
+    <!-- <script type="text/javascript" src="/admin/custom/grid-app.js"></script> -->
+    <!-- <script type="text/javascript" src="/admin/custom/app.js"></script> -->
 </body>
 </html>

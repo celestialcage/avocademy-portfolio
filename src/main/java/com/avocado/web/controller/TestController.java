@@ -64,7 +64,6 @@ public class TestController {
 		// JSONParser parser = new JSONParser();
 		// JSONObject jsonObject = (JSONObject) parser.parse(new InputStreamReader(url.openStream()));
 		
-		
 		return "program/test1";
 	}
 }
