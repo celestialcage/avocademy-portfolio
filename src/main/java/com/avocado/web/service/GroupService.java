@@ -21,6 +21,8 @@ public interface GroupService {
 	int getProgramNo(String string);
 
 	void openPRG(int prg_no);
+
+	GroupDTO programDetail(String no);
 	
 
 }
