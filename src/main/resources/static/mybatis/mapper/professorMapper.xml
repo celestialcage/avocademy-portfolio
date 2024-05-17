@@ -7,7 +7,7 @@
 	</select>
 	
 	<insert id="savePs" parameterType="Map">
-		INSERT INTO pscounsel (stud_no, ps_class, ps_cn, psc_no, ps_hr, ps_ymd) VALUES (#{studentNumber}, #{value}, #{content}, 1, #{time}, #{date});
+		INSERT INTO pscounsel (stud_no, ps_class, ps_cn, psc_no, ps_hr, ps_ymd) VALUES (#{studentNumber}, #{value}, #{content}, #{psc_no}, #{time}, #{date});
 	</insert>
 	
 	<select id="psSchedule" resultType="ProfessorDTO">
@@ -22,4 +22,8 @@
 	<update id="pscReserved" parameterType="Map">
 		UPDATE psschedule SET psc_reserved = '1' WHERE ymd = #{date} AND hr = #{time} AND psc_no = #{psc_no};
 	</update>
+	
+	<select id="professorInfo" parameterType="String" resultType="ProfessorDTO">
+		SELECT ps_no, user_no, ps_nm, scsbjt_cd FROM professor WHERE user_no = (SELECT uno FROM user WHERE uname = #{uname});
+	</select>
 </mapper>

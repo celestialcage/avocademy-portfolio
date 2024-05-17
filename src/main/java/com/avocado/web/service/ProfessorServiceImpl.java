@@ -42,6 +42,11 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return professorDAO.getAll(map);
 	}
 
+	@Override
+	public List<ProfessorDTO> professorInfo(String uname) {
+		return professorDAO.professorInfo(uname);
+	}
+
 	
 
 
