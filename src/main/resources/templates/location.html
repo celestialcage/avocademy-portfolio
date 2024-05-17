@@ -2,7 +2,7 @@
 <html lang="ko" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
 <head>
   <th:block th:insert="~{./fragments.html :: headTag}"></th:block>
-  
+  <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
   	<!-- 추가 script -->
 	<script type="text/javascript">
 	
@@ -17,6 +17,7 @@
   		margin: 0 auto;
   		height: auto;
   		min-height: 600px;
+  		display: flex;
   	}
   	</style>
 </head>
@@ -29,13 +30,22 @@
 		<div class="mainContents">
 		
 		<!-- =============사이드바============== -->
-		<th:block th:insert="~{./fragments.html :: counselSidebar}"></th:block>	
-		
-		<p>심리 검사</p>
+		<th:block th:insert="~{./fragments.html :: introSidebar}"></th:block>	
+			<div class="card-body m-4">
+					<div id="daumRoughmapContainer1715924243054" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+			</div>
 		</div>
 		<!-- 본문 끝 -->
 	</main>
 	<!-- FOOTER -->
 	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
+	<script charset="UTF-8">
+		new daum.roughmap.Lander({
+			"timestamp" : "1715924243054",
+			"key" : "2jd46",
+			"mapWidth" : "970",
+			"mapHeight" : "500"
+		}).render();
+	</script>
 </body>
 </html>

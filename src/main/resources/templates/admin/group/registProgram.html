@@ -13,19 +13,30 @@
     .datepicker > .input-group {
     	align-content: center;
     	width: 75%;
-    }
+    }    
     
-    .datepicker .datepicker-days tr td.active ~ td,
     .datepicker .datepicker-days tr td.active{
         color: #af1623 !important;
-        background: transparent !important;
+        background: yellow !important;
     }   
     .datepicker .datepicker-days tr:hover td{
         color: #000;
         background: #e5e2e3;
         border-radius: 0;
     } 
- 
+
+	 
+	 /* Chrome, Safari, Edge, Opera */
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+	  -webkit-appearance: none;
+	  margin: 0;
+	}
+	
+	/* Firefox  */
+	input[type='number'] {
+	  -moz-appearance: textfield;
+	}
 
     </style>
 </head>
@@ -100,6 +111,7 @@
 									</div>
 	                                <div class="form-group row">
 	                                    <div class="col-sm-4">
+	                                    	<input type="hidden" th:field="*{cns_no}">
 		                                    <label for="prg_cd" class="control-label col-form-label">상담 분야</label>
 		                                        <select class="select2 form-select shadow-none" id="prg_cd" th:field="*{prg_cd}" style="width:100%; height:36px;">
 	    	                                        <option value="">분야 선택</option>
@@ -116,7 +128,7 @@
 	                                <div class="form-group row">
 	                                	<label th:for="prg_content" class="control-label col-form-label">프로그램 내용</label>
 	                                	<div class="">
-	                                		<textarea class="form-control" id="prg_content" th:field="*{prg_content}"></textarea>
+	                                		<textarea class="form-control" id="prg_content" th:field="*{prg_content}" style="width:100%; min-height:200px;"></textarea>
 	                                	</div>
 	                                </div>
 	                                
@@ -125,38 +137,7 @@
 	                                <div class="form-group row">
 	                                	<label class="control-label col-form-label">상담 기간</label>
 	                                	<div class="row">
-		                                	<div class="col-sm-4">
-		                                		<div class="row">
-		                                			<div class="form-group col-sm-4">
-						                                <label class="control-label col-form-label">시작일</label>
-		                                			</div>
-		                                			<div class="form-group col-sm-8">
-						                                <div class="input-group">
-						                                    <input type="hidden" class="form-control" id="req_end" th:field="*{req_end}">
-						                                    <input type="text" class="form-control" id="startDate" th:field="*{prg_start}">
-						                                    <div class="input-group-append">
-						                                        <span class="input-group-text h-100"><i class="fa fa-calendar"></i></span>
-						                                    </div>
-						                                </div>
-		                                			</div>
-		                                		</div>				                                
-		                                	</div>
-		                                	<div class="col-sm-4">
-		                                		<div class="row">
-		                                			<div class="form-group col-sm-4">
-						                                <label class="control-label col-form-label">종료일</label>
-		                                			</div>
-		                                			<div class="form-group col-sm-8">
-						                                <div class="input-group">
-						                                    <input type="text" class="form-control" id="endDate" th:field="*{prg_end}">
-						                                    <div class="input-group-append">
-						                                        <span class="input-group-text h-100"><i class="fa fa-calendar"></i></span>
-						                                    </div>
-						                                </div>
-		                                			</div>
-		                                		</div>
-		                                	</div>
-		                                	<div class="col-sm-4">
+		                                	<div class="col-sm-6">
 		                                		<div class="row">
 		                                			<div class="form-group col-sm-2">
 				                                		<label class="control-label col-form-label">매주 </label>
@@ -171,24 +152,39 @@
 				    	                                	<option value="4">금요일</option>
 				                    	            	</select>
 		                                			</div>
-				                                	<div class="col-sm-5">
-				                                		<div class="row">
-				                                			<label>총 <input id="nmtm" th:field="*{prg_nmtm}" placeholder="0" style="width:36px; height:36px; outline:none;">회</label>
-				                                		</div>
-				                                	</div>
+		                                			<div class="form-group col-sm-5">
+		                                				<select class="select2 form-select shadow-none" id="prg_hr" th:field="*{prg_hr}" style="width:100%; height:36px;">
+				        	                                <option value="">선택</option>
+				        	                                <option value="09">9시</option>
+				            	                            <option value="10">10시</option>
+				                	                        <option value="11">11시</option>
+				                	                        <option value="12">12시</option>
+				    	                                	<option value="13">13시</option>
+				    	                                	<option value="14">14시</option>
+				    	                                	<option value="15">15시</option>
+				    	                                	<option value="16">16시</option>
+				    	                                	<option value="17">17시</option>
+				                    	            	</select>
+		                                			</div>
 		                                		</div>
+		                                	</div>
+		                                	<div class="col-sm-6">
+				                                <div class="row">
+				                                	<div class="input-group col-sm-9">
+				                                		<input type="text" class="form-control" id="choseDate" th:field="*{groupSCHDL}">
+			                             				<div class="input-group-append">
+					                                        <span class="input-group-text h-100"><i class="fa fa-calendar"></i></span>
+					                                    </div>		
+				                                	</div>
+				                                	<div class="form-group col-sm-3">
+				                                			<label>총 <input type="number" min="5" readonly="readonly" id="nmtm" th:field="*{prg_nmtm}" placeholder="0" style="width:36px; height:36px; outline:none;">회</label>
+				                                	</div>
+				                                </div>
 		                                	</div>
 	                                	</div>
 	                                </div>
 	                                
-	                                <div class="form-group row">
-	                                	<div class="input-group">
-	                                		<input type="text" class="form-control" id="choseDate" th:field="*{groupSCHDL}">
-                             				<div class="input-group-append">
-		                                        <span class="input-group-text h-100"><i class="fa fa-calendar"></i></span>
-		                                    </div>		
-	                                	</div>
-	                                </div>
+
 	                                
 		                            <div class="border-top">
 		                                <div class="card-body">
@@ -246,97 +242,73 @@
         /*datepicker*/
         var startDate, endDate, choseDate;
         var dayOfWeek;
+        var countNMTM;
         
-        $('#choseDate').datepicker({
-        	format: "yyyy-mm-dd",
-    	    startDate: '+14d', 
-    	    endDate: '+2m',
-            autoclose: true,
-            todayHighlight: true,
-            calendarWeeks : true,
-    	    multidate : true,
-    	    multidateSeparator :",",
-    	    templates : {
-    	        leftArrow: '&laquo;',
-    	        rightArrow: '&raquo;'
-    	    }, 
-    	    showWeekDays : true ,
-    	    todayHighlight : true ,
-    	    toggleActive : true,
-    	    title: "상담 시작 일자",
-    	    weekStart : 0 ,
-    	    language : "ko",
-    	    forceParse: false
+        $.datepicker.setDefaults({
+            dateFormat: 'yy-mm-dd',	//날짜 포맷이다. 보통 yy-mm-dd 를 많이 사용하는것 같다.
+            prevText: '이전 달',	// 마우스 오버시 이전달 텍스트
+            nextText: '다음 달',	// 마우스 오버시 다음달 텍스트
+            closeText: '닫기', // 닫기 버튼 텍스트 변경
+            currentText: '오늘', // 오늘 텍스트 변경
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],	//한글 캘린더중 월 표시를 위한 부분
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],	//한글 캘린더 중 월 표시를 위한 부분
+            dayNames: ['일', '월', '화', '수', '목', '금', '토'],	//한글 캘린더 요일 표시 부분
+            dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],	//한글 요일 표시 부분
+            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],	// 한글 요일 표시 부분
+            showMonthAfterYear: true,	// true : 년 월  false : 월 년 순으로 보여줌
+            yearSuffix: '년',	//
+            showButtonPanel: true,	// 오늘로 가는 버튼과 달력 닫기 버튼 보기 옵션
+//            buttonImageOnly: true,	// input 옆에 조그만한 아이콘으로 캘린더 선택가능하게 하기
+//            buttonImage: "images/calendar.gif",	// 조그만한 아이콘 이미지
+//            buttonText: "Select date"	// 조그만한 아이콘 툴팁
         });
-
-        
-        $('#startDate').datepicker({
-        	format: "yyyy-mm-dd",
-    	    startDate: '+14d', 
-    	    endDate: '+1m',
-            autoclose: true,
-            todayHighlight: true,
-            calendarWeeks : true,
-    	    templates : {
-    	        leftArrow: '&laquo;',
-    	        rightArrow: '&raquo;'
-    	    }, 
-    	    showWeekDays : true ,
-    	    title: "상담 시작 일자",
-    	    weekStart : 0 ,
-    	    language : "ko",
-    	    forceParse: false
-        }).on("changeDate", function(e){
-        	startDate = e.date;
-            //console.log(startDate);
-           var reqEnd = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - 3);
-           //var reqEndDate = reqEnd.getFullYear() + '-0' + (reqEnd.getMonth() + 1) + '-' + reqEnd.getDate();
-           //console.log(reqEndDate);
-           $('#req_end').val(reqEnd.getFullYear() + '-0' + (reqEnd.getMonth() + 1) + '-' + reqEnd.getDate());
-        });
-
-    	
-       	$('#endDate').datepicker({
-        	format: "yyyy-mm-dd",
-            autoclose: true,
-            todayHighlight: true,
-            calendarWeeks : true,
-    	    templates : {
-    	        leftArrow: '&laquo;',
-    	        rightArrow: '&raquo;'
-    	    }, 
-    	    showWeekDays : true ,
-    	    title: "상담 종료 일자",
-    	    weekStart : 0 ,
-    	    language : "ko",
-    	    forceParse: false
-        }).on("changeDate", function(e){
-            endDate = e.date;
-            //console.log(endDate);
-            var difference = Math.abs(endDate - startDate);
-            var daysDifference = Math.ceil(difference / (1000 * 60 * 60 * 24));
-            var weeks = Math.ceil(daysDifference / 7);
-        });
-    	
+                
 		$('#prg_dow').change(function(){
 			dayOfWeek = parseInt($('#prg_dow').val()) + 1;
-			var countNMTM = 0;
-			var currentDate = new Date(startDate);
-		   	console.log(currentDate);
-		   	console.log(endDate);
+			countNMTM = 0;
+	        const test = [0, 1, 2, 3, 4, 5, 6];
+			test.splice(dayOfWeek, 1);
+			console.log(test);
 			
-		    while (currentDate <= endDate) {
-		        if (currentDate.getDay() === dayOfWeek) {
-		        	countNMTM ++;
-		        }
-		        currentDate.setDate(currentDate.getDate() + 1);
-		    }
-		    
+	    
+	        $('#choseDate').datepicker({
+	        	format: "yyyymmdd",
+	    	    startDate: '+14d', 
+	    	    endDate: '+3m',
+	            autoclose: true,
+	            todayHighlight: true,
+	            calendarWeeks : true,
+	            daysOfWeekDisabled : test,	//선택 불가능한 요일 설정 0 : 일요일 ~ 6 : 토요일
+			    daysOfWeekHighlighted : [dayOfWeek], //강조 되어야 하는 요일 설정
+	    	    multidate : true,
+	    	    multidateSeparator :",",
+	    	    templates : {
+	    	        leftArrow: '&laquo;',
+	    	        rightArrow: '&raquo;'
+	    	    }, 
+	    	    showWeekDays : true ,
+	    	    todayHighlight : true ,
+	    	    toggleActive : true,
+	    	    title: "상담 시작 일자",
+	    	    weekStart : 0 ,
+	    	    language : "ko",
+	    	    forceParse: false
+	        }).on("changeDate", function(e){
+	        	countNMTM ++;
+	        	//console.log(e.date);
+			   	//console.log(countNMTM);
+			   $('#nmtm').val(countNMTM);
+	        });
 		   //console.log(countNMTM);
-		   $('#nmtm').val(countNMTM);
 		});
-    	
-    });
+        
+        
+        
+
+       
+
+    }); 	
+
     
     
     

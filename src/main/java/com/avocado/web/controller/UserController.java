@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.avocado.web.entity.CounselorDTO;
+import com.avocado.web.entity.StudentDTO;
 import com.avocado.web.service.UserService;
 import com.avocado.web.util.Util;
 
@@ -54,29 +56,38 @@ public class UserController {
 			session.setAttribute("uname", result.get("uname"));
 			session.setAttribute("ugrade", result.get("ugrade"));
 			session.setAttribute("uno", result.get("uno"));
-		
-			
-			// 출력하여 uid 확인
-		    System.out.println("UID: " + result.get("uid"));
-		    System.out.println("UGRADE: " + result.get("ugrade"));
-
+					
 			// 쿠키 생성
 			Cookie loginCookie = new Cookie("loginCookie", session.getId());
 			loginCookie.setMaxAge(60 * 60 * 24); // 쿠키 유효 시간 설정 (예: 24시간)
 			loginCookie.setPath("/"); // 쿠키의 유효 경로 설정
 			response.addCookie(loginCookie);
 			
+			// 출력하여 uid 확인
+		    System.out.println("UID: " + result.get("uid"));
+		    System.out.println("UGRADE: " + result.get("ugrade"));
+		    System.out.println("uno : " + result.get("uno"));
+			
 			// 사용자 등급 변수를 맵에서 추출
 			Integer role = (Integer) result.get("ugrade");
 	        System.out.println("사용자 등급: " + role);
 	        
+	        //사용자 등급 따른 정보 추가
+	        String uno = (result.get("uno")).toString();	        
+	        
 			// 사용자의 등급에 따라 리다이렉트할 페이지 결정
 	        if (role != null) {
-	            if (role == 5) {
-	                return "redirect:/admin/index"; // 관리자 페이지로 리다이렉트
-	            } else if (role == 1) {
-	                return "redirect:/main"; // 일반 사용자 페이지로 리다이렉트
+	            if (role == 1) {
+	            	String stud_no = userService.getStudentInfo(uno); //학번추가
+	            	session.setAttribute("stud_no", stud_no);
+	            	return "redirect:/main"; // 일반 사용자 페이지로 리다이렉트
+	            } else if (role == 3) {
+	            	String cns_no = userService.getCounselorInfo(uno);
+	            	session.setAttribute("cns_no", cns_no); //상담사번호추가
+	            } else if (role == 5) {
+	            	
 	            }
+	            return "redirect:/admin/index"; // 관리자 페이지로 리다이렉트
 	        }
 		}
 	        return "redirect:/login"; // 등급 정보가 없거나 올바르지 않은 경우 로그인 페이지로 리다이렉트

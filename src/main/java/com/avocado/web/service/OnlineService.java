@@ -7,14 +7,15 @@ import com.avocado.web.entity.OnlineDTO;
 
 public interface OnlineService {
 
-	public List<OnlineDTO> online();
+	public List<OnlineDTO> online(int pageNo, int post);
 
 	public OnlineDTO detail(int bno);
 
-	public int write(Map<String, String> map);
+	public int write(Map<String, Object> map);
 
 	public int count();
 
-	public List<OnlineDTO> findAll(Map<String, Integer> map);
-	
+	public int deletecd(String bno);
+
+
 }

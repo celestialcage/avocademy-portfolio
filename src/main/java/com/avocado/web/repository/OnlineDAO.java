@@ -12,13 +12,15 @@ import com.avocado.web.entity.OnlineDTO;
 @Mapper
 public interface OnlineDAO {
 
-	List<OnlineDTO> online();
+	List<OnlineDTO> online(int pageNo, int post);
 
 	OnlineDTO detail(int bno);
 
-	int write(Map<String, String> map);
+	int write(Map<String, Object> map);
 
 	int count();
 
 	List<OnlineDTO> findAll(Map<String, Integer> map);
+
+	int deletecd(String bno);
 }

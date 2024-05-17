@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+  <th:block th:insert="~{./fragments.html :: headTag}"></th:block>
   <meta charset="UTF-8">
   <title>Avocado 상담</title>
   <script src="/index/assets/js/color-modes.js"></script>
@@ -31,6 +32,23 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> <!-- moment.js 로드 -->
 
   <style>
+  
+ 	main {
+  		display:row;
+  	}
+  	
+  	.card {
+  	width: 100%;
+  	
+  	}
+  	
+  	.mainContents {
+  		margin: 0 auto;
+  		height: auto;
+  		min-height: 600px;
+  		display: flex;
+  	}
+  
     .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
@@ -108,9 +126,6 @@
       display: block !important;
     }
 
-
-
-
     label {
       font-size: 18px;
       line-height: 2rem;
@@ -160,7 +175,6 @@
       opacity: 0.7;
       cursor: not-allowed;
     }
-
     .form-check-input:checked+.form-check-label {
       font-weight: bold;
       color: black;
@@ -174,51 +188,12 @@
 </head>
 
 <body>
+	<main class="container">
+		<th:block th:insert="~{./fragments.html :: menu}"></th:block>	
+		<th:block th:insert="~{./fragments.html :: headerImg}"></th:block>
 
-  <header data-bs-theme="dark">
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">아보카데미</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="#">센터소개</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="#">상담안내</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="#">교육프로그램</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="#">커뮤니티</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="#">상담신청</a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            
-          </form>
-        </div>
-      </div>
-    </nav>
-  </header>
-
-  <br>
-  <br>
-  <br>
-  <br>
-
-  <div class="container">
+  <div class="mainContents">
+		<th:block th:insert="~{./fragments.html :: counselSidebar}"></th:block>
     <div class="card">
       <form action="/professorCSR" method="post">
         <div class="card-body">
@@ -239,6 +214,7 @@
               <input type="text" class="form-control phone-inputmask" id="phone" onfocus="this.value" name="phone"
                 th:value="${item.stud_telno}" readonly>
             </div>
+            
           </th:block>
           <div class="form-group">
             <label>상담 종류 <small class="text-muted">(한가지 선택해주세요)</small></label>
@@ -313,22 +289,27 @@
               <h5 id="eventTitle">상담시간선택</h5>
               <p id="eventDate"></p>
               <div id="selectedTime">
-                <!-- 동적으로 생성된 라디오 버튼들이 여기에 추가될 것입니다. -->
+                <!-- 자바스크립트로 생성된 라디오 버튼들 여기 들어가여 -->
               </div>
               <input type="hidden" id="selectedDate" name="selectedDate">
+              <input type="hidden" id="selectedPscNo" name="selectedPscNo">
+              
             </div>
           </div>
-
 
         </div>
         <div class="border-top">
           <div class="card-body">
-            <button type="submit" class="btn btn-primary">제출하기</button>
+            <button type="submit" class="btn btn-primary">신청하기</button>
           </div>
         </div>
       </form>
     </div>
   </div>
+		<!-- 본문 끝 -->
+	</main>
+	<!-- FOOTER -->
+	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
 </body>
 
 
@@ -390,30 +371,36 @@
               console.log('되네요', response);
               // 콜랩스 열기
               $('#eventDetails').collapse('show');
-
+			
               // 콜랩스 내용 갱신
               $('#eventDate').text(info.dateStr);
 
-              // 값이 있는지 확인
+              // 해당 날짜에 값이 있는지 확인
               if (response.length === 0) {
                 $('#selectedTime').empty(); // 기존 라디오 버튼 삭제
                 $('#selectedTime').append('<p id="noDataMessage">예약 가능한 시간이 없습니다.</p>');
-              } else {
+              } else { // 해당 날짜에 값이 있을 때
                 $('#noDataMessage').remove(); // 값이 있으면 메시지 삭제
                 var timeList = response; // AJAX 응답으로 받은 시간 목록
                 var radioGroup = $('#selectedTime'); // 라디오 버튼 그룹을 담을 div
                 radioGroup.empty(); // 기존 라디오 버튼 삭제
-
+                
                 $.each(timeList, function (index, time) {
                   // 각 시간별 라디오 버튼 생성
                   var radioId = 'time' + index; // 유니크한 ID 생성
+                  var psc = $('<input type="hidden" class="form-check-input" name="selectedPsc" value="'+ time.psc_no +'" id="' + radioId +'">');
                   var radioBtn = $('<input type="radio" class="form-check-input" name="selectedTime" value="' + time.hr + '" id="' + radioId + '" required>');
                   var label = $('<label class="form-check-label" for="' + radioId + '"><span>' + time.hr_nm + '</span></label>');
+                  
+                  alert(time.psc_no);
+                  
+                  radioGroup.append(psc);
                   radioGroup.append(radioBtn);
                   radioGroup.append(label);
                   radioGroup.append('<br>');
                 });
               }
+            	
             },
 
             error: function (xhr, status, error) {

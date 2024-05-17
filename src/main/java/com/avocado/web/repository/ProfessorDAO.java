@@ -14,10 +14,10 @@ import com.avocado.web.entity.ProfessorDTO;
 
 public interface ProfessorDAO {
 
-	List<ProfessorDTO> studentInfo();
+	List<ProfessorDTO> studentInfo(String uname);
 
 
-	int savePs(Map<String, String> map);
+	int savePs(Map<String, Object> map);
 
 
 	List<ProfessorDTO> psSchedule();
@@ -25,11 +25,13 @@ public interface ProfessorDAO {
 
 	Map<String, Object> timeList(HashMap<String, Object> map);
 
+	int pscReserved(Map<String, Object> map2);
 
-	List<Map<String, Object>> getAll(String selectedDate);
+
+	List<Map<String, Object>> getAll(Map<String, Object> map);
 
 
-	int pscReserved(Map<String, String> map2);
+	List<ProfessorDTO> professorInfo(String uname);
 
 
 		

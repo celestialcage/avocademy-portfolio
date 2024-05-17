@@ -32,7 +32,7 @@ function getDBEvent(calendar, dbEle) {
 
     let event = {
         id: id, // 스케줄번호
-        calendarId: 'cal1', // 캘린더 id...
+        calendarId: 'job1', // 캘린더 id...
         // start: start, // 시작날짜나 끝날짜나.. 하루씩 할거라
         // end: end, // 같을거같다. 근데 시각만 다름.
         title: title, // 일정 제목 -> db Free일 때 (상담사 이름) 상담 가능

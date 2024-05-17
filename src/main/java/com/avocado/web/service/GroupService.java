@@ -17,6 +17,10 @@ public interface GroupService {
 	void disApprovePRG(int prg_no);
 
 	void createSchedule(GroupDTO dto);
+
+	int getProgramNo(String string);
+
+	void openPRG(int prg_no);
 	
 
 }
