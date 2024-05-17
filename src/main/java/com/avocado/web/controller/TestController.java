@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.ParseException;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -64,8 +63,6 @@ public class TestController {
 		// 데이터 왔으면 파싱
 		// JSONParser parser = new JSONParser();
 		// JSONObject jsonObject = (JSONObject) parser.parse(new InputStreamReader(url.openStream()));
-		
-		
 		
 		return "program/test1";
 	}
