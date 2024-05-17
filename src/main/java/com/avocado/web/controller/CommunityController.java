@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.avocado.web.entity.CommunityDTO;
+import com.avocado.web.service.CommunityService;
+import com.avocado.web.service.CommunityServiceImpl;
 import com.avocado.web.util.Util;
 
 import net.coobird.thumbnailator.Thumbnailator;
@@ -23,6 +26,9 @@ public class CommunityController {
 	
 	@Autowired
 	private Util util;
+	
+	@Autowired
+	private CommunityService communityService;
 	
 	
 	@GetMapping("/community") // 커뮤니티
@@ -41,9 +47,13 @@ public class CommunityController {
 		//서버의 물리적 경로
 		//String url = util.req().getServletContext().getRealPath("/upload");
 		File url = new File(util.req().getServletContext().getRealPath("/upload"));
+		//디렉터리가 존재하지 않으면 생성
+		if (!url.exists()) {
+	            url.mkdirs();
+	        }
 		url.mkdirs();
 		
-				//UUID 생성
+		//UUID 생성
 		UUID uuid = UUID.randomUUID();
 		System.out.println("원본파일명 : " + file.getOriginalFilename());
 		System.out.println("UUID파일명 : " + uuid.toString()+file.getOriginalFilename());
@@ -61,6 +71,7 @@ public class CommunityController {
 		System.out.println("실제 경로 : " + url);
 				
 		try {
+			//서버에 파일저장
 			file.transferTo(upFileName);
 			
 			//썸네일 만들기
@@ -68,6 +79,14 @@ public class CommunityController {
 			Thumbnailator.createThumbnail(file.getInputStream(), thumbnail,100,100);
 			
 			thumbnail.close();
+			
+			//dto 객체 생성
+			CommunityDTO communityDTO = new CommunityDTO();
+			
+			//DB에 파일 정보 저장
+			communityService.saveFileUpload(communityDTO);
+			System.out.println("확인컨트롤러");
+			
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}

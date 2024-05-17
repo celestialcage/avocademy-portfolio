@@ -1,46 +1,160 @@
-<!doctype html>
-<html lang="ko" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <th:block th:insert="~{./fragments.html :: headTag}"></th:block>
-  
-  	<!-- 추가 script -->
-	<script type="text/javascript">
+<th:block th:insert="~{./fragments.html :: headTag}"></th:block>
+
+<meta charset="UTF-8">
+<title>커뮤니티 게시판</title>
+
+<!-- 추가 script -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<!-- 부트스트랩 JS 포함 (선택 사항, 부트스트랩 구성 요소 기능에 필요할 수 있음) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 	
-	</script>
-  
-  	<!-- 추가 css -->
-	<style type="text/css">
-	main {
-  		display:row;
-  	}
-  	.mainContents {
-  		margin: 0 auto;
-  		height: auto;
-  		min-height: 600px;
-  	}
-  	</style>
+<style type="text/css">
+
+main {
+	display: row;
+}
+
+.mainContents {
+	margin: 0 auto;
+	height: auto;
+	min-height: 600px;
+}
+
+h3 {
+	text-align: center;
+}
+
+h5 {
+	text-align: center;
+}
+
+</style>
 </head>
-<body>	
+<body>
 	<main class="container">
-		<th:block th:insert="~{./fragments.html :: menu}"></th:block>	
+		<th:block th:insert="~{./fragments.html :: menu}"></th:block>
 		<th:block th:insert="~{./fragments.html :: headerImg}"></th:block>
-
-		<!-- 여기가 본문 -->
-		<div class="mainContents">
-		<h3>파일업로드</h3>
-
-		<div class="">
-			<form action="/fileUp" method="post" enctype="multipart/form-data">
-
-				<input type="file" name="fileUp">
-				<button type="submit">파일업로드</button>
-			</form>
-		</div>
 		
+		<!-- 여기가 본문 -->
+		
+		<div class="mainContents">
+			<h3>커뮤니티게시판입니다.</h3>
+			<h5>많은관심부탁드립니다</h5>
+		
+			<div>
+				<table class="table table-hover">
+					<thead class="">
+						<tr>
+							<th class="col-1 text-center">번호</th>
+							<th class="col-5 text-center">제목</th>
+							<th class="col-1 text-center">글쓴이</th>
+							<th class="col-3 text-center">날짜</th>
+							<th class="col-1 text-center">답변상태</th>
+							<th class="col-1 text-center">삭제여부</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="name : ${list}"
+							th:onclick="|location.href='@{/online/detail(bno=${name.bno}, pageNo=${pageNo})}'|">
+							<td class="text-center" th:text="${name.bno}"></td>
+							<td class="text-center" th:text="${name.btitle}"></td>
+							<td class="text-center" th:text="${name.uname}"></td>
+							<td class="text-center" th:text="${name.bdate}"></td>
+							<td class="text-center"><span th:if="${name.commentYN == 0}" th:text="답변대기"
+								class="badge text-bg-secondary"></span> <span
+								th:if="${name.commentYN == 1}" th:text="답변완료"
+								class="badge text-bg-warning"></span></td>
+							<td class="text-center" th:text="${name.bdel}"></td>
+						</tr>
+					</tbody>
+				</table>
+				<button type="button" class="btn btn-outline-gray"
+					onclick="location.href='online/write'">글쓰기</button>
+			</div>
+
 		</div>
+
 		<!-- 본문 끝 -->
 	</main>
-	<!-- FOOTER -->
+	<!-- 페이지네이션 부트스트랩 -->
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" id="prev-page">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="/online?page=1">1</a></li>
+    <li class="page-item"><a class="page-link" href="/online?page=2">2</a></li>
+    <li class="page-item"><a class="page-link" href="/online?page=3">3</a></li>
+    <li class="page-item"><a class="page-link" href="/online?page=4">4</a></li>
+    <li class="page-item"><a class="page-link" href="/online?page=5">5</a></li>
+    <li class="page-item"><a class="page-link" href="/online?page=6">6</a></li>
+    <li class="page-item" id="next-page">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const totalPages = 10; // 총 페이지 수 설정
+      const pagination = document.querySelector('.pagination');
+      let prevPage = document.getElementById('prev-page');
+      let nextPage = document.getElementById('next-page');
+
+      function updatePagination(currentPage) {
+        // 이전 페이지 및 다음 페이지 링크 업데이트
+        prevPage.classList.toggle('disabled', currentPage === 1);
+        nextPage.classList.toggle('disabled', currentPage === totalPages);
+
+        prevPage.querySelector('a').href = currentPage > 1 ? `/online?page=${currentPage - 1}` : '#';
+        nextPage.querySelector('a').href = currentPage < totalPages ? `/online?page=${currentPage + 1}` : '#';
+
+
+        // 페이지 번호 갱신
+        let pageItems = '';
+        for (let i = 1; i <= totalPages; i++) {
+          if (i === currentPage) {
+            pageItems += `<li class="page-item active"><a class="page-link" href="/online?page=${i}">${i}</a></li>`;
+          } else {
+            pageItems += `<li class="page-item"><a class="page-link" href="/online?page=${i}">${i}</a></li>`;
+          }
+        }
+        pagination.innerHTML = prevPage.outerHTML + pageItems + nextPage.outerHTML;
+
+        // 다시 요소를 찾고 클릭 이벤트 리스너 추가
+       prevPage = document.getElementById('prev-page');
+       nextPage = document.getElementById('next-page'); 
+        
+        // 페이지 링크 클릭 이벤트 리스너 추가
+        pagination.querySelectorAll('.page-link').forEach(link => {
+          link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const selectedPage = parseInt(this.getAttribute('href').split('=')[1]);
+            updatePagination(selectedPage);
+          });
+        });
+      }
+
+      updatePagination(1); // 초기 페이지를 1로 설정
+    });
+  </script>
+  
+  <!-- FOOTER -->
 	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
+  
+	
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

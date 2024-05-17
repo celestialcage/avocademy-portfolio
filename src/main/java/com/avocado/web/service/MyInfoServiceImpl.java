@@ -5,8 +5,6 @@ import org.apache.commons.mail.SimpleEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.avocado.web.util.SecureInfo;
-
 @Service
 public class MyInfoServiceImpl implements MyInfoService {
 	
