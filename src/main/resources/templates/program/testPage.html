@@ -17,6 +17,7 @@
   		margin: 0 auto;
   		height: auto;
   		min-height: 600px;
+  		display: flex;
   	}
   	</style>
 </head>
@@ -27,18 +28,11 @@
 
 		<!-- 여기가 본문 -->
 		<div class="mainContents">
-		      <div class="container">
-         <div class="row">
-            <div class="col-md-4 mx-auto">
-                  <h2 class="text-center text-uppercase text-primary mb-4">myInfo</h2>
-					<h3>상담현황</h3>
-					<a th:href="@{/mail}">
-					<h3>메일보내기</h3>
-					
-            </div>
-         </div>
-      </div>
 		
+		<!-- =============사이드바============== -->
+		<th:block th:insert="~{./fragments.html :: counselSidebar}"></th:block>	
+		
+		<p>심리 검사</p>
 		</div>
 		<!-- 본문 끝 -->
 	</main>

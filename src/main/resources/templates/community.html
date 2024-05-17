@@ -27,11 +27,16 @@
 
 		<!-- 여기가 본문 -->
 		<div class="mainContents">
+		<h3>파일업로드</h3>
+
+		<div class="">
+			<form action="/fileUp" method="post" enctype="multipart/form-data">
+
+				<input type="file" name="fileUp">
+				<button type="submit">파일업로드</button>
+			</form>
+		</div>
 		
-		<!-- =============사이드바============== -->
-		<th:block th:insert="~{./fragments.html :: counselSidebar}"></th:block>	
-		
-		<p>심리 검사</p>
 		</div>
 		<!-- 본문 끝 -->
 	</main>
