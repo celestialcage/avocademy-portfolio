@@ -1,8 +1,11 @@
-async function getData(url, headers = {}) {
+async function getData(url, cno, headers = {}) {
   const options = {
-    method: "GET",
+    method: "POST",
+	body: JSON.stringify({
+		cns_no: cno,
+	}),
     headers: {
-      // "Content-Type": "application/json",
+      "Content-Type": "application/json",
       ...headers,
     },
   };
