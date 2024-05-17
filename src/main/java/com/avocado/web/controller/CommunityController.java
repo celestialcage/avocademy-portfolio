@@ -1,11 +1,7 @@
 package com.avocado.web.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.UUID;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,85 +9,86 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.avocado.web.entity.CommunityDTO;
-import com.avocado.web.service.CommunityService;
-import com.avocado.web.service.CommunityServiceImpl;
+import com.avocado.web.entity.OnlineDTO;
+import com.avocado.web.service.OnlineService;
 import com.avocado.web.util.Util;
 
-import net.coobird.thumbnailator.Thumbnailator;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpSession;
 @Controller
 public class CommunityController {
 	
 	@Autowired
 	private Util util;
-	
-	@Autowired
-	private CommunityService communityService;
-	
-	
-	@GetMapping("/community") // 커뮤니티
-	public String community(Model model) {
-		model.addAttribute("message", "커뮤니티");
-		return "community";
-	}
-	
-	
-	@PostMapping("/fileUp")
-	public String fileUp(@RequestParam("fileUp") MultipartFile file) {
-		System.out.println("파일 타입: " + file.getName());
-		System.out.println("파일 사이즈: " + file.getSize());
-		System.out.println("파일 이름: " + file.getOriginalFilename());
-		
-		//서버의 물리적 경로
-		//String url = util.req().getServletContext().getRealPath("/upload");
-		File url = new File(util.req().getServletContext().getRealPath("/upload"));
-		//디렉터리가 존재하지 않으면 생성
-		if (!url.exists()) {
-	            url.mkdirs();
-	        }
-		url.mkdirs();
-		
-		//UUID 생성
-		UUID uuid = UUID.randomUUID();
-		System.out.println("원본파일명 : " + file.getOriginalFilename());
-		System.out.println("UUID파일명 : " + uuid.toString()+file.getOriginalFilename());
-		
-		String newFileName = uuid.toString()+ "-" + file.getOriginalFilename();
-		System.out.println("새로 만들어진 파일이름 : " + newFileName);
-		
-		//날짜를 뽑아서 파일명 변경하기
-		LocalDateTime Idt = LocalDateTime.now();
-		String IdtFormat = Idt.format(DateTimeFormatter.ofPattern("YYYYMMddHHmmSS"));
-		System.out.println("날짜 파일명 : " +IdtFormat + file.getOriginalFilename());
-				
-		//실제 경로
-		File upFileName = new File(url, file.getOriginalFilename());
-		System.out.println("실제 경로 : " + url);
-				
-		try {
-			//서버에 파일저장
-			file.transferTo(upFileName);
-			
-			//썸네일 만들기
-			FileOutputStream thumbnail = new FileOutputStream(new File(url,"S_"+newFileName));
-			Thumbnailator.createThumbnail(file.getInputStream(), thumbnail,100,100);
-			
-			thumbnail.close();
-			
-			//dto 객체 생성
-			CommunityDTO communityDTO = new CommunityDTO();
-			
-			//DB에 파일 정보 저장
-			communityService.saveFileUpload(communityDTO);
-			System.out.println("확인컨트롤러");
-			
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
+
+	@Resource(name = "onlineService")
+	private OnlineService onlineService;
+
+	@GetMapping("/detail")
+	public String detail(Model model, @RequestParam(name = "bno", required = false, defaultValue = "1") int bno,
+			HttpSession session) {
+		System.out.println(bno);
+		OnlineDTO detail = onlineService.detail(bno);
+		System.out.println(detail.toString());
+		if (detail.getUname().equals(session.getAttribute("uname")) || (int) session.getAttribute("ugrade") == 5) {
+			model.addAttribute("detail", detail);
+			return "online/detail";
+		} else {
+			return "redirect:/online";
 		}
-		
-		return "redirect:/community";
-		
 	}
+
+	@GetMapping("/write")
+	public String write() {
+
+		HttpSession session = util.getSession();
+
+		if (session.getAttribute("uname") != null) {
+
+			return "online/write";
+		} else {
+			return "redirect:/login";
+		}
+	}
+
+	@PostMapping("/write")
+	public String write(@RequestParam(name = "btitle") String btitle, @RequestParam(name = "bcontent") String bcontent,
+			HttpSession session) {
+		System.out.println(btitle + bcontent);
+		// 글 작성 로직 실행
+
+		// 로그인 검사해주세요
+
+		String uname = (String) session.getAttribute("uname");
+
+		if (uname != null) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("btitle", btitle);
+			map.put("bcontent", bcontent);
+			map.put("uname", uname);
+			map.put("uno", session.getAttribute("uno"));
+
+			System.out.println(map);
+
+			int result = onlineService.write(map);
+
+			// 성공시 목록 페이지로 리디렉션
+			/* String url = "online"; */
+			return "redirect:/online";
+
+		} else {
+			return "redirect:/login";
+		}
+
+	}
+
+	@PostMapping("/deletecd")
+	public String deletecd(@RequestParam(name = "bno") String bno) {
+		System.out.println("삭제 : " + bno);
+		int result = onlineService.deletecd(bno);
+		return "redirect:/online";
+	}
+	
+
 }
