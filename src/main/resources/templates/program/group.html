@@ -12,6 +12,15 @@
   	min-height: 600px;
   	display: flex;
   }
+  .programInfo {
+  	width: 100%;
+  	height: 100%;
+  	margin: 15px;
+  	padding: 10px;
+  }
+  .pageText {
+  	
+  }
   </style>
 </head>
 <body>	
@@ -22,16 +31,44 @@
 		<div class="mainContents" style="width: 100%;">
 			<!-- =============사이드바============== -->
 			<th:block th:insert="~{./fragments.html :: counselSidebar}"></th:block>	
-			<div>
-				<h1>집단 상담</h1>	
-				<div>
-						<h4 class="h4-tit01">집단상담이란?</h4>
-						<p class="con-mg-b">비슷한 관심사를 가진 학생들과 전문상담자가 함께 모여 여러 활동과 대화를 통해서 문제해결을 돕고 자기 성장을 도모하는 프로그램입니다.</p>
-				</div>
-				
-				<div>
-					<a th:href="@{/group/programList}">집단상담 신청하기</a>
-				</div>		
+			<div class="programInfo">	
+				<div class="pageText mb-5">
+			
+			      <article class="blog-post">
+			        <h1 class="my-2">집단 상담</h1>			
+			        <hr>
+			      </article>
+			      <article class="blog-post mb-4">
+					<h4 class="h4-tit01 m-2">집단상담이란?</h4>
+					<p class="ms-4 mt-3">비슷한 관심사를 가진 학생들과 전문상담자가 함께 모여 여러 활동과 대화를 통해서 문제해결을 돕고 자기 성장을 도모하는 프로그램입니다.</p>
+			      </article>
+			      <article class="blog-post mb-4">
+					<h4 class="h4-tit01 m-2">집단상담 주제</h4>
+			        <dl class="m-3">
+			          <dt class="my-2 ms-2">대인관계 향상 프로그램</dt>
+			          <dd class="ms-4 mb-3">- The language used to describe and define the content of a Web page</dd>
+			          <dt class="my-2 ms-2">명상을 통한 자기 수용 및 스트레스 관리</dt>
+			          <dd class="ms-4 mb-3">- Used to describe the appearance of Web content</dd>
+			          <dt class="my-2 ms-2">진로 탐색 프로그램</dt>
+			          <dd class="ms-4 mb-3">- The programming language used to build advanced Web sites and applications</dd>
+			        </dl>
+			      </article>
+			    </div>
+			    <div class="row my-1 mx-2">
+				    <div class="col-md-6">
+				      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative align-items-center">
+				        <div class="col p-4 d-flex flex-column position-static">
+				          <h4 class="mb-0">집단상담 신청하기</h4>
+				          <a th:href="@{/group/programList}" class="icon-link gap-1 icon-link-hover stretched-link">
+				            <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+				          </a>
+				        </div>
+				        <div class="col-auto d-none d-lg-block">
+				          <svg class="bd-placeholder-img" width="180" height="150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+				        </div>
+				      </div>
+				    </div>
+			  	</div>
 			</div>
 		</div>
 	</main>
