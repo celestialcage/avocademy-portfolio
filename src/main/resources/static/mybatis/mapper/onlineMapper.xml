@@ -2,9 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.avocado.web.repository.OnlineDAO">
 	
-	<select id="online" resultType="OnlineDTO" parameterType="Integer">
-		SELECT bno, btitle, bcontent, bdate, secret, commentYN, bdel 
-		FROM online
+	<select id="online" resultType="OnlineDTO" parameterType="Map">
+		SELECT bno, btitle, bcontent, bdate, secret, commentYN, bdel, user.uname
+		FROM online join user 
+		on online.user_no = user.uno 
 		WHERE bdel = "1" 
 		ORDER BY bno DESC LIMIT #{pageNo}, #{post}; 
 	</select>
@@ -23,7 +24,7 @@
 	
 	<select id="count">
 		select count(1) from online
-		where del = '1';
+		where bdel = '1';
 	</select>
 	
 	<update id="deletecd" parameterType="String">

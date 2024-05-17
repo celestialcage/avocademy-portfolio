@@ -12,7 +12,7 @@ import com.avocado.web.entity.OnlineDTO;
 @Mapper
 public interface OnlineDAO {
 
-	List<OnlineDTO> online(int pageNo, int post);
+	List<OnlineDTO> online(Map<String, Integer> pageMap);
 
 	OnlineDTO detail(int bno);
 
