@@ -9,8 +9,8 @@
 	</select>
 	
 	<insert id="registProgram" parameterType="GroupDTO">
-		INSERT INTO grprograms (prg_nm, cns_no, prg_cd, prg_nope, prg_content, req_end, prg_dow, prg_nmtm, prg_schdl)
-		VALUES (#{prg_nm}, #{cns_no}, #{prg_cd}, #{prg_nope}, #{prg_content}, #{req_end}, #{prg_dow}, #{prg_nmtm}, #{prg_schdl})
+		INSERT INTO grprograms (prg_nm, cns_no, prg_cd, prg_nope, prg_content, prg_start, prg_end, prg_hr, req_end, prg_dow, prg_nmtm)
+		VALUES (#{prg_nm}, #{cns_no}, #{prg_cd}, #{prg_nope}, #{prg_content}, #{prg_start}, #{prg_end}, #{prg_hr}, #{req_end}, #{prg_dow}, #{prg_nmtm})
 	</insert>
 	
 	<select id="adminPRGList" resultType="GroupDTO">
@@ -47,6 +47,12 @@
 		FROM grprograms 
 		WHERE cns_no = #{cns_no} 
 		ORDER BY prg_no DESC LIMIT 1 
+	</select>
+	
+	<select id="programDetail" parameterType="String" resultType="GroupDTO">
+		SELECT prg_no, cns_no, prg_nm, prg_content, prg_nmtm, prg_nope, prg_schdl, prg_dow, prg_place 
+		FROM grprograms 
+		WHERE prg_no = #{no} 
 	</select>
 	
 </mapper>

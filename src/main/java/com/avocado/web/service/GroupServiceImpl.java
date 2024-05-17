@@ -56,6 +56,11 @@ public class GroupServiceImpl implements GroupService {
 		groupDAO.openPRG(prg_no);
 	}
 
+	@Override
+	public GroupDTO programDetail(String no) {
+		return groupDAO.programDetail(no);
+	}
+
 
 
 }
