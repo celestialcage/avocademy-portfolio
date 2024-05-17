@@ -34,7 +34,14 @@ public class OnlineController {
 		System.out.println(bno);
 		OnlineDTO detail = onlineService.detail(bno);
 		System.out.println(detail.toString());
-		if (detail.getUname().equals(session.getAttribute("uname")) || (int) session.getAttribute("ugrade") == 5) {
+
+		// 세션에 로그인이 안되어있는 상태에서 session.get 하면 null 반환되고
+		// null 이랑 equals 연산을 하다보니 null 오류가 발생
+		// 로그인이 안되어있으면 다시 게시판 페이지로 로딩이되거나 로그인으로 이동시키거나 골라서
+		if(session.getAttribute("uname") == null) {
+			// return "redirect:/login";
+			return "redirect:/online";
+		} else if (detail.getUname().equals(session.getAttribute("uname")) || (int) session.getAttribute("ugrade") == 5) {
 			model.addAttribute("detail", detail);
 			return "online/detail";
 		} else {
