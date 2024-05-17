@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:insert="~{./fragments.html :: headTag}"></th:block>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css" rel="stylesheet">
+  <style type="text/css">
+  main {
+  	display:row;
+  }
+  .mainContents {
+  	margin: 0 auto;
+  	height: auto;
+  	min-height: 600px;
+  	display: flex;
+  }
+  .programInfo {
+  	width: 100%;
+  	height: 100%;
+  	margin: 15px;
+  	padding: 10px;
+  }
+  .pageText {
+  	
+  }
+  </style>
+</head>
+<body>	
+	<main class="container">		
+		<th:block th:insert="~{./fragments.html :: menu}"></th:block>	
+		<th:block th:insert="~{./fragments.html :: headerImg}"></th:block>
+		
+		<div class="mainContents" style="width: 100%;">
+			<!-- =============사이드바============== -->
+			<th:block th:insert="~{./fragments.html :: counselSidebar}"></th:block>	
+			<div class="programInfo">	
+				<div class="pageText mb-5">
+			
+			      <article class="blog-post">
+			        <h1 class="my-2">집단 상담</h1>			
+			        <hr>
+			      </article>
+			      <article class="blog-post mb-4">
+					<h4 class="h4-tit01 m-2">프로그램 상세보기</h4>
+			      </article>
+			      <article class="blog-post mb-4">
+			      	<div class="card m-2">
+			      		<div class="card-body">
+					      	<input type="hidden" th:value="3">
+			      			<h5 class="card-title" th:text="${detail.prg_nm}"></h5>
+			      			<h6 class="card-subtitle m-2 text-body-secondary">내용</h6>
+						    <p class="card-text m-2" th:text="${detail.prg_content}"></p>
+			      			<h6 class="card-subtitle m-2 text-body-secondary">정원</h6>
+						    <p class="card-text m-2" th:text="${detail.prg_nmtm}"></p>
+			      			<h6 class="card-subtitle m-2 text-body-secondary">일정</h6>
+						    <p class="card-text m-2" th:text="${detail.prg_schdl}"></p>
+			      			<h6 class="card-subtitle m-2 text-body-secondary">장소</h6>
+						    <p class="card-text m-2" th:text="${detail.prg_place}"></p>
+			      		</div>
+			      	</div>
+			      </article>
+				  <button id="apply" th:attr="onclick=|programApply('${detail.prg_no}', '${detail.prg_nm}', '${detail.prg_nmtm}')|">신청하기</button>
+			    </div>
+
+			</div>
+		</div>
+	</main>
+	<!-- FOOTER -->
+	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
+	<script type="text/javascript">		
+		
+		const programApply = (no, title, stno) =>{
+			//alert(no + " : " + title);
+			Swal.fire({
+				title: title,
+				text: '프로그램 참가를 신청하시겠습니까?',
+				icon: 'question',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '신청',
+				cancelButtonText: '취소',
+				showLoaderOnConfirm: true,
+				preConfirm: (apply) =>{
+					return fetch('/group/programApply?no='+no)
+					.then(response => {
+						if (response.ok){
+							return response.json()					
+						}
+						throw new Error(response.statusText)
+					}).catch(error => {
+						Swal.showValidationMessage('통신오류')
+					})
+				},
+				allowOutsideClick: () => !Swal.isLoading()
+			}).then(apply =>{	
+				if (apply.isConfirmed){
+					//console.log(result)
+					if (apply.value.count == "0") {
+						$.ajax({
+							url: '/group/programApply',
+							type: "post",
+							dataType: "text",
+							data : {'no' : no, 'stno' : stno},
+							success : data => {
+								Swal.fire('신청을 완료했습니다.', '잇힝', 'success');						
+							},
+							error : () => {
+								Swal.fire('신청에 실패했습니다.', 'ㅠㅠ', 'error');						
+							}
+						});
+					}
+					Swal.fire('중복된 스케줄입니다.', '', 'error');				
+				} else if (apply.isDismissed){
+					Swal.fire('신청을 취소했습니다.', '', 'warning');					
+				}
+			})
+			
+		}
+		
+	</script>
+</body>
+</html>

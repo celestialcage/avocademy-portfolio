@@ -27,4 +27,6 @@ public interface GroupDAO {
 
 	void openPRG(int prg_no);
 
+	GroupDTO programDetail(String no);
+
 }
