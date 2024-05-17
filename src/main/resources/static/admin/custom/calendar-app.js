@@ -52,7 +52,7 @@
 	};
 	
 	const calendar = new Calendar(container, options);
-	
+	let cno = 1;
 	const navbarRange = document.querySelector('.calendar-render-range');
 	
 	function displayRenderRange() {
@@ -174,12 +174,12 @@
 		calendar.changeView('month');
 		update();
 		calendar.setOptions({
-		month: {
-			visibleWeeksCount: 0,
-			workweek: false,
-			narrowWeekend: true,
-			dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-		},
+			month: {
+				visibleWeeksCount: 0,
+				workweek: false,
+				narrowWeekend: true,
+				dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+			},
 		});
 		calendar.clearGridSelections();
 	});

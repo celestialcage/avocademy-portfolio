@@ -58,11 +58,9 @@
 		              </div>
 		              <div class="dropdown-menu">
 		                <div class="dropdown-content">
-		                  <a href="#" class="dropdown-item" data-counsel-field="job1">취업1</a>
-		                  <a href="#" class="dropdown-item" data-counsel-field="job2">취업2</a>
-		                  <a href="#" class="dropdown-item" data-counsel-field="mental1">심리1</a>
-		                  <a href="#" class="dropdown-item" data-counsel-field="mental2">심리2</a>
-		                  <a href="#" class="dropdown-item" data-counsel-field="mental3">심리3</a>
+		                <th:block th:each="csl : ${counselors}">
+		                  <a href="#" class="dropdown-item" th:data-counsel-field="${csl.cns_no}">[[${csl.cns_field}]] - [[${csl.cns_nm}]]</a>
+		                </th:block>
 		                </div>
 		              </div>
 		            </div>
