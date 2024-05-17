@@ -1,5 +1,6 @@
 package com.avocado.web.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,8 +22,12 @@ public class OnlineServiceImpl implements OnlineService {
 		// 기본 pageNo는 1로 시작
 		// limit 을 설정 할 수 있게
 		pageNo = (pageNo - 1) * post;
+		System.out.println("pageNO : " + pageNo + " / post : " + post);
+		Map<String, Integer> pageMap = new HashMap<>();
+		pageMap.put("pageNo", pageNo);
+		pageMap.put("post", post);
 		
-		List<OnlineDTO> list = onlineDAO.online(pageNo, post);
+		List<OnlineDTO> list = onlineDAO.online(pageMap);
 		return list;
 	}
 

@@ -1,8 +1,6 @@
 package com.avocado.web.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -71,23 +69,26 @@ public class IndexController {
 		} else {
 			totalPage = (totalCount / post) + 1;
 		}
-		model.addAttribute("totalPage", totalPage);
 		
+		// 페이지가 1보다 작으면 0이거나 음수면 1로 돌리기
+		if (pageNo < 1) {
+			pageNo = 1;
+		}
+		// 페이지가 글의 총 개수보다 커지면 페이지는 글 최대 개수로 제한
+		if (pageNo > totalPage) {
+			pageNo = totalPage;
+		}
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("pageNo", pageNo);
 		
 		List<OnlineDTO> list = onlineService.online(pageNo, post);
 		
-		
-		// List<OnlineDTO> list = onlineService.online();
-		
-		//System.out.println(list.get(0).getCommentYN());
+		System.out.println(list);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("pageNo", pageNo);
 		
 		return "online";
 	}
-	
-
-	
 
 }
