@@ -29,15 +29,12 @@ public class OnlineController {
 	private OnlineService onlineService;
 
 	@GetMapping("/detail")
-	public String detail(Model model,
-			@RequestParam(name = "bno", 
-			required = false, defaultValue = "1") int bno, 
+	public String detail(Model model, @RequestParam(name = "bno", required = false, defaultValue = "1") int bno,
 			HttpSession session) {
 		System.out.println(bno);
 		OnlineDTO detail = onlineService.detail(bno);
 		System.out.println(detail.toString());
-		if (detail.getUname().equals(session.getAttribute("uname"))
-				|| (int)session.getAttribute("ugrade") == 5) {
+		if (detail.getUname().equals(session.getAttribute("uname")) || (int) session.getAttribute("ugrade") == 5) {
 			model.addAttribute("detail", detail);
 			return "online/detail";
 		} else {
@@ -59,24 +56,22 @@ public class OnlineController {
 	}
 
 	@PostMapping("/write")
-	public String write(
-			@RequestParam(name = "btitle") String btitle,
-			@RequestParam(name = "bcontent") String bcontent,
+	public String write(@RequestParam(name = "btitle") String btitle, @RequestParam(name = "bcontent") String bcontent,
 			HttpSession session) {
 		System.out.println(btitle + bcontent);
 		// 글 작성 로직 실행
 
 		// 로그인 검사해주세요
 
-		 String uname = (String) session.getAttribute("uname");
-		
+		String uname = (String) session.getAttribute("uname");
+
 		if (uname != null) {
 			Map<String, Object> map = new HashMap<>();
 			map.put("btitle", btitle);
 			map.put("bcontent", bcontent);
 			map.put("uname", uname);
 			map.put("uno", session.getAttribute("uno"));
-			
+
 			System.out.println(map);
 
 			int result = onlineService.write(map);
@@ -92,10 +87,11 @@ public class OnlineController {
 	}
 
 	@PostMapping("/deletecd")
-	public String deletecd(@RequestParam(name ="bno") String bno) {
+	public String deletecd(@RequestParam(name = "bno") String bno) {
 		System.out.println("삭제 : " + bno);
 		int result = onlineService.deletecd(bno);
 		return "redirect:/online";
 	}
 	
+
 }

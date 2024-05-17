@@ -9,5 +9,6 @@ import lombok.ToString;
 @ToString
 public class OnlineDTO {
 	private int bno, user_no, bno2, fno, commentYN, bread;
-	private String btitle, bcontent,bdate, secret, bdel, comment, uname, bupdate;
+	private String btitle, bcontent, bdate, secret, bdel, comment, uname, bupdate;
+
 }

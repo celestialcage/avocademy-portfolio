@@ -55,21 +55,15 @@ public class IndexController {
 	
 	@GetMapping("/online") // 온라인 상담
 	public String online(Model model, HttpSession session,
-			@RequestParam(name="page", defaultValue = "1") int page,
-			@RequestParam(name="size", defaultValue = "10") int size) {
+			@RequestParam(name = "pageNo", required = false, defaultValue = "1") int pageNo) {
+	
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("page", page);
-		map.put("size", size);
 		List<OnlineDTO> list = onlineService.online();
-		List<OnlineDTO> list2 = onlineService.findAll(map);
 		
 		//System.out.println(list.get(0).getCommentYN());
 		
-		int total = onlineService.count();
 		model.addAttribute("list", list);
-		model.addAttribute("list2", list2);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("totalPages", (total + size - 1) / size);
+		model.addAttribute("pageNo", pageNo);
 		
 		return "online";
 	}

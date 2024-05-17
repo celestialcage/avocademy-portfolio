@@ -36,5 +36,5 @@
  		set bdel = '0'
   		where bno = #{bno}
 	</update>
-	
+
 </mapper>
