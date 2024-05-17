@@ -3,10 +3,8 @@ package com.avocado.web.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.avocado.web.entity.CounselorDTO;
@@ -24,7 +22,7 @@ public class CounselDataController {
 
 	@PostMapping("/cs-schedule")
 	public String bringSchedule(@RequestBody CounselorDTO cs) {
-		System.out.println(cs.getCns_no());
+		//System.out.println(cs.getCns_no());
 		String cns_no = String.valueOf(cs.getCns_no());
 		JsonObject json = new JsonObject();
 		List<Map<String, Object>> list;
@@ -42,8 +40,10 @@ public class CounselDataController {
 			obj.addProperty("counselorNo", map.get("cns_no").toString());
 			obj.addProperty("cslName", map.get("cns_nm").toString());
 			obj.addProperty("cslOffice", map.get("ofc_no").toString());
+			obj.addProperty("cslField", map.get("cns_field").toString());
 			obj.addProperty("scheduleDate", map.get("sch_ymd").toString());
 			obj.addProperty("scheduleTime", map.get("sch_hr").toString());
+			obj.addProperty("scheduleState", map.get("sch_state").toString());
 			jsonArr.add(obj);
 		}
 		json.add("schedules", jsonArr);

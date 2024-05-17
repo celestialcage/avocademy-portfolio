@@ -6,6 +6,7 @@
             enableClick: false,
         },
         useFormPopup: false,
+        useDetailPopup: true,
         usageStatistics: false,
         defaultView: 'week',
         timezone: {

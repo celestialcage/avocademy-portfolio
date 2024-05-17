@@ -3,12 +3,16 @@
 <mapper namespace="com.avocado.web.repository.CounselDAO">
 	
 	<select id="findAllSchedule" resultType="Map">
-		SELECT sch_no, c.cns_no, c.cns_nm, c.ofc_no, sch_ymd, sch_hr 
+		SELECT s.sch_no, c.cns_no, c.cns_nm, c.ofc_no, 
+			LEFT(GET_CD_NM('CO0020', cns_field), 2) AS cns_field, sch_ymd, sch_hr, 
+			(SELECT COUNT(0) FROM caply a WHERE a.sch_no = s.sch_no) AS sch_state 
 		FROM cschedule s JOIN counselor c ON s.cns_no = c.cns_no
 	</select>
 	
 	<select id="findEachSchedule" resultType="Map" parameterType="String">
-		SELECT sch_no, c.cns_no, c.cns_nm, c.ofc_no, sch_ymd, sch_hr 
+		SELECT sch_no, c.cns_no, c.cns_nm, c.ofc_no, 
+			LEFT(GET_CD_NM('CO0020', cns_field), 2) AS cns_field, sch_ymd, sch_hr, 
+			(SELECT COUNT(0) FROM caply a WHERE a.sch_no = s.sch_no) AS sch_state 
 		FROM cschedule s JOIN counselor c ON s.cns_no = c.cns_no
 		WHERE c.cns_no = #{cns_no}
 	</select>
