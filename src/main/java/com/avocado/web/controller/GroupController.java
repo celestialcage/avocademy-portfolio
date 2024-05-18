@@ -60,6 +60,7 @@ public class GroupController {
 		return json.toString();
 	}
 	
+	//신청
 	@PostMapping("/programApply")
 	public @ResponseBody String programApply(@RequestParam("no") String no, @RequestParam("stno") String stud_no) {
 		
