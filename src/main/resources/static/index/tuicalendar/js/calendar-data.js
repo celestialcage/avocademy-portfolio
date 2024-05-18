@@ -42,12 +42,14 @@ let COUNSEL_CALENDARS = [
   ];
 
 function getDBEvent(calendar, dbEle) {
-    let id, title, body, location, state;
+    let id, calendarId, title, body, location, state, isVisible;
     id = dbEle.scheduleNo;
+    calendarId = `${dbEle.counselorNo}`;
     title = `상담사 ${dbEle.counselorNo} 신청 가능`;
     body = ``;
     location = `상담사 ${dbEle.counselorNo} 사무실 N호`;
-    state = `Free`;
+    state = dbEle.scheduleState == 0 ? `신청 열림` : `예약됨`;
+    isVisible = dbEle.scheduleState == 0 ? true : false;
     // let calendarId, start, end;
     let attendees = [];
     let raw = {};
@@ -75,7 +77,7 @@ function getDBEvent(calendar, dbEle) {
 
     let event = {
         id: id, // 스케줄번호
-        calendarId: 'cal1', // 캘린더 id...
+        calendarId: calendarId, // 캘린더 id...
         // start: start, // 시작날짜나 끝날짜나.. 하루씩 할거라
         // end: end, // 같을거같다. 근데 시각만 다름.
         title: title, // 일정 제목 -> db Free일 때 (상담사 이름) 상담 가능
@@ -84,7 +86,7 @@ function getDBEvent(calendar, dbEle) {
         state: state, // 일정 상태 -> db 예약 차면 Busy, 안 차면 Free
         attendees: attendees, // 참석자 -> db 상담사, db 학생
         raw: raw, // 일정 상세.. 메모.. 일정 작성자
-        isVisible: true, // 관리자에서는 다 보여주기
+        isVisible: isVisible, // 관리자에서는 다 보여주기
         isReadOnly: true, // 수정 여부. Free일 경우에만? (어차피 새로 로드하는거같은데...)
     }
 
