@@ -6,5 +6,37 @@
 	INSERT INTO file(original_filename, stored_filename, fpath, fsize)
 	VALUES(#{originalFilename},#{storedFilename}, #{fpath}, #{fsize})
 </insert>
+	
+	<select id="community" resultType="CommunityDTO" parameterType="Map">
+		SELECT cno, ctitle, ccontent, cdate, secret, commentYN, cdel, user.uname
+		FROM community join user 
+		on community.user_no = user.uno 
+		WHERE bdel = "1" 
+		ORDER BY cno DESC LIMIT #{pageNo}, #{post}; 
+	</select>
+	
+	<select id="detail" parameterType="Integer" resultType="CommunityDTO"> 
+		SELECT * 
+		FROM onlineview 
+		WHERE bno = #{bno}; 
+	</select>
+	
+	<insert id="write" parameterType="Map"> 
+		INSERT INTO online
+		(btitle, bcontent, user_no) 
+		VALUES (#{btitle}, #{bcontent}, #{uno});
+	</insert>
+	
+	<select id="count">
+		select count(1) from online
+		where bdel = '1';
+	</select>
+	
+	<update id="deletecd" parameterType="String">
+ 		update online 
+ 		set bdel = '0'
+  		where bno = #{bno}
+	</update>
+
 
 </mapper>

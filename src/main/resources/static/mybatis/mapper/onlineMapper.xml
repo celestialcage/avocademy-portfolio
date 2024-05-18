@@ -33,6 +33,10 @@
   		where bno = #{bno}
 	</update>
 	
+	<update id="saveComment" parameterType="Map">
+		update online set comment = #{content}, commentYN = 1
+		where BNO = #{bno} 
+	</update>
 
 
 </mapper>
