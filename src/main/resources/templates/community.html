@@ -75,22 +75,22 @@ h5 {
 							</thead>
 							<tbody>
 								<tr th:each="name : ${list}"
-									th:onclick="|location.href='@{/online/detail(bno=${name.bno}, pageNo=${pageNo})}'|">
-									<td class="text-center" th:text="${name.bno}"></td>
-									<td class="text-center" th:text="${name.btitle}"></td>
+									th:onclick="|location.href='@{/community/detail(cno=${name.cno}, pageNo=${pageNo})}'|">
+									<td class="text-center" th:text="${name.cno}"></td>
+									<td class="text-center" th:text="${name.ctitle}"></td>
 									<td class="text-center" th:text="${name.uname}"></td>
-									<td class="text-center" th:text="${name.bdate}"></td>
-									<td class="text-center"><span
-										th:if="${name.commentYN == 0}" th:text="답변대기"
-										class="badge text-bg-secondary"></span> <span
-										th:if="${name.commentYN == 1}" th:text="답변완료"
+									<td class="text-center" th:text="${name.cdate}"></td>
+									<td class="text-center">
+									<span th:if="${name.commentYN == 0}" th:text="답변대기"
+										class="badge text-bg-secondary"></span> 
+										<span th:if="${name.commentYN == 1}" th:text="답변완료"
 										class="badge text-bg-warning"></span></td>
-									<td class="text-center" th:text="${name.bdel}"></td>
+									<td class="text-center" th:text="${name.cdel}"></td>
 								</tr>
 							</tbody>
 						</table>
 						<button type="button" class="btn btn-outline-gray"
-							onclick="location.href='online/write'">글쓰기</button>
+							onclick="location.href='community/write'">글쓰기</button>
 					</div>
 
 				</div>
@@ -106,12 +106,12 @@ h5 {
 			<li class="page-item" id="prev-page"><a class="page-link"
 				href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 			</a></li>
-			<li class="page-item"><a class="page-link" href="/online?page=1">1</a></li>
-			<li class="page-item"><a class="page-link" href="/online?page=2">2</a></li>
-			<li class="page-item"><a class="page-link" href="/online?page=3">3</a></li>
-			<li class="page-item"><a class="page-link" href="/online?page=4">4</a></li>
-			<li class="page-item"><a class="page-link" href="/online?page=5">5</a></li>
-			<li class="page-item"><a class="page-link" href="/online?page=6">6</a></li>
+			<li class="page-item"><a class="page-link" href="/community?page=1">1</a></li>
+			<li class="page-item"><a class="page-link" href="/community?page=2">2</a></li>
+			<li class="page-item"><a class="page-link" href="/community?page=3">3</a></li>
+			<li class="page-item"><a class="page-link" href="/community?page=4">4</a></li>
+			<li class="page-item"><a class="page-link" href="/community?page=5">5</a></li>
+			<li class="page-item"><a class="page-link" href="/community?page=6">6</a></li>
 			<li class="page-item" id="next-page"><a class="page-link"
 				href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 			</a></li>
