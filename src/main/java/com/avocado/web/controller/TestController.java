@@ -13,8 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.avocado.web.service.SecureInfo;
 import com.avocado.web.service.TestService;
+import com.avocado.web.util.SecureInfo;
 
 import jakarta.annotation.Resource;
 

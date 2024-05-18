@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.avocado.web.entity.CounselorDTO;
 import com.avocado.web.entity.StudentDTO;
 import com.avocado.web.repository.UserDAO;
+import com.avocado.web.util.SecureInfo;
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -19,7 +20,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public Map<String, Object> login(Map<String, Object> map) {
-		map.put("encryptKey", secureInfo.getEncryptkey());
+		map.put("encryptKey", secureInfo.getEncryptKey());
 		return userDAO.login(map);
 	}
 
