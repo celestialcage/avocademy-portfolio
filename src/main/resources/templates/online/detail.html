@@ -26,6 +26,7 @@
 }
 .card{
 	 height: 450px;
+	
 }
 
 .card-header h3 {
@@ -72,13 +73,20 @@
 						<p class="card-text" th:utext="${detail.bcontent}"></p>
 					</div>
 				</div>
-				<div class="commentdiv">
+				<div class="commentdiv mt-4">
+				 	<h4>답변</h4>
+					<ul class="list-group mb-3" id="comment-list">
+							<li class="list-group-item"><p th:text="${detail.comment}">댓글 내용</p></li>
+						<!-- <li class="list-group-item" th:each="comment : ${comment}"> -->
+							<!-- <small th:text="${comment.uname}">작성자</small> -->
+						<!-- </li> -->
+					</ul>
 					<div class="mb-3">
 						<label for="Commenttext" class="form-label">답장</label>
 						<textarea class="form-control" id="Commenttext" rows="3"></textarea>
 					</div>
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-						<button type="button" class="btn btn-outline-secondary">입력하기</button>
+						<button type="button" class="btn btn-outline-secondary" id="submit-comment">입력하기</button>
 					</div>
 				</div>
 			</div>
@@ -132,7 +140,7 @@
 		    });
             }
         
-	function updatecd(bno){
+	/* function updatecd(bno){
 		  Swal.fire({
 		    title: "수정합니까?",
 		    text: "해당 내용을 수정합니다.",
@@ -146,8 +154,53 @@
 		      // Swal.fire({ title: "수정을 선택했습니다.", text: "수정합니다.", icon: "success" });
 		    }
 		  });
-        }
+        } */
     </script>
+    <script>
+    $(document).ready(function () {
+        $('#submit-comment').click(function () {
+            var commentContent = $('#Commenttext').val();
+            var postId = [[${detail.bno}]];
+            
+
+            if (commentContent.trim() === "") {
+                Swal.fire({
+                    title: '오둥이',
+                    text: '댓글 내용을 입력하세요.',
+                    icon: 'error',
+                    confirmButtonText: '확인'
+                });
+                return;
+            }
+
+            $.ajax({
+                url: '/online/comment?bno=' + postId,
+                type: 'POST',
+                data: {
+                    content: commentContent
+                },
+                success: function (response) {
+                	alert("성공");
+                    Swal.fire({
+                        title: '성공',
+                        text: '댓글이 성공적으로 추가되었습니다.',
+                        icon: 'success',
+                        confirmButtonText: '확인'
+                    });
+                    location.href="/online/detail?bno=" + postId;
+                },
+                error: function (error) {
+                    Swal.fire({
+                        title: '오둥이',
+                        text: '댓글 추가에 실패했습니다.',
+                        icon: 'error',
+                        confirmButtonText: '확인'
+                    });
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 </html>

@@ -1,8 +1,9 @@
 package com.avocado.web.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import javax.xml.stream.events.Comment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.avocado.web.entity.OnlineDTO;
 import com.avocado.web.service.OnlineService;
@@ -53,16 +55,6 @@ public class OnlineController {
 		}
 	}
 
-	/*
-	 * @GetMapping("/detail") public String detail(@RequestParam(name = "bno")
-	 * String bno, Model model) { int reNo = util.str2Int(bno); if (reNo != -1) {
-	 * OnlineDTO onlineDTO = onlineService.detail(reNo); if (onlineDTO != null) {
-	 * model.addAttribute("detail", onlineDTO); if (onlineDTO.getComment() > 0) {
-	 * List<OnlineDTO> commentList = onlineService.commentList(reNo);
-	 * model.addAttribute("comment", commentList); } return "detail"; } else {
-	 * return "redirect:/error"; // 데이터가 없는 경우 처리 } } else { return
-	 * "redirect:/error"; // bno가 유효하지 않은 경우 처리 } }
-	 */
 
 	// 글쓰기1
 
@@ -122,10 +114,21 @@ public class OnlineController {
 	}
 
 	// 댓글달기
+	// /online/comment/bno=42
 	@PostMapping("/comment")
-	public String comment(@RequestParam(name = "bno") String bno, HttpSession session) {
+	@ResponseBody
+	public String comment(@RequestParam(name = "bno") String bno, HttpSession session,
+			@RequestParam(name="content") String content, Model model) {
 		
-		return "redirect:/detail";
+		int uno = (int) session.getAttribute("uno");
+		
+		System.out.println("글번호 : " + bno);
+		System.out.println("글번호 : " + content);
+		
+		int result = onlineService.saveComment(uno, bno, content);
+		
+		
+		return String.valueOf(result);
 	}
 
 }
