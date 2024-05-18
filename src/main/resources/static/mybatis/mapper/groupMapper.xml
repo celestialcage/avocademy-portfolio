@@ -3,20 +3,24 @@
 <mapper namespace="com.avocado.web.repository.GroupDAO">
 	
 	<select id="programList" resultType="GroupDTO">
-		SELECT prg_no, prg_nm, prg_content, cns_no, prg_nope, prg_cd, prg_schdl, prg_nmtm, prg_dow
-		FROM grprograms 
-		WHERE prg_aprv = 1
+		SELECT prg_no, prg_nm, prg_nope, prg_schdl, prg_nmtm, prg_dow,
+				GET_CD_NM('CO0020', prg_cd) AS prg_cd,
+				GET_CD_NM('CO0010', prg_hr) AS prg_hr,				
+				(select c.cns_nm from counselor c where c.cns_no = g.cns_no) AS cns_nm				
+		FROM grprograms g 
+		WHERE prg_aprv = 1 
+		ORDER BY prg_no DESC
 	</select>
 	
 	<insert id="registProgram" parameterType="GroupDTO">
-		INSERT INTO grprograms (prg_nm, cns_no, prg_cd, prg_nope, prg_content, req_end, prg_dow, prg_nmtm, prg_schdl)
-		VALUES (#{prg_nm}, #{cns_no}, #{prg_cd}, #{prg_nope}, #{prg_content}, #{req_end}, #{prg_dow}, #{prg_nmtm}, #{prg_schdl})
+		INSERT INTO grprograms (prg_nm, cns_no, prg_cd, prg_nope, prg_content, prg_schdl, prg_hr, req_end, prg_dow, prg_nmtm, prg_place)
+		VALUES (#{prg_nm}, #{cns_no}, #{prg_cd}, #{prg_nope}, #{prg_content}, #{prg_schdl}, #{prg_hr}, #{req_end}, #{prg_dow}, #{prg_nmtm}, #{prg_place})
 	</insert>
 	
 	<select id="adminPRGList" resultType="GroupDTO">
 		SELECT * 
 		FROM grprograms 
-		ORDER BY prg_no DESC; 
+		ORDER BY prg_no DESC
 	</select>
 	
 	<update id="approvePRG" parameterType="int">
@@ -48,5 +52,22 @@
 		WHERE cns_no = #{cns_no} 
 		ORDER BY prg_no DESC LIMIT 1 
 	</select>
+	
+	<select id="programDetail" parameterType="String" resultType="GroupDTO">
+		SELECT prg_no, cns_no, prg_nm, prg_content, prg_nmtm, prg_nope, prg_schdl, prg_dow, prg_place 
+		FROM grprograms 
+		WHERE prg_no = #{no} 
+	</select>
+	
+	<select id="getSchedulNo" parameterType="String" resultType="Integer">
+		SELECT grsch_no 
+		FROM grschedule 
+		WHERE prg_no = #{prg_no}
+	</select>
+	
+	<insert id="apply" parameterType="Map">
+		INSERT INTO graply (stud_no, grsch_no) 
+		VALUES (#{stud_no}, #{schdno})
+	</insert>
 	
 </mapper>

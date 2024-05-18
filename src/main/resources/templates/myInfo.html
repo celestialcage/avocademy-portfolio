@@ -31,10 +31,15 @@
          <div class="row">
             <div class="col-md-4 mx-auto">
                   <h2 class="text-center text-uppercase text-primary mb-4">myInfo</h2>
+					<h1>마이페이지</h1>
+					<div th:if="${user}">
+						<p>사용자 이름 : <span th:text="${user.uname}"></span>
+						
 					<h3>상담현황</h3>
-					<a th:href="@{/mail}">
+					<a th:href="@{/mail}"></a>
 					<h3>메일보내기</h3>
 					
+				</div>
             </div>
          </div>
       </div>

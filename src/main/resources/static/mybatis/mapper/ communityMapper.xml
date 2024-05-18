@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.avocado.web.repository.CommunityDAO">
+
+<insert id="insertFile" parameterType="com.avocado.web.entity.CommunityDTO">
+	INSERT INTO file(original_filename, stored_filename, fpath, fsize)
+	VALUES(#{originalFilename},#{storedFilename}, #{fpath}, #{fsize})
+</insert>
+
+</mapper>

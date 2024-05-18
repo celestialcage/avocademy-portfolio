@@ -1,6 +1,7 @@
 package com.avocado.web.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.avocado.web.entity.GroupDTO;
 
@@ -21,6 +22,12 @@ public interface GroupService {
 	int getProgramNo(String string);
 
 	void openPRG(int prg_no);
+
+	GroupDTO programDetail(String no);
+
+	List<Integer> getSchedulNo(String no);
+
+	void apply(Map<String, Object> map);
 	
 
 }

@@ -1,13 +1,60 @@
+let COUNSEL_CALENDARS = [
+    {
+      id: '1', // 1 블베빔
+      name: '심리 - 블베빔',
+      color: '#ffffff',
+      borderColor: '#9e5fff',
+      backgroundColor: '#9e5fff',
+      dragBackgroundColor: '#9e5fff',
+    },
+    {
+      id: '7', // 7 최행복
+      name: '취업 - 최행복',
+      color: '#ffffff',
+      borderColor: '#00a9ff',
+      backgroundColor: '#00a9ff',
+      dragBackgroundColor: '#00a9ff',
+    },
+    {
+      id: '2', // 2 크랜박
+      name: '취업 - 크랜박',
+      color: '#ffffff',
+      borderColor: '#DB473F',
+      backgroundColor: '#DB473F',
+      dragBackgroundColor: '#DB473F',
+    },
+    {
+      id: '3', // 3 라이미
+      name: '심리 - 라이미',
+      color: '#ffffff',
+      borderColor: '#03bd9e',
+      backgroundColor: '#03bd9e',
+      dragBackgroundColor: '#03bd9e',
+    },
+    {
+      id: '8', // 8 박지혜
+      name: '심리 - 박지혜',
+      color: '#ffffff',
+      borderColor: '#bbdc00',
+      backgroundColor: '#bbdc00',
+      dragBackgroundColor: '#bbdc00',
+    },
+  ];
+
 function getDBEvent(calendar, dbEle) {
-    let id, title, body, location, state;
-    id = dbEle.scheduleNo;
-    title = `상담사 ${dbEle.counselorNo} 신청 가능`;
+    let id, calendarId, title, body, location, state, isReadOnly;
+    id = `${dbEle.scheduleNo}`;
+    calendarId = `${dbEle.counselorNo}`;
+    title = `${dbEle.cslField}) ${dbEle.cslName} 상담사 신청 가능`;
     body = ``;
-    location = `상담사 ${dbEle.counselorNo} 사무실 N호`;
-    state = `Free`;
+    location = `${dbEle.cslOffice}호 사무실`;
+    state = dbEle.scheduleState === 0 ? `예약됨`: `신청 열림`;
+    // isReadOnly = dbEle.scheduleState === 0 ? true : false;
     // let calendarId, start, end;
     let attendees = [];
-    let raw = {};
+    let raw = {
+        //memo: `${dbEle.scheduleNo}`,
+    };
     // var raw = {
     //     memo: chance.sentence(),
     //     creator: {
@@ -32,7 +79,7 @@ function getDBEvent(calendar, dbEle) {
 
     let event = {
         id: id, // 스케줄번호
-        calendarId: 'job1', // 캘린더 id...
+        calendarId: calendarId, // 캘린더 id...
         // start: start, // 시작날짜나 끝날짜나.. 하루씩 할거라
         // end: end, // 같을거같다. 근데 시각만 다름.
         title: title, // 일정 제목 -> db Free일 때 (상담사 이름) 상담 가능
@@ -73,4 +120,8 @@ async function getDBEvents(viewName) {
     .catch(error => console.log(error));
 
     return dbEvents;
+}
+
+function changeDBSchedule(change) {
+
 }

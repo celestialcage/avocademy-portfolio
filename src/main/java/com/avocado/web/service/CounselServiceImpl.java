@@ -18,4 +18,14 @@ public class CounselServiceImpl implements CounselService {
 		return counselDAO.findAllSchedule();
 	}
 
+	@Override
+	public List<Map<String, Object>> findEachSchedule(String cns_no) {
+		return counselDAO.findEachSchedule(cns_no);
+	}
+
+	@Override
+	public List<Map<String, Object>> findAllCounselors() {
+		return counselDAO.findAllCounselors();
+	}
+
 }

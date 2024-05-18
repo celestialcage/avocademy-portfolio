@@ -12,6 +12,15 @@
   	min-height: 600px;
   	display: flex;
   }
+  .programInfo {
+  	width: 100%;
+  	height: 100%;
+  	margin: 15px;
+  	padding: 10px;
+  }
+  .pageText {
+  	
+  }
   </style>
 </head>
 <body>	
@@ -22,36 +31,51 @@
 		<div class="mainContents" style="width: 100%;">
 			<!-- =============사이드바============== -->
 			<th:block th:insert="~{./fragments.html :: counselSidebar}"></th:block>	
-			<div>
-				<h1>집단 상담</h1>	
-				<div>
-					<table border="1">
+			<div class="programInfo">	
+				<div class="pageText mb-5">
+			
+			      <article class="blog-post">
+			        <h1 class="my-2">집단 상담</h1>			
+			        <hr>
+			      </article>
+			      <article class="blog-post mb-4">
+					<h4 class="h4-tit01 m-2">프로그램 목록</h4>
+			      </article>
+			      <article class="blog-post mb-4">
+					<table border="1" class="m-3">
 						<thead>
 							<tr>
-								<th>프로그램명</th>
-								<th>담당 상담자</th>
+								<th class="">프로그램명</th>
+								<th>담당자</th>
 								<th>정원</th>
 								<th>분류</th>
-								<th>요일</th>
 								<th>기간</th>
+								<th>요일</th>
+								<th>시간</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="r : ${list}">
-								<td><a th:href="@{/group/programApply(no=${r.prg_no})}" th:text="${r.prg_nm}"></a></td>
-								<td th:text="${r.cns_no}"></td>
+								<td><a th:href="@{/group/programDetail(no=${r.prg_no})}" th:text="${r.prg_nm}"></a></td>
+								<td th:text="${r.cns_nm}"></td>
 								<td th:text="${r.prg_nope}"></td>
 								<td th:text="${r.prg_cd}"></td>
-								<td th:text="${r.prg_dow}"></td>
 								<td th:text="${r.prg_schdl}"></td>
+								<td th:text="${r.prg_dow}"></td>
+								<td th:text="${r.prg_hr}"></td>
 							</tr>
 						</tbody>
 					</table>
-				</div>		
+			      </article>
+			    </div>
+
 			</div>
 		</div>
 	</main>
 	<!-- FOOTER -->
 	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
+	<script type="text/javascript">
+
+	</script>
 </body>
 </html>
