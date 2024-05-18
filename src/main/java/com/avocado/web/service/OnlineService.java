@@ -17,5 +17,4 @@ public interface OnlineService {
 
 	public int deletecd(String bno);
 
-
 }

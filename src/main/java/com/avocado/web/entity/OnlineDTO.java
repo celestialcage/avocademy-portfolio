@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class OnlineDTO {
 
-	private int bno, user_no, bno2, fno, commentYN, bread;
+	private int bno, user_no, bno2, fno, commentYN, bread, reNo;
 	private String btitle, bcontent, bdate, secret, bdel, comment, uname, bupdate;
 
 }
