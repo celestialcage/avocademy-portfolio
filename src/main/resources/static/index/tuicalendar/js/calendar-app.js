@@ -117,8 +117,6 @@
         reloadEvents(cnsno);
     }
 
-    
-
     function bindAppEvents(cnsno) {
         dropdownTrigger.addEventListener('click', toggleDropdownState);
     
@@ -137,21 +135,22 @@
         })
     
         dropdownContent.addEventListener('click', function (e) {
-		  let emptyArr = [];
-			/* console.log(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1);
-			console.log(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo));
-			console.log(appState.activeCalendarIds);
-			console.log(e.target.dataset.counselNo); */
+		  let calIdArr = COUNSEL_CALENDARS.map(ele => { ele.id });
+		  cal.setCalendarVisibility(calIdArr, false);
           if ('counselNo' in e.target.dataset) {
+			console.log(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1);
             if(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1) { // 이게 없으면
-				appState.activeCalendarIds = emptyArr;
+				appState.activeCalendarIds = [];
                 appState.activeCalendarIds.push(e.target.dataset.counselNo);
-				COUNSEL_CALENDARS.forEach((e) => {
-					// console.log(typeof e.id);
-					console.log(cal);
-					cal.setCalendarVisibility(e.id, false);
-				})
-                cal.setCalendarVisibility(e.target.dataset.counselNo, true);
+                cal.setCalendarVisibility(appState.activeCalendarIds, true);
+				cal.setOptions({
+					week: {
+						// 얘는 뭔지를 모르겠네...
+						collapseDuplicateEvents: !(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1),
+					},
+					useDetailPopup: !!(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1),
+				});
+				console.log(cal.getOptions());
             }
             toggleDropdownState();
             update(cnsno);
