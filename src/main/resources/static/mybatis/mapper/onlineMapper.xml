@@ -32,5 +32,11 @@
  		set bdel = '0'
   		where bno = #{bno}
 	</update>
+	
+	
+	<insert id="comment" parameterType="OnlineDTO">
+  		INSERT INTO comment (bno, uno, comment) 
+  		values (#{bno}, (select uno from user where uid=#{id}), #{comment})
+	</insert>
 
 </mapper>
