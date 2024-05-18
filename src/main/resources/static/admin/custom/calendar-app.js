@@ -10,6 +10,13 @@
 	  useDetailPopup: true,
 	  usageStatistics: false, 
 	  defaultView: 'week',
+	  eventFilter: function (event) {
+		let currentView = cal.getViewName();
+		if (currentView === 'month') {
+		  return ['allday', 'time'].includes(event.category) && event.isVisible;
+		}
+		return event.isVisible;
+	  },
 	  timezone: {
 	    zones: [
 	      {

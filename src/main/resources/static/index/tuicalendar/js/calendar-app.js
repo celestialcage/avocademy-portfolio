@@ -9,6 +9,13 @@
         useDetailPopup: true,
         usageStatistics: false,
         defaultView: 'week',
+		eventFilter: function (event) {
+	      let currentView = cal.getViewName();
+	      if (currentView === 'month') {
+	        return ['allday', 'time'].includes(event.category) && event.isVisible;
+	      }
+	      return event.isVisible;
+	    },
         timezone: {
             zones: [
                 {
@@ -81,9 +88,14 @@
     }
 
     function setDropdownTriggerText() {
-        let csField = COUNSEL_CALENDARS[0].name;
+		function isThisField(e) {
+			if(e.id == appState.activeCalendarIds[0]) {
+				return true;
+			}
+		}
+        let csField = COUNSEL_CALENDARS.find(isThisField);
         let buttonText = document.querySelector('.dropdown .button-text');
-        buttonText.textContent = csField;
+        buttonText.textContent = csField.name;
     }
     
     function toggleDropdownState() {
@@ -100,7 +112,7 @@
     }
 
     function update(cnsno) {
-        // setDropdownTriggerText();
+        setDropdownTriggerText();
         displayRenderRange();
         reloadEvents(cnsno);
     }
@@ -126,7 +138,6 @@
     
         dropdownContent.addEventListener('click', function (e) {
 		  let emptyArr = [];
-          let buttonText = document.querySelector('.dropdown .button-text');
 			/* console.log(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1);
 			console.log(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo));
 			console.log(appState.activeCalendarIds);
@@ -136,10 +147,11 @@
 				appState.activeCalendarIds = emptyArr;
                 appState.activeCalendarIds.push(e.target.dataset.counselNo);
 				COUNSEL_CALENDARS.forEach((e) => {
+					// console.log(typeof e.id);
+					console.log(cal);
 					cal.setCalendarVisibility(e.id, false);
 				})
                 cal.setCalendarVisibility(e.target.dataset.counselNo, true);
-				buttonText.textContent = `${e.target.dataset.counselField} - ${e.target.dataset.counselName}`;
             }
             toggleDropdownState();
             update(cnsno);
@@ -187,7 +199,10 @@
     
 
     // Init
-    setDropdownTriggerText();
+    COUNSEL_CALENDARS.forEach((e) => {
+        cal.setCalendarVisibility(e.id, false);
+    })
+    cal.setCalendarVisibility(COUNSEL_CALENDARS[0].id, true);
     bindAppEvents(cno);
     // bindInstanceEvents();
     update(cno);
