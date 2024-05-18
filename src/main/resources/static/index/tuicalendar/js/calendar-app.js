@@ -18,18 +18,7 @@
                 },
             ],
         },
-        calendars: [
-            {
-                id: 'cal1',
-                name: '심리',
-                backgroundColor: '#03bd9e'
-            },
-            {
-                id: 'cal2',
-                name: '취업',
-                backgroundColor: '#00a9ff'
-            },
-        ],
+        calendars: COUNSEL_CALENDARS,
         week: {
             workweek: false, // 이거 주말에 하긴 힘드니까 일단은 주말포함 (다하면 true로 변경)
             eventView: true,
@@ -38,11 +27,20 @@
             hourEnd: 18,
             dayNames: ['일', '월', '화', '수', '목', '금', '토'],
         },
-        // template: { // 이거는 팝업때 쓰는것같다.
-        //     titlePlaceholder: () => {'제목'},
-        //     allday: (event) => {getEventTemplate(event, true)},
-        //     time: (event) => {getEventTemplate(event, false)}
-        // },
+        template: { // 이거는 팝업때 쓰는것같다.
+            titlePlaceholder: () => {'제목'},
+            popupDetailTitle({ title }) {
+                return title;
+            },
+            popupStateFree: function() {
+                return '예약 가능';
+            },
+            popupStateBusy: function() {
+                return '예약 불가';
+            },
+            allday: (event) => {getEventTemplate(event, true)},
+            // time: (event) => {getEventTemplate(event, false)}
+        },
     };
 
     const cal = new Calendar(container, options);
@@ -68,9 +66,10 @@
 
     // App State
     let appState = {
-        activeCalendarIds: COUNSEL_CALENDARS.map(function (calendar) {
-        return calendar.id;
-    }),
+            activeCalendarIds: [COUNSEL_CALENDARS[0].id],
+    //     activeCalendarIds: COUNSEL_CALENDARS.map(function (calendar) {
+    //     return calendar.id;
+    // }),
         isDropdownActive: false,
     };
 
@@ -101,7 +100,7 @@
     }
 
     function update(cnsno) {
-        setDropdownTriggerText();
+        // setDropdownTriggerText();
         displayRenderRange();
         reloadEvents(cnsno);
     }
@@ -126,18 +125,22 @@
         })
     
         dropdownContent.addEventListener('click', function (e) {
-          let targetCounselField;
-          console.log(e.target.dataset.counselField);
-    
-          if ('counselField' in e.target.dataset) {
-            targetCounselField = e.target.dataset.counselField;
-            // cal.changeView(targetViewName);
-			appState.activeCalendarIds = COUNSEL_CALENDARS.map(function (calendar) {
-              return calendar.id;
-            });
-            cal.setCalendarVisibility(appState.activeCalendarIds, true);
-            // setAllCheckboxes(true);
-            // checkboxCollapse.disabled = targetViewName === 'month';
+		  let emptyArr = [];
+          let buttonText = document.querySelector('.dropdown .button-text');
+			/* console.log(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1);
+			console.log(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo));
+			console.log(appState.activeCalendarIds);
+			console.log(e.target.dataset.counselNo); */
+          if ('counselNo' in e.target.dataset) {
+            if(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1) { // 이게 없으면
+				appState.activeCalendarIds = emptyArr;
+                appState.activeCalendarIds.push(e.target.dataset.counselNo);
+				COUNSEL_CALENDARS.forEach((e) => {
+					cal.setCalendarVisibility(e.id, false);
+				})
+                cal.setCalendarVisibility(e.target.dataset.counselNo, true);
+				buttonText.textContent = `${e.target.dataset.counselField} - ${e.target.dataset.counselName}`;
+            }
             toggleDropdownState();
             update(cnsno);
           }
@@ -184,6 +187,7 @@
     
 
     // Init
+    setDropdownTriggerText();
     bindAppEvents(cno);
     // bindInstanceEvents();
     update(cno);
