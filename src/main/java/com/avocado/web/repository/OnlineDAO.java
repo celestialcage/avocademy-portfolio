@@ -23,6 +23,4 @@ public interface OnlineDAO {
 	List<OnlineDTO> findAll(Map<String, Integer> map);
 
 	int deletecd(String bno);
-
-	List<OnlineDTO> commentList(int reNo);
 }

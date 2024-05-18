@@ -17,7 +17,4 @@ public interface OnlineService {
 
 	public int deletecd(String bno);
 
-	public List<OnlineDTO> commentList(int reNo);
-
-
 }

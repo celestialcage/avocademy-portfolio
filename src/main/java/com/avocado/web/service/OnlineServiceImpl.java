@@ -51,9 +51,4 @@ public class OnlineServiceImpl implements OnlineService {
 		return onlineDAO.deletecd(bno);
 
 	}
-
-	@Override
-	public List<OnlineDTO> commentList(int reNo) {
-		return onlineDAO.commentList(reNo);
-	}
 }
