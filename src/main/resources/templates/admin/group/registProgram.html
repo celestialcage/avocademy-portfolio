@@ -121,7 +121,7 @@
 	                    	                    </select>
 	                    	            </div>
 	                                	<div class="col-sm-4">
-	                                		<label for="prg_nope" class=" control-label col-form-label">참여인원</label>
+	                                		<label for="prg_nope" class="control-label col-form-label">참여인원</label>
 	                                    	<input type="number" class="form-control" id="prg_nope" th:field="*{prg_nope}" min='5' max='15'>
 	                                    </div>                               
 	                                </div>
@@ -171,6 +171,7 @@
 		                                	<div class="col-sm-6">
 				                                <div class="row">
 				                                	<div class="input-group col-sm-9">
+				                                		<input type="hidden" id="reqEnd" th:field="*{req_end}">
 				                                		<input type="text" class="form-control" id="choseDate" th:field="*{groupSCHDL}">
 			                             				<div class="input-group-append">
 					                                        <span class="input-group-text h-100"><i class="fa fa-calendar"></i></span>
@@ -244,6 +245,8 @@
         var dayOfWeek;
         var countNMTM;
         
+        import moment from "moment";
+        
         $.datepicker.setDefaults({
             dateFormat: 'yy-mm-dd',	//날짜 포맷이다. 보통 yy-mm-dd 를 많이 사용하는것 같다.
             prevText: '이전 달',	// 마우스 오버시 이전달 텍스트
@@ -300,12 +303,8 @@
 			   $('#nmtm').val(countNMTM);
 	        });
 		   //console.log(countNMTM);
+		   
 		});
-        
-        
-        
-
-       
 
     }); 	
 

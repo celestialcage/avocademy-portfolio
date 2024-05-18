@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class CounselorDTO {
 	
-	private int cns_no, user_no;
+	private int cns_no, user_no, sch_state;
 	private String cns_nm, cns_field, ofc_no;
 }

@@ -1,39 +1,39 @@
 let COUNSEL_CALENDARS = [
     {
-      id: 'job1', // 1 블베빔
-      name: '취업1 - 블베빔',
+      id: '1', // 1 블베빔
+      name: '심리 - 블베빔',
       color: '#ffffff',
       borderColor: '#9e5fff',
       backgroundColor: '#9e5fff',
       dragBackgroundColor: '#9e5fff',
     },
     {
-      id: 'job2', // 7 최행복
-      name: '취업2 - 최행복',
+      id: '7', // 7 최행복
+      name: '취업 - 최행복',
       color: '#ffffff',
       borderColor: '#00a9ff',
       backgroundColor: '#00a9ff',
       dragBackgroundColor: '#00a9ff',
     },
     {
-      id: 'mental1', // 2 크랜박
-      name: '심리1 - 크랜박',
+      id: '2', // 2 크랜박
+      name: '취업 - 크랜박',
       color: '#ffffff',
       borderColor: '#DB473F',
       backgroundColor: '#DB473F',
       dragBackgroundColor: '#DB473F',
     },
     {
-      id: 'mental2', // 3 라이미
-      name: '심리2 - 라이미',
+      id: '3', // 3 라이미
+      name: '심리 - 라이미',
       color: '#ffffff',
       borderColor: '#03bd9e',
       backgroundColor: '#03bd9e',
       dragBackgroundColor: '#03bd9e',
     },
     {
-      id: 'mental3', // 8 박지혜
-      name: '심리3 - 박지혜',
+      id: '8', // 8 박지혜
+      name: '심리 - 박지혜',
       color: '#ffffff',
       borderColor: '#bbdc00',
       backgroundColor: '#bbdc00',
@@ -93,13 +93,13 @@ function getDBEvent(calendar, dbEle) {
     return event;
 }
 
-async function getDBEvents(viewName) {
+async function getDBEvents(viewName, cno) {
     // let i;
     let event;
 	let events = [];
     
     // db 통신 ajax
-    let dbEvents = await getData('/cs-schedule').then(data => {
+    let dbEvents = await getData('/cs-schedule', cno).then(data => {
         data.schedules.forEach(e => {
             e.scheduleDate = moment(e.scheduleDate, "YYYYMMDD").format('YYYY-MM-DD');
         });

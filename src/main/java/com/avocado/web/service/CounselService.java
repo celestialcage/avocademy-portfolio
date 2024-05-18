@@ -7,4 +7,8 @@ public interface CounselService {
 
 	List<Map<String, Object>> findAllSchedule();
 
+	List<Map<String, Object>> findEachSchedule(String cns_no);
+
+	List<Map<String, Object>> findAllCounselors();
+
 }
