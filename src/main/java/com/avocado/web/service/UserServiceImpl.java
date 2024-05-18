@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.avocado.web.entity.CounselorDTO;
 import com.avocado.web.entity.StudentDTO;
 import com.avocado.web.repository.UserDAO;
-import com.avocado.web.util.SecureInfo;
 @Service
 public class UserServiceImpl implements UserService{
 

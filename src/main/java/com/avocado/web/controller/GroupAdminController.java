@@ -52,8 +52,10 @@ public class GroupAdminController {
 	private String registProgram(@ModelAttribute("groupDto") GroupDTO dto) {
 		
 		//프로그램 진행기간
-		dto.setPrg_schdl(dto.getGroupSCHDL().get(0) + " - " + dto.getGroupSCHDL().get(dto.getPrg_nmtm() -1));
-		dto.setReq_end(dto.getGroupSCHDL().get(0));
+		dto.setPrg_start(dto.getGroupSCHDL().get(0));
+		dto.setPrg_end(dto.getGroupSCHDL().get(dto.getPrg_nmtm() -1));
+		dto.setPrg_schdl(dto.getPrg_start() + " - " + dto.getPrg_end());
+		dto.setPrg_place("명상실");
 		
 		//프로그램 등록
 		groupService.registProgram(dto);

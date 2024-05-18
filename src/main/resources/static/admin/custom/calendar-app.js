@@ -6,7 +6,8 @@
 		enableDblClick: false,
 		enableClick: false,
 	  },
-	  useFormPopup: false,
+	  useFormPopup: true,
+	  useDetailPopup: true,
 	  usageStatistics: false, 
 	  defaultView: 'week',
 	  timezone: {
@@ -18,13 +19,7 @@
 	      },
 	    ],
 	  },
-	  calendars: [
-	    {
-	      id: 'cal1',
-	      name: '개인',
-	      backgroundColor: '#03bd9e',
-	    },
-	  ],
+	  calendars: COUNSEL_CALENDARS,
 	//   month: {
 	//     visibleWeeksCount: 2,
 	//     workweek: true,
@@ -39,9 +34,24 @@
 	      dayNames: ['일', '월', '화', '수', '목', '금', '토'],
 	  },
 	  template: {
-		titlePlaceholder: function () {
+		popupDetailTitle({ title }) {
+			return title;
+		},
+		popupStateFree: function() {
 			return '예약 가능';
-		  },
+		},
+		popupStateBusy: function() {
+			return '예약 불가';
+		},
+		popupUpdate() {
+			return "수정";
+		},
+		popupEdit() {
+			return "편집";
+		},
+		popupDelete() {
+			return "삭제";
+		},
 		allday: function (event) {
 		  return getEventTemplate(event, true);
 		},
@@ -51,8 +61,8 @@
 	  },
 	};
 	
+	// calendar Instance
 	const calendar = new Calendar(container, options);
-	
 	const navbarRange = document.querySelector('.calendar-render-range');
 	
 	function displayRenderRange() {
@@ -102,12 +112,14 @@
 			calendar.clearGridSelections();
 		  },
 		  beforeUpdateEvent: function (eventInfo) {
-			var event, changes;
+			let event, changes;
 	
 			console.log('beforeUpdateEvent', eventInfo);
 	
 			event = eventInfo.event;
 			changes = eventInfo.changes;
+
+			console.log(changes);
 	
 			calendar.updateEvent(event.id, event.calendarId, changes);
 		  },
@@ -174,12 +186,12 @@
 		calendar.changeView('month');
 		update();
 		calendar.setOptions({
-		month: {
-			visibleWeeksCount: 0,
-			workweek: false,
-			narrowWeekend: true,
-			dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-		},
+			month: {
+				visibleWeeksCount: 0,
+				workweek: false,
+				narrowWeekend: true,
+				dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+			},
 		});
 		calendar.clearGridSelections();
 	});

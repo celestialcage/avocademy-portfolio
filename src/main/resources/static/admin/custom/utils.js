@@ -1,8 +1,11 @@
-async function getData(url, headers = {}) {
+async function getData(url, cno, headers = {}) {
   const options = {
-    method: "GET",
+    method: "POST",
+	  body: JSON.stringify({
+		cns_no: cno,
+	}),
     headers: {
-      // "Content-Type": "application/json",
+      "Content-Type": "application/json",
       ...headers,
     },
   };
@@ -10,6 +13,25 @@ async function getData(url, headers = {}) {
   const res = await fetch(url, options);
   const data = await res.json();
   if(res.ok) {
+    return data;
+  } else {
+    throw Error(data);
+  }
+}
+
+async function updateData(url, params, headers = {}) {
+  const options = {
+    method: "POST",
+    body: JSON.stringify(params),
+    headers: {
+      "Content-Type": "application/json",
+      ...headers,
+    }
+  }
+
+  const response = await fetch(url, options);
+  const data = await response.json();
+  if(response.ok) {
     return data;
   } else {
     throw Error(data);

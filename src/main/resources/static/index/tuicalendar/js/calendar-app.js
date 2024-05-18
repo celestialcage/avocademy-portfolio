@@ -6,6 +6,7 @@
             enableClick: false,
         },
         useFormPopup: false,
+        useDetailPopup: true,
         usageStatistics: false,
         defaultView: 'week',
         timezone: {
@@ -20,12 +21,12 @@
         calendars: [
             {
                 id: 'cal1',
-                name: '취업',
+                name: '심리',
                 backgroundColor: '#03bd9e'
             },
             {
                 id: 'cal2',
-                name: '심리',
+                name: '취업',
                 backgroundColor: '#00a9ff'
             },
         ],
@@ -45,6 +46,7 @@
     };
 
     const cal = new Calendar(container, options);
+    let cno = 1;
 
     // Constants
     const CALENDAR_CSS_PREFIX = 'toastui-calendar-';
@@ -91,38 +93,36 @@
         dropdownTriggerIcon.classList.toggle(cls('open'), appState.isDropdownActive);
     }
 
-    function reloadEvents() {
+    function reloadEvents(cnsno) {
         cal.clear();
-        getDBEvents(
-            cal.getViewName()
-        ).then(data => {
+        getDBEvents(cal.getViewName(), cnsno).then(data => {
             cal.createEvents(data);
         });
     }
 
-    function update() {
+    function update(cnsno) {
         setDropdownTriggerText();
         displayRenderRange();
-        reloadEvents();
+        reloadEvents(cnsno);
     }
 
     
 
-    function bindAppEvents() {
+    function bindAppEvents(cnsno) {
         dropdownTrigger.addEventListener('click', toggleDropdownState);
     
         todayBtn.addEventListener('click', () => {
             cal.today();
-            update();
+            update(cnsno);
         })
     
         prevBtn.addEventListener('click', () => {
             cal.prev();
-            update();
+            update(cnsno);
         })
         nextBtn.addEventListener('click', () => {
             cal.next();
-            update();
+            update(cnsno);
         })
     
         dropdownContent.addEventListener('click', function (e) {
@@ -139,7 +139,7 @@
             // setAllCheckboxes(true);
             // checkboxCollapse.disabled = targetViewName === 'month';
             toggleDropdownState();
-            update();
+            update(cnsno);
           }
         });
     
@@ -184,8 +184,8 @@
     
 
     // Init
-    bindAppEvents();
+    bindAppEvents(cno);
     // bindInstanceEvents();
-    update();
+    update(cno);
 
 })(tui.Calendar);
