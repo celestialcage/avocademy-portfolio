@@ -1,6 +1,7 @@
 package com.avocado.web.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,6 +61,18 @@ public class GroupServiceImpl implements GroupService {
 	public GroupDTO programDetail(String no) {
 		return groupDAO.programDetail(no);
 	}
+
+	@Override
+	public List<Integer> getSchedulNo(String no) {
+		return groupDAO.getSchedulNo(no);
+	}
+
+	@Override
+	public void apply(Map<String, Object> map) {
+		groupDAO.apply(map);		
+	}
+
+	
 
 
 

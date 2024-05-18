@@ -1,9 +1,11 @@
 package com.avocado.web.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.service.GroupService;
+import com.avocado.web.util.Util;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -25,6 +28,9 @@ public class GroupController {
 	
 	@Resource(name="groupService")
 	private GroupService groupService;
+	
+	@Autowired
+	private Util util;
 	
 	//프로그램 확인 페이지 (학생)
 	@GetMapping("")
@@ -60,9 +66,21 @@ public class GroupController {
 		return json.toString();
 	}
 	
+	//신청
 	@PostMapping("/programApply")
 	public @ResponseBody String programApply(@RequestParam("no") String no, @RequestParam("stno") String stud_no) {
 		
+		//스케줄번호 찾아오기
+		List<Integer> schdlNo = groupService.getSchedulNo(no);
+		
+		for(int i = 0; i < schdlNo.size(); i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("schdno", schdlNo.get(i));
+			map.put("stud_no", stud_no);
+			groupService.apply(map);			
+		}		
+		
+		//신청테이블에 넣기
 		return "1";
 	}
 	
