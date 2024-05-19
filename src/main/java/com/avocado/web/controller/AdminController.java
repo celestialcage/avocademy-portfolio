@@ -1,12 +1,23 @@
 package com.avocado.web.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.avocado.web.service.CounselService;
+
+import jakarta.annotation.Resource;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	
+	@Resource(name = "counselService")
+	private CounselService counselService;
 	
 	@GetMapping("")
 	public String redirectAdmin() {
@@ -54,7 +65,12 @@ public class AdminController {
 	}
 	
 	@GetMapping("/calendar")
-	public String calendar() {
+	public String calendar(Model model) {
+		
+		// 임시로 서비스로 가져오고 캐싱하기~!
+		List<Map<String, Object>> times = counselService.findAllTimes();
+		model.addAttribute("times", times);
+		
 		return "admin/tui-calendar";
 	}
 	

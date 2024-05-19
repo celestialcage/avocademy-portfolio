@@ -16,4 +16,8 @@ public interface CounselDAO {
 
 	List<Map<String, Object>> findAllCounselors();
 
+	Map<String, Object> findCsInfo(int user_no);
+
+	List<Map<String, Object>> findAllTimes();
+
 }

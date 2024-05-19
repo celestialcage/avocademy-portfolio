@@ -48,7 +48,7 @@ function getDBEvent(calendar, dbEle) {
     title = `${dbEle.cslField}) ${dbEle.cslName} 상담사 신청 가능`;
     body = ``;
     location = `${dbEle.cslOffice}호 사무실`;
-    state = dbEle.scheduleState === 0 ? `예약됨`: `신청 열림`;
+    state = dbEle.scheduleState == 0 ? `신청 열림` : `예약됨`;
     // isReadOnly = dbEle.scheduleState === 0 ? true : false;
     // let calendarId, start, end;
     let attendees = [];
@@ -102,8 +102,8 @@ async function getDBEvents(viewName) {
     let event;
 	let events = [];
     
-    // db 통신 ajax
-    let dbEvents = await getData('/cs-schedule').then(data => {
+    // db 통신 ajax (상담사 로그인 때)
+    let dbEvents = await getData('/cs-schedule', sessionCno).then(data => {
         data.schedules.forEach(e => {
             e.scheduleDate = moment(e.scheduleDate, "YYYYMMDD").format('YYYY-MM-DD');
         });

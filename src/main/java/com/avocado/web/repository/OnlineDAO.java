@@ -23,4 +23,6 @@ public interface OnlineDAO {
 	List<OnlineDTO> findAll(Map<String, Integer> map);
 
 	int deletecd(String bno);
+
+	int saveComment(Map<String, Object> comment);
 }

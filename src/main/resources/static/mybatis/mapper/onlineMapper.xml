@@ -3,7 +3,7 @@
 <mapper namespace="com.avocado.web.repository.OnlineDAO">
 	
 	<select id="online" resultType="OnlineDTO" parameterType="Map">
-		SELECT bno, btitle, bcontent, bdate, secret, commentYN, bdel, user.uname
+		SELECT bno, btitle, bcontent, bdate, secret, commentYN, comment, bdel, user.uname
 		FROM online join user 
 		on online.user_no = user.uno 
 		WHERE bdel = "1" 
@@ -32,5 +32,11 @@
  		set bdel = '0'
   		where bno = #{bno}
 	</update>
+	
+	<update id="saveComment" parameterType="Map">
+		update online set comment = #{content}, commentYN = 1
+		where BNO = #{bno} 
+	</update>
+
 
 </mapper>

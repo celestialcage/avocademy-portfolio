@@ -9,6 +9,13 @@
         useDetailPopup: true,
         usageStatistics: false,
         defaultView: 'week',
+		eventFilter: function (event) {
+	      let currentView = cal.getViewName();
+	      if (currentView === 'month') {
+	        return ['allday', 'time'].includes(event.category) && event.isVisible;
+	      }
+	      return event.isVisible;
+	    },
         timezone: {
             zones: [
                 {
@@ -18,18 +25,7 @@
                 },
             ],
         },
-        calendars: [
-            {
-                id: 'cal1',
-                name: '심리',
-                backgroundColor: '#03bd9e'
-            },
-            {
-                id: 'cal2',
-                name: '취업',
-                backgroundColor: '#00a9ff'
-            },
-        ],
+        calendars: COUNSEL_CALENDARS,
         week: {
             workweek: false, // 이거 주말에 하긴 힘드니까 일단은 주말포함 (다하면 true로 변경)
             eventView: true,
@@ -38,11 +34,20 @@
             hourEnd: 18,
             dayNames: ['일', '월', '화', '수', '목', '금', '토'],
         },
-        // template: { // 이거는 팝업때 쓰는것같다.
-        //     titlePlaceholder: () => {'제목'},
-        //     allday: (event) => {getEventTemplate(event, true)},
-        //     time: (event) => {getEventTemplate(event, false)}
-        // },
+        template: { // 이거는 팝업때 쓰는것같다.
+            titlePlaceholder: () => {'제목'},
+            popupDetailTitle({ title }) {
+                return title;
+            },
+            popupStateFree: function() {
+                return '예약 가능';
+            },
+            popupStateBusy: function() {
+                return '예약 불가';
+            },
+            allday: (event) => {getEventTemplate(event, true)},
+            // time: (event) => {getEventTemplate(event, false)}
+        },
     };
 
     const cal = new Calendar(container, options);
@@ -68,9 +73,10 @@
 
     // App State
     let appState = {
-        activeCalendarIds: COUNSEL_CALENDARS.map(function (calendar) {
-        return calendar.id;
-    }),
+            activeCalendarIds: [COUNSEL_CALENDARS[0].id],
+    //     activeCalendarIds: COUNSEL_CALENDARS.map(function (calendar) {
+    //     return calendar.id;
+    // }),
         isDropdownActive: false,
     };
 
@@ -82,9 +88,14 @@
     }
 
     function setDropdownTriggerText() {
-        let csField = COUNSEL_CALENDARS[0].name;
+		function isThisField(e) {
+			if(e.id == appState.activeCalendarIds[0]) {
+				return true;
+			}
+		}
+        let csField = COUNSEL_CALENDARS.find(isThisField);
         let buttonText = document.querySelector('.dropdown .button-text');
-        buttonText.textContent = csField;
+        buttonText.textContent = csField.name;
     }
     
     function toggleDropdownState() {
@@ -106,8 +117,6 @@
         reloadEvents(cnsno);
     }
 
-    
-
     function bindAppEvents(cnsno) {
         dropdownTrigger.addEventListener('click', toggleDropdownState);
     
@@ -126,20 +135,19 @@
         })
     
         dropdownContent.addEventListener('click', function (e) {
-          let targetCounselField;
-          console.log(e.target.dataset.counselField);
-    
-          if ('counselField' in e.target.dataset) {
-            targetCounselField = e.target.dataset.counselField;
-            // cal.changeView(targetViewName);
-			appState.activeCalendarIds = COUNSEL_CALENDARS.map(function (calendar) {
-              return calendar.id;
-            });
-            cal.setCalendarVisibility(appState.activeCalendarIds, true);
-            // setAllCheckboxes(true);
-            // checkboxCollapse.disabled = targetViewName === 'month';
+		  let cno = '1';
+		  let calIdArr = COUNSEL_CALENDARS.map(ele => { ele.id });
+		  cal.setCalendarVisibility(calIdArr, false);
+          if ('counselNo' in e.target.dataset) {
+			// console.log(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1);
+            if(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1) { // 이게 없으면
+				appState.activeCalendarIds = [];
+                appState.activeCalendarIds.push(e.target.dataset.counselNo);
+                cal.setCalendarVisibility(appState.activeCalendarIds, true);
+                cno = e.target.dataset.counselNo;
+            }
             toggleDropdownState();
-            update(cnsno);
+            update(cno);
           }
         });
     
@@ -180,12 +188,54 @@
         //   }
         // });
       }
+
+	function bindInstanceEvents() {
+		cal.on({
+		  clickEvent: function (eventInfo) {
+			console.log('clickEvent', eventInfo);
+		  },
+		  clickDayName: function (dayNameInfo) {
+			console.log('clickDayName', dayNameInfo);
+		  },
+		  selectDateTime: function (dateTimeInfo) {
+			console.log('selectDateTime', dateTimeInfo);
+		  },
+		  beforeCreateEvent: function (event) {
+			console.log('beforeCreateEvent', event);
+			event.id = chance.guid();
+	
+			calendar.createEvents([event]);
+			calendar.clearGridSelections();
+		  },
+		  beforeUpdateEvent: function (eventInfo) {
+			let event, changes;
+	
+			console.log('beforeUpdateEvent', eventInfo);
+	
+			event = eventInfo.event;
+			changes = eventInfo.changes;
+
+			console.log(changes);
+	
+			calendar.updateEvent(event.id, event.calendarId, changes);
+		  },
+		  beforeDeleteEvent: function (eventInfo) {
+			console.log('beforeDeleteEvent', eventInfo);
+	
+			calendar.deleteEvent(eventInfo.id, eventInfo.calendarId);
+		  },
+		});
+	  }
     
     
 
     // Init
+    COUNSEL_CALENDARS.forEach((e) => {
+        cal.setCalendarVisibility(e.id, false);
+    })
+    cal.setCalendarVisibility(COUNSEL_CALENDARS[0].id, true);
     bindAppEvents(cno);
-    // bindInstanceEvents();
+    bindInstanceEvents();
     update(cno);
 
 })(tui.Calendar);

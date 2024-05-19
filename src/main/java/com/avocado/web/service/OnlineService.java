@@ -17,5 +17,6 @@ public interface OnlineService {
 
 	public int deletecd(String bno);
 
+	public int saveComment(int uno, String bno, String content);
 
 }

@@ -51,4 +51,15 @@ public class OnlineServiceImpl implements OnlineService {
 		return onlineDAO.deletecd(bno);
 
 	}
+
+	@Override
+	public int saveComment(int uno, String bno, String content) {
+		Map<String, Object> comment = new HashMap<>();
+		
+		comment.put("uno", uno);
+		comment.put("bno", bno);
+		comment.put("content", content);
+		
+		return onlineDAO.saveComment(comment);
+	}
 }
