@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.avocado.web.entity.CounselorDTO;
+import com.avocado.web.entity.PersonalDTO;
 import com.avocado.web.service.CounselService;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -49,5 +51,23 @@ public class CounselDataController {
 		json.add("schedules", jsonArr);
 		
 		return json.toString();
+	}
+	
+	@PostMapping("/cs-info")
+	public String bringCsInfo(@RequestBody CounselorDTO cs) {
+		Map<String, Object> csInfo;
+		csInfo = counselService.findCsInfo(cs.getUser_no());
+		Gson gson = new Gson();
+		String json = gson.toJson(csInfo);
+		return json;
+	}
+	
+	@PostMapping("/add-cschedule")
+	public String addCsSchedule(@RequestBody PersonalDTO ps) {
+		System.out.println("상담사 번호: " + ps.getCns_no());
+		System.out.println("상담 날짜: " + ps.getSch_ymd());
+		System.out.println("상담 시간: " + ps.getSch_hr());
+		String result = "";
+		return result;
 	}
 }

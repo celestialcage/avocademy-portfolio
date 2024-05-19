@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class PersonalDTO {
 
-	private String cns_no, user_no;
-	private int cns_nm;
+	private int cns_no, user_no, sch_no, sch_state;
+	private String cns_nm, ofc_no, cns_field, sch_ymd, sch_hr;
 }

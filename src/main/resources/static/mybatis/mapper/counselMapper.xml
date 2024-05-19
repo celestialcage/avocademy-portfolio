@@ -23,4 +23,15 @@
 		WHERE left(cns_field, 2) = 'P1' 
 		ORDER BY cns_field, cns_no
 	</select>
+	
+	<select id="findCsInfo" parameterType="int" resultType="Map">
+		SELECT cns_no, cns_nm, LEFT(GET_CD_NM('CO0020', cns_field), 2) AS cns_field, ofc_no, uemail 
+		FROM counselor JOIN user ON uno = user_no 
+		WHERE uno=#{user_no} AND left(cns_field, 2) = 'P1'
+	</select>
+	
+	<select id="findAllTimes" resultType="Map">
+		SELECT code, ccnm FROM commoncode
+		WHERE `div` = 'CO0010'
+	</select>
 </mapper>

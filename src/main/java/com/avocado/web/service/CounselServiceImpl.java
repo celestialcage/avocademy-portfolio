@@ -28,4 +28,14 @@ public class CounselServiceImpl implements CounselService {
 		return counselDAO.findAllCounselors();
 	}
 
+	@Override
+	public Map<String, Object> findCsInfo(int user_no) {
+		return counselDAO.findCsInfo(user_no);
+	}
+
+	@Override
+	public List<Map<String, Object>> findAllTimes() {
+		return counselDAO.findAllTimes();
+	}
+
 }

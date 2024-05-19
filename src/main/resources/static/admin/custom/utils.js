@@ -19,7 +19,7 @@ async function getData(url, cno, headers = {}) {
   }
 }
 
-async function updateData(url, params, headers = {}) {
+async function postData(url, params, headers = {}) {
   const options = {
     method: "POST",
     body: JSON.stringify(params),
@@ -36,6 +36,30 @@ async function updateData(url, params, headers = {}) {
   } else {
     throw Error(data);
   }
+}
+
+async function updateData(url, params, headers = {}) {
+  const options = {
+    method: "POST",
+    body: JSON.stringify(params),
+    headers: {
+      "Content-Type": "application/json",
+      ...headers,
+    }
+  }
+
+  const response = await fetch(url, options);
+  //const data = await response.json();
+  if(response.ok) {
+    return response;
+  } else {
+    throw Error(response);
+  }
+}
+
+
+function makeUserNoObj(uno) {
+	return {user_no: uno};
 }
 
 function getNavbarRange(tzStart, tzEnd, viewType) {

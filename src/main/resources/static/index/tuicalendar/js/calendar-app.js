@@ -135,25 +135,19 @@
         })
     
         dropdownContent.addEventListener('click', function (e) {
+		  let cno = '1';
 		  let calIdArr = COUNSEL_CALENDARS.map(ele => { ele.id });
 		  cal.setCalendarVisibility(calIdArr, false);
           if ('counselNo' in e.target.dataset) {
-			console.log(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1);
+			// console.log(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1);
             if(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1) { // 이게 없으면
 				appState.activeCalendarIds = [];
                 appState.activeCalendarIds.push(e.target.dataset.counselNo);
                 cal.setCalendarVisibility(appState.activeCalendarIds, true);
-				cal.setOptions({
-					week: {
-						// 얘는 뭔지를 모르겠네...
-						collapseDuplicateEvents: !(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1),
-					},
-					useDetailPopup: !!(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1),
-				});
-				console.log(cal.getOptions());
+                cno = e.target.dataset.counselNo;
             }
             toggleDropdownState();
-            update(cnsno);
+            update(cno);
           }
         });
     
@@ -194,6 +188,44 @@
         //   }
         // });
       }
+
+	function bindInstanceEvents() {
+		cal.on({
+		  clickEvent: function (eventInfo) {
+			console.log('clickEvent', eventInfo);
+		  },
+		  clickDayName: function (dayNameInfo) {
+			console.log('clickDayName', dayNameInfo);
+		  },
+		  selectDateTime: function (dateTimeInfo) {
+			console.log('selectDateTime', dateTimeInfo);
+		  },
+		  beforeCreateEvent: function (event) {
+			console.log('beforeCreateEvent', event);
+			event.id = chance.guid();
+	
+			calendar.createEvents([event]);
+			calendar.clearGridSelections();
+		  },
+		  beforeUpdateEvent: function (eventInfo) {
+			let event, changes;
+	
+			console.log('beforeUpdateEvent', eventInfo);
+	
+			event = eventInfo.event;
+			changes = eventInfo.changes;
+
+			console.log(changes);
+	
+			calendar.updateEvent(event.id, event.calendarId, changes);
+		  },
+		  beforeDeleteEvent: function (eventInfo) {
+			console.log('beforeDeleteEvent', eventInfo);
+	
+			calendar.deleteEvent(eventInfo.id, eventInfo.calendarId);
+		  },
+		});
+	  }
     
     
 
@@ -203,7 +235,7 @@
     })
     cal.setCalendarVisibility(COUNSEL_CALENDARS[0].id, true);
     bindAppEvents(cno);
-    // bindInstanceEvents();
+    bindInstanceEvents();
     update(cno);
 
 })(tui.Calendar);

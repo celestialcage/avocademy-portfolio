@@ -11,7 +11,7 @@
 	  usageStatistics: false, 
 	  defaultView: 'week',
 	  eventFilter: function (event) {
-		let currentView = cal.getViewName();
+		let currentView = calendar.getViewName();
 		if (currentView === 'month') {
 		  return ['allday', 'time'].includes(event.category) && event.isVisible;
 		}
@@ -33,7 +33,8 @@
 	//     dayNames: ['일', '월', '화', '수', '목', '금', '토'],
 	//   },
 	  week: {
-        workweek: true,
+          workweek: false,
+		  narrowWeekend: true,
 	      eventView: true,
 	      taskView: false,
 	      hourStart: 9, 
