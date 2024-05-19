@@ -61,6 +61,25 @@ public class GroupServiceImpl implements GroupService {
 		return groupDAO.programDetail(no);
 	}
 
+	@Override
+	public List<Integer> getSchedulNo(String no) {
+		return groupDAO.getSchedulNo(no);
+	}
+
+	@Override
+	public void apply(Map<String, Object> map) {
+		groupDAO.apply(map);		
+	}
+
+	@Override
+	public int checkSchedul(Map<String, Object> check) {
+		return groupDAO.checkSchedul(check);
+	}
+
+
+
+	
+
 
 
 }

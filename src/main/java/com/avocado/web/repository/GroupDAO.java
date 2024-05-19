@@ -29,4 +29,10 @@ public interface GroupDAO {
 
 	GroupDTO programDetail(String no);
 
+	List<Integer> getSchedulNo(String no);
+
+	void apply(Map<String, Object> map);
+
+	int checkSchedul(Map<String, Object> check);
+
 }

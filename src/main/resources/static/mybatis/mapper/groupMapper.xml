@@ -59,4 +59,24 @@
 		WHERE prg_no = #{no} 
 	</select>
 	
+	<select id="getSchedulNo" parameterType="String" resultType="Integer">
+		SELECT grsch_no 
+		FROM grschedule 
+		WHERE prg_no = #{prg_no}
+	</select>
+	
+	<select id="checkSchedul" parameterType="Map" resultType="int">
+		SELECT COUNT(*)
+		FROM graply 
+		WHERE stud_no = #{stud_no} 
+			AND grsch_no = (SELECT grsch_no 
+								FROM grschedule 
+								WHERE prg_no = #{prg_no} LIMIT 1) 
+	</select>
+	
+	<insert id="apply" parameterType="Map">
+		INSERT INTO graply (stud_no, grsch_no) 
+		VALUES (#{stud_no}, #{schdno})
+	</insert>
+	
 </mapper>

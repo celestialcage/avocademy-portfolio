@@ -61,7 +61,7 @@
 			      		</div>
 			      	</div>
 			      </article>
-				  <button id="apply" th:attr="onclick=|programApply('${detail.prg_no}', '${detail.prg_nm}', '${detail.prg_nmtm}')|">신청하기</button>
+				  <button id="apply" th:attr="onclick=|programApply('${detail.prg_no}', '${detail.prg_nm}')|">신청하기</button>
 			    </div>
 
 			</div>
@@ -71,7 +71,7 @@
 	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
 	<script type="text/javascript">		
 		
-		const programApply = (no, title, stno) =>{
+		const programApply = (no, title) =>{
 			//alert(no + " : " + title);
 			Swal.fire({
 				title: title,
@@ -103,7 +103,7 @@
 							url: '/group/programApply',
 							type: "post",
 							dataType: "text",
-							data : {'no' : no, 'stno' : stno},
+							data : {'no' : no},
 							success : data => {
 								Swal.fire('신청을 완료했습니다.', '잇힝', 'success');						
 							},
