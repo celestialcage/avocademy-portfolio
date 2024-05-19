@@ -31,11 +31,12 @@ main {
 		<!-- 여기가 본문 -->
 		<div class="mainContents">
 			<h1>글쓰기</h1>
-			<form method="post" action="/online/write">
-				<input class="form-control my-2" name="btitle" placeholder="제목을 입력해주세요.">
-				<textarea id="summernote" name="bcontent"></textarea>
+			<form method="post" action="/community/write" enctype="multipart/form-data">
+				<input class="form-control my-2" name="ctitle" placeholder="제목을 입력해주세요.">
+				<textarea id="summernote" name="ccontent"></textarea>
 				<div class="mb-3">
-					<label for="formFile" class="form-label"></label> <input class="form-control" type="file" id="formFile">
+					<label for="formFile" class="form-label"></label> 
+					<input class="form-control" type="file" id="fileUp" name="fileUp">
 				</div>
 				<div class="input-group">
 					<div class="input-group-text">
