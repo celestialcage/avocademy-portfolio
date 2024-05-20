@@ -36,7 +36,7 @@ public class AdminController {
 	
 	@GetMapping("/charts")
 	public String charts() {
-		return "admin/appointments";
+		return "admin/charts";
 	}
 	
 	@GetMapping("/tables")
@@ -59,13 +59,13 @@ public class AdminController {
 		return "admin/form-wizard";
 	}
 	
-	@GetMapping("/full-calendar")
+	@GetMapping("/calendar")
 	public String fullCalendar() {
 		return "admin/pages-calendar";
 	}
 	
-	@GetMapping("/calendar")
-	public String calendar(Model model) {
+	@GetMapping("/csl-schedule")
+	public String cslSchedule(Model model) {
 		// 세션에서 관리자 이상만 데려가기...
 		
 		// 임시로 서비스로 가져오고 캐싱하기~!
@@ -74,6 +74,11 @@ public class AdminController {
 		
 		// 이 페이지는 상담사 중 개인 상담하는 사람만 갈 수 있도록
 		return "admin/tui-calendar";
+	}
+	
+	@GetMapping("/appointments")
+	public String appointments() {
+		return "admin/appointments";
 	}
 	
 }
