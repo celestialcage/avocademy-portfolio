@@ -34,4 +34,29 @@
 		SELECT code, ccnm FROM commoncode
 		WHERE `div` = 'CO0010'
 	</select>
+	
+	<insert id="addSchedule" parameterType="PersonalDTO">
+		INSERT INTO cschedule (cns_no, sch_ymd, sch_hr)
+		VALUES (#{cns_no}, #{sch_ymd}, #{sch_hr})
+	</insert>
+	
+	<select id="findSchedule" parameterType="PersonalDTO" resultType="int">
+		SELECT COUNT(0) 
+		FROM cschedule 
+		WHERE cns_no=#{cns_no} AND sch_ymd=#{sch_ymd} AND sch_hr=#{sch_hr}
+	</select>
+	
+	<delete id="deleteSchedule" parameterType="PersonalDTO">
+		DELETE FROM cschedule 
+		WHERE sch_no=#{sch_no} AND 
+		(SELECT COUNT(0) FROM caply WHERE sch_no=#{sch_no}) = 0
+	</delete>
+	
+	<insert id="applySchedule" parameterType="PersonalDTO">
+		INSERT INTO caply (stud_no, sch_no, dscsn_ymd, dscsn_hr) 
+		VALUES (#{stud_no}, #{sch_no}, 
+			(SELECT sch_ymd FROM cschedule WHERE sch_no=#{sch_no}), 
+			(SELECT sch_hr FROM cschedule WHERE sch_no=#{sch_no})
+		)
+	</insert>
 </mapper>

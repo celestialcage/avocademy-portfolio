@@ -24,17 +24,18 @@
 	height: auto;
 	min-height: 600px;
 }
-.card{
-	 height: 450px;
-	
+
+.card {
+	height: 450px;
 }
 
 .card-header h3 {
 	flex-grow: 1;
 }
 
-.card-header .text-muted {
+.card-header .text-muted  {
 	margin-left: auto;
+
 }
 
 .commentdiv {
@@ -55,15 +56,14 @@
 				<div class="card">
 					<div class="card-header d-flex align-items-center">
 						<h3 class="card-title d-flex align-items-center">
-							<span th:text="${detail.btitle}">제목</span> 
+							<span th:text="${detail.btitle}">제목</span>
 							<!-- <img th:src="@{/img/자물쇠.png}" alt="Lock Icon" class="ml-2" style="width: 24px; height: 24px;"> -->
 						</h3>
 						<div th:if="${session.uname eq detail.uname}" class="ml-3">
 							<img th:src="@{/img/작은수정.png}"
-								th:attr="onclick=|updatecd('${detail.bno}')|" 
-								style="cursor: pointer; margin-right: 10px;"> 
-							<img
-								th:src="@{/img/작은삭제.png}" 
+								th:attr="onclick=|updatecd('${detail.bno}')|"
+								style="cursor: pointer; margin-right: 10px;"> <img
+								th:src="@{/img/작은삭제.png}"
 								th:attr="onclick=|deletecd('${detail.bno}')|"
 								style="cursor: pointer;">
 						</div>
@@ -74,19 +74,18 @@
 					</div>
 				</div>
 				<div class="commentdiv mt-4">
-				 	<h4>답변</h4>
+					<h4>답변</h4>
 					<ul class="list-group mb-3" id="comment-list">
-							<li class="list-group-item"><p th:text="${detail.comment}">댓글 내용</p></li>
-						<!-- <li class="list-group-item" th:each="comment : ${comment}"> -->
-							<!-- <small th:text="${comment.uname}">작성자</small> -->
-						<!-- </li> -->
+						<li class="list-group-item"><p th:text="${detail.comment}">댓글
+								내용</p></li>
 					</ul>
 					<div class="mb-3">
 						<label for="Commenttext" class="form-label">답장</label>
 						<textarea class="form-control" id="Commenttext" rows="3"></textarea>
 					</div>
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-						<button type="button" class="btn btn-outline-secondary" id="submit-comment">입력하기</button>
+						<button type="button" class="btn btn-outline-secondary"
+							id="submit-comment">입력하기</button>
 					</div>
 				</div>
 			</div>
@@ -156,7 +155,7 @@
 		  });
         } */
     </script>
-    <script>
+	<script>
     $(document).ready(function () {
         $('#submit-comment').click(function () {
             var commentContent = $('#Commenttext').val();

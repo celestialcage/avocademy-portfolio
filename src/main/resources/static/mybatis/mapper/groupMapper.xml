@@ -3,24 +3,83 @@
 <mapper namespace="com.avocado.web.repository.GroupDAO">
 	
 	<select id="programList" resultType="GroupDTO">
-		SELECT prg_no, prg_nm, prg_nope, prg_schdl, prg_nmtm, prg_dow,
+		SELECT g.prg_no, g.prg_nm, g.prg_nope, g.prg_nmtm, GET_WEEK_DAY(g.prg_dow) AS prg_dow,
+    		GET_CD_NM('CO0020', g.prg_cd) AS prg_cd, GET_CD_NM('CO0010', g.prg_hr) AS prg_hr,
+    		(SELECT c.cns_nm FROM counselor c WHERE c.cns_no = g.cns_no) AS cns_nm,
+    		CONCAT(DATE_FORMAT(STR_TO_DATE(LEFT(g.prg_schdl, 8), '%Y%m%d'), '%Y-%m-%d'), ' ~ ', 
+        	DATE_FORMAT(STR_TO_DATE(RIGHT(g.prg_schdl, 8), '%Y%m%d'), '%Y-%m-%d')) AS prg_schdl,
+    		s.req_open,
+    		COALESCE(COUNT(DISTINCT a.stud_no), 0) AS applyCount
+		FROM grprograms g
+    	JOIN (SELECT DISTINCT prg_no, req_open 
+    			FROM grschedule) s ON s.prg_no = g.prg_no
+    	LEFT JOIN grschedule sch ON g.prg_no = sch.prg_no
+    	LEFT JOIN graply a ON sch.GRSCH_NO = a.grsch_no
+		WHERE g.prg_aprv = '1' AND s.req_open = '1'
+		GROUP BY g.prg_no, g.prg_nm, g.prg_nope, g.prg_nmtm, GET_WEEK_DAY(g.prg_dow), GET_CD_NM('CO0020', g.prg_cd),
+				GET_CD_NM('CO0010', g.prg_hr), cns_nm, prg_schdl, s.req_open
+		ORDER BY g.prg_no DESC;
+	</select>	
+	
+	<select id="programDetail" parameterType="String" resultType="GroupDTO">
+		SELECT prg_no, prg_nm, prg_content, prg_nmtm, prg_nope, prg_place,
+				GET_WEEK_DAY(prg_dow) AS prg_dow,
 				GET_CD_NM('CO0020', prg_cd) AS prg_cd,
 				GET_CD_NM('CO0010', prg_hr) AS prg_hr,				
-				(select c.cns_nm from counselor c where c.cns_no = g.cns_no) AS cns_nm				
-		FROM grprograms g 
-		WHERE prg_aprv = 1 
-		ORDER BY prg_no DESC
+				(select c.cns_nm from counselor c where c.cns_no = g.cns_no) AS cns_nm,
+				CONCAT(DATE_FORMAT(STR_TO_DATE(LEFT(g.prg_schdl, 8), '%Y%m%d'), '%Y-%m-%d'), ' ~ ', 
+				DATE_FORMAT(STR_TO_DATE(RIGHT(g.prg_schdl, 8), '%Y%m%d'), '%Y-%m-%d')) AS prg_schdl	
+		FROM grprograms g
+		WHERE prg_no = #{no} 
 	</select>
+	
+	<select id="getSchedulNo" parameterType="String" resultType="Integer">
+		SELECT grsch_no 
+		FROM grschedule 
+		WHERE prg_no = #{prg_no}
+	</select>
+	
+	<select id="checkSchedul" parameterType="Map" resultType="int">
+		SELECT COUNT(DISTINCT a.stud_no) AS COUNT
+		FROM grprograms p 
+		JOIN grschedule s ON p.prg_no = s.prg_no
+		JOIN graply a ON s.grsch_no = a.grsch_no
+		WHERE p.prg_no = #{prg_no} AND a.stud_no = #{stud_no} 
+	</select>
+	
+	<insert id="apply" parameterType="Map">
+		INSERT INTO graply (stud_no, grsch_no) 
+		VALUES (#{stud_no}, #{schdno})
+	</insert>
+	
+	
+	
+	
+	
+	<select id="getfield" parameterType="String" resultType="String">
+		SELECT cns_field
+		FROM counselor
+		WHERE cns_no = #{cns_no}
+	</select>
+	
 	
 	<insert id="registProgram" parameterType="GroupDTO">
 		INSERT INTO grprograms (prg_nm, cns_no, prg_cd, prg_nope, prg_content, prg_schdl, prg_hr, req_end, prg_dow, prg_nmtm, prg_place)
-		VALUES (#{prg_nm}, #{cns_no}, #{prg_cd}, #{prg_nope}, #{prg_content}, #{prg_schdl}, #{prg_hr}, #{req_end}, #{prg_dow}, #{prg_nmtm}, #{prg_place})
+		VALUES (#{prg_nm}, #{cns_no}, #{prg_cd}, #{prg_nope}, #{prg_content}, 
+				CONCAT(DATE_FORMAT(STR_TO_DATE(#{prg_start}, '%Y-%m-%d'), '%Y%m%d'), ' - ', DATE_FORMAT(STR_TO_DATE(#{prg_end}, '%Y-%m-%d'), '%Y%m%d')),
+		 		#{prg_hr}, DATE_FORMAT(STR_TO_DATE(#{req_end}, '%Y-%m-%d'), '%Y%m%d'), #{prg_dow}, #{prg_nmtm}, #{prg_place})
 	</insert>
 	
 	<select id="adminPRGList" resultType="GroupDTO">
 		SELECT * 
 		FROM grprograms 
 		ORDER BY prg_no DESC
+	</select>
+	
+	<select id="showContent" parameterType="int" resultType="String">
+		SELECT prg_content
+		FROM grprograms 
+		WHERE prg_no = #{no}
 	</select>
 	
 	<update id="approvePRG" parameterType="int">
@@ -43,7 +102,7 @@
 	
 	<insert id="createSchedule" parameterType="GroupDTO">
 		INSERT INTO grschedule (prg_no, prg_ymd, prg_hr) 
-		VALUES (#{prg_no}, #{prg_ymd}, #{prg_hr}) 
+		VALUES (#{prg_no}, DATE_FORMAT(STR_TO_DATE(#{prg_ymd}, '%Y-%m-%d'), '%Y%m%d'), #{prg_hr}) 
 	</insert>
 	
 	<select id="getProgramNo" parameterType="String" resultType="int">
@@ -53,30 +112,6 @@
 		ORDER BY prg_no DESC LIMIT 1 
 	</select>
 	
-	<select id="programDetail" parameterType="String" resultType="GroupDTO">
-		SELECT prg_no, cns_no, prg_nm, prg_content, prg_nmtm, prg_nope, prg_schdl, prg_dow, prg_place 
-		FROM grprograms 
-		WHERE prg_no = #{no} 
-	</select>
-	
-	<select id="getSchedulNo" parameterType="String" resultType="Integer">
-		SELECT grsch_no 
-		FROM grschedule 
-		WHERE prg_no = #{prg_no}
-	</select>
-	
-	<select id="checkSchedul" parameterType="Map" resultType="int">
-		SELECT COUNT(*)
-		FROM graply 
-		WHERE stud_no = #{stud_no} 
-			AND grsch_no = (SELECT grsch_no 
-								FROM grschedule 
-								WHERE prg_no = #{prg_no} LIMIT 1) 
-	</select>
-	
-	<insert id="apply" parameterType="Map">
-		INSERT INTO graply (stud_no, grsch_no) 
-		VALUES (#{stud_no}, #{schdno})
-	</insert>
+
 	
 </mapper>

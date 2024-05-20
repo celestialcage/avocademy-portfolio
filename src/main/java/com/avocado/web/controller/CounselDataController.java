@@ -3,6 +3,7 @@ package com.avocado.web.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,10 +65,48 @@ public class CounselDataController {
 	
 	@PostMapping("/add-cschedule")
 	public String addCsSchedule(@RequestBody PersonalDTO ps) {
-		System.out.println("상담사 번호: " + ps.getCns_no());
-		System.out.println("상담 날짜: " + ps.getSch_ymd());
-		System.out.println("상담 시간: " + ps.getSch_hr());
-		String result = "";
-		return result;
+//		System.out.println("상담사 번호: " + ps.getCns_no());
+//		System.out.println("상담 날짜: " + ps.getSch_ymd());
+//		System.out.println("상담 시간: " + ps.getSch_hr());
+		JsonObject json = new JsonObject();
+		
+		// 중복 스케줄 있는지 조회도...
+		int isThereSchedule = counselService.findSchedule(ps);
+//		System.out.println(isThereSchedule);
+		if (isThereSchedule == 1) {
+			json.addProperty("result", 0);
+			json.addProperty("message", "이미 등록된 스케줄");
+		} else {
+			int result = counselService.addSchedule(ps);
+			json.addProperty("result", result);
+			json.addProperty("message", "스케줄 추가 성공");
+		}
+		return json.toString();
+	}
+	
+	@PostMapping("/delete-cschedule")
+	public String deleteCsSchedule(@RequestBody PersonalDTO ps) {
+		JsonObject json = new JsonObject();
+		// 이미 예약된 스케줄은 삭제 불가
+		int result = counselService.deleteSchedule(ps);
+		
+		String message = result == 0 ? "스케줄 삭제 실패" : "스케줄 삭제 성공";
+		json.addProperty("result", result);
+		json.addProperty("message", message);
+		
+		return json.toString();
+	}
+	
+	@PostMapping("/apply-schedule")
+	public String applyCsSchedule(@RequestBody PersonalDTO ps) {
+		JsonObject json = new JsonObject();
+		
+		int result = counselService.applySchedule(ps);
+		String message = result == 0 ? "상담 신청 실패" : "상담 신청 성공";
+		
+		json.addProperty("result", result);
+		json.addProperty("message", message);
+		
+		return json.toString();
 	}
 }

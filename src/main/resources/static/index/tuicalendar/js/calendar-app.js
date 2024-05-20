@@ -6,7 +6,7 @@
             enableClick: false,
         },
         useFormPopup: false,
-        useDetailPopup: true,
+        useDetailPopup: false,
         usageStatistics: false,
         defaultView: 'week',
 		eventFilter: function (event) {
@@ -68,6 +68,17 @@
     const dropdownTrigger = document.querySelector('.dropdown-trigger');
     const dropdownTriggerIcon = document.querySelector('.dropdown-icon');
     const dropdownContent = document.querySelector('.dropdown-content');
+	const modalBtn = document.querySelector("#modalBtn");
+	
+	// 신청용 정보
+	let schNo = document.querySelector("#schNo"); // 스케줄번호
+	let stNo = document.querySelector("#stNo");
+	// 모달 내용
+	let csName = document.querySelector("#csName");
+	let csLoc = document.querySelector("#csLoc");
+	let csDate = document.querySelector("#csDate");
+	let csTime = document.querySelector("#csTime");
+	
     // const checkboxCollapse = document.querySelector('.checkbox-collapse');
     // const sidebar = document.querySelector('.sidebar');
 
@@ -150,49 +161,22 @@
             update(cno);
           }
         });
-    
-        // checkboxCollapse.addEventListener('change', function (e) {
-        //   if ('checked' in e.target) {
-        //     cal.setOptions({
-        //       week: {
-        //         collapseDuplicateEvents: !!e.target.checked,
-        //       },
-        //       useDetailPopup: !e.target.checked,
-        //     });
-        //   }
-        // });
-    
-        // sidebar.addEventListener('click', function (e) {
-        //   if ('value' in e.target) {
-        //     if (e.target.value === 'all') {
-        //       if (appState.activeCalendarIds.length > 0) {
-        //         cal.setCalendarVisibility(appState.activeCalendarIds, false);
-        //         appState.activeCalendarIds = [];
-        //         setAllCheckboxes(false);
-        //       } else {
-        //         appState.activeCalendarIds = MOCK_CALENDARS.map(function (calendar) {
-        //           return calendar.id;
-        //         });
-        //         cal.setCalendarVisibility(appState.activeCalendarIds, true);
-        //         setAllCheckboxes(true);
-        //       }
-        //     } else if (appState.activeCalendarIds.indexOf(e.target.value) > -1) {
-        //       appState.activeCalendarIds.splice(appState.activeCalendarIds.indexOf(e.target.value), 1);
-        //       cal.setCalendarVisibility(e.target.value, false);
-        //       setCheckboxBackgroundColor(e.target);
-        //     } else {
-        //       appState.activeCalendarIds.push(e.target.value);
-        //       cal.setCalendarVisibility(e.target.value, true);
-        //       setCheckboxBackgroundColor(e.target);
-        //     }
-        //   }
-        // });
       }
 
 	function bindInstanceEvents() {
 		cal.on({
 		  clickEvent: function (eventInfo) {
 			console.log('clickEvent', eventInfo);
+			// 신청자명, 학번 => 세션
+			// 상담사명, 상담실, 날짜, 시간단위 => 이벤트 정보
+			
+			schNo.value = eventInfo.event.id;
+			csName.value = eventInfo.event.title;
+			csLoc.value = eventInfo.event.location;
+			csDate.value = moment(eventInfo.event.start.toDate()).format("YYYY-MM-DD");
+			csTime.value = eventInfo.event.body;
+			
+			modalBtn.click();
 		  },
 		  clickDayName: function (dayNameInfo) {
 			console.log('clickDayName', dayNameInfo);
@@ -227,6 +211,9 @@
 		});
 	  }
     
+	/*modalBtn.addEventListener("click", () => {
+		console.log("모달 버튼 클릭");
+	})*/
     
 
     // Init

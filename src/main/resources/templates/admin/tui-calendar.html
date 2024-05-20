@@ -61,9 +61,26 @@
 		  background:#d4b8e5;
 		  color:#fff;
 		}
-		
+		.toastui-calendar-day-name-item.toastui-calendar-week span:hover {
+			cursor: pointer;
+		}
 		#datepicker-autoclose:hover {
 			cursor: pointer;
+		}
+		
+		.toggleBtn {
+		  display:inline-block;
+		  border:1px solid rgba(0,0,0,0.08);
+		  background:#eee;
+		  text-align:center;
+		  line-height:38px;
+		  color:#666;
+		  -webkit-transition:background .15s ease;
+		  transition:background .15s ease;
+		}
+		input:checked + .toggleBtn {
+			background:#2255a4;
+			color:#fff;
 		}
 	</style>
 </head>
@@ -141,7 +158,8 @@
                             <!-- <form class="form-horizontal"> -->
                                 <div class="card-body">
                                     <!-- <h4 class="card-title">상담 시간 입력 폼</h4> -->
-                                    <input type="hidden" id="sessionInfo" th:value="${session.uno}">
+                                    <input type="hidden" id="sessionUno" th:value="${session.uno}">
+                                    <input type="hidden" id="sessionCno" th:value="${session.cns_no}">
                                     <div class="form-group row">
                                         <label for="fname"
                                             class="col-sm-3 text-end control-label col-form-label">상담사명</label>
@@ -207,6 +225,11 @@
                                     </div>
                                     <div class="col-lg-9">
                                         <div class="card-body b-l calender-sidebar mt-2">
+              <!-- =================================일정 삭제 버튼==================================== -->
+                                        <div class="m-3">
+	                                        <input type="checkbox" id="deleteSchBtn" class="hidden">
+	                                        <label for="deleteSchBtn" class="btn mt-0 btn-info d-block waves-effect waves-light align-middle toggleBtn"><i class="ti-trash"></i> 일정 삭제하기</label>
+                                        </div>
               <!-- =================================캘린더 메뉴==================================== -->
                                         	<div id="calendarMenu" class="d-flex justify-content-between align-items-center">
                                         	<span>
@@ -322,6 +345,9 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
+    <script type="text/javascript">
+    	let sessionCno = document.getElementById("sessionCno").value;
+    </script>
     <th:block th:insert="~{./admin/thfragments/fragments.html :: jqueryScript}"></th:block>
     <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
@@ -331,10 +357,10 @@
     <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
     <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.js"></script>
     <script type="text/javascript" src="/admin/custom/utils.js"></script>
-    <script type="text/javascript" src="/admin/custom/app.js"></script>
     <!-- <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script> -->
     <script type="text/javascript" src="/admin/custom/calendar-data.js"></script>
     <script type="text/javascript" src="/admin/custom/calendar-app.js"></script>
+    <script type="text/javascript" src="/admin/custom/app.js"></script>
     <!-- <script type="text/javascript" src="/admin/custom/grid-app.js"></script> -->
     <script>
 	    /*datwpicker*/
