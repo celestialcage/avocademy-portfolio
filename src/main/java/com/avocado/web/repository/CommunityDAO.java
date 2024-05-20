@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.avocado.web.entity.CommunityDTO;
+import com.avocado.web.entity.FilesDTO;
 import com.avocado.web.entity.OnlineDTO;
 
 @Repository
@@ -23,9 +24,10 @@ public interface CommunityDAO {
 
 		int deletecd(String cno);
 
-		void inserFile(CommunityDTO communityDTO);
 
 		List<CommunityDTO> community(Map<String, Integer> pageMap);
+
+
 	
 	
 		
