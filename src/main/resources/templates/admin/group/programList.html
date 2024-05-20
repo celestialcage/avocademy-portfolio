@@ -107,7 +107,7 @@
                                     	<tbody id="prgList">
                                     		<tr th:each="r : ${list}" id="prgTable">
                                     			<td th:text="${r.prg_no}" id="no"></td>
-                                    			<td th:attr="onclick=|showContent('${r.prg_no}', '${r.prg_nm}', '${r.prg_content}')|">[[${r.prg_nm}]]</td>
+                                    			<td th:attr="onclick=|showContent('${r.prg_no}', '${r.prg_nm}')|">[[${r.prg_nm}]]</td>
                                     			<td th:text="${r.prg_schdl}"></td>
                                     			<td th:text="${r.prg_place}"></td>
                                     			<td th:switch="${r.prg_aprv}">
@@ -142,7 +142,7 @@
 				      </div>
 				      <div class="modal-body">
 				      	<div class="mt-2" id="modalContent">
-					        Modal body text goes here.
+					       <p id="here">Modal body text goes here.</p>
 				      	</div>
 				      </div>
 				      <div class="modal-footer">
@@ -208,10 +208,22 @@
         });
 
         
-		function showContent(no, title, contents){
-			$("#modalTitle").text(title);
-			$("#modalContent").html(contents);
-			contentModal.classList.remove('hidden');
+		function showContent(no, title){
+			const prg_no = no;
+			$.ajax({
+				url: "./programList",
+       			type: "POST",
+       			data: {"no" : no},
+       			dataType: "json",
+       	        success: function (result) {
+       	            $("#modalTitle").text(title);
+       	            $("#modalContent").html(result.content);  // JSON 응답에서 content를 가져와서 모달 내용 업데이트
+       	            contentModal.classList.remove('hidden');
+       	        },
+       	        error: function () {
+       	            alert("에러");
+       	        }
+			});
 			
 		}
 	    

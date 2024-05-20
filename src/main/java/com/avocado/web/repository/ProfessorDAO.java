@@ -20,8 +20,7 @@ public interface ProfessorDAO {
 	int savePs(Map<String, Object> map);
 
 
-	List<ProfessorDTO> psSchedule();
-
+	List<ProfessorDTO> psSchedule(String uname);
 
 	Map<String, Object> timeList(HashMap<String, Object> map);
 
@@ -32,6 +31,9 @@ public interface ProfessorDAO {
 
 
 	List<ProfessorDTO> professorInfo(String uname);
+
+
+	int registPsCounsel(Map<String, Object> map);
 
 
 		

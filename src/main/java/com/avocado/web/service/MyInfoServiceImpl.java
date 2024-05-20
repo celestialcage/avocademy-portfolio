@@ -13,7 +13,6 @@ public class MyInfoServiceImpl implements MyInfoService {
 	@Autowired
 	private SecureInfo secureInfo;
 
-
 	@Override
 	
 		public void sendMail(String email, String title, String content) throws EmailException {	
@@ -36,4 +35,5 @@ public class MyInfoServiceImpl implements MyInfoService {
 		
 	
 		}
+
 }

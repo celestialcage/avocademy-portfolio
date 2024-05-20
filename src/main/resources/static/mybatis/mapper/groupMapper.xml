@@ -56,6 +56,13 @@
 	
 	
 	
+	<select id="getfield" parameterType="String" resultType="String">
+		SELECT cns_field
+		FROM counselor
+		WHERE cns_no = #{cns_no}
+	</select>
+	
+	
 	<insert id="registProgram" parameterType="GroupDTO">
 		INSERT INTO grprograms (prg_nm, cns_no, prg_cd, prg_nope, prg_content, prg_schdl, prg_hr, req_end, prg_dow, prg_nmtm, prg_place)
 		VALUES (#{prg_nm}, #{cns_no}, #{prg_cd}, #{prg_nope}, #{prg_content}, 
@@ -67,6 +74,12 @@
 		SELECT * 
 		FROM grprograms 
 		ORDER BY prg_no DESC
+	</select>
+	
+	<select id="showContent" parameterType="int" resultType="String">
+		SELECT prg_content
+		FROM grprograms 
+		WHERE prg_no = #{no}
 	</select>
 	
 	<update id="approvePRG" parameterType="int">
