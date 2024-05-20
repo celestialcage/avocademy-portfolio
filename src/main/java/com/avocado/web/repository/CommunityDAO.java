@@ -35,6 +35,8 @@ public interface CommunityDAO {
 
 		List<FilesDTO> getFileByPostId(Long postId);
 
+		int getFileNo();
+
 
 
 	
