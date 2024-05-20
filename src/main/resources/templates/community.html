@@ -69,7 +69,6 @@ h5 {
 									<th class="col-5 text-center">제목</th>
 									<th class="col-1 text-center">글쓴이</th>
 									<th class="col-3 text-center">날짜</th>
-									<th class="col-1 text-center">답변상태</th>
 									<th class="col-1 text-center">삭제여부</th>
 								</tr>
 							</thead>
@@ -78,13 +77,9 @@ h5 {
 									th:onclick="|location.href='@{/community/detail(cno=${name.cno}, pageNo=${pageNo})}'|">
 									<td class="text-center" th:text="${name.cno}"></td>
 									<td class="text-center" th:text="${name.ctitle}"></td>
+									
 									<td class="text-center" th:text="${name.uname}"></td>
 									<td class="text-center" th:text="${name.cdate}"></td>
-									<td class="text-center">
-									<span th:if="${name.commentYN == 0}" th:text="답변대기"
-										class="badge text-bg-secondary"></span> 
-										<span th:if="${name.commentYN == 1}" th:text="답변완료"
-										class="badge text-bg-warning"></span></td>
 									<td class="text-center" th:text="${name.cdel}"></td>
 								</tr>
 							</tbody>
@@ -130,17 +125,17 @@ h5 {
         prevPage.classList.toggle('disabled', currentPage === 1);
         nextPage.classList.toggle('disabled', currentPage === totalPages);
 
-        prevPage.querySelector('a').href = currentPage > 1 ? `/online?page=${currentPage - 1}` : '#';
-        nextPage.querySelector('a').href = currentPage < totalPages ? `/online?page=${currentPage + 1}` : '#';
+        prevPage.querySelector('a').href = currentPage > 1 ? `/community?page=${currentPage - 1}` : '#';
+        nextPage.querySelector('a').href = currentPage < totalPages ? `/community?page=${currentPage + 1}` : '#';
 
 
         // 페이지 번호 갱신
         let pageItems = '';
         for (let i = 1; i <= totalPages; i++) {
           if (i === currentPage) {
-            pageItems += `<li class="page-item active"><a class="page-link" href="/online?page=${i}">${i}</a></li>`;
+            pageItems += `<li class="page-item active"><a class="page-link" href="/community?page=${i}">${i}</a></li>`;
           } else {
-            pageItems += `<li class="page-item"><a class="page-link" href="/online?page=${i}">${i}</a></li>`;
+            pageItems += `<li class="page-item"><a class="page-link" href="/community?page=${i}">${i}</a></li>`;
           }
         }
         pagination.innerHTML = prevPage.outerHTML + pageItems + nextPage.outerHTML;
