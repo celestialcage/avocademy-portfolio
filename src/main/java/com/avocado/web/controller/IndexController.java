@@ -7,7 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.avocado.web.entity.CommunityDTO;
 import com.avocado.web.entity.OnlineDTO;
+import com.avocado.web.service.CommunityService;
 import com.avocado.web.service.IndexService;
 import com.avocado.web.service.OnlineService;
 import com.avocado.web.service.TestService;
@@ -26,6 +28,9 @@ public class IndexController {
 	
 	@Resource(name="onlineService")
 	private OnlineService onlineService;
+	
+	@Resource(name="communityService")
+	private CommunityService communityService;
 	
 	@GetMapping({"/", "/main"})
 	public String main(Model model) {
@@ -89,6 +94,44 @@ public class IndexController {
 		model.addAttribute("pageNo", pageNo);
 		
 		return "online";
+	}
+	
+	@GetMapping("/community") // 온라인 상담 가져온것
+	public String community(Model model, HttpSession session,
+			@RequestParam(name = "pageNo", required = false, defaultValue = "1") int pageNo) {
+				
+		// 한번에 보여주고 싶은 글 개수
+		int post = 10;
+		
+		// 총 글 갯수 확인해서 페이지 개수 계산
+		int totalCount = communityService.count();
+		int totalPage = 1;
+		if (totalCount % post == 0) {
+			totalPage = totalCount / post;
+		} else {
+			totalPage = (totalCount / post) + 1;
+		}
+		
+		// 페이지가 1보다 작으면 0이거나 음수면 1로 돌리기
+		if (pageNo < 1) {
+			pageNo = 1;
+		}
+		// 페이지가 글의 총 개수보다 커지면 페이지는 글 최대 개수로 제한
+		if (pageNo > totalPage) {
+			pageNo = totalPage;
+		}
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("pageNo", pageNo);
+		
+		List<CommunityDTO> list = communityService.community(pageNo, post);
+		
+		//System.out.println("인덱스 컨트롤러 확인하자 : " +  list);
+				
+		model.addAttribute("list", list);
+		model.addAttribute("pageNo", pageNo);
+		
+				
+		return "community";
 	}
 
 }

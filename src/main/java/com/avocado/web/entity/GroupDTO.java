@@ -13,4 +13,5 @@ public class GroupDTO {
 	private int prg_no, prg_nope, prg_nmtm;
 	
 	private List<String> groupSCHDL;
+
 }
