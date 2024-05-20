@@ -3,10 +3,10 @@
 	const container = document.getElementById('calendar');
 	const options = {
 	  gridSelection: {
-		enableDblClick: false,
+		enableDbClick: false,
 		enableClick: false,
 	  },
-	  useFormPopup: true,
+	  useFormPopup: false,
 	  useDetailPopup: true,
 	  usageStatistics: false, 
 	  defaultView: 'week',
@@ -33,8 +33,8 @@
 	//     dayNames: ['일', '월', '화', '수', '목', '금', '토'],
 	//   },
 	  week: {
-          workweek: false,
-		  narrowWeekend: true,
+          workweek: true,
+		  narrowWeekend: false,
 	      eventView: true,
 	      taskView: false,
 	      hourStart: 9, 
@@ -104,12 +104,34 @@
 		  },
 		  clickEvent: function (eventInfo) {
 			console.log('clickEvent', eventInfo);
+			let deleteBtn = document.getElementById("deleteSchBtn");
+			if(deleteBtn.checked) {
+				console.log(eventInfo.event.id);
+				if(confirm("일정을 삭제하시겠습니까?")) {
+					let params = {
+						sch_no: eventInfo.event.id,
+					}
+					// 실제로 열었던 일정 삭제
+					postData('/delete-cschedule', params).then(data => {
+						alert(data.message);
+						if(data.result != 0) {
+							location.reload(true);
+						}
+					}).catch(err => {
+						console.log(err);
+					})
+					
+				}
+			}
 			
 		  },
 		  clickDayName: function (dayNameInfo) {
-			console.log('clickDayName', dayNameInfo);
+			// console.log('clickDayName', dayNameInfo.date);
+			let dateInput = document.getElementById("datepicker-autoclose");
+			dateInput.value = dayNameInfo.date;
 		  },
 		  selectDateTime: function (dateTimeInfo) {
+			calendar.clearGridSelections();
 			console.log('selectDateTime', dateTimeInfo);
 		  },
 		  beforeCreateEvent: function (event) {
@@ -174,6 +196,8 @@
     const twoWeeksViewBtn = document.querySelector('#twoWeeksViewBtn');
 	const weekViewBtn = document.querySelector('#weekViewBtn');
 	
+	const deleteBtn = document.getElementById("deleteSchBtn");
+	
 	todayBtn.addEventListener("click", () => {
 		calendar.today();
 		update();
@@ -231,6 +255,20 @@
 	  });
 	  calendar.clearGridSelections();
 	});
+	
+	deleteBtn.addEventListener("change", () => {
+		if(deleteBtn.checked) {
+			// detail 팝업 불가능하게 변경
+			calendar.setOptions({
+				useDetailPopup: false,
+			});
+		} else {
+			calendar.setOptions({
+				useDetailPopup: true,
+			})
+		}
+	});
+	
 
 	console.log(calendar);
 

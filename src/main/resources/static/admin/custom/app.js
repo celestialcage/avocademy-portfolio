@@ -1,21 +1,15 @@
 const csNmInput = document.getElementById("csName");
 const csLocInput = document.getElementById("csLoc");
-let sessionCno;
 const addSchBtn = document.querySelector('#addSchBtn');
 
-console.log(csNmInput);
-console.log(csLocInput);
-
 let csInfoUrl = '/cs-info';
-let csInfoParams = makeUserNoObj(document.querySelector("#sessionInfo").value);
+let csInfoParams = makeUserNoObj(document.querySelector("#sessionUno").value);
 
 // 폼 데이터 넣기 (상담사 로그인)
 postData(csInfoUrl, csInfoParams).then(data => {
-	sessionCno = data.cns_no;
 	csNmInput.value = data.cns_nm;
 	csLocInput.value = data.ofc_no;
 })
-
 
 function addSchedule() {
     let selectedTimes = document.querySelectorAll('input[name="cslTimes"]:checked');
@@ -40,16 +34,19 @@ function addSchedule() {
 			sch_ymd: schDate,
 		}
 		params.sch_hr = e.value;
-		updateData(url, params).then(data => {
-			console.log(data);
-		})
+		postData(url, params).then(data => {
+			if(data.result == 0) {
+				alert('등록 실패: ' + data.message);
+			} else {
+				// alert(data.message);
+				location.reload(true);
+			}
+		}).catch(err => {
+			console.log(err);
+		});
 	})
-	/*let params = {
-		cns_no: ,
-		sch_ymd: ,
-		sch_hr: ,
-	};*/
 }
+
 
 addSchBtn.addEventListener("click", addSchedule);
 

@@ -66,11 +66,13 @@ public class AdminController {
 	
 	@GetMapping("/calendar")
 	public String calendar(Model model) {
+		// 세션에서 관리자 이상만 데려가기...
 		
 		// 임시로 서비스로 가져오고 캐싱하기~!
 		List<Map<String, Object>> times = counselService.findAllTimes();
 		model.addAttribute("times", times);
 		
+		// 이 페이지는 상담사 중 개인 상담하는 사람만 갈 수 있도록
 		return "admin/tui-calendar";
 	}
 	
