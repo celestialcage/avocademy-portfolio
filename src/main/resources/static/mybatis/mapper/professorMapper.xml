@@ -10,8 +10,8 @@
 		INSERT INTO pscounsel (stud_no, ps_class, ps_cn, psc_no, ps_hr, ps_ymd) VALUES (#{studentNumber}, #{value}, #{content}, #{psc_no}, #{time}, #{date});
 	</insert>
 	
-	<select id="psSchedule" resultType="ProfessorDTO">
-		SELECT psc_no, ps_no, ymd, hr FROM psschedule;
+	<select id="psSchedule" parameterType="String" resultType="ProfessorDTO">
+		SELECT psc_no, ps_no, ymd, hr, GET_CD_NM('CO0010', hr) AS hr_nm FROM psschedule WHERE ps_no = (SELECT ps_no FROM professor WHERE user_no = (SELECT uno FROM user WHERE uname=#{uname}));
 	</select>
 	
 	<select id="getAll" parameterType="Map" resultType="Map">
@@ -26,4 +26,8 @@
 	<select id="professorInfo" parameterType="String" resultType="ProfessorDTO">
 		SELECT ps_no, user_no, ps_nm, scsbjt_cd FROM professor WHERE user_no = (SELECT uno FROM user WHERE uname = #{uname});
 	</select>
+	
+	<insert id="registPsCounsel" parameterType="Map">
+		INSERT INTO psschedule (ps_no, ymd, hr) VALUES ((SELECT ps_no FROM professor WHERE ps_nm = #{psName}), #{selectedDate}, #{times})
+	</insert>
 </mapper>

@@ -8,7 +8,42 @@
 	<link rel="stylesheet" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.css"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.css"/>
 	<link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />
-	<link rel="stylesheet" href="/admin/custom/calendar-custom.css" />
+	<link rel="stylesheet" href="/admin/professor/calendar-custom.css" />
+
+<style type="text/css">
+
+.unselectable, .unselectable * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none; 
+}
+.hidden {
+  display:none;
+}
+.checkbox {
+  display:inline-block;
+  width:200px;
+  height:40px;
+  border:1px solid rgba(0,0,0,0.08);
+  background:#eee;
+  text-align:center;
+  line-height:38px;
+  color:#666;
+  -webkit-transition:background .15s ease;
+  transition:background .15s ease;
+}
+.item + .item {
+  margin-top:5px;
+}
+input:checked + .checkbox {
+/*   background:#21bad9; */
+  background:#d4b8e5;
+  color:#fff;
+}
+
+</style>
 </head>
 
 <body>
@@ -81,7 +116,7 @@
                                                 <div class="col-md-12">
                                                     <div id="calendar-events" class="">
                                                     <div class="card">
-                            <form class="form-horizontal" action="/registPsCounsel" method="post">
+                            <form class="form-horizontal" action="/admin/registPsCounsel" method="post" id="counselForm">
                                 <div class="card-body">
                                 	<th:block th:each="item : ${list}">
                                     <h4 class="card-title"></h4>
@@ -108,52 +143,76 @@
                                             <div class="input-group">
 			                                    <input type="text" class="form-control" id="datepicker-autoclose"
 			                                        placeholder="yyyy-mm-dd">
+			                                        
 			                                    <div class="input-group-append">
 			                                        <span class="input-group-text h-100"><i class="fa fa-calendar"></i></span>
+			                                        <input type="hidden" id="selectedDate" name="selectedDate">
 			                                    </div>
 			                                </div>
                                         </div>
                                     </div>
                                     
                                     <div class="form-group row">
-                                    <label class="col-md-3 text-end">시간 단위</label>
+                                    <label class="col-md-3 text-end">시간</label>
                                     <div class="col-md-9">
-                                        <div class="form-check mr-sm-2">
-                                            <input type="checkbox" class="form-check-input"
-                                                id="customControlAutosizing1">
-                                            <label class="form-check-label mb-0" for="customControlAutosizing1">First
-                                                One</label>
+                                        <div class="form-check mr-sm-2 item">
+                                            <input type="checkbox" class="hidden" id="9" name="time" value="09">
+                                            <label class="form-check-label mb-0 checkbox" for="9">09:00 ~ 09:50</label>
                                         </div>
-                                        <div class="form-check mr-sm-2">
-                                            <input type="checkbox" class="form-check-input"
-                                                id="customControlAutosizing2">
-                                            <label class="form-check-label mb-0" for="customControlAutosizing2">Second
-                                                One</label>
+                                        
+                                        <div class="form-check mr-sm-2 item">
+                                            <input type="checkbox" class="hidden" id="10" name="time" value="10">
+                                            <label class="form-check-label mb-0 checkbox" for="10">10:00 ~ 10:50</label>
                                         </div>
-                                        <div class="form-check mr-sm-2">
-                                            <input type="checkbox" class="form-check-input"
-                                                id="customControlAutosizing3">
-                                            <label class="form-check-label mb-0" for="customControlAutosizing3">Third
-                                                One</label>
+                                        
+                                        <div class="form-check mr-sm-2 item">
+                                            <input type="checkbox" class="hidden" id="11" name="time" value="11">
+                                            <label class="form-check-label mb-0 checkbox" for="11">11:00 ~ 11:50</label>
                                         </div>
+                                        
+                                        <div class="form-check mr-sm-2 item">
+                                            <input type="checkbox" class="hidden" id="12" name="time" value="12">
+                                            <label class="form-check-label mb-0 checkbox" for="12">12:00 ~ 12:50</label>
+                                        </div>
+                                        
+                                        <div class="form-check mr-sm-2 item">
+                                            <input type="checkbox" class="hidden" id="13" name="time" value="13">
+                                            <label class="form-check-label mb-0 checkbox" for="13">13:00 ~ 13:50</label>
+                                        </div>
+                                        
+                                        <div class="form-check mr-sm-2 item">
+                                            <input type="checkbox" class="hidden" id="14" name="time" value="14">
+                                            <label class="form-check-label mb-0 checkbox" for="14">14:00 ~ 14:50</label>
+                                        </div>
+                                        
+                                        <div class="form-check mr-sm-2 item">
+                                            <input type="checkbox" class="hidden" id="15" name="time" value="15">
+                                            <label class="form-check-label mb-0 checkbox" for="15">15:00 ~ 15:50</label>
+                                        </div>
+                                        
+                                        <div class="form-check mr-sm-2 item">
+                                            <input type="checkbox" class="hidden" id="16" name="time" value="16">
+                                            <label class="form-check-label mb-0 checkbox" for="16">16:00 ~ 16:50</label>
+                                        </div>
+                                        
+                                        <div class="form-check mr-sm-2 item">
+                                            <input type="checkbox" class="hidden" id="17" name="time" value="17">
+                                            <label class="form-check-label mb-0 checkbox" for="17">17:00 ~ 17:50</label>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                                     
                                 </div>
                                 <div class="border-top">
                                     <div class="card-body">
-                                        <button type="button" class="btn btn-success text-white" style="width:100%;">입력</button>
+                                        <button type="button" class="btn btn-success text-white" id="submitBtn" style="width:100%;">일정 등록하기</button>
                                     </div>
                                 </th:block>
                                 </div>
                             </form>
                         </div>
                                                     </div>
-                                                    <!-- checkbox -->
-                                                    <a href="javascript:void(0)" id="addEventBtn"
-                                                        class="btn mt-3 btn-info d-block waves-effect waves-light">
-                                                        <i class="ti-plus"></i> Add New Event
-                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -164,8 +223,6 @@
                                         	<div id="calendarMenu" class="d-flex justify-content-between align-items-center">
                                         	<span>
                                         		<button type="button" id="monthViewBtn" class="calendar-btn calendar-move-today">Month</button>
-                                        		<button type="button" id="twoWeeksViewBtn" class="calendar-btn calendar-move-today">2Weeks</button>
-                                        		<button type="button" id="weekViewBtn" class="calendar-btn calendar-move-today">Week</button>
                                         	</span>
                                         	<span class="calendar-render-range"></span>
                                         	<span>
@@ -187,68 +244,25 @@
                         </div>
                     </div>
                 </div>
-                <!-- BEGIN MODAL -->
-                <div class="modal none-border" id="my-event">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title"><strong>Add Event</strong></h4>
-                                <button type="button" class="close" data-dismiss="modal"
-                                    aria-hidden="true">&times;</button>
-                            </div>
-                            <div class="modal-body"></div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary waves-effect"
-                                    data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-success save-event waves-effect waves-light">Create
-                                    event</button>
-                                <button type="button" class="btn btn-danger delete-event waves-effect waves-light"
-                                    data-dismiss="modal">Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Modal Add Category -->
-                <div class="modal fade none-border" id="add-new-event">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title"><strong>Add</strong> a category</h4>
-                                <button type="button" class="close" data-dismiss="modal"
-                                    aria-hidden="true">&times;</button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label class="control-label">Category Name</label>
-                                            <input class="form-control form-white" placeholder="Enter name" type="text"
-                                                name="category-name" />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="control-label">Choose Category Color</label>
-                                            <select class="form-select shadow-none form-white" data-placeholder="Choose a color..."
-                                                name="category-color">
-                                                <option value="success">Success</option>
-                                                <option value="danger">Danger</option>
-                                                <option value="info">Info</option>
-                                                <option value="primary">Primary</option>
-                                                <option value="warning">Warning</option>
-                                                <option value="inverse">Inverse</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger waves-effect waves-light save-category"
-                                    data-dismiss="modal">Save</button>
-                                <button type="button" class="btn btn-secondary waves-effect"
-                                    data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
+                <!-- 모달 HTML -->
+				<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+				    <div class="modal-dialog" role="document">
+				        <div class="modal-content">
+				            <div class="modal-header">
+				            </div>
+				            <div class="modal-body">
+				                일정을 등록하시겠습니까?
+				            </div>
+				            <div class="modal-footer">
+				                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+				                <button type="button" class="btn btn-primary" id="confirmSubmit">제출</button>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+                
+                
                 <!-- END MODAL -->
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
@@ -284,11 +298,12 @@
     <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
     <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.js"></script>
     <!-- <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script> -->
-    <script type="text/javascript" src="/admin/custom/calendar-data.js"></script>
-    <script type="text/javascript" src="/admin/custom/utils.js"></script>
-    <script type="text/javascript" src="/admin/custom/calendar-app.js"></script>
-    <!-- <script type="text/javascript" src="/admin/custom/grid-app.js"></script> -->
-    <script type="text/javascript" src="/admin/custom/app.js"></script>
+    <script type="text/javascript" src="/admin/professor/calendar-data.js"></script>
+    <script type="text/javascript" src="/admin/professor/utils.js"></script>
+    <script type="text/javascript" src="/admin/professor/calendar-app.js"></script>
+    <!-- <script type="text/javascript" src="/admin/professor/grid-app.js"></script> -->
+    <script type="text/javascript" src="/admin/professor/app.js"></script>
+    
     <script type="text/javascript">
 	    /*datwpicker*/
 	    jQuery('#datepicker-autoclose').datepicker({
@@ -298,17 +313,67 @@
 	        autoclose: true,
 	        todayHighlight: true,
 	        daysOfWeekDisabled: [0,6]
-	        
-	        
 	    })
+	    
 	    // 날짜 클릭 시 값 selectedDate에 저장
 	    .on('changeDate', function(e){
 	    	selectedDate = e.format('yyyy-mm-dd');
-	    	alert(selectedDate);
+	    	$('#selectedDate').val(selectedDate);
+	    	
+	    	 // selectedDate에 날짜가 지정되면 시간 드래그 활성화
+		    $.fn.dragCheckbox = function () {
+		        var source = this;
+		        var ConditionA = false;
+		        var ConditionB = false;
+		        source.parent().css({
+		          '-webkit-user-select': 'none',
+		          '-moz-user-select': 'none',
+		          '-ms-user-select': 'none',
+		          '-o-user-select': 'none',
+		          'user-select': 'none'
+		        });
+		        source.mousedown(function(){
+		            ConditionA = true;
+		            ConditionB = true;
+		        });
+		        $(document).mouseup(function(){
+		            ConditionA = false;
+		            ConditionB = false;
+		        })
+		        source.mouseenter(function(){
+		            if(ConditionA != false) {
+		                $(this).trigger('click');
+		                var checkbox = $(this).find('input[type="checlbox"]');
+		                checkbox.prop('checked', !checkbox.prop('checked'));
+		            }
+		        });
+		        source.mouseout(function(){
+		            if(ConditionA != false && ConditionB != false) {
+		                $(this).trigger('click');
+		                ConditionB = false;
+		            }
+		        });
+		    }
+		      $('.checkbox').dragCheckbox();
+		      $('.item').dragCheckbox();
+		    // plugin - Click by Drag
 	    });
 	    
-	    
-	    
+	    $(document).ready(function() {
+	        // 제출 버튼 클릭 시 모달 표시
+	        $('#submitBtn').click(function() {
+	            $('#confirmModal').modal('show');
+	        });
+	     	// 모달의 취소 버튼 클릭 시 모달 닫기
+	        $('.modal-footer .btn-secondary').click(function() {
+	            $('#confirmModal').modal('hide');
+	        });
+
+	        // 모달의 제출 버튼 클릭 시 폼 제출
+	        $('#confirmSubmit').click(function() {
+	            $('#counselForm').submit();
+	        });
+	    });
     </script>
 </body>
 

@@ -376,7 +376,7 @@
               $('#eventDate').text(info.dateStr);
 
               // 해당 날짜에 값이 있는지 확인
-              if (response.length === 0) {
+              if (response.length == 0) {
                 $('#selectedTime').empty(); // 기존 라디오 버튼 삭제
                 $('#selectedTime').append('<p id="noDataMessage">예약 가능한 시간이 없습니다.</p>');
               } else { // 해당 날짜에 값이 있을 때
@@ -388,13 +388,14 @@
                 $.each(timeList, function (index, time) {
                   // 각 시간별 라디오 버튼 생성
                   var radioId = 'time' + index; // 유니크한 ID 생성
-                  var psc = $('<input type="hidden" class="form-check-input" name="selectedPsc" value="'+ time.psc_no +'" id="' + radioId +'">');
                   var radioBtn = $('<input type="radio" class="form-check-input" name="selectedTime" value="' + time.hr + '" id="' + radioId + '" required>');
                   var label = $('<label class="form-check-label" for="' + radioId + '"><span>' + time.hr_nm + '</span></label>');
                   
-                  alert(time.psc_no);
                   
-                  radioGroup.append(psc);
+                  radioBtn.on('change', function() {
+                	 $('#selectedPscNo').val(time.psc_no); // hidden input에 psc_no값 넣어주기 
+                  });
+                  
                   radioGroup.append(radioBtn);
                   radioGroup.append(label);
                   radioGroup.append('<br>');
