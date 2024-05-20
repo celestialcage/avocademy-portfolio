@@ -102,8 +102,8 @@ async function getDBEvents(viewName) {
     let event;
 	let events = [];
     
-    // db 통신 ajax
-    let dbEvents = await getData('/cs-schedule').then(data => {
+    // db 통신 ajax (상담사 로그인 때)
+    let dbEvents = await getData('/cs-schedule', sessionCno).then(data => {
         data.schedules.forEach(e => {
             e.scheduleDate = moment(e.scheduleDate, "YYYYMMDD").format('YYYY-MM-DD');
         });

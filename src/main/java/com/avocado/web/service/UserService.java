@@ -7,7 +7,7 @@ public interface UserService {
 
 	Map<String, Object> login(Map<String, Object> map);
 
-	String getStudentInfo(String uno);
+	Map<String, Object> getStudentInfo(String uno);
 
 	String getCounselorInfo(String uno);
 

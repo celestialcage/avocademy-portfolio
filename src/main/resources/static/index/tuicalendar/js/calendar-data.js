@@ -45,9 +45,9 @@ function getDBEvent(calendar, dbEle) {
     let id, calendarId, title, body, location, state, isVisible;
     id = dbEle.scheduleNo;
     calendarId = `${dbEle.counselorNo}`;
-    title = `상담사 ${dbEle.counselorNo} 신청 가능`;
-    body = ``;
-    location = `상담사 ${dbEle.counselorNo} 사무실 N호`;
+    title = `${dbEle.cslName}`;
+    body = `${dbEle.scheduleTime}:00 ~ ${dbEle.scheduleTime}:50`;
+    location = `상담사 ${dbEle.cslName} 사무실 ${dbEle.cslOffice}호`;
     state = dbEle.scheduleState == 0 ? `신청 열림` : `예약됨`;
     isVisible = dbEle.scheduleState == 0 ? true : false;
     // let calendarId, start, end;

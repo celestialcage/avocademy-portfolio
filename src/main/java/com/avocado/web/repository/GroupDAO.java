@@ -34,4 +34,10 @@ public interface GroupDAO {
 
 	void apply(Map<String, Object> map);
 
+	int checkSchedul(Map<String, Object> check);
+
+	String getfield(String cns_no);
+
+	String showContent(int no);
+
 }

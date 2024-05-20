@@ -6,9 +6,16 @@
             enableClick: false,
         },
         useFormPopup: false,
-        useDetailPopup: true,
+        useDetailPopup: false,
         usageStatistics: false,
         defaultView: 'week',
+		eventFilter: function (event) {
+	      let currentView = cal.getViewName();
+	      if (currentView === 'month') {
+	        return ['allday', 'time'].includes(event.category) && event.isVisible;
+	      }
+	      return event.isVisible;
+	    },
         timezone: {
             zones: [
                 {
@@ -61,6 +68,17 @@
     const dropdownTrigger = document.querySelector('.dropdown-trigger');
     const dropdownTriggerIcon = document.querySelector('.dropdown-icon');
     const dropdownContent = document.querySelector('.dropdown-content');
+	const modalBtn = document.querySelector("#modalBtn");
+	
+	// 신청용 정보
+	let schNo = document.querySelector("#schNo"); // 스케줄번호
+	let stNo = document.querySelector("#stNo");
+	// 모달 내용
+	let csName = document.querySelector("#csName");
+	let csLoc = document.querySelector("#csLoc");
+	let csDate = document.querySelector("#csDate");
+	let csTime = document.querySelector("#csTime");
+	
     // const checkboxCollapse = document.querySelector('.checkbox-collapse');
     // const sidebar = document.querySelector('.sidebar');
 
@@ -81,9 +99,14 @@
     }
 
     function setDropdownTriggerText() {
-        let csField = COUNSEL_CALENDARS[0].name;
+		function isThisField(e) {
+			if(e.id == appState.activeCalendarIds[0]) {
+				return true;
+			}
+		}
+        let csField = COUNSEL_CALENDARS.find(isThisField);
         let buttonText = document.querySelector('.dropdown .button-text');
-        buttonText.textContent = csField;
+        buttonText.textContent = csField.name;
     }
     
     function toggleDropdownState() {
@@ -100,12 +123,10 @@
     }
 
     function update(cnsno) {
-        // setDropdownTriggerText();
+        setDropdownTriggerText();
         displayRenderRange();
         reloadEvents(cnsno);
     }
-
-    
 
     function bindAppEvents(cnsno) {
         dropdownTrigger.addEventListener('click', toggleDropdownState);
@@ -125,71 +146,83 @@
         })
     
         dropdownContent.addEventListener('click', function (e) {
-		  let emptyArr = [];
-          let buttonText = document.querySelector('.dropdown .button-text');
-			/* console.log(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1);
-			console.log(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo));
-			console.log(appState.activeCalendarIds);
-			console.log(e.target.dataset.counselNo); */
+		  let cno = '1';
+		  let calIdArr = COUNSEL_CALENDARS.map(ele => { ele.id });
+		  cal.setCalendarVisibility(calIdArr, false);
           if ('counselNo' in e.target.dataset) {
+			// console.log(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1);
             if(appState.activeCalendarIds.indexOf(e.target.dataset.counselNo) == -1) { // 이게 없으면
-				appState.activeCalendarIds = emptyArr;
+				appState.activeCalendarIds = [];
                 appState.activeCalendarIds.push(e.target.dataset.counselNo);
-				COUNSEL_CALENDARS.forEach((e) => {
-					cal.setCalendarVisibility(e.id, false);
-				})
-                cal.setCalendarVisibility(e.target.dataset.counselNo, true);
-				buttonText.textContent = `${e.target.dataset.counselField} - ${e.target.dataset.counselName}`;
+                cal.setCalendarVisibility(appState.activeCalendarIds, true);
+                cno = e.target.dataset.counselNo;
             }
             toggleDropdownState();
-            update(cnsno);
+            update(cno);
           }
         });
-    
-        // checkboxCollapse.addEventListener('change', function (e) {
-        //   if ('checked' in e.target) {
-        //     cal.setOptions({
-        //       week: {
-        //         collapseDuplicateEvents: !!e.target.checked,
-        //       },
-        //       useDetailPopup: !e.target.checked,
-        //     });
-        //   }
-        // });
-    
-        // sidebar.addEventListener('click', function (e) {
-        //   if ('value' in e.target) {
-        //     if (e.target.value === 'all') {
-        //       if (appState.activeCalendarIds.length > 0) {
-        //         cal.setCalendarVisibility(appState.activeCalendarIds, false);
-        //         appState.activeCalendarIds = [];
-        //         setAllCheckboxes(false);
-        //       } else {
-        //         appState.activeCalendarIds = MOCK_CALENDARS.map(function (calendar) {
-        //           return calendar.id;
-        //         });
-        //         cal.setCalendarVisibility(appState.activeCalendarIds, true);
-        //         setAllCheckboxes(true);
-        //       }
-        //     } else if (appState.activeCalendarIds.indexOf(e.target.value) > -1) {
-        //       appState.activeCalendarIds.splice(appState.activeCalendarIds.indexOf(e.target.value), 1);
-        //       cal.setCalendarVisibility(e.target.value, false);
-        //       setCheckboxBackgroundColor(e.target);
-        //     } else {
-        //       appState.activeCalendarIds.push(e.target.value);
-        //       cal.setCalendarVisibility(e.target.value, true);
-        //       setCheckboxBackgroundColor(e.target);
-        //     }
-        //   }
-        // });
       }
+
+	function bindInstanceEvents() {
+		cal.on({
+		  clickEvent: function (eventInfo) {
+			console.log('clickEvent', eventInfo);
+			// 신청자명, 학번 => 세션
+			// 상담사명, 상담실, 날짜, 시간단위 => 이벤트 정보
+			
+			schNo.value = eventInfo.event.id;
+			csName.value = eventInfo.event.title;
+			csLoc.value = eventInfo.event.location;
+			csDate.value = moment(eventInfo.event.start.toDate()).format("YYYY-MM-DD");
+			csTime.value = eventInfo.event.body;
+			
+			modalBtn.click();
+		  },
+		  clickDayName: function (dayNameInfo) {
+			console.log('clickDayName', dayNameInfo);
+		  },
+		  selectDateTime: function (dateTimeInfo) {
+			console.log('selectDateTime', dateTimeInfo);
+		  },
+		  beforeCreateEvent: function (event) {
+			console.log('beforeCreateEvent', event);
+			event.id = chance.guid();
+	
+			calendar.createEvents([event]);
+			calendar.clearGridSelections();
+		  },
+		  beforeUpdateEvent: function (eventInfo) {
+			let event, changes;
+	
+			console.log('beforeUpdateEvent', eventInfo);
+	
+			event = eventInfo.event;
+			changes = eventInfo.changes;
+
+			console.log(changes);
+	
+			calendar.updateEvent(event.id, event.calendarId, changes);
+		  },
+		  beforeDeleteEvent: function (eventInfo) {
+			console.log('beforeDeleteEvent', eventInfo);
+	
+			calendar.deleteEvent(eventInfo.id, eventInfo.calendarId);
+		  },
+		});
+	  }
     
+	/*modalBtn.addEventListener("click", () => {
+		console.log("모달 버튼 클릭");
+	})*/
     
 
     // Init
-    setDropdownTriggerText();
+    COUNSEL_CALENDARS.forEach((e) => {
+        cal.setCalendarVisibility(e.id, false);
+    })
+    cal.setCalendarVisibility(COUNSEL_CALENDARS[0].id, true);
     bindAppEvents(cno);
-    // bindInstanceEvents();
+    bindInstanceEvents();
     update(cno);
 
 })(tui.Calendar);
