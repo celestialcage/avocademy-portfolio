@@ -68,8 +68,8 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public void apply(Map<String, Object> map) {
-		groupDAO.apply(map);		
+	public int apply(Map<String, Object> map) {
+		return groupDAO.apply(map);		
 	}
 
 	@Override

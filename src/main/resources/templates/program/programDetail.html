@@ -116,19 +116,23 @@
 						$.ajax({
 							url: '/group/programApply',
 							type: "post",
-							dataType: "text",
+							dataType: "json",
 							data : {'no' : no},
 							success : data => {
-								//if(data.status === "success") {									
+								if(data.status === "success") {									
 									Swal.fire('신청 완료', data.message, 'success');						
-								//}
+								} else {
+									Swal.fire('신청 실패', data.message, 'error');
+								}
+								
+								 console.log(data.status);
 							},
 							error : () => {
 								Swal.fire('통신 실패', 'ㅠㅠ', 'error');						
 							}
 						});
 					} else if (apply.value.count == "1"){
-						Swal.fire('중복된 스케줄입니다.', '', 'error');									
+						Swal.fire('중복된 스케줄이 존재합니다.', '', 'error');									
 					}
 				} else if (apply.isDismissed){
 					Swal.fire('신청을 취소했습니다.', '', 'warning');					
