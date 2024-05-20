@@ -21,6 +21,6 @@ public interface CommunityService {
 	int deletecd(String cno);
 
 
-	int write(Map<String, Object> map, FilesDTO dto, MultipartFile file);
+	Map<String, Object> write(Map<String, Object> map, FilesDTO dto, MultipartFile file);
 
 }

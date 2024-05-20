@@ -2,10 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.avocado.web.repository.CommunityDAO">
 
-<insert id="fileUp" parameterType="com.avocado.web.entity.FilesDTO">
-	INSERT INTO file(fno, fsn, actl_fnm, uuid, fsize, fpath)
-	VALUES(#{fno},#{fsn}, #{fsn}, #{actl_fnm}, #{uuid}, #{#{fsize}}, #{fpath})
-</insert>
+	<insert id="fileUp" parameterType="com.avocado.web.entity.FilesDTO">
+		INSERT INTO files(fno, fsn, actl_fnm, uuid, fsize, fpath)
+		VALUES(#{fno},#{fsn}, #{actl_fnm}, #{uuid}, #{fsize}, #{fpath})
+	</insert>
+
+	<insert id="write" parameterType="Map"> 
+		INSERT INTO community
+		(ctitle, ccontent, user_no2) 
+		VALUES (#{ctitle}, #{ccontent}, #{uno});
+	</insert>
 	
 	<select id="community" resultType="CommunityDTO" parameterType="Map">
 		SELECT cno, ctitle, ccontent, cdate, cdel, user.uname
@@ -21,11 +27,7 @@
 		WHERE cno = #{cno}; 
 	</select>
 	
-	<insert id="write" parameterType="Map"> 
-		INSERT INTO community
-		(ctitle, ccontent, user_no2) 
-		VALUES (#{ctitle}, #{ccontent}, #{uno});
-	</insert>
+	
 	
 	<select id="count">
 		select count(1) from community

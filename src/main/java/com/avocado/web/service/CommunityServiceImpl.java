@@ -56,8 +56,8 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public int write(Map<String, Object> map, FilesDTO dto, MultipartFile file) {
-		
+	public Map<String, Object> write(Map<String, Object> map, FilesDTO dto, MultipartFile file) {
+			System.out.println("서비스 맵"+map);
 			System.out.println("서비스_파일 타입: " + file.getName());
 			System.out.println("서비스_파일 사이즈: " + file.getSize());
 			System.out.println("서비스_파일 이름: " + file.getOriginalFilename());
@@ -103,15 +103,21 @@ public class CommunityServiceImpl implements CommunityService {
 				dto.setFsn(file.getOriginalFilename());
 				dto.setActl_fnm(newFileName);
 				dto.setUuid(uuid.toString());
-				dto.setFsize(String.valueOf(file.getSize()));
+				dto.setFsize(file.getSize());
 				dto.setFpath(upFileName.getAbsolutePath());
 
 		  } catch (IllegalStateException | IOException e) {
 		        e.printStackTrace();
 		    }
-
+			Map<String, Object> result = new HashMap<String, Object>();
 		    // 글 작성 정보 저장
-		    return communityDAO.write(map);
+			int write = communityDAO.write(map);
+			int fileUp = communityDAO.fileUp(dto);
+			
+			result.put("write", write);
+			result.put("fileUp", fileUp);
+			
+			return result;
 		}
 	
 
