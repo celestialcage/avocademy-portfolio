@@ -15,6 +15,7 @@ import com.avocado.web.entity.OnlineDTO;
 @Mapper
 public interface CommunityDAO {
 
+		
 		CommunityDTO detail(int cno);
 
 		int write(Map<String, Object> map);
@@ -29,6 +30,11 @@ public interface CommunityDAO {
 		List<CommunityDTO> community(Map<String, Integer> pageMap);
 
 		int fileUp(FilesDTO dto);
+
+		FilesDTO getPostById(Long postId);
+
+		List<FilesDTO> getFileByPostId(Long postId);
+
 
 
 	

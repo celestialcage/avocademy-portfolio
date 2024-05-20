@@ -23,4 +23,13 @@ public interface CommunityService {
 
 	Map<String, Object> write(Map<String, Object> map, FilesDTO dto, MultipartFile file);
 
+
+	FilesDTO getPostById(Long postId);
+
+	List<FilesDTO> getFileByPostId(Long postId);
+
+
+
+
+
 }
