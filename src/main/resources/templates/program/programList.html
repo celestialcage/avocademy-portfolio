@@ -45,24 +45,24 @@
 					<table border="1" class="m-3">
 						<thead>
 							<tr>
-								<th class="">프로그램명</th>
-								<th>담당자</th>
-								<th>정원</th>
-								<th>분류</th>
-								<th>기간</th>
-								<th>요일</th>
-								<th>시간</th>
+								<th class="col-2">프로그램명</th>
+								<th class="col-2">담당자</th>
+								<th class="col-1">정원</th>
+								<th class="col-1">분류</th>
+								<th class="col-3">기간</th>
+								<th class="col-3">시간</th>
+	
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="r : ${list}">
 								<td><a th:href="@{/group/programDetail(no=${r.prg_no})}" th:text="${r.prg_nm}"></a></td>
 								<td th:text="${r.cns_nm}"></td>
-								<td th:text="${r.prg_nope}"></td>
+								<td>[[(${r.applyCount})]]/[[(${r.prg_nope})]]</td>
 								<td th:text="${r.prg_cd}"></td>
 								<td th:text="${r.prg_schdl}"></td>
-								<td th:text="${r.prg_dow}"></td>
-								<td th:text="${r.prg_hr}"></td>
+								<td>매주 ([[(${r.prg_dow})]]) [[(${r.prg_hr})]]</td>
+					
 							</tr>
 						</tbody>
 					</table>

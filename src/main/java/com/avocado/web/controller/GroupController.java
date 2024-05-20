@@ -77,21 +77,25 @@ public class GroupController {
 	
 	//신청
 	@PostMapping("/programApply")
-	public @ResponseBody String programApply(@RequestParam("no") String no, HttpSession session) {
+	public @ResponseBody Map<String, Object> programApply(@RequestParam("no") String no, HttpSession session) {
 		
 		String stud_no = (String) session.getAttribute("stud_no");
 		//스케줄번호 찾아오기
 		List<Integer> schdlNo = groupService.getSchedulNo(no);
 		
+		//신청테이블에 넣기
 		for(int i = 0; i < schdlNo.size(); i++) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("schdno", schdlNo.get(i));
 			map.put("stud_no", stud_no);
 			groupService.apply(map);			
-		}		
+		}
 		
-		//신청테이블에 넣기
-		return "1";
+		Map<String, Object> response = new HashMap<String, Object>();
+		response.put("status", "success");
+		response.put("message", "신청이 완료되었습니다.");
+		
+		return response;
 	}
 	
 	

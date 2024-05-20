@@ -53,7 +53,7 @@
 			      			<h6 class="card-subtitle m-2 text-body-secondary">내용</h6>
 						    <p class="card-text m-2" th:text="${detail.prg_content}"></p>
 			      			<h6 class="card-subtitle m-2 text-body-secondary">정원</h6>
-						    <p class="card-text m-2" th:text="${detail.prg_nmtm}"></p>
+						    <p class="card-text m-2" th:text="${detail.prg_nope}"></p>
 			      			<h6 class="card-subtitle m-2 text-body-secondary">일정</h6>
 						    <p class="card-text m-2" th:text="${detail.prg_schdl}"></p>
 			      			<h6 class="card-subtitle m-2 text-body-secondary">장소</h6>
@@ -97,7 +97,6 @@
 				allowOutsideClick: () => !Swal.isLoading()
 			}).then(apply =>{	
 				if (apply.isConfirmed){
-					//console.log(result)
 					if (apply.value.count == "0") {
 						$.ajax({
 							url: '/group/programApply',
@@ -105,10 +104,14 @@
 							dataType: "text",
 							data : {'no' : no},
 							success : data => {
-								Swal.fire('신청을 완료했습니다.', '잇힝', 'success');						
+								if(data.status === "success") {									
+									Swal.fire('신청 완료', data.message, 'success');						
+								} else {
+									Swal.fire('신청 실패', '', 'error');															
+								}
 							},
 							error : () => {
-								Swal.fire('신청에 실패했습니다.', 'ㅠㅠ', 'error');						
+								Swal.fire('통신 실패', 'ㅠㅠ', 'error');						
 							}
 						});
 					}

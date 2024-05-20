@@ -97,9 +97,8 @@
                                     	<thead>
                                     		<tr>
                                     			<th>no</th>
-                                    			<th>프로그램 제목</th>
-                                    			<th>프로그램 내용</th>
-                                    			<th>시간</th>
+                                    			<th>제목</th>
+                                    			<th>프로그램 일정</th>
                                     			<th>장소</th>
                                     			<th>상태</th>
                                     			<th>승인</th>
@@ -109,7 +108,6 @@
                                     		<tr th:each="r : ${list}" id="prgTable">
                                     			<td th:text="${r.prg_no}" id="no"></td>
                                     			<td th:attr="onclick=|showContent('${r.prg_no}', '${r.prg_nm}', '${r.prg_content}')|">[[${r.prg_nm}]]</td>
-                                    			<td th:text="${r.prg_content}"></td>
                                     			<td th:text="${r.prg_schdl}"></td>
                                     			<td th:text="${r.prg_place}"></td>
                                     			<td th:switch="${r.prg_aprv}">

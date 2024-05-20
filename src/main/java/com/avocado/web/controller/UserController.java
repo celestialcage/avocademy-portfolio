@@ -81,7 +81,7 @@ public class UserController {
 	            	String stud_no = userService.getStudentInfo(uno); //학번추가
 	            	session.setAttribute("stud_no", stud_no);
 	            	return "redirect:/main"; // 일반 사용자 페이지로 리다이렉트
-	            } else if (role == 3) {
+	            } else if (role == 3 || role == 4) {
 	            	String cns_no = userService.getCounselorInfo(uno);
 	            	session.setAttribute("cns_no", cns_no); //상담사번호추가
 	            } else if (role == 5) {
