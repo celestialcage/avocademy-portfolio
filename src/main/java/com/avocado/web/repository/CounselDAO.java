@@ -30,4 +30,6 @@ public interface CounselDAO {
 
 	int applySchedule(PersonalDTO ps);
 
+	List<PersonalDTO> findCslAppointments(int cns_no);
+
 }

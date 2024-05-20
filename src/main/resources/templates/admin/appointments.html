@@ -67,12 +67,12 @@
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
-                    	<div class="card">
+                    	<!-- <div class="card">
                     		<div class="card-body">
                                 <h5 class="card-title mb-0">Toast UI Grid</h5>
                             </div>
                     		<div id="grid"></div>
-                    	</div>
+                    	</div> -->
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title mb-0">Static Table</h5>
@@ -80,30 +80,22 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Handle</th>
+                                        <th scope="col">신청번호</th>
+                                        <th scope="col">신청자(학번)</th>
+                                        <th scope="col">상담일자</th>
+                                        <th scope="col">상담시간</th>
+                                        <th scope="col">신청상태</th>
+                                        <th scope="col">승인여부</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
+                                    <tr th:each="apply : ${applyList}">
+                                        <th scope="row" th:text="${apply.aply_no}" class="aply_no align-middle"></th>
+                                        <td th:text="${apply.stud_no}" class="stud_no align-middle"></td>
+                                        <td th:text="${apply.dscsn_ymd}" class="dscsn_ymd align-middle"></td>
+                                        <td th:text="${apply.dscsn_hr}" class="dscsn_hr align-middle"></td>
+                                        <td th:text="${apply.dscsn_stat}" class="dscsn_stat align-middle"></td>
+                                        <td><button th:id="|confirmBtn${apply.aply_no}|" class="confirmBtn btn btn-success text-white align-middle">승인</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -766,8 +758,9 @@
     <script src="/admin/assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
     <script src="/admin/assets/extra-libs/multicheck/jquery.multicheck.js"></script>
     <script src="/admin/assets/extra-libs/DataTables/datatables.min.js"></script>
-    <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
-    <script type="text/javascript" src="/admin/custom/grid-app.js"></script>
+    <!-- <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+    <script type="text/javascript" src="/admin/custom/grid-app.js"></script> -->
+    <script type="text/javascript" src="/admin/custom/appointments-app.js"></script>
     <script>
         /****************************************
          *       Basic Table                   *

@@ -3,18 +3,25 @@ package com.avocado.web.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.avocado.web.entity.PersonalDTO;
 import com.avocado.web.service.CounselService;
+import com.avocado.web.util.Util;
 
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	
+	@Autowired
+	private Util util;
 	
 	@Resource(name = "counselService")
 	private CounselService counselService;
@@ -77,7 +84,15 @@ public class AdminController {
 	}
 	
 	@GetMapping("/appointments")
-	public String appointments() {
+	public String appointments(Model model) {
+		HttpSession session = util.getSession();
+		int cns_no = Integer.valueOf(session.getAttribute("cns_no").toString());
+		System.out.println(session.getAttribute("uno"));
+		System.out.println(session.getAttribute("uid"));
+		System.out.println(session.getAttribute("cns_no"));
+		
+		List<PersonalDTO> list = counselService.findCslAppointments(cns_no);
+		model.addAttribute("applyList", list);
 		return "admin/appointments";
 	}
 	
