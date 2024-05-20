@@ -118,16 +118,19 @@ public class CommunityServiceImpl implements CommunityService {
 			
 		  }
 			Map<String, Object> result = new HashMap<String, Object>();
-		    // 글 작성 정보 저장
-			int write = communityDAO.write(map);
+		   
 			
 			
 			// 파일이 비어 있지 않은 경우에만 파일 정보를 데이터베이스에 저장
 		    if (!file.isEmpty()) {
 		        int fileUp = communityDAO.fileUp(dto);
 		        result.put("fileUp", fileUp);
+		        
+		        int fileNo = communityDAO.getFileNo();
+		        map.put("fno",fileNo);
 		    }
-
+		    // 글 작성 정보 저장
+			int write = communityDAO.write(map);
 			
 			result.put("write", write);
 			

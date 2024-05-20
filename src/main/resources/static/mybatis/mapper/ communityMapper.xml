@@ -9,8 +9,8 @@
 
 	<insert id="write" parameterType="Map"> 
 		INSERT INTO community
-		(ctitle, ccontent, user_no2) 
-		VALUES (#{ctitle}, #{ccontent}, #{uno});
+		(ctitle, ccontent, user_no2, fno) 
+		VALUES (#{ctitle}, #{ccontent}, #{uno}, #{fno});
 	</insert>
 	
 	<select id="community" resultType="CommunityDTO" parameterType="Map">
@@ -25,6 +25,12 @@
 		SELECT * 
 		FROM communityview 
 		WHERE cno = #{cno}; 
+	</select>
+	
+		<select id="getFileNo"  resultType="int"> 
+		SELECT fno 
+		FROM files
+		DESC limit 1;
 	</select>
 	
 	
