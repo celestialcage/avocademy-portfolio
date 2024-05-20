@@ -6,6 +6,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
   <style type="text/css">
   main {
   	display:row;
@@ -48,16 +49,30 @@
 			      <article class="blog-post mb-4">
 			      	<div class="card m-2">
 			      		<div class="card-body">
-					      	<input type="hidden" th:value="3">
-			      			<h5 class="card-title" th:text="${detail.prg_nm}"></h5>
-			      			<h6 class="card-subtitle m-2 text-body-secondary">내용</h6>
-						    <p class="card-text m-2" th:text="${detail.prg_content}"></p>
-			      			<h6 class="card-subtitle m-2 text-body-secondary">정원</h6>
-						    <p class="card-text m-2" th:text="${detail.prg_nope}"></p>
-			      			<h6 class="card-subtitle m-2 text-body-secondary">일정</h6>
-						    <p class="card-text m-2" th:text="${detail.prg_schdl}"></p>
-			      			<h6 class="card-subtitle m-2 text-body-secondary">장소</h6>
-						    <p class="card-text m-2" th:text="${detail.prg_place}"></p>
+			      			<h5 class="card-title mx-4" th:text="${detail.prg_nm}"></h5>
+			      			<hr>
+			      			<div class="programInfo">
+			      				<table class="table">
+			      					<thead>
+			      						<tr>
+			      							<th>정원</th>
+			      							<th colspan="2">일정</th>
+			      							<th>장소</th>
+			      						</tr>
+			      					</thead>
+			      					<tbody>
+			      						<tr>
+			      							<td>[[(${detail.prg_nope})]]명</td>
+			      							<td th:text="${detail.prg_schdl}"></td>
+			      							<td>매주 [[(${detail.prg_dow})]]요일 [[(${detail.prg_hr})]]</td>
+			      							<td th:text="${detail.prg_place}"></td>
+			      						</tr>
+			      					</tbody>
+			      				</table>
+			      			</div>
+			      			<div class="programContent mx-3">
+							    <p class="card-text m-2" th:utext="${detail.prg_content}"></p>
+			      			</div>
 			      		</div>
 			      	</div>
 			      </article>

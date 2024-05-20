@@ -49,16 +49,24 @@ public class GroupAdminController {
 	}
 	
 	@PostMapping("/registProgram")
-	private String registProgram(@ModelAttribute("groupDto") GroupDTO dto) {
+	private String registProgram(@ModelAttribute("groupDto") GroupDTO dto, HttpSession session) {
 		
 		//프로그램 진행기간
 		dto.setPrg_start(dto.getGroupSCHDL().get(0));
 		dto.setPrg_end(dto.getGroupSCHDL().get(dto.getPrg_nmtm() -1));
 		dto.setPrg_schdl(dto.getPrg_start() + " - " + dto.getPrg_end());
-		dto.setPrg_place("명상실");
+		
+		if(dto.getCns_no().equals("4")) {
+			dto.setPrg_place("진로상담실");
+		} else if(dto.getCns_no().equals("5")) {
+			dto.setPrg_place("명상실");			
+		} else if(dto.getCns_no().equals("6")) {
+			dto.setPrg_place("미니 회의실");
+		}
 		
 		//프로그램 등록
 		groupService.registProgram(dto);
+		
 		
 		//상담사번호 기준 가장 최근 업로드 데이터 찾기
 		int prgNO = groupService.getProgramNo(dto.getCns_no());
