@@ -27,8 +27,8 @@ public class ProfessorServiceImpl implements ProfessorService {
 	}
 
 	@Override
-	public List<ProfessorDTO> psSchedule() {
-		return professorDAO.psSchedule();
+	public List<ProfessorDTO> psSchedule(String uname) {
+		return professorDAO.psSchedule(uname);
 	}
 
 
@@ -45,6 +45,11 @@ public class ProfessorServiceImpl implements ProfessorService {
 	@Override
 	public List<ProfessorDTO> professorInfo(String uname) {
 		return professorDAO.professorInfo(uname);
+	}
+
+	@Override
+	public int registPsCounsel(Map<String, Object> map) {
+		return professorDAO.registPsCounsel(map);
 	}
 
 	

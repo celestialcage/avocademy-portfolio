@@ -1,5 +1,6 @@
 package com.avocado.web.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,11 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.service.GroupService;
 import com.avocado.web.util.Util;
-import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
@@ -44,6 +46,7 @@ public class GroupAdminController {
 	private String registProgram(Model model, GroupDTO groupDto, HttpSession session) {
 		//System.out.println(session.getAttribute("cns_no"));
 		groupDto.setCns_no((String) session.getAttribute("cns_no"));
+		groupDto.setPrg_cd(groupService.getfield(groupDto.getCns_no()));
 		model.addAttribute("groupDto", groupDto);
 		return "admin/group/registProgram";
 	}
@@ -92,6 +95,21 @@ public class GroupAdminController {
 		model.addAttribute("list", list);
 		return "admin/group/programList";
 	}
+	
+	//프로그램 내용 불러오기
+	@PostMapping("/programList")
+	@ResponseBody
+	private Map<String, Object> showContent(@RequestParam("no") int no, Model model){
+		
+		String content = groupService.showContent(no);
+		//System.out.println("내용 : " + content);
+		
+		Map<String, Object> response = new HashMap<String, Object>();
+		response.put("content", content);
+	
+		return response;
+	}
+	
 	
 	//승인
 	@RequestMapping(value = "/approveProgram", method = {RequestMethod.POST})

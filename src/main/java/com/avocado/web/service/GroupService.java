@@ -27,9 +27,13 @@ public interface GroupService {
 
 	List<Integer> getSchedulNo(String no);
 
-	void apply(Map<String, Object> map);
+	int apply(Map<String, Object> map);
 
 	int checkSchedul(Map<String, Object> check);
+
+	String getfield(String cns_no);
+
+	String showContent(int no);
 	
 
 }
