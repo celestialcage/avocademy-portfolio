@@ -6,7 +6,7 @@
             enableClick: false,
         },
         useFormPopup: false,
-        useDetailPopup: true,
+        useDetailPopup: false,
         usageStatistics: false,
         defaultView: 'week',
 		eventFilter: function (event) {
@@ -68,6 +68,7 @@
     const dropdownTrigger = document.querySelector('.dropdown-trigger');
     const dropdownTriggerIcon = document.querySelector('.dropdown-icon');
     const dropdownContent = document.querySelector('.dropdown-content');
+	const modalBtn = document.querySelector("#modalBtn");
     // const checkboxCollapse = document.querySelector('.checkbox-collapse');
     // const sidebar = document.querySelector('.sidebar');
 
@@ -193,6 +194,10 @@
 		cal.on({
 		  clickEvent: function (eventInfo) {
 			console.log('clickEvent', eventInfo);
+			// 신청자명, 학번 => 세션
+			// 상담사명, 상담실, 날짜, 시간단위 => 이벤트 정보
+			
+			modalBtn.click();
 		  },
 		  clickDayName: function (dayNameInfo) {
 			console.log('clickDayName', dayNameInfo);
@@ -227,6 +232,9 @@
 		});
 	  }
     
+	modalBtn.addEventListener("click", () => {
+		console.log("모달 버튼 클릭");
+	})
     
 
     // Init

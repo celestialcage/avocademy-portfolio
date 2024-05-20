@@ -56,6 +56,7 @@
 				<h4 class="card-title my-3">상담 예약</h4>
 			</div>
 			<div class="card-body mt-3">
+			<button id="modalBtn" type="button" data-bs-toggle="modal" data-bs-target="#applyModal" style="display:none"></button>
 	<!-- =================================캘린더 메뉴==================================== -->
 				<div id="calendarMenu">
 					<!-- 여기 드롭다운으로 -->
@@ -90,16 +91,39 @@
 <!-- =================================캘린더 위치==================================== -->
 			<div id="calendar" class="calendar-wrapper"></div>
 			
-			<!-- 모달 해야겠다 -->
-			<form class="form-horizontal">
+	<!-- Modal -->
+			<div class="modal fade" id="applyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h1 class="modal-title fs-5" id="exampleModalLabel">상담 예약하기</h1>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
                                 <div class="card-body">
                                     <h4 class="card-title">상담 신청</h4>
+                                    <div class="form-group row">
+                                        <label for="stName"
+                                            class="col-sm-3 text-end control-label col-form-label">신청자명</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="stName"
+                                                placeholder="신청자 이름" th:value="${session.uname}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="stNo"
+                                            class="col-sm-3 text-end control-label col-form-label">학번</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="stNo"
+                                                placeholder="신청자 학번" readonly>
+                                        </div>
+                                    </div>
                                     <div class="form-group row">
                                         <label for="fname"
                                             class="col-sm-3 text-end control-label col-form-label">상담사명</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control" id="csName"
-                                                placeholder="상담사 이름">
+                                                placeholder="상담사 이름" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -107,7 +131,7 @@
                                             class="col-sm-3 text-end control-label col-form-label">상담실</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control" id="csLoc"
-                                                placeholder="상담실 정보">
+                                                placeholder="상담실 정보" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -116,70 +140,30 @@
                                         <div class="col-sm-9">
                                             <div class="input-group">
 			                                    <input type="text" class="form-control" id="datepicker-autoclose"
-			                                        placeholder="yyyy-mm-dd">
+			                                        placeholder="yyyy-mm-dd" readonly>
 			                                    <div class="input-group-append">
 			                                        <span class="input-group-text h-100"><i class="fa fa-calendar"></i></span>
 			                                    </div>
 			                                </div>
                                         </div>
                                     </div>
-                                    
                                     <div class="form-group row">
-                                    <label class="col-md-3 text-end">시간 단위</label>
-                                    <div class="col-md-9">
-                                        <div class="form-check mr-sm-2">
-                                            <input type="checkbox" class="form-check-input"
-                                                id="customControlAutosizing1">
-                                            <label class="form-check-label mb-0" for="customControlAutosizing1">First
-                                                One</label>
-                                        </div>
-                                        <div class="form-check mr-sm-2">
-                                            <input type="checkbox" class="form-check-input"
-                                                id="customControlAutosizing2">
-                                            <label class="form-check-label mb-0" for="customControlAutosizing2">Second
-                                                One</label>
-                                        </div>
-                                        <div class="form-check mr-sm-2">
-                                            <input type="checkbox" class="form-check-input"
-                                                id="customControlAutosizing3">
-                                            <label class="form-check-label mb-0" for="customControlAutosizing3">Third
-                                                One</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                    <div class="form-group row">
-                                        <label for="cono1"
-                                            class="col-sm-3 text-end control-label col-form-label">코멘트</label>
+                                        <label for="csTime"
+                                            class="col-sm-3 text-end control-label col-form-label">시간 단위</label>
                                         <div class="col-sm-9">
-                                            <textarea class="form-control"></textarea>
+                                            <input type="text" class="form-control" id="csTime"
+                                                placeholder="상담 시간" readonly>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="border-top">
-                                    <div class="card-body">
-                                        <button type="button" class="btn btn-success text-white" style="width:100%;">입력</button>
-                                    </div>
-                                </div>
-                            </form>
-			<!-- <h2>상담신청 폼</h2>
-			  <div class="mb-3 row">
-			    <label for="staticEmail" class="col-sm-2 col-form-label">상담사</label>
-			    <div class="col-sm-10">
-			      <input type="text" readonly class="form-control-plaintext" id="staticEmail" th:value="${cns_nm}">
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			        <button type="button" id="applyBtn" class="btn btn-success text-white">신청하기</button>
+			      </div>
 			    </div>
 			  </div>
-			  <div class="mb-3 row">
-			    <label for="inputPassword" class="col-sm-2 col-form-label">날짜</label>
-			    <div class="col-sm-10">
-			      <input type="password" class="form-control" id="inputPassword">
-			    </div>
-			  </div>
-			  <div class="mb-3 row">
-			    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-			    <div class="col-sm-10">
-			      <input type="password" class="form-control" id="inputPassword">
-			    </div>
-			  </div> -->
+			</div>
 			
 			</div> <!-- 캘린더 card-body 끝 -->
 		</div> <!-- container-fluid 끝 -->
@@ -200,16 +184,16 @@
     <script type="text/javascript" src="/admin/custom/utils.js"></script>
     <script type="text/javascript" src="/index/tuicalendar/js/calendar-app.js"></script>
     <!-- <script type="text/javascript" src="/admin/custom/grid-app.js"></script> -->
-    <!-- <script type="text/javascript" src="/admin/custom/app.js"></script> -->
+    <script type="text/javascript" src="/index/tuicalendar/js/app.js"></script>
     <script type="text/javascript">
 	    /*datwpicker*/
-	    jQuery('#datepicker-autoclose').datepicker({
+	    /* jQuery('#datepicker-autoclose').datepicker({
 	    	format: 'yyyy-mm-dd',
 	    	startDate: '-d',
 	    	calendarWeeks: true,
 	        autoclose: true,
 	        todayHighlight: true
-	    });
+	    }); */
 	    
     </script>
 </body>
