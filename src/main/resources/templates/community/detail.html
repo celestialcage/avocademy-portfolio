@@ -40,8 +40,25 @@
 				<p class="card-text" th:text="${detail.ccontent}">게시글 내용</p>
 			</div>
 			
-			 <!-- 파일 다운로드 링크 영역 -->
-    <a th:href="@{/download/{fno}(fno=${detail.fno})}">파일 다운로드</a>
+
+<!-- 첨부 파일 목록 출력 -->
+<div th:if="${fileList != null and fileList.size() > 0}">
+    <h3>첨부파일</h3>
+    <ul>
+        <li th:each="file : ${fileList}">
+            <span th:text="${file.fsn}"></span>
+            <!-- 파일 다운로드 링크 추가 -->
+            <a th:href="@{/community/download/{fileName}(fileName=${file.actl_fnm})}">다운로드</a>
+        </li>
+    </ul>
+</div>
+<div th:unless="${fileList != null and fileList.size() > 0}">
+    <p>첨부파일이 없습니다.</p>
+</div>
+
+
+
+
 
 		</div>
 	</div>

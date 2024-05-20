@@ -25,6 +25,7 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Autowired
 	private CommunityDAO communityDAO;
+	private String fileDTO;
 
 	@Override
 	public int count() {
@@ -92,7 +93,7 @@ public class CommunityServiceImpl implements CommunityService {
 	
 			// 실제 경로
 			File upFileName = new File(url, file.getOriginalFilename());
-	//		System.out.println("실제 경로 : " + url);
+			System.out.println("실제 경로 : " + url);
 	
 			try {
 				// 서버에 파일저장
@@ -139,6 +140,19 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityDAO.deletecd(cno);
 	}
 
+	@Override
+	public FilesDTO getPostById(Long postId) {
+		
+		return communityDAO.getPostById(postId);
+	}
+
+	@Override
+	public List<FilesDTO> getFileByPostId(Long postId) {
+		
+		 return communityDAO.getFileByPostId(postId);
+	}
+
+	
 
 
 }
