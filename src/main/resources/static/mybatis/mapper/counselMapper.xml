@@ -51,4 +51,12 @@
 		WHERE sch_no=#{sch_no} AND 
 		(SELECT COUNT(0) FROM caply WHERE sch_no=#{sch_no}) = 0
 	</delete>
+	
+	<insert id="applySchedule" parameterType="PersonalDTO">
+		INSERT INTO caply (stud_no, sch_no, dscsn_ymd, dscsn_hr) 
+		VALUES (#{stud_no}, #{sch_no}, 
+			(SELECT sch_ymd FROM cschedule WHERE sch_no=#{sch_no}), 
+			(SELECT sch_hr FROM cschedule WHERE sch_no=#{sch_no})
+		)
+	</insert>
 </mapper>

@@ -23,4 +23,6 @@ public interface CounselService {
 
 	int deleteSchedule(PersonalDTO ps);
 
+	int applySchedule(PersonalDTO ps);
+
 }

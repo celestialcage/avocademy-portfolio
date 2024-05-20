@@ -1,3 +1,4 @@
+// body에 cns_no만 넣을때... (ㅠㅠ 없애야될듯...)
 async function getData(url, cno, headers = {}) {
   const options = {
     method: "POST",
@@ -19,6 +20,7 @@ async function getData(url, cno, headers = {}) {
   }
 }
 
+// return 값이 json
 async function postData(url, params, headers = {}) {
   const options = {
     method: "POST",
@@ -38,6 +40,7 @@ async function postData(url, params, headers = {}) {
   }
 }
 
+// return 값이 json 아니고 일반 string일 때
 async function updateData(url, params, headers = {}) {
   const options = {
     method: "POST",

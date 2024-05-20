@@ -54,4 +54,11 @@ public class CounselServiceImpl implements CounselService {
 		return counselDAO.deleteSchedule(ps);
 	}
 
+	@Override
+	public int applySchedule(PersonalDTO ps) {
+		// 상담사한테 메일
+		
+		return counselDAO.applySchedule(ps);
+	}
+
 }
