@@ -36,7 +36,7 @@ public class AdminController {
 	
 	@GetMapping("/charts")
 	public String charts() {
-		return "admin/charts";
+		return "admin/appointments";
 	}
 	
 	@GetMapping("/tables")

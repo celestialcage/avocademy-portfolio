@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public String getStudentInfo(String uno) {
+	public Map<String, Object> getStudentInfo(String uno) {
 		return userDAO.getStudentInfo(uno);
 	}
 

@@ -102,12 +102,13 @@
 			      <div class="modal-body">
                                 <div class="card-body">
                                     <h4 class="card-title">상담 신청</h4>
+                                    <input type="hidden" id="schNo">
                                     <div class="form-group row">
                                         <label for="stName"
                                             class="col-sm-3 text-end control-label col-form-label">신청자명</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control" id="stName"
-                                                placeholder="신청자 이름" th:value="${session.uname}" readonly>
+                                                placeholder="신청자 이름" th:value="${session.stud_nm}" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -115,7 +116,7 @@
                                             class="col-sm-3 text-end control-label col-form-label">학번</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control" id="stNo"
-                                                placeholder="신청자 학번" readonly>
+                                                placeholder="신청자 학번" th:value="${session.stud_no}" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -135,11 +136,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="datepicker-autoclose"
+                                        <label for="csDate"
                                             class="col-sm-3 text-end control-label col-form-label">날짜</label>
                                         <div class="col-sm-9">
                                             <div class="input-group">
-			                                    <input type="text" class="form-control" id="datepicker-autoclose"
+			                                    <input type="text" class="form-control" id="csDate"
 			                                        placeholder="yyyy-mm-dd" readonly>
 			                                    <div class="input-group-append">
 			                                        <span class="input-group-text h-100"><i class="fa fa-calendar"></i></span>
@@ -149,7 +150,7 @@
                                     </div>
                                     <div class="form-group row">
                                         <label for="csTime"
-                                            class="col-sm-3 text-end control-label col-form-label">시간 단위</label>
+                                            class="col-sm-3 text-end control-label col-form-label">시간</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control" id="csTime"
                                                 placeholder="상담 시간" readonly>

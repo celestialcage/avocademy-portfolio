@@ -8,5 +8,5 @@ import lombok.Setter;
 public class PersonalDTO {
 
 	private int cns_no, user_no, sch_no, sch_state;
-	private String cns_nm, ofc_no, cns_field, sch_ymd, sch_hr;
+	private String cns_nm, ofc_no, cns_field, stud_no, sch_ymd, sch_hr;
 }

@@ -28,4 +28,6 @@ public interface CounselDAO {
 
 	int deleteSchedule(PersonalDTO ps);
 
+	int applySchedule(PersonalDTO ps);
+
 }

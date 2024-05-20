@@ -87,9 +87,23 @@ public class CounselDataController {
 	@PostMapping("/delete-cschedule")
 	public String deleteCsSchedule(@RequestBody PersonalDTO ps) {
 		JsonObject json = new JsonObject();
+		// 이미 예약된 스케줄은 삭제 불가
 		int result = counselService.deleteSchedule(ps);
 		
 		String message = result == 0 ? "스케줄 삭제 실패" : "스케줄 삭제 성공";
+		json.addProperty("result", result);
+		json.addProperty("message", message);
+		
+		return json.toString();
+	}
+	
+	@PostMapping("/apply-schedule")
+	public String applyCsSchedule(@RequestBody PersonalDTO ps) {
+		JsonObject json = new JsonObject();
+		
+		int result = counselService.applySchedule(ps);
+		String message = result == 0 ? "상담 신청 실패" : "상담 신청 성공";
+		
 		json.addProperty("result", result);
 		json.addProperty("message", message);
 		
