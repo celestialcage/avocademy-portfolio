@@ -30,4 +30,10 @@
 	<insert id="registPsCounsel" parameterType="Map">
 		INSERT INTO psschedule (ps_no, ymd, hr) VALUES ((SELECT ps_no FROM professor WHERE ps_nm = #{psName}), #{selectedDate}, #{times})
 	</insert>
+	
+	<select id="psCounselList" parameterType="String" resultType="ProfessorDTO">
+		SELECT s.stud_nm, p.pseq_no, p.ps_ymd, GET_CD_NM('CO0010', ps_hr) AS ps_hr, p.ps_status, p.ps_cn, p.ps_class, p.stud_no, p.psc_no FROM stu_user s 
+		JOIN pscounsel p ON s.stud_no = p.stud_no 
+		JOIN ps_user u ON s.scsbjt_cd = u.scsbjt_cd WHERE u.uname = #{uname}
+	</select>
 </mapper>

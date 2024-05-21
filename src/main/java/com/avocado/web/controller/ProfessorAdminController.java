@@ -55,6 +55,7 @@ public class ProfessorAdminController {
 		return "/admin/professor/registPsCounsel";
 	}
 	
+	// 교수 상담일정 등록하기
 	@PostMapping("/registPsCounsel")
 	private String registPsCounsel(@RequestParam("psName") String psName,
 									@RequestParam("scsbjt") String scsbjt,
@@ -72,5 +73,17 @@ public class ProfessorAdminController {
 		
 		
 		return "redirect:registPsCounsel";
+	}
+	
+	// 교수 상담일정관리페이지
+	@GetMapping("/psCounselList")
+	private String psCounselList (Model model) {
+		HttpSession session = util.getSession();
+		List<ProfessorDTO> list = new ArrayList<ProfessorDTO>();
+		String uname = (String)(session.getAttribute("uname"));
+		list = professorService.psCounselList(uname);
+		model.addAttribute("list", list);
+		System.out.println(list);
+		return "/admin/professor/psCounselList";
 	}
 }

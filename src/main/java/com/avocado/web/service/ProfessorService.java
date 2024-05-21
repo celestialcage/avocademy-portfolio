@@ -27,6 +27,9 @@ public interface ProfessorService {
 	int registPsCounsel(Map<String, Object> map);
 
 
+	List<ProfessorDTO> psCounselList(String uname);
+
+
 
 
 

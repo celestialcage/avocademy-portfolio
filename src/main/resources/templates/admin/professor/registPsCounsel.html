@@ -362,6 +362,19 @@ input:checked + .checkbox {
 	    $(document).ready(function() {
 	        // 제출 버튼 클릭 시 모달 표시
 	        $('#submitBtn').click(function() {
+	            var selectedTimes = [];
+	            $('input[name="time"]:checked').each(function() {
+	                selectedTimes.push($(this).next('label').text());
+	            });
+
+	            var modalContent = '<p>날짜: ' + selectedDate + '</p>';
+	            modalContent += '<p>시간:</p><ul>';
+	            selectedTimes.forEach(function(time) {
+	                modalContent += '<li>' + time + '</li>';
+	            });
+	            modalContent += '</ul><p>일정을 등록하시겠습니까?</p>';
+
+	            $('.modal-body').html(modalContent);
 	            $('#confirmModal').modal('show');
 	        });
 	     	// 모달의 취소 버튼 클릭 시 모달 닫기

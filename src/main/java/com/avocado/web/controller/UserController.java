@@ -88,6 +88,8 @@ public class UserController {
 	            	session.setAttribute("cns_no", cns_no); //상담사번호추가
 	            } else if (role == 5) {
 	            	
+	            } else if (role == 2) {
+	            	return "redirect:/admin/professorAdmin"; // 지도교수관리자페이지로 리다이렉트
 	            }
 	            return "redirect:/admin/index"; // 관리자 페이지로 리다이렉트
 	        }

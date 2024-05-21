@@ -28,7 +28,7 @@
 	  },
 	  calendars: COUNSEL_CALENDARS,
 	   month: {
-	     visibleWeeksCount: 2,
+	     visibleWeeksCount: 4,
 	     workweek: true,
 	     dayNames: ['일', '월', '화', '수', '목', '금', '토'],
 	   },
@@ -171,8 +171,8 @@
 	const nextBtn = document.querySelector('#nextBtn');
 	
 	const monthViewBtn = document.querySelector('#monthViewBtn');
-    const twoWeeksViewBtn = document.querySelector('#twoWeeksViewBtn');
-	const weekViewBtn = document.querySelector('#weekViewBtn');
+//    const twoWeeksViewBtn = document.querySelector('#twoWeeksViewBtn');
+//	const weekViewBtn = document.querySelector('#weekViewBtn');
 	
 	todayBtn.addEventListener("click", () => {
 		calendar.today();
@@ -203,34 +203,34 @@
 		});
 		calendar.clearGridSelections();
 	});
-    twoWeeksViewBtn.addEventListener("click", () => {
-		calendar.changeView('month');
-		update();
-		calendar.setOptions({
-		month: {
-			visibleWeeksCount: 2,
-			workweek: true,
-			dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-		},
-		});
-		calendar.clearGridSelections();
-	});
+//    twoWeeksViewBtn.addEventListener("click", () => {
+//		calendar.changeView('month');
+//		update();
+//		calendar.setOptions({
+//		month: {
+//			visibleWeeksCount: 2,
+//			workweek: true,
+//			dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+//		},
+//		});
+//		calendar.clearGridSelections();
+//	});
 
-	weekViewBtn.addEventListener("click", () => {
-	  calendar.changeView('week');
-      update();
-	  calendar.setOptions({
-	    week: {
-        workweek: true,
-	      eventView: true,
-	      taskView: false,
-	      hourStart: 9, 
-	      hourEnd: 18, 
-	      dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-	    },
-	  });
-	  calendar.clearGridSelections();
-	});
+//	weekViewBtn.addEventListener("click", () => {
+//	  calendar.changeView('week');
+//     update();
+//	  calendar.setOptions({
+//	    week: {
+//        workweek: true,
+//	      eventView: true,
+//	      taskView: false,
+//	      hourStart: 9, 
+//	      hourEnd: 18, 
+//	      dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+//	    },
+//	  });
+//	  calendar.clearGridSelections();
+//	});
 
 	console.log(calendar);
 
