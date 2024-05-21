@@ -144,12 +144,44 @@
 				        </button>
 				      </div>
 				      <div class="modal-body">
-				      	<div class="mt-2" id="modalContent">
-					       <p id="here">Modal body text goes here.</p>
+				      	<div class="mt-2 row">
+				      	   <input type="hidden" id="prg_no">
+				      	   <input type="hidden" id="aprV">
+				      	   <input type="hidden" id="reqE">
+					       <table class="mx-3">
+					       	<tbody>
+					       		<tr class="mb-1 mx-3">					       			
+						       		<td><strong>유형</strong></td>
+						       		<td id="cd">cd</td>
+						       		<td><strong>기간</strong></td>
+						       		<td id="schdl">schdl</td>
+					       		</tr>
+						       	<tr class="mb-1 mx-3">
+						       		<td><strong>담당자</strong></td>
+						       		<td id="cns">nm</td>
+						       		<td><strong>일시</strong></td>
+						       		<td id="hour">hour</td>
+						       	</tr>
+						       	<tr class="mb-1 mx-3">
+						       		<td><strong>회차</strong></td>
+						       		<td id="nmtm">nmtm</td>
+						       		<td><strong>장소</strong></td>
+						       		<td id="place">place</td>
+						       	</tr>
+						       	<tr class="mx-3">
+						       		<td><strong>정원</strong></td>
+						       		<td id="nope">nope</td>
+						       	</tr>
+					       	</tbody>
+					       </table>
+				      	</div>
+				      	<hr class="my-3">
+				      	<div class="my-2" id="modalContent">
+					       <p>Modal body text goes here.</p>
 				      	</div>
 				      </div>
 				      <div class="modal-footer">
-				        <button type="button" class="btn btn-primary" id="sub">승인</button>
+				        <button type="button" class="btn btn-primary submit" id="sub">승인</button>
 				        <button type="button" class="btn btn-secondary" id="closeModal">취소</button>
 				      </div>
 				    </div>
@@ -194,7 +226,7 @@
 		const contentModal = document.getElementById("contentModal");
 		const closeModal = document.getElementById("closeModal");
         
-        $(document).on("click", ".apr", function(){
+        $(document).on("click", ".submit", function(){
        		let val = $(this).siblings('#apprv').val();
        		let no = $(this).parents('#prgTable').children('#no').text();      		
        		if (val >= 2){
@@ -222,8 +254,19 @@
        			data: {"no" : no},
        			dataType: "json",
        	        success: function (result) {
-       	            $("#modalTitle").text(title);
-       	            $("#modalContent").html(result.content);  // JSON 응답에서 content를 가져와서 모달 내용 업데이트
+       	        	console.log(result);
+       	            $("#modalTitle").text(result.prg_nm);
+       	            $("#cd").text(result.prg_cd);
+       	            $("#cns").text(result.cns_nm);
+       	            $("#schdl").text(result.prg_start + " ~ " + result.prg_end);
+       	            $("#place").text(result.prg_place);
+       	            $("#hour").text("매주 " + result.prg_dow + " / " + result.prg_hr);
+       	            $("#nmtm").text(result.prg_nmtm + "회");
+       	            $("#nope").text(result.prg_nope + "명");
+       	            $("#reqE").val(result.req_end);
+       	            $("#aprV").val(prg_aprv);
+       	            $("#prg_no").val(result.prg_no);
+       	            $("#modalContent").html(result.prg_content);  // JSON 응답에서 content를 가져와서 모달 내용 업데이트
        	            contentModal.classList.remove('hidden');
        	        },
        	        error: function () {

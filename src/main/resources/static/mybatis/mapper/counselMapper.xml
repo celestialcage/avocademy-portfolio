@@ -67,6 +67,7 @@
 	</select>
 	
 	<delete id="deleteExpiredSchedule" parameterType="int">
+	<![CDATA[
 		DELETE FROM cschedule 
 		WHERE sch_no IN (
 			SELECT s.sch_no 
@@ -74,5 +75,6 @@
 			LEFT JOIN caply a ON s.sch_no = a.sch_no 
 			WHERE a.aply_no IS NULL
 		) AND sch_hr < #{hourNow}
+		]]>
 	</delete>
 </mapper>

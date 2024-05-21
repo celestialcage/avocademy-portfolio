@@ -16,6 +16,20 @@ public class GroupServiceImpl implements GroupService {
 	
 	@Autowired
 	private GroupDAO groupDAO;
+	
+	private GroupDTO setAprv(GroupDTO dto) {
+		LocalDate endDate = LocalDate.parse(dto.getPrg_end(), java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		LocalDate reqEnd = LocalDate.parse(dto.getReq_end(), java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd"));
+		LocalDate today = LocalDate.now();
+		
+		if(endDate.isBefore(today)) {
+			dto.setPrg_aprv("3");
+		} else if(reqEnd.isBefore(today)) {
+			dto.setPrg_aprv("2");
+		}
+		return dto;
+	}
+	
 
 	@Override
 	public List<GroupDTO> programList() {
@@ -31,7 +45,7 @@ public class GroupServiceImpl implements GroupService {
 	public List<GroupDTO> adminPRGList() {
 		List<GroupDTO> list = groupDAO.adminPRGList();
 		for (GroupDTO groupDTO : list) {
-			LocalDate endDate = LocalDate.parse(groupDTO.getPrg_end(), java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		/*	LocalDate endDate = LocalDate.parse(groupDTO.getPrg_end(), java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 			LocalDate reqEnd = LocalDate.parse(groupDTO.getReq_end(), java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd"));
 			LocalDate today = LocalDate.now();
 			
@@ -39,7 +53,9 @@ public class GroupServiceImpl implements GroupService {
 				groupDTO.setPrg_aprv("3");
 			} else if(reqEnd.isBefore(today)) {
 				groupDTO.setPrg_aprv("2");
-			}
+			} */
+			
+			groupDTO = setAprv(groupDTO);
 		}
 		
 		return list;
@@ -110,6 +126,13 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public void closePRG(int prg_no) {
 		groupDAO.closePRG(prg_no);		
+	}
+
+	@Override
+	public GroupDTO adminDetail(int no) {
+		GroupDTO dto = groupDAO.adminDetail(no);
+		dto = setAprv(dto);		
+		return dto;
 	}
 
 

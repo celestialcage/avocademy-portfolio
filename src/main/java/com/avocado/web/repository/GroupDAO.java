@@ -44,4 +44,6 @@ public interface GroupDAO {
 
 	void closePRG(int prg_no);
 
+	GroupDTO adminDetail(int no);
+
 }

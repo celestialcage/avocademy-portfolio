@@ -100,15 +100,16 @@ public class GroupAdminController {
 	//프로그램 내용 불러오기
 	@PostMapping("/programList")
 	@ResponseBody
-	private Map<String, Object> showContent(@RequestParam("no") int no, Model model){
+	private GroupDTO showContent(@RequestParam("no") int no, Model model){
 		
 		String content = groupService.showContent(no);
+		GroupDTO adminDetail = groupService.adminDetail(no);
 		//System.out.println("내용 : " + content);
 		
-		Map<String, Object> response = new HashMap<String, Object>();
-		response.put("content", content);
+		//Map<String, Object> response = new HashMap<String, Object>();
+		//response.put("content", content);
 	
-		return response;
+		return adminDetail;
 	}
 	
 	
@@ -150,7 +151,6 @@ public class GroupAdminController {
 	@RequestMapping(value = "/grSchedule")
 	private @ResponseBody List<Map<String, Object>> grSchedule() {
 		List<Map<String, Object>> scheduleList = groupService.scheduleList();
-
 		return scheduleList;
 	}
 	
