@@ -71,7 +71,9 @@
 	</insert>
 	
 	<select id="adminPRGList" resultType="GroupDTO">
-		SELECT * 
+		SELECT prg_no, prg_nm, prg_place, prg_aprv, req_end, 
+			DATE_FORMAT(STR_TO_DATE(LEFT(prg_schdl, 8), '%Y%m%d'), '%Y-%m-%d') AS prg_start,  
+			DATE_FORMAT(STR_TO_DATE(RIGHT(prg_schdl, 8), '%Y%m%d'), '%Y-%m-%d') AS prg_end
 		FROM grprograms 
 		ORDER BY prg_no DESC
 	</select>
@@ -88,9 +90,9 @@
 		WHERE prg_no = #{prg_no} 
 	</update>
 
-	<update id="openPRG" parameterType="int">
+	<update id="changeReqOpen" parameterType="Map">
 		UPDATE grschedule 
-		SET req_open = 1 
+		SET req_open = #{req_open} 
 		WHERE prg_no = #{prg_no} 
 	</update>
 
@@ -112,6 +114,14 @@
 		ORDER BY prg_no DESC LIMIT 1 
 	</select>
 	
+	<select id="scheduleList" resultType="Map">
+		SELECT p.prg_no, s.prg_ymd, p.prg_cd, p.cns_no, p.prg_nm, p.req_end, p.prg_aprv, s.grsch_no, p.prg_place, s.req_open, 
+			 s.prg_hr, c.cns_nm 
+		FROM grprograms p 
+		JOIN grschedule s ON p.prg_no = s.prg_no 
+		JOIN counselor c ON c.cns_no = p.cns_no 
+		WHERE p.prg_aprv = 1 
+	</select>
 
 	
 </mapper>

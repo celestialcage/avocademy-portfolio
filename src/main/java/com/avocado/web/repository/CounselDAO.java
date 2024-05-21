@@ -32,4 +32,6 @@ public interface CounselDAO {
 
 	List<PersonalDTO> findCslAppointments(int cns_no);
 
+	void deleteExpiredSchedule(int hourNow);
+
 }

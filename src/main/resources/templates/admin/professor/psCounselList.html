@@ -63,7 +63,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">집단상담 프로그램 관리 페이지</h4>
+                        <h4 class="page-title">지도교수 관리 페이지</h4>
                         <div class="ms-auto text-end">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
@@ -89,7 +89,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-md-flex align-items-center">
-                                	<h4 class="card-title">프로그램 목록</h4>
+                                	<h4 class="card-title">상담일정관리</h4>
                                 </div>
                                 <!-- table -->
                                 <div class="table-responsive">
@@ -97,31 +97,22 @@
                                     	<thead>
                                     		<tr>
                                     			<th>no</th>
-                                    			<th>프로그램 제목</th>
-                                    			<th>프로그램 일정</th>
-                                    			<th>장소</th>
-                                    			<th>상태</th>
-                                    			<th>승인</th>
+                                    			<th>학생</th>
+                                    			<th>상담날짜</th>
+                                    			<th>상담시간</th>
+                                    			<th>진행상태</th>
                                     		</tr>
                                     	</thead>
-                                    	<tbody id="prgList">
-                                    		<tr th:each="r : ${list}" id="prgTable">
-                                    			<td th:text="${r.prg_no}" id="no"></td>
-                                    			<td th:attr="onclick=|showContent('${r.prg_no}', '${r.prg_nm}')|">[[${r.prg_nm}]]</td>
-                                    			<td>[[${r.prg_start}]] <br>~ [[${r.prg_end}]]</td>
-                                    			<td th:text="${r.prg_place}"></td>
-                                    			<td th:switch="${r.prg_aprv}">
-                                    				<span th:case="0">미승인</span>
-                                    				<span th:case="1">승인</span>
-                                    				<span th:case="2">신청마감</span>
-                                    				<span th:case="3">완료</span>
-                                    			</td>
-                                    			<td>
-                                    				<input type="hidden" id="apprv" th:value="${r.prg_aprv}">
-                                    				<span class="apr" th:if="${r.prg_aprv} == 0"><button class="btn btn-success text-white">승인</button></span>
-                                    				<span class="apr" th:if="${r.prg_aprv} == 1"><button class="btn btn-danger text-white">취소</button></span>
-                                    				<span class="apr" th:if="${r.prg_aprv} >= 2"><button class="btn" disabled="disabled">만료</button></span>
-                                    			</td>
+                                    	<tbody id="psList">
+                                    		<tr th:each="a : ${list}" id="psTable" th:attr="onclick=|showContent('${a.pseq_no}', '${a.ps_class}', '${a.ps_cn}')|">
+                                    			<td th:text="${a.pseq_no}" id="no"></td>
+                                    			<td th:text="${a.stud_nm}"></td>
+                                    			<td th:text="${a.ps_ymd}"></td>
+                                    			<td th:text="${a.ps_hr}"></td>
+                                    			<td th:if="${a.ps_status} == '10'" th:text="신청"></td>
+                                    			<td th:if="${a.ps_status} == '20'" th:text="확정"></td>
+                                    			<td th:if="${a.ps_status} == '30'" th:text="완료"></td>
+                                    			<td th:if="${a.ps_status} == '40'" th:text="미진행"></td>
                                     		</tr>
                                     	</tbody>
                                     </table>
@@ -193,46 +184,14 @@
 		
 		const contentModal = document.getElementById("contentModal");
 		const closeModal = document.getElementById("closeModal");
-        
-        $(document).on("click", ".apr", function(){
-       		let val = $(this).siblings('#apprv').val();
-       		let no = $(this).parents('#prgTable').children('#no').text();      		
-       		if (val >= 2){
-       			return false;
-       		}
-       		
-       		$.ajax({
-       			url: "./approveProgram",
-       			type: "POST",
-       			data: {"no" : no, "val" : val}
-       		}).done(function (fragment){
-       			console.log(fragment);
-       			$('#prgList').replaceWith(fragment);     		 
-
-       		});
-        	
-        });
-
-        
-		function showContent(no, title){
-			const prg_no = no;
-			$.ajax({
-				url: "./programList",
-       			type: "POST",
-       			data: {"no" : no},
-       			dataType: "json",
-       	        success: function (result) {
-       	            $("#modalTitle").text(title);
-       	            $("#modalContent").html(result.content);  // JSON 응답에서 content를 가져와서 모달 내용 업데이트
-       	            contentModal.classList.remove('hidden');
-       	        },
-       	        error: function () {
-       	            alert("에러");
-       	        }
-			});
-			
+		
+		function showContent(no, a, b){
+			const pseq_no = no;
+			 $("#modalTitle").text(no);
+	         $("#modalContent").html("상담 종류: " + a+"<br><br>"+"상담 받을 내용: " + b);  // JSON 응답에서 content를 가져와서 모달 내용 업데이트
+	         contentModal.classList.remove('hidden');
 		}
-	    
+		
 		closeModal.addEventListener('click', () => {
 			contentModal.classList.add('hidden');
 		})

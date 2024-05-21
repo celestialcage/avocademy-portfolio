@@ -36,5 +36,8 @@ public interface ProfessorDAO {
 	int registPsCounsel(Map<String, Object> map);
 
 
+	List<ProfessorDTO> psCounselList(String uname);
+
+
 		
 }

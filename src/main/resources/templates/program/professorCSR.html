@@ -318,6 +318,10 @@
     $(function () {
       // calendar element 취득      
       var calendarEl = $('#calendar')[0];
+      
+      var events = [];
+      
+    	  
       // full-calendar 생성하기      
       var calendar = new FullCalendar.Calendar(calendarEl, {
         height: '700px', // calendar 높이 설정        
@@ -330,6 +334,7 @@
           center: 'title',
           right: 'dayGridMonth,timeGridWeek'
         },
+        
         initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)        
         //initialDate: '2021-07-15', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)        
         navLinks: false, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크        
@@ -345,8 +350,7 @@
           start: Date.now(),
           end: Date.now() + 2592000000,
         },
-
-
+		
         dateClick: function (info) {
           var selectedDate = info.dateStr; // 클릭한 날짜 정보 획득
           console.log(selectedDate);
@@ -354,8 +358,6 @@
 
           var selectedTime;
           // 해당 날짜의 이벤트 정보 획득
-          var events = calendar.getEvents();
-          var eventInfo = events.find(event => event.start.toISOString() === info.date.toISOString());
 
           $('#selectedDate').val(selectedDate);
 
@@ -413,7 +415,8 @@
       });
       // 캘린더 랜더링      
       calendar.render();
-
+	
+    	 
     });
   })();
 

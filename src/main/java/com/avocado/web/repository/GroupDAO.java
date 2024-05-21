@@ -26,7 +26,7 @@ public interface GroupDAO {
 
 	int getProgramNo(String cns_no);
 
-	void openPRG(int prg_no);
+	void changeReqOpen(Map<String, Object> status);
 
 	GroupDTO programDetail(String no);
 
@@ -39,5 +39,9 @@ public interface GroupDAO {
 	String getfield(String cns_no);
 
 	String showContent(int no);
+
+	List<Map<String, Object>> scheduleList();
+
+	void closePRG(int prg_no);
 
 }

@@ -3,10 +3,10 @@
 	const container = document.getElementById('calendar');
 	const options = {
 	  gridSelection: {
-		enableDblClick: false,
+		enableDbClick: false,
 		enableClick: false,
 	  },
-	  useFormPopup: true,
+	  useFormPopup: false,
 	  useDetailPopup: true,
 	  usageStatistics: false, 
 	  defaultView: 'month',
@@ -28,19 +28,19 @@
 	  },
 	  calendars: COUNSEL_CALENDARS,
 	   month: {
-	     visibleWeeksCount: 4,
+	     //visibleWeeksCount: 2,
 	     workweek: true,
 	     dayNames: ['일', '월', '화', '수', '목', '금', '토'],
 	   },
-	//  week: {
-    //     workweek: false,
-	//	   narrowWeekend: true,
-	//      eventView: true,
-	//      taskView: false,
-	//      hourStart: 9, 
-	//      hourEnd: 18, 
-	//      dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-	//  },
+	  week: {
+          workweek: true,
+		  narrowWeekend: false,
+	      eventView: true,
+	      taskView: false,
+	      hourStart: 9, 
+	      hourEnd: 18, 
+	      dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+	  },
 	  template: {
 		popupDetailTitle({ title }) {
 			return title;
@@ -104,12 +104,34 @@
 		  },
 		  clickEvent: function (eventInfo) {
 			console.log('clickEvent', eventInfo);
+			let deleteBtn = document.getElementById("deleteSchBtn");
+			if(deleteBtn.checked) {
+				console.log(eventInfo.event.id);
+				if(confirm("일정을 삭제하시겠습니까?")) {
+					let params = {
+						sch_no: eventInfo.event.id,
+					}
+					// 실제로 열었던 일정 삭제
+					postData('/delete-cschedule', params).then(data => {
+						alert(data.message);
+						if(data.result != 0) {
+							location.reload(true);
+						}
+					}).catch(err => {
+						console.log(err);
+					})
+					
+				}
+			}
 			
 		  },
 		  clickDayName: function (dayNameInfo) {
-			console.log('clickDayName', dayNameInfo);
+			// console.log('clickDayName', dayNameInfo.date);
+			let dateInput = document.getElementById("datepicker-autoclose");
+			dateInput.value = dayNameInfo.date;
 		  },
 		  selectDateTime: function (dateTimeInfo) {
+			calendar.clearGridSelections();
 			console.log('selectDateTime', dateTimeInfo);
 		  },
 		  beforeCreateEvent: function (event) {
@@ -171,8 +193,10 @@
 	const nextBtn = document.querySelector('#nextBtn');
 	
 	const monthViewBtn = document.querySelector('#monthViewBtn');
-//    const twoWeeksViewBtn = document.querySelector('#twoWeeksViewBtn');
-//	const weekViewBtn = document.querySelector('#weekViewBtn');
+    const twoWeeksViewBtn = document.querySelector('#twoWeeksViewBtn');
+	const weekViewBtn = document.querySelector('#weekViewBtn');
+	
+	//const deleteBtn = document.getElementById("deleteSchBtn");
 	
 	todayBtn.addEventListener("click", () => {
 		calendar.today();
@@ -203,34 +227,48 @@
 		});
 		calendar.clearGridSelections();
 	});
-//    twoWeeksViewBtn.addEventListener("click", () => {
-//		calendar.changeView('month');
-//		update();
-//		calendar.setOptions({
-//		month: {
-//			visibleWeeksCount: 2,
-//			workweek: true,
-//			dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-//		},
-//		});
-//		calendar.clearGridSelections();
-//	});
+    twoWeeksViewBtn.addEventListener("click", () => {
+		calendar.changeView('month');
+		update();
+		calendar.setOptions({
+		month: {
+			visibleWeeksCount: 2,
+			workweek: true,
+			dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+		},
+		});
+		calendar.clearGridSelections();
+	});
 
-//	weekViewBtn.addEventListener("click", () => {
-//	  calendar.changeView('week');
-//     update();
-//	  calendar.setOptions({
-//	    week: {
-//        workweek: true,
-//	      eventView: true,
-//	      taskView: false,
-//	      hourStart: 9, 
-//	      hourEnd: 18, 
-//	      dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-//	    },
-//	  });
-//	  calendar.clearGridSelections();
-//	});
+	weekViewBtn.addEventListener("click", () => {
+	  calendar.changeView('week');
+      update();
+	  calendar.setOptions({
+	    week: {
+        workweek: true,
+	      eventView: true,
+	      taskView: false,
+	      hourStart: 9, 
+	      hourEnd: 18, 
+	      dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+	    },
+	  });
+	  calendar.clearGridSelections();
+	});
+	
+/*	deleteBtn.addEventListener("change", () => {
+		if(deleteBtn.checked) {
+			// detail 팝업 불가능하게 변경
+			calendar.setOptions({
+				useDetailPopup: false,
+			});
+		} else {
+			calendar.setOptions({
+				useDetailPopup: true,
+			})
+		}
+	});*/
+	
 
 	console.log(calendar);
 

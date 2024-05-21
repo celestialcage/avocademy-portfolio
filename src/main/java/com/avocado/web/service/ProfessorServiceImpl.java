@@ -52,6 +52,11 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return professorDAO.registPsCounsel(map);
 	}
 
+	@Override
+	public List<ProfessorDTO> psCounselList(String uname) {
+		return professorDAO.psCounselList(uname);
+	}
+
 	
 
 
