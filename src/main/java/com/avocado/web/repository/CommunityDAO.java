@@ -32,4 +32,6 @@ public interface CommunityDAO {
 
 	String getFsn(int fno);
 
+	FilesDTO getFile(int fno);
+
 }

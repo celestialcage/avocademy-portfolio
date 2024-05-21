@@ -49,4 +49,8 @@
     FROM files
     WHERE fno = #{fno}
 	</select>
+	
+	<select id="getFile" parameterType="int" resultType="com.avocado.web.entity.FilesDTO">
+        SELECT * FROM files WHERE fno = #{fno}
+    </select>
 </mapper>

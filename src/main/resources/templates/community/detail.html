@@ -41,7 +41,9 @@
 			</div>
 			<div th:if="${detail.fsn != null}">
    			<p class="card-text">첨부파일: <span th:text="${detail.fno + '.' + detail.fsn}"></span></p>
-			<a th:href="@{/downloadFile(fno=${detail.fno})}">첨부파일 다운로드</a>
+
+		 	<a th:href="@{/downloadFile/{fsn}(fsn=${detail.fsn})}">첨부파일 다운로드</a> 
+			
 			</div>
 
 			

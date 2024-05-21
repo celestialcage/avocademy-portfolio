@@ -12,6 +12,8 @@ public class FilesDTO {
 	private int fno ;
 	private long fsize;
 	private String fsn, actl_fnm, uuid, fpath;
+	
+	
 
 
 	

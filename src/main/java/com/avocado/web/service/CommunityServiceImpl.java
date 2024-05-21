@@ -141,14 +141,16 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityDAO.deletecd(cno);
 	}
 	
-	// 파일 번호를 반환하는 메서드 추가
-    public int getFileNo() {
-        return communityDAO.getFileNo();
-    }
 
 	@Override
 	public String getFsn(int fno) {		
 		return communityDAO.getFsn(fno);
+	}
+
+	@Override
+	public FilesDTO getFile(int fno) {
+		// TODO Auto-generated method stub
+		return communityDAO.getFile(fno);
 	}
     
 
