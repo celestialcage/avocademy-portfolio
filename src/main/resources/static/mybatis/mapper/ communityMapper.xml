@@ -22,18 +22,10 @@
 	</select>
 	
 	<select id="detail" parameterType="Integer" resultType="CommunityDTO"> 
-		SELECT * 
+		SELECT uno,uid, uname, uemail, ukey, cno, ctitle, ccontent, cdate, cdel, fno, comment
 		FROM communityview 
 		WHERE cno = #{cno}; 
 	</select>
-	
-		<select id="getFileNo"  resultType="int"> 
-		SELECT fno 
-		FROM files
-		DESC limit 1;
-	</select>
-	
-	
 	
 	<select id="count">
 		select count(1) from community
@@ -45,6 +37,16 @@
  		set cdel = '0'
   		where cno = #{cno}
 	</update>
+	
+	<select id="getFileNo"  resultType="int"> 
+		SELECT fno 
+		FROM files
+		ORDER BY fno DESC limit 1;
+	</select>
 
-
+	<select id="getFsn" parameterType="int" resultType="java.lang.String">
+    SELECT fsn 
+    FROM files
+    WHERE fno = #{fno}
+	</select>
 </mapper>

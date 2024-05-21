@@ -23,10 +23,10 @@ public interface CommunityService {
 
 	Map<String, Object> write(Map<String, Object> map, FilesDTO dto, MultipartFile file);
 
+	int getFileNo();
 
-	FilesDTO getPostById(Long postId);
+	String getFsn(int fno);
 
-	List<FilesDTO> getFileByPostId(Long postId);
 
 
 

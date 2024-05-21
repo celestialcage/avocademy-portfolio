@@ -39,26 +39,12 @@
 			<div class="card-body">
 				<p class="card-text" th:text="${detail.ccontent}">게시글 내용</p>
 			</div>
+			<div th:if="${detail.fsn != null}">
+   			<p class="card-text">첨부파일: <span th:text="${detail.fno + '.' + detail.fsn}"></span></p>
+			<a th:href="@{/downloadFile(fno=${detail.fno})}">첨부파일 다운로드</a>
+			</div>
+
 			
-
-<!-- 첨부 파일 목록 출력 -->
-<div th:if="${fileList != null and fileList.size() > 0}">
-    <h3>첨부파일</h3>
-    <ul>
-        <li th:each="file : ${fileList}">
-            <span th:text="${file.fsn}"></span>
-            <!-- 파일 다운로드 링크 추가 -->
-            <a th:href="@{/community/download/{fileName}(fileName=${file.actl_fnm})}">다운로드</a>
-        </li>
-    </ul>
-</div>
-<div th:unless="${fileList != null and fileList.size() > 0}">
-    <p>첨부파일이 없습니다.</p>
-</div>
-
-
-
-
 
 		</div>
 	</div>
