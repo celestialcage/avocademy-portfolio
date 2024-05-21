@@ -1,5 +1,7 @@
 package com.avocado.web.service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +29,20 @@ public class GroupServiceImpl implements GroupService {
 
 	@Override
 	public List<GroupDTO> adminPRGList() {
-		return groupDAO.adminPRGList();
+		List<GroupDTO> list = groupDAO.adminPRGList();
+		for (GroupDTO groupDTO : list) {
+			LocalDate endDate = LocalDate.parse(groupDTO.getPrg_end(), java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			LocalDate reqEnd = LocalDate.parse(groupDTO.getReq_end(), java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd"));
+			LocalDate today = LocalDate.now();
+			
+			if(endDate.isBefore(today)) {
+				groupDTO.setPrg_aprv("3");
+			} else if(reqEnd.isBefore(today)) {
+				groupDTO.setPrg_aprv("2");
+			}
+		}
+		
+		return list;
 	}
 
 	@Override
@@ -53,8 +68,8 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public void openPRG(int prg_no) {
-		groupDAO.openPRG(prg_no);
+	public void changeReqOpen(Map<String, Object> status) {
+		groupDAO.changeReqOpen(status);
 	}
 
 	@Override
@@ -68,9 +83,36 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public void apply(Map<String, Object> map) {
-		groupDAO.apply(map);		
+	public int apply(Map<String, Object> map) {
+		return groupDAO.apply(map);		
 	}
+
+	@Override
+	public int checkSchedul(Map<String, Object> check) {
+		return groupDAO.checkSchedul(check);
+	}
+
+	@Override
+	public String getfield(String cns_no) {
+		return groupDAO.getfield(cns_no);
+	}
+
+	@Override
+	public String showContent(int no) {
+		return groupDAO.showContent(no);
+	}
+
+	@Override
+	public List<Map<String, Object>> scheduleList() {
+		return groupDAO.scheduleList();
+	}
+
+	@Override
+	public void closePRG(int prg_no) {
+		groupDAO.closePRG(prg_no);		
+	}
+
+
 
 	
 

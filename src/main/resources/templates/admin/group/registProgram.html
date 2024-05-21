@@ -5,10 +5,14 @@
     <th:block th:insert="~{./admin/thfragments/fragments.html :: headTag}"></th:block>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/summernote/summernote-lite.css">
     <link rel="stylesheet" type="text/css" href="/admin/assets/libs/select2/dist/css/select2.min.css">
     <link rel="stylesheet" type="text/css" href="/admin/assets/libs/jquery-minicolors/jquery.minicolors.css">
     <link rel="stylesheet" type="text/css"
         href="/admin/assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <script type="text/javascript">
+    var textholder;
+    </script>
     <style type="text/css">
     .datepicker > .input-group {
     	align-content: center;
@@ -107,9 +111,9 @@
 		                                    <label for="prg_cd" class="control-label col-form-label">상담 분야</label>
 		                                        <select class="select2 form-select shadow-none" id="prg_cd" th:field="*{prg_cd}" style="width:100%; height:36px;">
 	    	                                        <option value="">분야 선택</option>
-	        	                                    <option value="P210">대인관계</option>
-	            	                                <option value="P220">명상</option>
-	                	                            <option value="P230">진로탐색</option>
+	        	                                    <option value="P210" th:selected="${prg_cd} == P210">대인관계</option>
+	            	                                <option value="P220" th:selected="${prg_cd} == P220">명상</option>
+	                	                            <option value="P230" th:selected="${prg_cd} == P230">진로탐색</option>
 	                    	                    </select>
 	                    	            </div>
 	                                	<div class="col-sm-1">
@@ -142,9 +146,6 @@
 		    	                                	<option value="17">17시</option>
 		                    	            	</select>
 	                               			</div>
-	                               			<div class="form-group col-sm-2">
-				                        	총<input type="number" min="5" id="nmtm" th:field="*{prg_nmtm}" placeholder="0" style="width:36px; height:36px;">회
-				                        	</div>	                                	
 		                                	<div class="form-group row col-sm-4">
 			                                	<div class="input-group">
 			                                		<input type="hidden" id="reqEnd" th:field="*{req_end}">
@@ -154,6 +155,9 @@
 				                                    </div>		
 				                                </div>
 		                                	</div>
+	                               			<div class="form-group col-sm-2">
+				                        	총<input type="number" readonly="readonly" min="5" max="10" id="nmtm" th:field="*{prg_nmtm}" placeholder="0" style="width:36px; height:36px;">회
+				                        	</div>	                                	
 				                        </div>                             
 	                                </div>
 	                                <div class="form-group row">
@@ -211,6 +215,8 @@
     <script src="/admin/assets/libs/jquery-minicolors/jquery.minicolors.min.js"></script>	
    	<script src="/admin/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
    	<script src="/admin/assets/libs/bootstrap-datepicker/dist/locales/bootstrap-datepicker.ko.min.js"></script>
+   	<script src="/js/summernote/summernote-lite.js"></script>
+	<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
    	<script type="text/javascript">
 
     
@@ -221,7 +227,7 @@
         var countNMTM;
         
         $.datepicker.setDefaults({
-            dateFormat: 'yy-mm-dd',
+            dateFormat: 'yyyy-mm-dd',
             prevText: '이전 달',
             nextText: '다음 달',
             closeText: '닫기', 
@@ -240,57 +246,125 @@
 		$('#prg_dow').change(function(){
 			dayOfWeek = parseInt($('#prg_dow').val()) + 1;
 			const disabledDays = [0, 1, 2, 3, 4, 5, 6].filter(day => day !== dayOfWeek);		
-	    
-	        $('#nmtm').change(function(){
-		        countNMTM  = $('#nmtm').val();
-		        const start = 14;
-				const end = countNMTM * 7 + 14;
-				startDate = '+' + start + 'd';
-				endDate = '+' + end + 'd';  
-				console.log(startDate);
-				console.log(endDate);
+	        
+			$('#choseDate').datepicker({
+	        	format: "yyyy-mm-dd",
+	    	    //startDate: '+14d', 
+	    	    //endDate: '+84d',
+	            autoclose: true,
+	            todayHighlight: true,
+	            calendarWeeks : true,
+	            daysOfWeekDisabled : disabledDays,
+			    daysOfWeekHighlighted : [dayOfWeek],
+	    	    multidate : true,
+	    	    multidateSeparator :",",
+	    	    templates : {
+	    	        leftArrow: '&laquo;',
+	    	        rightArrow: '&raquo;'
+	    	    }, 
+	    	    showWeekDays : true ,
+	    	    todayHighlight : true ,
+	    	    toggleActive : true,
+	    	    title: "상담 시작 일자",
+	    	    weekStart : 0 ,
+	    	    language : "ko",
+	    	    forceParse: false
+	        }).on("changeDate", function(e){
+				
+	        	const selectedDates = $(this).datepicker('getDates').sort((a, b) => a - b);
+	        	const firstDate = selectedDates[0];
+	        	if (firstDate) {
+                    const reqEndDate = new Date(firstDate);
+                    reqEndDate.setDate(reqEndDate.getDate() - 3);
+                    const formattedReqEndDate = reqEndDate.getFullYear() +"-"+ ('0' + (reqEndDate.getMonth() + 1)).slice(-2) +"-"+ ('0' + reqEndDate.getDate()).slice(-2);
+                    $('#reqEnd').val(formattedReqEndDate);
+             		console.log(formattedReqEndDate);
+                }
+	        	
+	        	countNMTM = selectedDates.length;
+	        	console.log(countNMTM);
+	        	$('#nmtm').val(countNMTM);
+	        });
 
-				$('#choseDate').datepicker({
-		        	format: "yyyymmdd",
-		    	    startDate: startDate, 
-		    	    endDate: endDate,
-		            autoclose: true,
-		            todayHighlight: true,
-		            calendarWeeks : true,
-		            daysOfWeekDisabled : disabledDays,
-				    daysOfWeekHighlighted : [dayOfWeek],
-		    	    multidate : true,
-		    	    multidateSeparator :",",
-		    	    templates : {
-		    	        leftArrow: '&laquo;',
-		    	        rightArrow: '&raquo;'
-		    	    }, 
-		    	    showWeekDays : true ,
-		    	    todayHighlight : true ,
-		    	    toggleActive : true,
-		    	    title: "상담 시작 일자",
-		    	    weekStart : 0 ,
-		    	    language : "ko",
-		    	    forceParse: false
-		        }).on("changeDate", function(e){
-					
-		        	const selectedDates = $(this).datepicker('getDates').sort((a, b) => a - b);
-		        	const firstDate = selectedDates[0];
-		        	if (firstDate) {
-	                    const reqEndDate = new Date(firstDate);
-	                    reqEndDate.setDate(reqEndDate.getDate() - 3);
-	                    const formattedReqEndDate = reqEndDate.getFullYear() + ('0' + (reqEndDate.getMonth() + 1)).slice(-2) + ('0' + reqEndDate.getDate()).slice(-2);
-	                    $('#reqEnd').val(formattedReqEndDate);
-	             		console.log(formattedReqEndDate);
-	                }
-		        });
-	        })
 	        
 		   
 	        
 		   
 		});
+	
+		
+		
+		
+		 $('#prg_content').summernote({
+	            codeviewFilter: false, // 코드 보기 필터 비활성화
+	            codeviewIframeFilter: false, // 코드 보기 iframe 필터 비활성화
 
+	            height: 500, // 에디터 높이
+	            minHeight: null, // 최소 높이
+	            maxHeight: null, // 최대 높이
+	            focus: true, // 에디터 로딩 후 포커스 설정
+	            lang: 'ko-KR', // 언어 설정 (한국어)
+	            placeholder: '목적<br>-<br>-<br><br>기대효과<br>-<br>-<br>',
+
+	            toolbar: [
+	                ['style', ['style']], // 글자 스타일 설정 옵션
+	                ['fontsize', ['fontsize']], // 글꼴 크기 설정 옵션
+	                ['font', ['bold', 'underline', 'clear']], // 글자 굵게, 밑줄, 포맷 제거 옵션
+	                ['color', ['color']], // 글자 색상 설정 옵션
+	                //['table', ['table']], // 테이블 삽입 옵션
+	                ['para', ['ul', 'ol', 'paragraph']], // 문단 스타일, 순서 없는 목록, 순서 있는 목록 옵션
+	                ['height', ['height']], // 에디터 높이 조절 옵션
+	                ['insert', ['picture', 'link', 'video']], // 이미지 삽입, 링크 삽입, 동영상 삽입 옵션
+	                ['view', ['codeview', 'fullscreen', 'help']], // 코드 보기, 전체 화면, 도움말 옵션
+	            ],
+
+	            fontSizes: [
+	                '8', '9', '10', '11', '12', '14', '16', '18',
+	                '20', '22', '24', '28', '30', '36', '50', '72',
+	            ], // 글꼴 크기 옵션
+
+	            styleTags: [
+	                'p',  // 일반 문단 스타일 옵션
+	                {
+	                    title: 'Blockquote',
+	                    tag: 'blockquote',
+	                    className: 'blockquote',
+	                    value: 'blockquote',
+	                },  // 인용구 스타일 옵션
+	                'pre',  // 코드 단락 스타일 옵션
+	                {
+	                    title: 'code_light',
+	                    tag: 'pre',
+	                    className: 'code_light',
+	                    value: 'pre',
+	                },  // 밝은 코드 스타일 옵션
+	                {
+	                    title: 'code_dark',
+	                    tag: 'pre',
+	                    className: 'code_dark',
+	                    value: 'pre',
+	                },  // 어두운 코드 스타일 옵션
+	                'h1', 'h2', 'h3', 'h4', 'h5', 'h6',  // 제목 스타일 옵션
+	            ],
+
+	        /*     callbacks: {
+	                onImageUpload: function (files, editor, welEditable) {
+	                    // 파일 업로드 (다중 업로드를 위해 반복문 사용)
+	                    for (var i = files.length - 1; i >= 0; i--) {
+	                        var fileName = files[i].name
+
+	                        // 이미지 alt 속성 삽일을 위한 설정
+	                        var caption = prompt('이미지 설명 :', fileName)
+	                        if (caption == '') {
+	                            caption = '이미지'
+	                        }
+	                        uploadSummernoteImageFile(files[i], this, caption)
+	                    }
+	                },
+	            }, */
+	        })
+
+		
     }); 	
 
     

@@ -9,8 +9,11 @@ import lombok.ToString;
 @ToString
 public class FilesDTO {
 	
-	private int fno;
-	private String fsn, actl_fnm, uuid, fsize, fpath;
+	private int fno ;
+	private long fsize;
+	private String fsn, actl_fnm, uuid, fpath;
+	
+	
 
 
 	

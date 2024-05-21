@@ -8,8 +8,8 @@
 	
 	</select>
 	
-	<select id="getStudentInfo" parameterType="String" resultType="String">
-		SELECT stud_no
+	<select id="getStudentInfo" parameterType="String" resultType="Map">
+		SELECT stud_no, stud_nm
 		FROM student
 		WHERE user_no = #{uno}
 	</select>

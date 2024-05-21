@@ -21,6 +21,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/group")
@@ -40,10 +41,17 @@ public class GroupController {
 	
 	//프로그램 목록 보기
 	@GetMapping("/programList")
-	public String programList(Model model) {		
-		List<GroupDTO> list = groupService.programList();
-		model.addAttribute("list", list);
-		return "program/programList";
+	public String programList(Model model, HttpSession session) {
+		if (session.getAttribute("uid") == null) {			
+			return "redirect:/login";
+			
+		} else {
+			
+			List<GroupDTO> list = groupService.programList();
+			model.addAttribute("list", list);
+			return "program/programList";
+		}
+		
 	}
 	
 	//프로그램 설명 자세히 보기
@@ -60,29 +68,64 @@ public class GroupController {
 	@GetMapping("/programApply")
 	public @ResponseBody String programApply(@RequestParam("no") String no) {
 		
+		HttpSession session = util.getSession();
+		String stud_no = (String) session.getAttribute("stud_no");
+		Map<String, Object> check = new HashMap<String, Object>();
+		check.put("prg_no", no);
+		check.put("stud_no", stud_no);
+		
+		int count = groupService.checkSchedul(check);
+		
 		JsonObject json = new JsonObject();
-		json.addProperty("count", 0);
+		json.addProperty("count", count);
 		
 		return json.toString();
 	}
 	
 	//신청
 	@PostMapping("/programApply")
-	public @ResponseBody String programApply(@RequestParam("no") String no, @RequestParam("stno") String stud_no) {
+	public @ResponseBody Map<String, Object> programApply(@RequestParam("no") String no, HttpSession session) {
 		
-		//스케줄번호 찾아오기
-		List<Integer> schdlNo = groupService.getSchedulNo(no);
+		String stud_no = (String) session.getAttribute("stud_no");
+		if (stud_no == null) {
+			return errorResponse("세션이 만료되었습니다.");
+	    }
 		
-		for(int i = 0; i < schdlNo.size(); i++) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("schdno", schdlNo.get(i));
-			map.put("stud_no", stud_no);
-			groupService.apply(map);			
-		}		
-		
-		//신청테이블에 넣기
-		return "1";
+		try {
+			//스케줄번호 찾아오기
+			List<Integer> schdlNo = groupService.getSchedulNo(no);
+			
+			//신청테이블에 넣기
+			for(int i = 0; i < schdlNo.size(); i++) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("schdno", schdlNo.get(i));
+				map.put("stud_no", stud_no);
+				int result = groupService.apply(map);
+				if (result == 0) {
+					return errorResponse("스케줄 번호 " + schdlNo + "에 대한 신청이 실패하였습니다.");
+				}
+			}
+			//성공시
+			return successResponse("신청이 완료되었습니다.");
+			
+		} catch (Exception e) {
+			return errorResponse("통신 오류가 발생했습니다: " + e.getMessage());
+		}
+
 	}
 	
+	private Map<String, Object> successResponse(String message){
+		Map<String, Object> response = new HashMap<String, Object>();	
+		response.put("status", "success");
+		response.put("message", message);
+		return response;
+	}
+	
+	private Map<String, Object> errorResponse(String message){
+		Map<String, Object> response = new HashMap<String, Object>();
+		response.put("status", "error");
+		response.put("message", message);
+		return response;
+	}
 	
 }

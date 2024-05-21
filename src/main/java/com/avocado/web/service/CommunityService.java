@@ -17,10 +17,17 @@ public interface CommunityService {
 
 	CommunityDTO detail(int cno);
 
-
 	int deletecd(String cno);
 
+	Map<String, Object> write(Map<String, Object> map, FilesDTO dto, MultipartFile file);
 
-	int write(Map<String, Object> map, FilesDTO dto, MultipartFile file);
+	String getFsn(int fno);
+
+	FilesDTO getFile(int fno);
+
+
+
+
+
 
 }

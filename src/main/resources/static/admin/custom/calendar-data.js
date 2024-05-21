@@ -51,7 +51,7 @@ function getDBEvent(calendar, dbEle) {
     state = dbEle.scheduleState == 0 ? `신청 열림` : `예약됨`;
     // isReadOnly = dbEle.scheduleState === 0 ? true : false;
     // let calendarId, start, end;
-    let attendees = [];
+    let attendees = '${dbEle.cns_nm}';
     let raw = {
         //memo: `${dbEle.scheduleNo}`,
     };

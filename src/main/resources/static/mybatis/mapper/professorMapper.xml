@@ -10,8 +10,8 @@
 		INSERT INTO pscounsel (stud_no, ps_class, ps_cn, psc_no, ps_hr, ps_ymd) VALUES (#{studentNumber}, #{value}, #{content}, #{psc_no}, #{time}, #{date});
 	</insert>
 	
-	<select id="psSchedule" resultType="ProfessorDTO">
-		SELECT psc_no, ps_no, ymd, hr FROM psschedule;
+	<select id="psSchedule" parameterType="String" resultType="ProfessorDTO">
+		SELECT psc_no, ps_no, ymd, hr, GET_CD_NM('CO0010', hr) AS hr_nm FROM psschedule WHERE ps_no = (SELECT ps_no FROM professor WHERE user_no = (SELECT uno FROM user WHERE uname=#{uname}));
 	</select>
 	
 	<select id="getAll" parameterType="Map" resultType="Map">
@@ -25,5 +25,15 @@
 	
 	<select id="professorInfo" parameterType="String" resultType="ProfessorDTO">
 		SELECT ps_no, user_no, ps_nm, scsbjt_cd FROM professor WHERE user_no = (SELECT uno FROM user WHERE uname = #{uname});
+	</select>
+	
+	<insert id="registPsCounsel" parameterType="Map">
+		INSERT INTO psschedule (ps_no, ymd, hr) VALUES ((SELECT ps_no FROM professor WHERE ps_nm = #{psName}), #{selectedDate}, #{times})
+	</insert>
+	
+	<select id="psCounselList" parameterType="String" resultType="ProfessorDTO">
+		SELECT s.stud_nm, p.pseq_no, p.ps_ymd, GET_CD_NM('CO0010', ps_hr) AS ps_hr, p.ps_status, p.ps_cn, p.ps_class, p.stud_no, p.psc_no FROM stu_user s 
+		JOIN pscounsel p ON s.stud_no = p.stud_no 
+		JOIN ps_user u ON s.scsbjt_cd = u.scsbjt_cd WHERE u.uname = #{uname}
 	</select>
 </mapper>

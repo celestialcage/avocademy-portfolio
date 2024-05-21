@@ -6,6 +6,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.avocado.web.entity.PersonalDTO;
+
 @Repository
 @Mapper
 public interface CounselDAO {
@@ -19,5 +21,17 @@ public interface CounselDAO {
 	Map<String, Object> findCsInfo(int user_no);
 
 	List<Map<String, Object>> findAllTimes();
+
+	int addSchedule(PersonalDTO ps);
+
+	int findSchedule(PersonalDTO ps);
+
+	int deleteSchedule(PersonalDTO ps);
+
+	int applySchedule(PersonalDTO ps);
+
+	List<PersonalDTO> findCslAppointments(int cns_no);
+
+	void deleteExpiredSchedule(int hourNow);
 
 }

@@ -21,13 +21,23 @@ public interface GroupService {
 
 	int getProgramNo(String string);
 
-	void openPRG(int prg_no);
+	void changeReqOpen(Map<String, Object> status);
 
 	GroupDTO programDetail(String no);
 
 	List<Integer> getSchedulNo(String no);
 
-	void apply(Map<String, Object> map);
+	int apply(Map<String, Object> map);
+
+	int checkSchedul(Map<String, Object> check);
+
+	String getfield(String cns_no);
+
+	String showContent(int no);
+
+	List<Map<String, Object>> scheduleList();
+
+	void closePRG(int prg_no);
 	
 
 }

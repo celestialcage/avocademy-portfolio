@@ -1,5 +1,7 @@
 package com.avocado.web.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,11 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.service.GroupService;
 import com.avocado.web.util.Util;
-import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
@@ -44,21 +47,30 @@ public class GroupAdminController {
 	private String registProgram(Model model, GroupDTO groupDto, HttpSession session) {
 		//System.out.println(session.getAttribute("cns_no"));
 		groupDto.setCns_no((String) session.getAttribute("cns_no"));
+		groupDto.setPrg_cd(groupService.getfield(groupDto.getCns_no()));
 		model.addAttribute("groupDto", groupDto);
 		return "admin/group/registProgram";
 	}
 	
 	@PostMapping("/registProgram")
-	private String registProgram(@ModelAttribute("groupDto") GroupDTO dto) {
+	private String registProgram(@ModelAttribute("groupDto") GroupDTO dto, HttpSession session) {
 		
 		//프로그램 진행기간
 		dto.setPrg_start(dto.getGroupSCHDL().get(0));
 		dto.setPrg_end(dto.getGroupSCHDL().get(dto.getPrg_nmtm() -1));
 		dto.setPrg_schdl(dto.getPrg_start() + " - " + dto.getPrg_end());
-		dto.setPrg_place("명상실");
+		
+		if(dto.getCns_no().equals("4")) {
+			dto.setPrg_place("진로상담실");
+		} else if(dto.getCns_no().equals("5")) {
+			dto.setPrg_place("명상실");			
+		} else if(dto.getCns_no().equals("6")) {
+			dto.setPrg_place("미니 회의실");
+		}
 		
 		//프로그램 등록
 		groupService.registProgram(dto);
+		
 		
 		//상담사번호 기준 가장 최근 업로드 데이터 찾기
 		int prgNO = groupService.getProgramNo(dto.getCns_no());
@@ -85,23 +97,44 @@ public class GroupAdminController {
 		return "admin/group/programList";
 	}
 	
+	//프로그램 내용 불러오기
+	@PostMapping("/programList")
+	@ResponseBody
+	private Map<String, Object> showContent(@RequestParam("no") int no, Model model){
+		
+		String content = groupService.showContent(no);
+		//System.out.println("내용 : " + content);
+		
+		Map<String, Object> response = new HashMap<String, Object>();
+		response.put("content", content);
+	
+		return response;
+	}
+	
+	
 	//승인
 	@RequestMapping(value = "/approveProgram", method = {RequestMethod.POST})
 	private String approveProgram(Model model, @RequestParam Map<String, Object> map) {
-		System.out.println(map.get("no"));
-		System.out.println(map.get("val"));
+		//System.out.println(map.get("no"));
+		//System.out.println(map.get("val"));
 				
 		int prg_no = Integer.parseInt((String) map.get("no"));
 		String approv = (String) map.get("val");
+
+		Map<String, Object> status = new HashMap<String, Object>();
+		status.put("prg_no", prg_no);
 		
 		if(approv.equals("0")) {
-			System.out.println("승인하기");
+			//System.out.println("승인하기");
 			groupService.approvePRG(prg_no);
-			groupService.openPRG(prg_no);
+			status.put("req_open", 1);
+			groupService.changeReqOpen(status);
 			
 		} else if (approv.equals("1")) {
-			System.out.println("승인취소하기");
-			groupService.disApprovePRG(prg_no);			
+			//System.out.println("승인취소하기");
+			groupService.disApprovePRG(prg_no);
+			status.put("req_open", 0);
+			groupService.changeReqOpen(status);
 		} else {
 			System.out.println("땡");
 		}
@@ -109,6 +142,16 @@ public class GroupAdminController {
 		model.addAttribute("list", groupService.adminPRGList());
 
 		return "admin/group/programList :: #prgList";
+	}
+	
+	
+	
+	//프로그램 스케줄확인
+	@RequestMapping(value = "/grSchedule")
+	private @ResponseBody List<Map<String, Object>> grSchedule() {
+		List<Map<String, Object>> scheduleList = groupService.scheduleList();
+
+		return scheduleList;
 	}
 	
 }

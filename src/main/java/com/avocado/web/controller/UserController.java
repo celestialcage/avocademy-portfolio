@@ -78,14 +78,18 @@ public class UserController {
 			// 사용자의 등급에 따라 리다이렉트할 페이지 결정
 	        if (role != null) {
 	            if (role == 1) {
-	            	String stud_no = userService.getStudentInfo(uno); //학번추가
+	            	String stud_no = userService.getStudentInfo(uno).get("stud_no").toString(); //학번추가
+	            	String stud_nm = userService.getStudentInfo(uno).get("stud_nm").toString(); //학생이름추가
 	            	session.setAttribute("stud_no", stud_no);
+	            	session.setAttribute("stud_nm", stud_nm);
 	            	return "redirect:/main"; // 일반 사용자 페이지로 리다이렉트
-	            } else if (role == 3) {
+	            } else if (role == 3 || role == 4) {
 	            	String cns_no = userService.getCounselorInfo(uno);
 	            	session.setAttribute("cns_no", cns_no); //상담사번호추가
 	            } else if (role == 5) {
 	            	
+	            } else if (role == 2) {
+	            	return "redirect:/admin/professorAdmin"; // 지도교수관리자페이지로 리다이렉트
 	            }
 	            return "redirect:/admin/index"; // 관리자 페이지로 리다이렉트
 	        }

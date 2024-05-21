@@ -14,23 +14,24 @@ import com.avocado.web.entity.OnlineDTO;
 @Mapper
 public interface CommunityDAO {
 
-		CommunityDTO detail(int cno);
+	CommunityDTO detail(int cno);
 
-		int write(Map<String, Object> map);
+	int write(Map<String, Object> map);
 
-		int count();
+	int count();
 
-		List<OnlineDTO> findAll(Map<String, Integer> map);
+	List<OnlineDTO> findAll(Map<String, Integer> map);
 
-		int deletecd(String cno);
+	int deletecd(String cno);
 
+	List<CommunityDTO> community(Map<String, Integer> pageMap);
 
-		List<CommunityDTO> community(Map<String, Integer> pageMap);
+	int fileUp(FilesDTO dto);
 
+	int getFileNo();
 
-	
-	
-		
-	}
+	String getFsn(int fno);
 
+	FilesDTO getFile(int fno);
 
+}

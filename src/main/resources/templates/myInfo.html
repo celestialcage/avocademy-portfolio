@@ -24,29 +24,84 @@
 	<main class="container">
 		<th:block th:insert="~{./fragments.html :: menu}"></th:block>	
 		<th:block th:insert="~{./fragments.html :: headerImg}"></th:block>
+		
+					
+				
+		<!-- =============사이드바============== -->
+		<th:block th:fragment="counselSidebarHead">
+	<link rel="stylesheet" href="/index/css/sidebars.css">
+	<script defer src="/index/js/sidebars.js"></script>
+</th:block>
 
+<th:block th:fragment="counselSidebar1">
+	<script defer src="/index/js/sidebars.js"></script>
+	  <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
+    <a href="/counselingGuide" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+      <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+      <span class="fs-4">마이페이지</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="/myinfo" class="nav-link link-body-emphasis">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+          내가 쓴 글
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link link-body-emphasis">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+          예약 확인
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link link-body-emphasis">
+          <svg class="bi pe-none me-2" width="16" height="16"></svg>
+          상담 기록
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link link-body-emphasis">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+          개인정보 수정
+        </a>
+      </li>
+    </ul>
+    <hr>
+   
+  </div>
+	
+</th:block>
 		<!-- 여기가 본문 -->
 		<div class="mainContents">
 		      <div class="container">
-         <div class="row">
-            <div class="col-md-4 mx-auto">
-                  <h2 class="text-center text-uppercase text-primary mb-4">myInfo</h2>
-					<h1>마이페이지</h1>
-					<div th:if="${user}">
-						<p>사용자 이름 : <span th:text="${user.uname}"></span>
-						
-					<h3>상담현황</h3>
-					<a th:href="@{/mail}"></a>
-					<h3>메일보내기</h3>
-					
-				</div>
-            </div>
-         </div>
+
+				<table>
+					<thead>
+						<tr>
+							<th>Title</th>
+							<th>Content</th>
+							<th>Created At</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="post : ${posts}">
+							<td th:text="${post.btitle}">Title</td>
+							<td th:text="${post.bcontent}">Content</td>
+							<td th:text="${post.createdAt}">Created At</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
       </div>
 		
-		</div>
 		<!-- 본문 끝 -->
+		
+
 	</main>
+	
+
 	<!-- FOOTER -->
 	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
 </body>
