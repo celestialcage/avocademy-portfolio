@@ -28,10 +28,10 @@ public interface CommunityDAO {
 
 	int fileUp(FilesDTO dto);
 
-	int getFileNo();
-
 	String getFsn(int fno);
 
 	FilesDTO getFile(int fno);
+
+	int getFileNo();
 
 }

@@ -1,6 +1,7 @@
 package com.avocado.web.service;
 
 import java.io.File;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -25,7 +26,7 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Autowired
 	private CommunityDAO communityDAO;
-	private String fileDTO;
+
 
 	@Override
 	public int count() {

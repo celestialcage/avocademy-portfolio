@@ -2,6 +2,8 @@ package com.avocado.web.controller;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,8 +61,8 @@ private static final Logger logger = LoggerFactory.getLogger(CommunityController
 		// model.addAttribute("fileNo", fileNo);
 		model.addAttribute("fsn", detail.getFno());
 		model.addAttribute("fno", detail.getFno());
-		System.out.println(detail.getFno());
-		System.out.println(detail.getFsn());
+		System.out.println("fno:"+detail.getFno());
+		System.out.println("fsn:"+detail.getFsn());
 
 		// 세션에 로그인이 안되어있는 상태에서 session.get 하면 null 반환되고
 		// null 이랑 equals 연산을 하다보니 null 오류가 발생
@@ -134,13 +136,12 @@ private static final Logger logger = LoggerFactory.getLogger(CommunityController
 	}
 
 	@GetMapping("/downloadFile/{fsn}")
-	public HttpEntity<UrlResource> downloadFile(@PathVariable String fsn) throws MalformedURLException {
-	
-		
-
+	public HttpEntity<UrlResource> downloadFile(@PathVariable("fsn") String fsn) throws MalformedURLException {
+	System.out.println("컨트롤러------다운로드------------------:");
 
 		// 파일 경로 설정 (예시: /avocademy/src/main/resources/static/files/)
-	    String filePath = "/avocademy/src/main/resources/static/files/" + fsn;
+	    String baseDir = "/avocademy/src/main/resources/static/files/" + fsn;
+	 	String filePath = baseDir + fsn;
 
 	    // 파일 객체 생성
 	    File file = new File(filePath);
@@ -150,6 +151,9 @@ private static final Logger logger = LoggerFactory.getLogger(CommunityController
 	        // 예외 처리 또는 에러 응답 반환
 	        return ResponseEntity.notFound().build();
 	    }
+	    
+	    // 절대 경로를 가져옴
+        Path path = Paths.get(file.getAbsolutePath());
 
 	    // Resource 객체 생성
 	    UrlResource resource = new UrlResource(file.toURI());
