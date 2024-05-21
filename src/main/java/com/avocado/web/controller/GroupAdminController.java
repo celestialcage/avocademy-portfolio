@@ -1,5 +1,6 @@
 package com.avocado.web.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,20 +115,26 @@ public class GroupAdminController {
 	//승인
 	@RequestMapping(value = "/approveProgram", method = {RequestMethod.POST})
 	private String approveProgram(Model model, @RequestParam Map<String, Object> map) {
-		System.out.println(map.get("no"));
-		System.out.println(map.get("val"));
+		//System.out.println(map.get("no"));
+		//System.out.println(map.get("val"));
 				
 		int prg_no = Integer.parseInt((String) map.get("no"));
 		String approv = (String) map.get("val");
+
+		Map<String, Object> status = new HashMap<String, Object>();
+		status.put("prg_no", prg_no);
 		
 		if(approv.equals("0")) {
-			System.out.println("승인하기");
+			//System.out.println("승인하기");
 			groupService.approvePRG(prg_no);
-			groupService.openPRG(prg_no);
+			status.put("req_open", 1);
+			groupService.changeReqOpen(status);
 			
 		} else if (approv.equals("1")) {
-			System.out.println("승인취소하기");
-			groupService.disApprovePRG(prg_no);			
+			//System.out.println("승인취소하기");
+			groupService.disApprovePRG(prg_no);
+			status.put("req_open", 0);
+			groupService.changeReqOpen(status);
 		} else {
 			System.out.println("땡");
 		}
@@ -135,6 +142,16 @@ public class GroupAdminController {
 		model.addAttribute("list", groupService.adminPRGList());
 
 		return "admin/group/programList :: #prgList";
+	}
+	
+	
+	
+	//프로그램 스케줄확인
+	@RequestMapping(value = "/grSchedule")
+	private @ResponseBody List<Map<String, Object>> grSchedule() {
+		List<Map<String, Object>> scheduleList = groupService.scheduleList();
+
+		return scheduleList;
 	}
 	
 }

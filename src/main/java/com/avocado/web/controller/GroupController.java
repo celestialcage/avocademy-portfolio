@@ -41,10 +41,17 @@ public class GroupController {
 	
 	//프로그램 목록 보기
 	@GetMapping("/programList")
-	public String programList(Model model) {		
-		List<GroupDTO> list = groupService.programList();
-		model.addAttribute("list", list);
-		return "program/programList";
+	public String programList(Model model, HttpSession session) {
+		if (session.getAttribute("uid") == null) {			
+			return "redirect:/login";
+			
+		} else {
+			
+			List<GroupDTO> list = groupService.programList();
+			model.addAttribute("list", list);
+			return "program/programList";
+		}
+		
 	}
 	
 	//프로그램 설명 자세히 보기

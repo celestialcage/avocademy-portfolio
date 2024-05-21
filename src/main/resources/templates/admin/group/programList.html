@@ -108,16 +108,19 @@
                                     		<tr th:each="r : ${list}" id="prgTable">
                                     			<td th:text="${r.prg_no}" id="no"></td>
                                     			<td th:attr="onclick=|showContent('${r.prg_no}', '${r.prg_nm}')|">[[${r.prg_nm}]]</td>
-                                    			<td th:text="${r.prg_schdl}"></td>
+                                    			<td>[[${r.prg_start}]] <br>~ [[${r.prg_end}]]</td>
                                     			<td th:text="${r.prg_place}"></td>
                                     			<td th:switch="${r.prg_aprv}">
-                                    				<span th:case="1">승인</span>
                                     				<span th:case="0">미승인</span>
+                                    				<span th:case="1">승인</span>
+                                    				<span th:case="2">신청마감</span>
+                                    				<span th:case="3">완료</span>
                                     			</td>
                                     			<td>
                                     				<input type="hidden" id="apprv" th:value="${r.prg_aprv}">
                                     				<span class="apr" th:if="${r.prg_aprv} == 0"><button class="btn btn-success text-white">승인</button></span>
                                     				<span class="apr" th:if="${r.prg_aprv} == 1"><button class="btn btn-danger text-white">취소</button></span>
+                                    				<span class="apr" th:if="${r.prg_aprv} >= 2"><button class="btn" disabled="disabled">만료</button></span>
                                     			</td>
                                     		</tr>
                                     	</tbody>
@@ -194,6 +197,9 @@
         $(document).on("click", ".apr", function(){
        		let val = $(this).siblings('#apprv').val();
        		let no = $(this).parents('#prgTable').children('#no').text();      		
+       		if (val >= 2){
+       			return false;
+       		}
        		
        		$.ajax({
        			url: "./approveProgram",
@@ -201,7 +207,7 @@
        			data: {"no" : no, "val" : val}
        		}).done(function (fragment){
        			console.log(fragment);
-       			$('#prgList').replaceWith(fragment);
+       			$('#prgList').replaceWith(fragment);     		 
 
        		});
         	
