@@ -22,7 +22,7 @@
 		VALUES (#{btitle}, #{bcontent}, #{uno});
 	</insert>
 	
-	<select id="count">
+	<select id="count" resultType="Integer">
 		select count(1) from online
 		where bdel = '1';
 	</select>
