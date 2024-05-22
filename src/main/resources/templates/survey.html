@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:insert="~{./fragments.html :: headTag}"></th:block>
+  
+  	<!-- 추가 script -->
+	<script type="text/javascript">
+	
+	</script>
+  
+  	<!-- 추가 css -->
+	<style type="text/css">
+	main {
+  		display:row;
+  	}
+  	.mainContents {
+  		margin: 0 auto;
+  		height: auto;
+  		min-height: 600px;
+  	}
+  	
+  	#mainForm {
+    width: 460px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid black;
+    }
+    
+  	#mainForm progress {
+	  width: 100%;
+	  height: 14px;
+	  appearance: none;
+	}
+	
+	#mainForm progress::-webkit-progress-bar {
+	  /* progressbar의 배경이 되는 요소 */
+	  border-radius: 20px;
+	  background-color: #ebebeb;
+	}
+	
+	#mainForm progress::-webkit-progress-value {
+	  /* progress의 진행 bar가 되는 요소 */
+	  border-radius: 20px;
+	  background-color: #ff7f50;
+	}
+	
+	#mainForm fieldset {
+    border: none;
+    box-sizing: border-box;
+	}
+	fieldset {
+    display: block;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    min-inline-size: min-content;
+    border-width: 2px;
+    border-style: groove;
+    border-color: rgb(192, 192, 192);
+    border-image: initial;
+	}
+  	</style>
+</head>
+<body>	
+	<main class="container">
+		<th:block th:insert="~{./fragments.html :: menu}"></th:block>	
+		<th:block th:insert="~{./fragments.html :: headerImg}"></th:block>
+
+		<!-- 여기가 본문 -->
+		<div class="mainContents">
+			<div data-tf-live="01HYFCW6EMMER2W8FTVZC9PBZZ"></div><script src="//embed.typeform.com/next/embed.js"></script>
+			<div class="card">
+			<form id="mainForm" class="col-9 row">
+			    <fieldset class="row">
+			        <legend>JS 스터디 모집 설문조사</legend>
+			        <!-- progress : 작업의 완료 정도를 나타내는 요소 -->
+			        <progress max="100" value="0" class="bar-progress"></progress>
+			        <p class="msg-notice">설문지를 작성하세요!</p>
+			
+			        <label for="q1">질문 1. 무엇을 가장 배우고 싶으세요?</label>
+			        <input type="text" id="q1" required />
+			        <label for="q2">질문 2. 시간은 언제가 적당한가요?</label>
+			        <input type="text" id="q2" required />
+			        <label for="q3">질문 3. 몇 시간정도 예상하세요?</label>
+			        <input type="text" id="q3" required />
+			        <label for="q4">질문 4. 난이도를 조정한다면?</label>
+			        <input type="text" id="q4" required />
+			        <label for="q5">질문 5. 끝으로 하고싶은 말이 있나요?</label>
+			        <input type="text" id="q5" required />
+			
+			        <button type="submit">제출</button>
+			        <button type="reset">초기화</button>
+			    </fieldset>
+			</form>
+			</div>
+		</div>
+		<!-- 본문 끝 -->
+	</main>
+	<!-- FOOTER -->
+	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
+	<script type="text/javascript">
+	const surveyForm = document.querySelector("#mainForm");
+	const progressBar = surveyForm.querySelector(".bar-progress");
+	const inp = surveyForm.querySelectorAll("input");
+	const message = surveyForm.querySelector(".msg-notice");
+	
+	</script>
+</body>
+</html>

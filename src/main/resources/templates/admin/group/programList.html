@@ -109,7 +109,7 @@
                                     		<tr th:each="r : ${list}" id="prgTable">
                                     			<td th:text="${r.prg_no}" id="no"></td>
                                     			<td th:text="${r.prg_cd}" id="prgCD"></td>
-                                    			<td th:attr="onclick=|showContent('${r.prg_no}', '${r.prg_nm}')|">[[${r.prg_nm}]]</td>
+                                    			<td th:attr="onclick=|showContent('${r.prg_no}')|">[[${r.prg_nm}]]</td>
                                     			<td>[[${r.prg_start}]] <br>~ [[${r.prg_end}]]</td>
                                     			<td th:text="${r.prg_place}"></td>
                                     			<td th:switch="${r.prg_aprv}">
@@ -241,7 +241,7 @@
         });
 
         
-		function showContent(no, title){
+		function showContent(no){
 			const prg_no = no;
 			$.ajax({
 				url: "./programList",
