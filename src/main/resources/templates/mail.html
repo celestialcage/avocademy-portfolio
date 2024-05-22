@@ -4,8 +4,34 @@
 <th:block th:insert="~{./fragments.html :: headTag}"></th:block>
 
 <!-- 추가 script -->
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+	integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <script type="text/javascript">
-	
+	function emailAuth() {
+		$.ajax({
+			url : '/emailAuth',//1,0을 전송시켜보자 rest컨트롤러에 만들자
+			type : 'post',
+			dataType : 'text',
+			success : function(result) {
+				if (result == 1) {
+					Swal.fire("전송했습니다.", "결과 : " + result, "success");
+
+				} else {
+					Swal.fire("Ooops", "문제가 발생했습니다 : " + error, "info");
+
+				}
+			},
+			error : function(request, status, error) {
+				Swal.fire("Ooops", "문제가 발생했습니다 : " + error, "Error");
+			}
+		});
+	}
 </script>
 
 <!-- 추가 css -->
@@ -28,24 +54,36 @@ main {
 
 		<!-- 여기가 본문 -->
 
-			<div class="container">
-				<div class="row">
-					<div class="col-md-4 mx-auto">
-						<h2 class="text-center text-uppercase text-primary mb-4">myInfo</h2>
-						<h3>메일알림</h3>
-						<div class="d-flex justify-content-center">
-							<div class="text-center">
-								<form action="/mail" method="post">
-									받는 사람 : <input type="email" name="email"><br>
-									제목 : <input type="text" name="title"> <br>
-									본문 : <textarea name="content"></textarea><br>
-									<button type="submit">보내기</button>
-								</form>
-							</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 mx-auto">
+					<h2 class="text-center text-uppercase text-primary mb-4">mail</h2>
+					<div class="d-flex justify-content-center">
+						<div class="text-center">
+							<form action="/mail" method="post">
+								<label for="email">Email:</label> <input type="email" id="email"
+									name="email" required> <br>
+								 <input type="hidden" id="key" name="key">
+								<button onclick="emailAuth()">인증번호 요청하기</button>
+							</form>
+
+							<br>
+
+							<form id="verificationForm" style="display: block;">
+								<label for="verificationCode">인증번호:</label> 
+								<input type="text" id="verificationCode" name="verificationCode" required>
+								<button type="button" onclick="verifyCode()">확인</button>
+							</form>
+							<div id="message" style="margin-top: 10px;"></div>
+
+
+
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
+		
 		<!-- 본문 끝 -->
 	</main>
 	<!-- FOOTER -->
