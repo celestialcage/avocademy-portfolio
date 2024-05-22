@@ -27,6 +27,13 @@
 		WHERE cno = #{cno}; 
 	</select>
 	
+	<select id="getFileNo"  resultType="int"> 
+		SELECT fno 
+		FROM files
+		ORDER BY fno DESC limit 1;
+	</select>
+	
+	
 	<select id="count">
 		select count(1) from community
 		where cdel = '1';
@@ -37,12 +44,9 @@
  		set cdel = '0'
   		where cno = #{cno}
 	</update>
-	
-	<select id="getFileNo"  resultType="int"> 
-		SELECT fno 
-		FROM files
-		ORDER BY fno DESC limit 1;
-	</select>
+
+
+
 
 	<select id="getFsn" parameterType="int" resultType="java.lang.String">
     SELECT fsn 
@@ -53,4 +57,11 @@
 	<select id="getFile" parameterType="int" resultType="com.avocado.web.entity.FilesDTO">
         SELECT * FROM files WHERE fno = #{fno}
     </select>
+    
+    <update id="saveComment" parameterType="Map">
+		update community set comment = #{ccontent}
+		where CNO = #{cno} 
+	</update>
+    
+    
 </mapper>

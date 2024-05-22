@@ -73,6 +73,6 @@
 			FROM cschedule s 
 			LEFT JOIN caply a ON s.sch_no = a.sch_no 
 			WHERE a.aply_no IS NULL
-		) AND sch_hr < #{hourNow}
+		) AND sch_hr #{hourNow}
 	</delete>
 </mapper>
