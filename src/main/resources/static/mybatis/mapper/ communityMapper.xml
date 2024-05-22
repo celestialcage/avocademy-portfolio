@@ -38,12 +38,6 @@
   		where cno = #{cno}
 	</update>
 	
-	<select id="getFileNo"  resultType="int"> 
-		SELECT fno 
-		FROM files
-		ORDER BY fno DESC limit 1;
-	</select>
-
 	<select id="getFsn" parameterType="int" resultType="java.lang.String">
     SELECT fsn 
     FROM files
