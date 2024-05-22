@@ -102,11 +102,18 @@ async function getDBEvents(viewName, cno) {
     
     // db 통신 ajax
     let dbEvents = await getData('/cs-schedule', cno).then(data => {
-        data.schedules.forEach(e => {
+		
+		// 다음날부터 예약 가능 (근데 스케줄러 쓰면..? 그래도 상담사가 ok해야..)
+        let filteredSchedules = data.schedules
+			.filter(e => 
+				moment(e.scheduleDate).isAfter(moment())
+			);
+			
+		filteredSchedules.forEach(e => {
             e.scheduleDate = moment(e.scheduleDate, "YYYYMMDD").format('YYYY-MM-DD');
         });
-        
-        return data.schedules;
+
+        return filteredSchedules;
     })
 	.then(dbList => {
 		dbList.forEach(dbEle => {

@@ -25,26 +25,38 @@ function addSchedule() {
 		alert('가능한 날짜를 선택하세요.');
 		return false;
 	}
-	let schDate = moment(cslDate).format('YYYYMMDD');
-	
-	// 배열로 보내서 서버에서 처리하는게 좋을까... 통신 횟수가 너무 늘어나는 느낌.
-	selectedTimes.forEach(e => {
-		let params = {
-			cns_no: cno,
-			sch_ymd: schDate,
-		}
-		params.sch_hr = e.value;
-		postData(url, params).then(data => {
-			if(data.result == 0) {
-				alert('등록 실패: ' + data.message);
-			} else {
-				// alert(data.message);
-				location.reload(true);
+	// 오늘 이후의 일정만 등록 가능? 오늘도 포함시켜주자
+	if (moment(cslDate).isSameOrBefore(moment().subtract(1, 'd'))) {
+		alert('과거 시점 일정 등록은 불가능합니다.');
+		location.reload(true);
+		return false;
+	} else {
+		let schDate = moment(cslDate).format('YYYYMMDD');
+		
+		// 배열로 보내서 서버에서 처리하는게 좋을까... 통신 횟수가 너무 늘어나는 느낌.
+		selectedTimes.forEach(e => {
+			let params = {
+				cns_no: cno,
+				sch_ymd: schDate,
 			}
-		}).catch(err => {
-			console.log(err);
-		});
-	})
+			if (e.value <= moment().hour()) {
+				alert('과거 시점 일정 등록은 불가능합니다. (시간)');
+				return false;
+			} else {
+				params.sch_hr = e.value;
+				postData(url, params).then(data => {
+					if(data.result == 0) {
+						alert('등록 실패: ' + data.message);
+					} else {
+						alert(data.message);
+						location.reload(true);
+					}
+				}).catch(err => {
+					console.log(err);
+				});
+			}
+		})
+	}
 }
 
 
