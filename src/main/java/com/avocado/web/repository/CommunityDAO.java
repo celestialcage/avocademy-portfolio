@@ -32,6 +32,9 @@ public interface CommunityDAO {
 
 	FilesDTO getFile(int fno);
 
+	int saveComment(Map<String, Object> comment);
+
 	int getFileNo();
+	
 
 }

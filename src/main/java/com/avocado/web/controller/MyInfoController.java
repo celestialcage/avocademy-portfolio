@@ -1,5 +1,7 @@
 package com.avocado.web.controller;
 
+import java.util.List;
+
 import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.avocado.web.entity.MyinfoDTO;
 import com.avocado.web.service.MyInfoServiceImpl;
 import com.avocado.web.util.Util;
 
@@ -22,17 +25,54 @@ public class MyInfoController {
 	
 	@Autowired
 	private Util util;
+
+	private int totalCount;
 	
 	//마이페이지 이동
 	@GetMapping("/myInfo")
-	public String myInfo(Model model) {
+	public String myInfo(Model model,@RequestParam(name = "bno", required = false, defaultValue = "1") int bno,
+			 @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
+             @RequestParam(name = "post",defaultValue = "10") int post) {
+		
 		
 		HttpSession session = util.getSession();
 		
-		System.out.println(session.getAttribute("uname"));
-		System.out.println(session.getAttribute("bno"));
+		int uno =  (int) (session.getAttribute("uno"));
 		
-		return "myInfo";
+		
+		System.out.println(session.getAttribute("uname"));
+		System.out.println(session.getAttribute("uno"));
+		
+		
+		//총 글 갯수 확인해서 페이지 개수 계산!!!
+		int totalCount = myInfoService.count(uno);
+		System.out.println("totalcount : " + totalCount);
+		int totalPage = 1;
+		
+		if(totalCount % post == 0) {
+			totalPage = totalCount / post;
+		} else {
+			totalPage = (totalCount / post) + 1;
+		}
+		
+		// 페이지가 1보다 작으면 0이거나 음수면 1로 돌리기
+		if (pageNo < 1) {
+			pageNo = 1;
+		}
+		// 페이지가 글의 총 개수보다 커지면 페이지는 글 최대 개수로 제한
+		if (pageNo > totalPage) {
+			pageNo = totalPage;
+		}
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("pageNo", pageNo);
+		
+		List<MyinfoDTO> list = myInfoService.myinfo(pageNo, post);
+		
+		// System.out.println(list);
+		
+		model.addAttribute("list", list);
+		
+		return "myinfo";
 	}
 	
 	@GetMapping("/esInfo")

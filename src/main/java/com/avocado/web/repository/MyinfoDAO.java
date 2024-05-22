@@ -1,6 +1,7 @@
 package com.avocado.web.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -10,7 +11,14 @@ import com.avocado.web.entity.MyinfoDTO;
 @Repository
 @Mapper
 public interface MyinfoDAO {
+	
+	List<MyinfoDTO> myinfo(Map<String, Integer> pageMap);
 
-	List<MyinfoDTO> staff();
+	List<MyinfoDTO> getMyinfo(Map<String, Integer> uno);
+
+	int count(int uno);
+
+	List<MyinfoDTO> getMyinfo(String uno);
+
 
 }
