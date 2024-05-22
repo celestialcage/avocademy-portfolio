@@ -25,6 +25,8 @@ public interface CommunityService {
 
 	FilesDTO getFile(int fno);
 
+	int saveComment(int uno, String cno, String ccontent);
+
 
 
 

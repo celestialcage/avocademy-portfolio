@@ -1,7 +1,6 @@
 package com.avocado.web.service;
 
 import java.io.File;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -30,7 +29,6 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public int count() {
-
 		return communityDAO.count();
 	}
 
@@ -136,7 +134,8 @@ public class CommunityServiceImpl implements CommunityService {
 
 		return result;
 	}
-
+	
+	
 	@Override
 	public int deletecd(String cno) {
 		return communityDAO.deletecd(cno);
@@ -150,8 +149,18 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public FilesDTO getFile(int fno) {
-		// TODO Auto-generated method stub
 		return communityDAO.getFile(fno);
+	}
+
+	@Override
+	public int saveComment(int uno, String cno, String ccontent) {
+		Map<String, Object> comment = new HashMap<>();
+		
+		comment.put("uno", uno);
+		comment.put("cno", cno);
+		comment.put("ccontent", ccontent);
+		
+		return communityDAO.saveComment(comment);
 	}
     
 
