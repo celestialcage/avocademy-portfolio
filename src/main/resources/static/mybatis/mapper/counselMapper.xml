@@ -59,4 +59,22 @@
 			(SELECT sch_hr FROM cschedule WHERE sch_no=#{sch_no})
 		)
 	</insert>
+	
+	<select id="findCslAppointments" parameterType="int" resultType="PersonalDTO">
+		SELECT aply_no, stud_no, dscsn_ymd, dscsn_hr, GET_CD_NM('CS', a.dscsn_stat) AS dscsn_stat, aply_no_old, dscsn_cn, dscsn_nmtm, a.sch_no 
+		FROM caply a JOIN cschedule s ON a.sch_no = s.sch_no  
+		WHERE s.cns_no=#{cns_no}
+	</select>
+	
+	<delete id="deleteExpiredSchedule" parameterType="int">
+	<![CDATA[
+		DELETE FROM cschedule 
+		WHERE sch_no IN (
+			SELECT s.sch_no 
+			FROM cschedule s 
+			LEFT JOIN caply a ON s.sch_no = a.sch_no 
+			WHERE a.aply_no IS NULL
+		) AND sch_hr < #{hourNow}
+		]]>
+	</delete>
 </mapper>

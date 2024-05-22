@@ -2,41 +2,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.avocado.web.repository.CommunityDAO">
 
-<insert id="insertFile" parameterType="com.avocado.web.entity.CommunityDTO">
-	INSERT INTO file(original_filename, stored_filename, fpath, fsize)
-	VALUES(#{originalFilename},#{storedFilename}, #{fpath}, #{fsize})
-</insert>
+	<insert id="fileUp" parameterType="com.avocado.web.entity.FilesDTO">
+		INSERT INTO files(fno, fsn, actl_fnm, uuid, fsize, fpath)
+		VALUES(#{fno},#{fsn}, #{actl_fnm}, #{uuid}, #{fsize}, #{fpath})
+	</insert>
+
+	<insert id="write" parameterType="Map"> 
+		INSERT INTO community
+		(ctitle, ccontent, user_no2, fno) 
+		VALUES (#{ctitle}, #{ccontent}, #{uno}, #{fno});
+	</insert>
 	
 	<select id="community" resultType="CommunityDTO" parameterType="Map">
-		SELECT cno, ctitle, ccontent, cdate, secret, commentYN, cdel, user.uname
+		SELECT cno, ctitle, ccontent, cdate, cdel, user.uname
 		FROM community join user 
-		on community.user_no = user.uno 
-		WHERE bdel = "1" 
+		on community.user_no2 = user.uno 
+		WHERE cdel = "1" 
 		ORDER BY cno DESC LIMIT #{pageNo}, #{post}; 
 	</select>
 	
 	<select id="detail" parameterType="Integer" resultType="CommunityDTO"> 
-		SELECT * 
-		FROM onlineview 
-		WHERE bno = #{bno}; 
+		SELECT uno,uid, uname, uemail, ukey, cno, ctitle, ccontent, cdate, cdel, fno, comment
+		FROM communityview 
+		WHERE cno = #{cno}; 
 	</select>
 	
-	<insert id="write" parameterType="Map"> 
-		INSERT INTO online
-		(btitle, bcontent, user_no) 
-		VALUES (#{btitle}, #{bcontent}, #{uno});
-	</insert>
-	
 	<select id="count">
-		select count(1) from online
-		where bdel = '1';
+		select count(1) from community
+		where cdel = '1';
 	</select>
 	
 	<update id="deletecd" parameterType="String">
- 		update online 
- 		set bdel = '0'
-  		where bno = #{bno}
+ 		update community 
+ 		set cdel = '0'
+  		where cno = #{cno}
 	</update>
+	
+	<select id="getFileNo"  resultType="int"> 
+		SELECT fno 
+		FROM files
+		ORDER BY fno DESC limit 1;
+	</select>
 
-
+	<select id="getFsn" parameterType="int" resultType="java.lang.String">
+    SELECT fsn 
+    FROM files
+    WHERE fno = #{fno}
+	</select>
+	
+	<select id="getFile" parameterType="int" resultType="com.avocado.web.entity.FilesDTO">
+        SELECT * FROM files WHERE fno = #{fno}
+    </select>
 </mapper>

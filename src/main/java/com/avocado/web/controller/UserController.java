@@ -37,7 +37,7 @@ public class UserController {
 	public String login(@RequestParam Map<String, Object> map, HttpServletResponse response) {
 
 
-		System.out.println("map : " + map);
+		//System.out.println("map : " + map);
 		String id = (String) map.get("id");
 		String pw = (String) map.get("pw");
 		Integer grade = (Integer) map.get("grade");
@@ -48,7 +48,7 @@ public class UserController {
 		
 		Map<String, Object> result = userService.login(map);
 		
-		System.out.println("활용하자 "  + result);
+		//System.out.println("활용하자 "  + result);
 
 		if (util.str2Int(result.get("count")) == 1) { // mapper 에서 오는 count(*) 의 별칭
 			HttpSession session = util.getSession();
@@ -64,13 +64,13 @@ public class UserController {
 			response.addCookie(loginCookie);
 			
 			// 출력하여 uid 확인
-		    System.out.println("UID: " + result.get("uid"));
-		    System.out.println("UGRADE: " + result.get("ugrade"));
-		    System.out.println("uno : " + result.get("uno"));
+		   //System.out.println("UID: " + result.get("uid"));
+		   //System.out.println("UGRADE: " + result.get("ugrade"));
+		   //System.out.println("uno : " + result.get("uno"));
 			
 			// 사용자 등급 변수를 맵에서 추출
 			Integer role = (Integer) result.get("ugrade");
-	        System.out.println("사용자 등급: " + role);
+	        //System.out.println("사용자 등급: " + role);
 	        
 	        //사용자 등급 따른 정보 추가
 	        String uno = (result.get("uno")).toString();	        
@@ -88,6 +88,8 @@ public class UserController {
 	            	session.setAttribute("cns_no", cns_no); //상담사번호추가
 	            } else if (role == 5) {
 	            	
+	            } else if (role == 2) {
+	            	return "redirect:/admin/professorAdmin"; // 지도교수관리자페이지로 리다이렉트
 	            }
 	            return "redirect:/admin/index"; // 관리자 페이지로 리다이렉트
 	        }

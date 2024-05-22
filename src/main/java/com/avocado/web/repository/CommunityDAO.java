@@ -7,28 +7,31 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.avocado.web.entity.CommunityDTO;
+import com.avocado.web.entity.FilesDTO;
 import com.avocado.web.entity.OnlineDTO;
 
 @Repository
 @Mapper
 public interface CommunityDAO {
 
-		CommunityDTO detail(int cno);
+	CommunityDTO detail(int cno);
 
-		int write(Map<String, Object> map);
+	int write(Map<String, Object> map);
 
-		int count();
+	int count();
 
-		List<OnlineDTO> findAll(Map<String, Integer> map);
+	List<OnlineDTO> findAll(Map<String, Integer> map);
 
-		int deletecd(String cno);
+	int deletecd(String cno);
 
-		void inserFile(CommunityDTO communityDTO);
+	List<CommunityDTO> community(Map<String, Integer> pageMap);
 
-		List<CommunityDTO> community(Map<String, Integer> pageMap);
-	
-	
-		
-	}
+	int fileUp(FilesDTO dto);
 
+	String getFsn(int fno);
 
+	FilesDTO getFile(int fno);
+
+	int getFileNo();
+
+}

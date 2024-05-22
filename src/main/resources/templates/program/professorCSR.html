@@ -318,6 +318,10 @@
     $(function () {
       // calendar element 취득      
       var calendarEl = $('#calendar')[0];
+      
+      var events = [];
+      
+    	  
       // full-calendar 생성하기      
       var calendar = new FullCalendar.Calendar(calendarEl, {
         height: '700px', // calendar 높이 설정        
@@ -330,6 +334,7 @@
           center: 'title',
           right: 'dayGridMonth,timeGridWeek'
         },
+        
         initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)        
         //initialDate: '2021-07-15', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)        
         navLinks: false, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크        
@@ -345,8 +350,7 @@
           start: Date.now(),
           end: Date.now() + 2592000000,
         },
-
-
+		
         dateClick: function (info) {
           var selectedDate = info.dateStr; // 클릭한 날짜 정보 획득
           console.log(selectedDate);
@@ -354,8 +358,6 @@
 
           var selectedTime;
           // 해당 날짜의 이벤트 정보 획득
-          var events = calendar.getEvents();
-          var eventInfo = events.find(event => event.start.toISOString() === info.date.toISOString());
 
           $('#selectedDate').val(selectedDate);
 
@@ -376,7 +378,7 @@
               $('#eventDate').text(info.dateStr);
 
               // 해당 날짜에 값이 있는지 확인
-              if (response.length === 0) {
+              if (response.length == 0) {
                 $('#selectedTime').empty(); // 기존 라디오 버튼 삭제
                 $('#selectedTime').append('<p id="noDataMessage">예약 가능한 시간이 없습니다.</p>');
               } else { // 해당 날짜에 값이 있을 때
@@ -388,13 +390,14 @@
                 $.each(timeList, function (index, time) {
                   // 각 시간별 라디오 버튼 생성
                   var radioId = 'time' + index; // 유니크한 ID 생성
-                  var psc = $('<input type="hidden" class="form-check-input" name="selectedPsc" value="'+ time.psc_no +'" id="' + radioId +'">');
                   var radioBtn = $('<input type="radio" class="form-check-input" name="selectedTime" value="' + time.hr + '" id="' + radioId + '" required>');
                   var label = $('<label class="form-check-label" for="' + radioId + '"><span>' + time.hr_nm + '</span></label>');
                   
-                  alert(time.psc_no);
                   
-                  radioGroup.append(psc);
+                  radioBtn.on('change', function() {
+                	 $('#selectedPscNo').val(time.psc_no); // hidden input에 psc_no값 넣어주기 
+                  });
+                  
                   radioGroup.append(radioBtn);
                   radioGroup.append(label);
                   radioGroup.append('<br>');
@@ -412,7 +415,8 @@
       });
       // 캘린더 랜더링      
       calendar.render();
-
+	
+    	 
     });
   })();
 

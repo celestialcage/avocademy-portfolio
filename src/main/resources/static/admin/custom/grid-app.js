@@ -2,42 +2,42 @@ const Grid = tui.Grid;
 
 Grid.setLanguage('ko');
 
+{
+	let params = {};
+	const initData = postData('/', params).then(data => console.log(data));
+}
+
 const instance = new Grid({
     el: document.getElementById('grid'),
     columns: [
         {
-            header: '시간',
-            name: 'time'
+            header: '신청번호',
+            name: 'aply_no'
         },
         {
-            header: '월',
-            name: 'mon'
+            header: '신청자(학번)',
+            name: 'stud_no'
         },
         {
-            header: '화',
-            name: 'tue'
+            header: '상담일자',
+            name: 'dscsn_ymd'
         },
         {
-            header: '수',
-            name: 'wed'
+            header: '상담시간',
+            name: 'dscsn_hr'
         },
         {
-            header: '목',
-            name: 'thr'
+            header: '신청상태',
+            name: 'dscsn_stat'
         },
         {
-            header: '금',
-            name: 'fri'
+            header: '승인여부',
+            name: 'aply_confirm'
         },
     ],
     data: [
         {
-            time: `시간`,
-            mon: `<input type="checkbox">`,
-            tue: `<input type="checkbox">`,
-            wed: `<input type="checkbox">`,
-            thr: `<input type="checkbox">`,
-            fri: `<input type="checkbox">`
+			aply_no: 1,
         }
     ]
 });
