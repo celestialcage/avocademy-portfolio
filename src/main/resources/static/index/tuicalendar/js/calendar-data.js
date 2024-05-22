@@ -49,7 +49,7 @@ function getDBEvent(calendar, dbEle) {
     body = `${dbEle.scheduleTime}:00 ~ ${dbEle.scheduleTime}:50`;
     location = `상담사 ${dbEle.cslName} 사무실 ${dbEle.cslOffice}호`;
     state = dbEle.scheduleState == 0 ? `신청 열림` : `예약됨`;
-    isVisible = dbEle.scheduleState == 0 ? true : false;
+    isVisible = !!dbEle.scheduleState ? false : true;
     // let calendarId, start, end;
     let attendees = [];
     let raw = {};
@@ -102,11 +102,10 @@ async function getDBEvents(viewName, cno) {
     
     // db 통신 ajax
     let dbEvents = await getData('/cs-schedule', cno).then(data => {
-		
 		// 다음날부터 예약 가능 (근데 스케줄러 쓰면..? 그래도 상담사가 ok해야..)
         let filteredSchedules = data.schedules
 			.filter(e => 
-				moment(e.scheduleDate).isAfter(moment())
+				moment(e.scheduleDate).isSameOrAfter(moment().format('YYYY-MM-DD'))
 			);
 			
 		filteredSchedules.forEach(e => {
