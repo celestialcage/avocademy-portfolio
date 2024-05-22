@@ -71,6 +71,7 @@
 	
 	<select id="adminPRGList" resultType="GroupDTO">
 		SELECT prg_no, prg_nm, prg_place, prg_aprv, req_end, 
+			GET_CD_NM('CO0020', prg_cd) AS prg_cd,
 			DATE_FORMAT(STR_TO_DATE(LEFT(prg_schdl, 8), '%Y%m%d'), '%Y-%m-%d') AS prg_start,  
 			DATE_FORMAT(STR_TO_DATE(RIGHT(prg_schdl, 8), '%Y%m%d'), '%Y-%m-%d') AS prg_end
 		FROM grprograms 
