@@ -86,12 +86,16 @@ public class AdminController {
 	@GetMapping("/appointments")
 	public String appointments(Model model) {
 		HttpSession session = util.getSession();
+		List<PersonalDTO> list;
 //		System.out.println(session.getAttribute("cns_no"));
 		if(session.getAttribute("cns_no") != null) {
 			int cns_no = Integer.valueOf(session.getAttribute("cns_no").toString());
-			List<PersonalDTO> list = counselService.findCslAppointments(cns_no);
-			model.addAttribute("applyList", list);
+			// List<PersonalDTO> list = counselService.findCslAppointments(cns_no);
+			list = counselService.findCslScheduleList(cns_no);
+		} else {
+			list = counselService.findAllScheduleList();
 		}
+		model.addAttribute("applyList", list);
 //		System.out.println(session.getAttribute("uno"));
 //		System.out.println(session.getAttribute("uid"));
 		
