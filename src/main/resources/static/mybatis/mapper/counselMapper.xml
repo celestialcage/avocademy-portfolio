@@ -101,4 +101,12 @@
 			OR (STR_TO_DATE(dscsn_ymd, '%Y%m%d') < CURDATE()))
 	]]>
 	</update>
+	
+	<select id="findAllScheduleList" resultType="PersonalDTO">
+		SELECT 
+	</select>
+	
+	<select id="findCslScheduleList" parameterType="int" resultType="PersonalDTO">
+		
+	</select>
 </mapper>

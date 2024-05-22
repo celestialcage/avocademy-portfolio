@@ -48,7 +48,7 @@ public class CounselDataController {
 			obj.addProperty("scheduleTime", map.get("sch_hr").toString());
 			// 자바 null 검사는 귀찮구나..
 			if(map.get("stud_nm") != null) {
-				obj.addProperty("stud_nm", map.get("stud_nm").toString());
+				obj.addProperty("stName", map.get("stud_nm").toString());
 			}
 			if(map.get("sch_state") != null) {
 				obj.addProperty("scheduleState", map.get("sch_state").toString());
@@ -117,10 +117,15 @@ public class CounselDataController {
 	}
 	
 	@PostMapping("/cs-schedule-list")
-	public String csScheduleList(@RequestBody CounselorDTO cs) {
-		JsonObject json = new JsonObject();
+	public List<PersonalDTO> csScheduleList(@RequestBody CounselorDTO cs) {
 		
+		List<PersonalDTO> list;
+		if (cs.getCns_no() == 0) {
+			list = counselService.findAllScheduleList();
+		} else {
+			list = counselService.findCslScheduleList(cs.getCns_no());
+		}
 		
-		return json.toString();
+		return list;
 	}
 }

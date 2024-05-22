@@ -52,8 +52,8 @@ function getDBEvent(calendar, dbEle) {
     // isReadOnly = dbEle.scheduleState === 0 ? true : false;
     // let calendarId, start, end;
     let attendees = [`${dbEle.cslName}`];
-	if(!!dbEle.stud_nm) {
-		attendees.push(`${dbEle.stud_nm}`);
+	if(!!dbEle.stName) {
+		attendees.push(`${dbEle.stName}`);
 	}
     let raw = {
         //memo: `${dbEle.scheduleNo}`,

@@ -66,4 +66,14 @@ public class CounselServiceImpl implements CounselService {
 		return counselDAO.findCslAppointments(cns_no);
 	}
 
+	@Override
+	public List<PersonalDTO> findAllScheduleList() {
+		return counselDAO.findAllScheduleList();
+	}
+
+	@Override
+	public List<PersonalDTO> findCslScheduleList(int cns_no) {
+		return counselDAO.findCslScheduleList(cns_no);
+	}
+
 }
