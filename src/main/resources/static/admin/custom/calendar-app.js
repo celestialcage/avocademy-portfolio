@@ -130,7 +130,7 @@
 		  clickDayName: function (dayNameInfo) {
 			// console.log('clickDayName', dayNameInfo.date);
 			// 날짜 다음날부터 눌러야 들어가게
-			if (moment(dayNameInfo.date).isSameOrAfter(moment().subtract(1, 'd'))) {
+			if (moment(dayNameInfo.date).isSameOrAfter(moment().format('YYYY-MM-DD'))) {
 				document.getElementById("datepicker-autoclose").value = dayNameInfo.date;
 			}
 		  },

@@ -26,9 +26,9 @@ function addSchedule() {
 		return false;
 	}
 	// 오늘 이후의 일정만 등록 가능? 오늘도 포함시켜주자
-	if (moment(cslDate).isSameOrBefore(moment().subtract(1, 'd'))) {
+	if (moment(cslDate).isBefore(moment().format('YYYY-MM-DD'))) {
 		alert('과거 시점 일정 등록은 불가능합니다.');
-		location.reload(true);
+		// location.reload(true);
 		return false;
 	} else {
 		let schDate = moment(cslDate).format('YYYYMMDD');
@@ -39,7 +39,7 @@ function addSchedule() {
 				cns_no: cno,
 				sch_ymd: schDate,
 			}
-			if (e.value <= moment().hour()) {
+			if (moment(cslDate).isSame(moment().format('YYYY-MM-DD')) && e.value <= moment().hour()) {
 				alert('과거 시점 일정 등록은 불가능합니다. (시간)');
 				return false;
 			} else {
