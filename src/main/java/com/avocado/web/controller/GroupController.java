@@ -43,20 +43,21 @@ public class GroupController {
 	@GetMapping("/programList")
 	public String programList(Model model, HttpSession session) {
 		if (session.getAttribute("uid") == null) {			
-			return "redirect:/login";
-			
+			return "redirect:/login";	
 		} else {
-			
 			List<GroupDTO> list = groupService.programList();
 			model.addAttribute("list", list);
 			return "program/programList";
-		}
-		
+		}	
 	}
 	
 	//프로그램 설명 자세히 보기
 	@GetMapping("/programDetail")
 	public String programDetail(@RequestParam("no") String no, Model model, GroupDTO dto) {
+		HttpSession session = util.getSession();
+		if (session.getAttribute("uid") == null) {			
+			return "redirect:/login";
+		}
 		dto = groupService.programDetail(no);
 		model.addAttribute("detail", dto);
 		return "program/programDetail";
@@ -69,6 +70,9 @@ public class GroupController {
 	public @ResponseBody String programApply(@RequestParam("no") String no) {
 		
 		HttpSession session = util.getSession();
+		if (session.getAttribute("uid") == null) {			
+			return "redirect:/login";
+		}
 		String stud_no = (String) session.getAttribute("stud_no");
 		Map<String, Object> check = new HashMap<String, Object>();
 		check.put("prg_no", no);
@@ -87,10 +91,10 @@ public class GroupController {
 	public @ResponseBody Map<String, Object> programApply(@RequestParam("no") String no, HttpSession session) {
 		
 		String stud_no = (String) session.getAttribute("stud_no");
+		
 		if (stud_no == null) {
 			return errorResponse("세션이 만료되었습니다.");
 	    }
-		
 		try {
 			//스케줄번호 찾아오기
 			List<Integer> schdlNo = groupService.getSchedulNo(no);
@@ -113,6 +117,7 @@ public class GroupController {
 		}
 
 	}
+
 	
 	private Map<String, Object> successResponse(String message){
 		Map<String, Object> response = new HashMap<String, Object>();	

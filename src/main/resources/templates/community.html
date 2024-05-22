@@ -25,23 +25,35 @@
 	crossorigin="anonymous"></script>
 
 <style type="text/css">
-main {
-	display: row;
-}
 
-.mainContents {
-	margin: 0 auto;
-	height: auto;
-	min-height: 600px;
-}
+ 		body {
+            background-color: #f8f9fa;
+        }
 
-h3 {
-	text-align: center;
-}
+        main {
+            padding-top: 20px;
+        }
 
-h5 {
-	text-align: center;
-}
+        .mainContents {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .pagination {
+            justify-content: center;
+        }
+
 </style>
 </head>
 <body>
@@ -53,12 +65,12 @@ h5 {
 		<div class="mainContents">
 
 			<div class="row">
-				<div class="col-md-3 mb-3 mb-3 mb-md-0">
-					<!-- =============사이드바============== -->
+<!-- 				<div class="col-md-3 mb-3 mb-3 mb-md-0">
+					=============사이드바==============
 
 					<th:block th:include="fragments :: communitySidebar"></th:block>
 
-				</div>
+				</div> -->
 				<div class="col-md-9">
 
 					<div>
@@ -69,7 +81,7 @@ h5 {
 									<th class="col-5 text-center">제목</th>
 									<th class="col-1 text-center">글쓴이</th>
 									<th class="col-3 text-center">날짜</th>
-									<th class="col-1 text-center">삭제여부</th>
+
 								</tr>
 							</thead>
 							<tbody>
@@ -80,7 +92,7 @@ h5 {
 									
 									<td class="text-center" th:text="${name.uname}"></td>
 									<td class="text-center" th:text="${name.cdate}"></td>
-									<td class="text-center" th:text="${name.cdel}"></td>
+
 								</tr>
 							</tbody>
 						</table>
@@ -98,65 +110,17 @@ h5 {
 	<!-- 페이지네이션 부트스트랩 -->
 	<nav aria-label="Page navigation example">
 		<ul class="pagination justify-content-center">
-			<li class="page-item" id="prev-page"><a class="page-link"
-				href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-			</a></li>
-			<li class="page-item"><a class="page-link" href="/community?page=1">1</a></li>
-			<li class="page-item"><a class="page-link" href="/community?page=2">2</a></li>
-			<li class="page-item"><a class="page-link" href="/community?page=3">3</a></li>
-			<li class="page-item"><a class="page-link" href="/community?page=4">4</a></li>
-			<li class="page-item"><a class="page-link" href="/community?page=5">5</a></li>
-			<li class="page-item"><a class="page-link" href="/community?page=6">6</a></li>
-			<li class="page-item" id="next-page"><a class="page-link"
-				href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-			</a></li>
+			<li class="page-item" th:classappend="${param.pageNo == 1} ? ' disabled'">
+				<a class="page-link" th:href="@{/community(pageNo=1)}" aria-label="Previous"><span aria-hidden="true">&laquo;</span>	</a></li>
+			<li class="page-item"><a class="page-link" th:href="@{/community(pageNo=${pageNo - 1})}" aria-label="Previous"><span aria-hidden="true">&lt;</span></a></li>
+			<th:block th:each="page : ${#numbers.sequence(1, totalPage)}">
+    			<li class="page-item"><a class="page-link" th:href="@{/community(pageNo=${page})}" th:text="${page}">페이지번호들어가는곳</a></li>
+    		</th:block>
+    		<li class="page-item"><a class="page-link" th:href="@{/community(pageNo=${pageNo + 1})}" aria-label="Previous"><span aria-hidden="true">&gt;</span></a></li>
+			<li class="page-item"><a class="page-link" th:href="@{/community(pageNo=${totalPage})}" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
 		</ul>
 	</nav>
 
-	<script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const totalPages = 10; // 총 페이지 수 설정
-      const pagination = document.querySelector('.pagination');
-      let prevPage = document.getElementById('prev-page');
-      let nextPage = document.getElementById('next-page');
-
-      function updatePagination(currentPage) {
-        // 이전 페이지 및 다음 페이지 링크 업데이트
-        prevPage.classList.toggle('disabled', currentPage === 1);
-        nextPage.classList.toggle('disabled', currentPage === totalPages);
-
-        prevPage.querySelector('a').href = currentPage > 1 ? `/community?page=${currentPage - 1}` : '#';
-        nextPage.querySelector('a').href = currentPage < totalPages ? `/community?page=${currentPage + 1}` : '#';
-
-
-        // 페이지 번호 갱신
-        let pageItems = '';
-        for (let i = 1; i <= totalPages; i++) {
-          if (i === currentPage) {
-            pageItems += `<li class="page-item active"><a class="page-link" href="/community?page=${i}">${i}</a></li>`;
-          } else {
-            pageItems += `<li class="page-item"><a class="page-link" href="/community?page=${i}">${i}</a></li>`;
-          }
-        }
-        pagination.innerHTML = prevPage.outerHTML + pageItems + nextPage.outerHTML;
-
-        // 다시 요소를 찾고 클릭 이벤트 리스너 추가
-       prevPage = document.getElementById('prev-page');
-       nextPage = document.getElementById('next-page'); 
-        
-        // 페이지 링크 클릭 이벤트 리스너 추가
-        pagination.querySelectorAll('.page-link').forEach(link => {
-          link.addEventListener('click', function(event) {
-            event.preventDefault();
-            const selectedPage = parseInt(this.getAttribute('href').split('=')[1]);
-            updatePagination(selectedPage);
-          });
-        });
-      }
-
-      updatePagination(1); // 초기 페이지를 1로 설정
-    });
-  </script>
 
 	<!-- FOOTER -->
 	<th:block th:insert="~{./fragments.html :: footer}"></th:block>

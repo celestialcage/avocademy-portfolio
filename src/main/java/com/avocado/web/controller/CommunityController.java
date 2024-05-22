@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.avocado.web.entity.CommunityDTO;
@@ -43,8 +44,9 @@ public class CommunityController {
 	private CommunityService communityService;
 	
 
-private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);
 
+	private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);
+	//상세보기
 	@GetMapping("/detail")
 	public String detail(Model model, @RequestParam(name = "cno", required = false, defaultValue = "1") int cno,
 			HttpSession session) {
@@ -81,6 +83,7 @@ private static final Logger logger = LoggerFactory.getLogger(CommunityController
 		}
 	}
 
+	//글쓰기
 	@GetMapping("/write")
 	public String write() {
 
@@ -93,15 +96,15 @@ private static final Logger logger = LoggerFactory.getLogger(CommunityController
 			return "redirect:/login";
 		}
 	}
-
+	
+	//글쓰기
 	@PostMapping("/write")
 	public String write(@RequestParam(name = "ctitle") String ctitle, @RequestParam(name = "ccontent") String ccontent,
 			HttpSession session, @RequestParam("fileUp") MultipartFile file, Model model) {
 		// System.out.println(ctitle + ccontent);
-		// 글 작성 로직 실행
+		
 
-		// 로그인 검사해주세요
-
+		// 로그인 검사
 		String uname = (String) session.getAttribute("uname");
 
 		if (uname != null) {
@@ -128,21 +131,41 @@ private static final Logger logger = LoggerFactory.getLogger(CommunityController
 
 	}
 
+	//글삭제
 	@PostMapping("/deletecd")
-	public String deletecd(@RequestParam(name = "cno") String cno) {
+	public String deletecd(@RequestParam(name = "cno") String cno, HttpSession session) {
 		//System.out.println("삭제 : " + cno);
 		int result = communityService.deletecd(cno);
 		return "redirect:/community";
 	}
 
+	
+	// 댓글달기
+		// /online/comment/bno=42
+		@PostMapping("/comment")
+		@ResponseBody
+		public String comment(@RequestParam(name = "cno") String cno, HttpSession session,
+				@RequestParam(name="ccontent") String ccontent, Model model) {
+			int uno = (int) session.getAttribute("uno");
+			
+			System.out.println("글번호 : " + cno);
+			System.out.println("글번호 : " + ccontent);
+			
+			int result = communityService.saveComment(uno, cno, ccontent);
+			
+			
+			return String.valueOf(result);
+		}
+
+		
 	@GetMapping("/downloadFile/{fsn}")
 	public HttpEntity<UrlResource> downloadFile(@PathVariable("fsn") String fsn) throws MalformedURLException {
 	System.out.println("컨트롤러------다운로드------------------:");
 
 		// 파일 경로 설정 (예시: /avocademy/src/main/resources/static/files/)
-	    String baseDir = "/avocademy/src/main/resources/static/files/" + fsn;
-	 	String filePath = baseDir + fsn;
-
+	    //String baseDir = "/avocademy/src/main/resources/static/files/";
+	  	String filePath = Paths.get( "src", "main", "resources", "static", "files", fsn).toString();
+	 
 	    // 파일 객체 생성
 	    File file = new File(filePath);
 
@@ -159,15 +182,14 @@ private static final Logger logger = LoggerFactory.getLogger(CommunityController
 	    UrlResource resource = new UrlResource(file.toURI());
 
 	    // Content-Type 및 Content-Disposition 헤더 설정
-	    String contentType = "application/octet-stream";
-	    String headerValue = "attachment; filename=\"" + resource.getFilename() + "\"";
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", resource.getFilename());
 
-	    return ResponseEntity.ok()
-	            .contentType(MediaType.parseMediaType(contentType))
-	            .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
-	            .body(resource);
-	}
-	
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(resource);
+    }
 		
 	}
 

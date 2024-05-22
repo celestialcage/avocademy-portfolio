@@ -133,5 +133,11 @@ public class IndexController {
 				
 		return "community";
 	}
+	
+	
+	@GetMapping("/survey")
+	private String survey() {
+		return "survey";
+	}
 
 }

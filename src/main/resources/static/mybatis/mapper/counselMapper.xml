@@ -4,16 +4,20 @@
 	
 	<select id="findAllSchedule" resultType="Map">
 		SELECT s.sch_no, c.cns_no, c.cns_nm, c.ofc_no, 
-			LEFT(GET_CD_NM('CO0020', cns_field), 2) AS cns_field, sch_ymd, sch_hr, 
-			(SELECT COUNT(0) FROM caply a WHERE a.sch_no = s.sch_no) AS sch_state 
+			(SELECT stud_nm FROM student st WHERE st.stud_no = a.stud_no) AS stud_nm, 
+			aply_no, GET_CD_NM('CS', dscsn_stat) AS sch_state, 
+			LEFT(GET_CD_NM('CO0020', cns_field), 2) AS cns_field, sch_ymd, sch_hr 
 		FROM cschedule s JOIN counselor c ON s.cns_no = c.cns_no
+			LEFT JOIN caply a ON s.sch_no = a.sch_no 
 	</select>
 	
 	<select id="findEachSchedule" resultType="Map" parameterType="String">
 		SELECT s.sch_no, c.cns_no, c.cns_nm, c.ofc_no, 
-			LEFT(GET_CD_NM('CO0020', cns_field), 2) AS cns_field, sch_ymd, sch_hr, 
-			(SELECT COUNT(0) FROM caply a WHERE a.sch_no = s.sch_no) AS sch_state 
+			(SELECT stud_nm FROM student st WHERE st.stud_no = a.stud_no) AS stud_nm, 
+			aply_no, GET_CD_NM('CS', dscsn_stat) AS sch_state, 
+			LEFT(GET_CD_NM('CO0020', cns_field), 2) AS cns_field, sch_ymd, sch_hr 
 		FROM cschedule s JOIN counselor c ON s.cns_no = c.cns_no
+			LEFT JOIN caply a ON s.sch_no = a.sch_no 
 		WHERE c.cns_no = #{cns_no}
 	</select>
 	
@@ -67,12 +71,42 @@
 	</select>
 	
 	<delete id="deleteExpiredSchedule" parameterType="int">
+	<![CDATA[
 		DELETE FROM cschedule 
 		WHERE sch_no IN (
 			SELECT s.sch_no 
 			FROM cschedule s 
 			LEFT JOIN caply a ON s.sch_no = a.sch_no 
 			WHERE a.aply_no IS NULL
-		) AND sch_hr  #{hourNow}
+				AND ((STR_TO_DATE(sch_ymd, '%Y%m%d') = CURDATE() AND sch_hr <= #{hourNow}) 
+				OR (STR_TO_DATE(sch_ymd, '%Y%m%d') < CURDATE()))
+		) 
+	]]>
 	</delete>
+	
+	<update id="changeExpiredSchedule" parameterType="int">
+	<![CDATA[
+		UPDATE caply SET dscsn_stat = 'CS005' 
+		WHERE dscsn_stat = 'CS001' AND 
+		((STR_TO_DATE(dscsn_ymd, '%Y%m%d') = CURDATE() AND dscsn_hr <= #{hour}) 
+			OR (STR_TO_DATE(dscsn_ymd, '%Y%m%d') < CURDATE()))
+	]]>
+	</update>
+	
+	<update id="changeExpiredAppointment" parameterType="int">
+	<![CDATA[
+		UPDATE caply SET dscsn_stat = 'CS004' 
+		WHERE dscsn_stat = 'CS002' AND 
+		((STR_TO_DATE(dscsn_ymd, '%Y%m%d') = CURDATE() AND dscsn_hr < #{hour}) 
+			OR (STR_TO_DATE(dscsn_ymd, '%Y%m%d') < CURDATE()))
+	]]>
+	</update>
+	
+	<select id="findAllScheduleList" resultType="PersonalDTO">
+		SELECT 
+	</select>
+	
+	<select id="findCslScheduleList" parameterType="int" resultType="PersonalDTO">
+		
+	</select>
 </mapper>

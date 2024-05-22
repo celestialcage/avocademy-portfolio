@@ -48,10 +48,13 @@ function getDBEvent(calendar, dbEle) {
     title = `${dbEle.cslField}) ${dbEle.cslName} 상담사 신청 가능`;
     body = ``;
     location = `${dbEle.cslOffice}호 사무실`;
-    state = dbEle.scheduleState == 0 ? `신청 열림` : `예약됨`;
+    state = !!dbEle.scheduleState ? dbEle.scheduleState : `신청 가능`;
     // isReadOnly = dbEle.scheduleState === 0 ? true : false;
     // let calendarId, start, end;
-    let attendees = '${dbEle.cns_nm}';
+    let attendees = [`${dbEle.cslName}`];
+	if(!!dbEle.stName) {
+		attendees.push(`${dbEle.stName}`);
+	}
     let raw = {
         //memo: `${dbEle.scheduleNo}`,
     };

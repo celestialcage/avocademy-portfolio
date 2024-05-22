@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ko" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:insert="~{./fragments.html :: headTag}"></th:block>
+  
+  	<!-- 추가 script -->
+	<script type="text/javascript">
+	
+	</script>
+  
+  	<!-- 추가 css -->
+	<style type="text/css">
+	main {
+  		display:row;
+  	}
+  	.mainContents {
+  		margin: 0 auto;
+  		height: auto;
+  		min-height: 600px;
+  	}
+  	
+  	#mainForm {
+    width: 460px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid black;
+    }
+    
+  	#mainForm progress {
+	  width: 100%;
+	  height: 14px;
+	  appearance: none;
+	}
+	
+	#mainForm progress::-webkit-progress-bar {
+	  /* progressbar의 배경이 되는 요소 */
+	  border-radius: 20px;
+	  background-color: #ebebeb;
+	}
+	
+	#mainForm progress::-webkit-progress-value {
+	  /* progress의 진행 bar가 되는 요소 */
+	  border-radius: 20px;
+	  background-color: #ff7f50;
+	}
+	
+	#mainForm fieldset {
+    border: none;
+    box-sizing: border-box;
+	}
+	fieldset {
+    display: block;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    min-inline-size: min-content;
+    border-width: 2px;
+    border-style: groove;
+    border-color: rgb(192, 192, 192);
+    border-image: initial;
+	}
+  	</style>
+</head>
+<body>	
+	<main class="container">
+		<th:block th:insert="~{./fragments.html :: menu}"></th:block>	
+		<th:block th:insert="~{./fragments.html :: headerImg}"></th:block>
+
+		<!-- 여기가 본문 -->
+		<div class="mainContents">
+			<div data-tf-live="01HYFCW6EMMER2W8FTVZC9PBZZ"></div><script src="//embed.typeform.com/next/embed.js"></script>
+			<div class="card">
+		    <table>
+		        <thead>
+		            <tr>
+		                <th>ID</th>
+		                <th>Response ID</th>
+		                <th>Answer 1</th>
+		                <th>Answer 2</th>
+		                <th>Answer 3</th>
+		                <th>Answer 4</th>
+		                <th>Answer 5</th>
+		                <th>Created At</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <tr th:each="response : ${responses}">
+		                <td th:text="${response.id}">1</td>
+		                <td th:text="${response.responseId}">Response ID</td>
+		                <td th:text="${response.answer1}">Answer 1</td>
+		                <td th:text="${response.answer2}">Answer 2</td>
+		                <td th:text="${response.answer3}">Answer 3</td>
+		                <td th:text="${response.answer4}">Answer 4</td>
+		                <td th:text="${response.answer5}">Answer 5</td>
+		                <td th:text="${response.createdAt}">Created At</td>
+		            </tr>
+		        </tbody>
+		    </table>
+			</div>
+		</div>
+		<!-- 본문 끝 -->
+	</main>
+	<!-- FOOTER -->
+	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
+	<script type="text/javascript">
+	const surveyForm = document.querySelector("#mainForm");
+	const progressBar = surveyForm.querySelector(".bar-progress");
+	const inp = surveyForm.querySelectorAll("input");
+	const message = surveyForm.querySelector(".msg-notice");
+	
+	</script>
+</body>
+</html>

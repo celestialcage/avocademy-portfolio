@@ -30,6 +30,12 @@ public interface ProfessorService {
 	List<ProfessorDTO> psCounselList(String uname);
 
 
+	int changeStatus(Map<String, Object> map);
+
+
+	List<Map<String, Object>> psTimeList(Map<String, Object> map);
+
+
 
 
 

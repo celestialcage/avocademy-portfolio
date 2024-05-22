@@ -11,9 +11,10 @@
     	
     </script>
     <style type="text/css">
-	#contentModal {
-	  width: 100%;
-	  height: 100%;
+	
+#contentModal {
+	  min-width: 700px;
+	  min-height: 700px;
 	  position: fixed;
 	  top: 0;
 	  left: 0;
@@ -25,6 +26,11 @@
 	
 	#contentModal.hidden {
 	  display: none;
+	}
+	
+	#contentModal .modal-dialog {
+		min-width: 700px;
+		min-height: 400px;
 	}
     </style>
 </head>
@@ -101,18 +107,28 @@
                                     			<th>상담날짜</th>
                                     			<th>상담시간</th>
                                     			<th>진행상태</th>
+                                    			<th>상태변경</th>
                                     		</tr>
                                     	</thead>
                                     	<tbody id="psList">
-                                    		<tr th:each="a : ${list}" id="psTable" th:attr="onclick=|showContent('${a.pseq_no}', '${a.ps_class}', '${a.ps_cn}')|">
-                                    			<td th:text="${a.pseq_no}" id="no"></td>
-                                    			<td th:text="${a.stud_nm}"></td>
-                                    			<td th:text="${a.ps_ymd}"></td>
-                                    			<td th:text="${a.ps_hr}"></td>
-                                    			<td th:if="${a.ps_status} == '10'" th:text="신청"></td>
-                                    			<td th:if="${a.ps_status} == '20'" th:text="확정"></td>
-                                    			<td th:if="${a.ps_status} == '30'" th:text="완료"></td>
-                                    			<td th:if="${a.ps_status} == '40'" th:text="미진행"></td>
+                                    		<tr th:each="a : ${list}" id="psTable">
+                                    			<td th:text="${a.pseq_no}" class="no" th:value="${a.pseq_no}"></td>
+                                    			<td th:attr="onclick=|showContent('${a.pseq_no}', '${a.ps_class}', '${a.ps_cn}')|" th:text="${a.stud_nm}"></td>
+                                    			<td th:attr="onclick=|showContent('${a.pseq_no}', '${a.ps_class}', '${a.ps_cn}')|" th:text="${a.ps_ymd}"></td>
+                                    			<td th:attr="onclick=|showContent('${a.pseq_no}', '${a.ps_class}', '${a.ps_cn}')|" th:text="${a.ps_hr}"></td>
+                                    			<td class="statusText" th:if="${a.ps_status} == '10'" th:text="신청"></td>
+                                    			<td class="statusText" th:if="${a.ps_status} == '20'" th:text="확정"></td>
+                                    			<td class="statusText" th:if="${a.ps_status} == '30'" th:text="완료"></td>
+                                    			<td class="statusText" th:if="${a.ps_status} == '40'" th:text="미진행"></td>
+                                    			<td>
+                                    				<select class="status">
+                                    					<option selected disabled>-선택-</option>
+                                    					<option value="10" th:text="신청"></option>
+                                    					<option value="20" th:text="확정"></option>
+                                    					<option value="30" th:text="완료"></option>
+                                    					<option value="40" th:text="미진행"></option>
+                                    				</select>
+                                    			</td>
                                     		</tr>
                                     	</tbody>
                                     </table>
@@ -130,9 +146,6 @@
 				    <div class="modal-content">
 				      <div class="modal-header">
 				        <h5 class="modal-title fs-5" id="modalTitle">상세보기</h5>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
 				      </div>
 				      <div class="modal-body">
 				      	<div class="mt-2" id="modalContent">
@@ -186,15 +199,55 @@
 		const closeModal = document.getElementById("closeModal");
 		
 		function showContent(no, a, b){
-			const pseq_no = no;
+			var pseq_no = no;
 			 $("#modalTitle").text(no);
 	         $("#modalContent").html("상담 종류: " + a+"<br><br>"+"상담 받을 내용: " + b);  // JSON 응답에서 content를 가져와서 모달 내용 업데이트
 	         contentModal.classList.remove('hidden');
+	         
 		}
 		
 		closeModal.addEventListener('click', () => {
 			contentModal.classList.add('hidden');
 		})
+		
+		// 상태변화 드롭다운 선택시  ajax로 보내기
+		$(document).ready(function(){
+			$('.status').on('change', function(){
+				var changeStatus = $(this).val();
+				var no = $(this).closest('tr').find('.no').text();
+				var statusTextElement = $(this).closest('tr').find('.statusText');
+				console.log(no);
+				
+				$.ajax({
+					url: '/admin/changeStatus',
+					type: 'post',
+					data: {
+						"status" : changeStatus,
+						"no" : no
+					},
+					success: function(response){
+						
+						// 상태 선택 시 화면에 바로 출력되게하기
+						var statusText = '';
+						switch(changeStatus) {
+						case '10': statusText = '신청';
+							break;
+						case '20': statusText = '확정';
+							break;
+						case '30': statusText = '완료';
+							break;
+						case '40': statusText = '미진행';
+							break;
+						}
+						statusTextElement.text(statusText);
+					},
+					
+					error: function(error) {
+						alert(error + "에러임다");
+					}
+				});
+			});
+		});
         
     </script>
 </body>

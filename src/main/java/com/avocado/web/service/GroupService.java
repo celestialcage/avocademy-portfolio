@@ -38,6 +38,8 @@ public interface GroupService {
 	List<Map<String, Object>> scheduleList();
 
 	void closePRG(int prg_no);
+
+	GroupDTO adminDetail(int no);
 	
 
 }

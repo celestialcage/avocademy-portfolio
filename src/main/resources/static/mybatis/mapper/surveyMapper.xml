@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.avocado.web.repository.SurveyDAO">
+	
+	<insert id="insertResponse" parameterType="SurveyDTO">
+		INSERT INTO survey_responses (response_no, question_no, answer) 
+		VALUES (#{response_no}, #{question_no}, #{answer})
+	</insert>
+	<select id="getAllResponses" resultType="SurveyDTO">
+        SELECT * 
+        FROM survey_responses
+    </select>
+</mapper>

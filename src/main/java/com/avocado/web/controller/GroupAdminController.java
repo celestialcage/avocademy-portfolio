@@ -100,23 +100,50 @@ public class GroupAdminController {
 	//프로그램 내용 불러오기
 	@PostMapping("/programList")
 	@ResponseBody
-	private Map<String, Object> showContent(@RequestParam("no") int no, Model model){
+	private GroupDTO showContent(@RequestParam("no") int no, Model model){
 		
-		String content = groupService.showContent(no);
+		//String content = groupService.showContent(no);
+		GroupDTO adminDetail = groupService.adminDetail(no);
 		//System.out.println("내용 : " + content);
 		
-		Map<String, Object> response = new HashMap<String, Object>();
-		response.put("content", content);
+		//Map<String, Object> response = new HashMap<String, Object>();
+		//response.put("content", content);
 	
-		return response;
+		return adminDetail;
 	}
 	
 	
 	//승인
+	@PostMapping("/approveProgram")
+	private @ResponseBody GroupDTO approveProgram(@RequestParam Map<String, Object> map) {
+				
+		int prg_no = Integer.parseInt((String) map.get("no"));
+		String approv = (String) map.get("val");
+
+		Map<String, Object> status = new HashMap<String, Object>();
+		status.put("prg_no", prg_no);
+		
+		if(approv.equals("0")) {
+			groupService.approvePRG(prg_no);
+			status.put("req_open", 1);
+			groupService.changeReqOpen(status);
+			
+		} else if (approv.equals("1")) {
+			groupService.disApprovePRG(prg_no);
+			status.put("req_open", 0);
+			groupService.changeReqOpen(status);
+		} else {
+			System.out.println("땡");
+		}		
+		return groupService.adminDetail(prg_no);
+	}
+	
+
+	/*
 	@RequestMapping(value = "/approveProgram", method = {RequestMethod.POST})
 	private String approveProgram(Model model, @RequestParam Map<String, Object> map) {
-		//System.out.println(map.get("no"));
-		//System.out.println(map.get("val"));
+		System.out.println(map.get("no"));
+		System.out.println(map.get("val"));
 				
 		int prg_no = Integer.parseInt((String) map.get("no"));
 		String approv = (String) map.get("val");
@@ -129,29 +156,29 @@ public class GroupAdminController {
 			groupService.approvePRG(prg_no);
 			status.put("req_open", 1);
 			groupService.changeReqOpen(status);
+			//approv = "1";
 			
 		} else if (approv.equals("1")) {
 			//System.out.println("승인취소하기");
 			groupService.disApprovePRG(prg_no);
 			status.put("req_open", 0);
 			groupService.changeReqOpen(status);
+			//approv = "0";
 		} else {
 			System.out.println("땡");
 		}
 		
-		model.addAttribute("list", groupService.adminPRGList());
-
-		return "admin/group/programList :: #prgList";
-	}
-	
+		model.addAttribute("detail", groupService.adminDetail(prg_no));
+		return "admin/group/programList :: #contentModal";
+	}*/
 	
 	
 	//프로그램 스케줄확인
 	@RequestMapping(value = "/grSchedule")
 	private @ResponseBody List<Map<String, Object>> grSchedule() {
 		List<Map<String, Object>> scheduleList = groupService.scheduleList();
-
 		return scheduleList;
 	}
+	
 	
 }

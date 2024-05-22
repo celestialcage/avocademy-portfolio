@@ -57,6 +57,19 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return professorDAO.psCounselList(uname);
 	}
 
+	@Override
+	public int changeStatus(Map<String, Object> map) {
+		return professorDAO.changeStatus(map);
+	}
+
+	@Override
+	public List<Map<String, Object>> psTimeList(Map<String, Object> map) {
+		return professorDAO.psTimeList(map);
+	}
+
+	
+	
+
 	
 
 

@@ -1,72 +1,221 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
- <th:block th:insert="~{./fragments.html :: headTag}"></th:block>
+<th:block th:insert="~{./fragments.html :: headTag}"></th:block>
 <meta charset="UTF-8">
-<title>게시글 상세보기</title>
+<title>커뮤니티 게시글 상세보기</title>
 
-  
-  	<!-- 추가 script -->
-	<link
+
+<!-- 추가 script -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet">
+<script
+	src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js "></script>
+<link
+	href=" https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css "
+	rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/css/style.css">
-  
-  	<!-- 추가 css -->
-	<style type="text/css">
-	main {
-  		display:row;
-  	}
-  	.mainContents {
-  		margin: 0 auto;
-  		height: auto;
-  		min-height: 600px;
-  	}
-  	</style>
+
+
+<!-- 추가 css -->
+<style type="text/css">
+
+
+.mainContents {
+	margin: 0 auto;
+	height: auto;
+	min-height: 600px;
+}
+
+.card {
+	height: 450px;
+}
+
+.card-header h3 {
+	flex-grow: 1;
+}
+
+.card-header .text-muted {
+	margin-left: auto;
+}
+
+.commentdiv {
+	margin-top: 20px;
+}
+
+.commentdiv label {
+	font-weight: bold;
+}
+</style>
 </head>
 <body>
-<main class="container">
-		<th:block th:insert="~{./fragments.html :: menu}"></th:block>	
+	<main class="container">
+		<th:block th:insert="~{./fragments.html :: menu}"></th:block>
 		<!-- 여기가 본문 -->
 		<div class="mainContents">
-	<div class="container mt-5">
-		<div class="card text-center">
-			<div
-				class="card-header d-flex justify-content-between align-items-center">
-				<h3 class="card-title" th:text="${detail.ctitle}">게시글 제목</h3>
-				<samll class="text-muted" th:text="${detail.cdate}">게시 날짜</samll>
+			<div class="container mt-5">
+				<div class="card">
+					<div class="card-header d-flex align-items-center">
+						<h3 class="card-title d-flex align-items-center">
+							<span th:text="${detail.ctitle}">제목</span>
+							<!-- <img th:src="@{/img/자물쇠.png}" alt="Lock Icon" class="ml-2" style="width: 24px; height: 24px;"> -->
+						</h3>
+						<div th:if="${session.uname eq detail.uname}" class="ml-3">
+							<img th:src="@{/img/작은수정.png}"
+								th:attr="onclick=|updatecd('${detail.cno}')|"
+								style="cursor: pointer; margin-right: 10px;"> <img
+								th:src="@{/img/작은삭제.png}"
+								th:attr="onclick=|deletecd('${detail.cno}')|"
+								style="cursor: pointer;">
+						</div>
+						<small class="text-muted ml-auto" th:text="${detail.cdate}">게시날짜</small>
+					</div>
+					<div class="card-body">
+						<p class="card-text" th:utext="${detail.ccontent}"></p>
+					</div>
+				</div>
+				<!-- 파일 업로드/다운로드 -->
+				<div th:if="${detail.fsn != null}">
+					<p class="card-text">첨부파일: <span th:text="${detail.fno + '.' + detail.fsn}"></span></p>
+					<a th:href="@{/community/downloadFile/{fsn}(fsn=${detail.fsn})}">첨부파일 다운로드</a>
+				</div>
+								
+				<div class="commentdiv mt-4">
+
+					<ul class="list-group mb-3" id="comment-list">
+						<li class="list-group-item"><p th:text="${detail.comment}">댓글내용</p></li>
+					</ul>
+
+					<div class="mb-3">
+						<label for="Commenttext" class="form-label">댓글</label>
+						<textarea class="form-control" id="Commenttext" rows="3"></textarea>
+					</div>
+					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+						<button type="button" class="btn btn-outline-secondary" id="submit-comment">입력하기</button>
+					</div>
+				</div>
 			</div>
-			<div class="card-body">
-				<p class="card-text" th:text="${detail.ccontent}">게시글 내용</p>
-			</div>
-			<div th:if="${detail.fsn != null}">
-   			<p class="card-text">첨부파일: <span th:text="${detail.fno + '.' + detail.fsn}"></span></p>
-
-<!-- 		 	<a th:href="@{/downloadFile/${detail.fsn}">첨부파일 다운로드</a>  -->
-		 	<a th:href="@{/community/downloadFile/{fsn}(fsn=${detail.fsn})}">첨부파일 다운로드</a> 
-
-			
-			</div>
-
-			
-
 		</div>
-	</div>
-	<div class="mt-3"
-		style="width: 100%; display: flex; justify-content: center;">
-		<a href="/community" class="btn btn-light">back</a>
-	</div>
-		
+
+
+
+
+
+
+
+		<div class="mt-3 d-flex justify-content-center">
+			<a href="/community" class="btn btn-light">back</a>
 		</div>
+
 		<!-- 본문 끝 -->
 	</main>
 
 
 
 	<!-- Bootstrap Bundle with Popper -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- FOOTER -->
-<th:block th:insert="~{./fragments.html :: footer}"></th:block>
+	<!-- FOOTER -->
+	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
+	<script type="text/javascript">
+	function deletecd(cno){
+		  Swal.fire({
+		    title: "삭제합니까?",
+		      text: "해당 내용을 삭제합니다. 복구가 불가능합니다.",
+		      icon: "warning",
+		      showCancelButton: true,
+		      confirmButtonColor: "#3085d6",
+		      cancelButtonColor: "#d33",
+		      confirmButtonText: "삭제"
+				}).then((result) => {
+		      if (result.isConfirmed) {
+		    	  // Swal.fire({ title: "삭제를 선택했습니다.", text: "삭제합니다.", icon: "success" });
+		    	  let form = document.createElement('form');
+		    	  form.setAttribute('method', 'post');
+		    	  form.setAttribute('action', '/community/deletecd');
+		    	  
+		    	  let input = document.createElement('input');
+		    	  input.setAttribute('type', 'hidden');
+		    	  input.setAttribute('name', 'cno');
+		    	  input.setAttribute('value', cno);
+		    	  
+		    	  form.appendChild(input);
+		    	  
+		    	  document.body.appendChild(form);
+		    	  form.submit();
+		    	}
+		    });
+            }
+        
+	/* function updatecd(bno){
+		  Swal.fire({
+		    title: "수정합니까?",
+		    text: "해당 내용을 수정합니다.",
+		    icon: "warning",
+		    showCancelButton: true,
+		    confirmButtonColor: "#3085d6",
+		    cancelButtonColor: "#d33",
+		    confirmButtonText: "수정"
+		  }).then((result) => {
+		    if (result.isConfirmed) {
+		      // Swal.fire({ title: "수정을 선택했습니다.", text: "수정합니다.", icon: "success" });
+		    }
+		  });
+        } */
+    </script>
+	<script>
+    $(document).ready(function () {
+        $('#submit-comment').click(function () {
+            var commentContent = $('#Commenttext').val();
+            var postId = [['${detail.cno}']];
+            
+
+            if (commentContent.trim() === "") {
+                Swal.fire({
+                    title: '오둥이',
+                    text: '댓글 내용을 입력하세요.',
+                    icon: 'error',
+                    confirmButtonText: '확인'
+                });
+                return;
+            }
+
+            $.ajax({
+                url: '/community/comment?cno=' + postId,
+                type: 'POST',
+                data: {
+                    content: commentContent
+                },
+                success: function (response) {
+                	alert("성공");
+                    Swal.fire({
+                        title: '성공',
+                        text: '댓글이 성공적으로 추가되었습니다.',
+                        icon: 'success',
+                        confirmButtonText: '확인'
+                    });
+                    location.href="/community/detail?cno=" + postId;
+                },
+                error: function (error) {
+                    Swal.fire({
+                        title: '오둥이',
+                        text: '댓글 추가에 실패했습니다.',
+                        icon: 'error',
+                        confirmButtonText: '확인'
+                    });
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

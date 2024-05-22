@@ -63,12 +63,13 @@
 	</th:block>
 	
 	<th:block th:fragment="headerImg">
-		<div class="container-fluid header_img" 
-			style="background-image: url('/index/assets/img/headerImg(1).jpg'); height:190px; position:relative; 
-			font-size: 60px; text-align: center; line-height: 190px; color: white; text-shadow: 2px 2px grey;">
-			아보카대학교 상담센터
-		</div>
-	</th:block>
+    <div class="container-fluid header_img"
+        style="background-image: url('/index/assets/img/headerImg(1).jpg'); position:relative; 
+        font-size: 6vw; text-align: center; color: white; text-shadow: 0.1vw 0.1vw grey;">
+        아보카대학교 상담센터
+    </div>
+</th:block>
+
 
 
 	<th:block th:fragment="footer">
@@ -232,9 +233,25 @@
     <hr>
     </div>
 </th:block>
-
-<th:block th:fragment="communitySidebar">
+<!--커뮤니티 사이드바  -->
+<!-- <th:block th:fragment="communitySidebar">
 <script defer src="/index/js/sidebars.js"></script>
+    <style>
+        
+        /* 반응형 사이드바 스타일 */
+        @media (min-width: 992px) {
+            .sidebar {
+                background-color: #fff;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .community-sidebar {
+                display: none; /* 모바일 화면에서는 사이드바를 숨깁니다 */
+            }
+           }
+    </style>
 	  <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
     <a href="/community" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
       <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
@@ -257,8 +274,9 @@
     </ul>
     <hr>
     </div>
+</th:block> -->
 
-</th:block>
+
 	<th:block></th:block>
 	
 </body>

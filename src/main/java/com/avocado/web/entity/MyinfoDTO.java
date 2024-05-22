@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class MyinfoDTO {
 
-	private int bno, user_no, bno2, fno, commentYN, bread, reNo;
-	private String btitle, bcontent, bdate, secret, bdel, comment, uname, bupdate, upw;
+	private int bno, user_no, bno2, fno, commentYN, bread, reNo, uno, ugrade;
+	private String btitle, bcontent, bdate, secret, bdel, comment, uname, bupdate, uid, upw;
 
 }

@@ -3,8 +3,8 @@ const Grid = tui.Grid;
 Grid.setLanguage('ko');
 
 {
-	let params = {};
-	const initData = postData('/', params).then(data => console.log(data));
+	let params = {}; // 세션 cns_no만 넣자
+	const initData = postData('/cs-schedule-list', params).then(data => console.log(data));
 }
 
 const instance = new Grid({
@@ -17,6 +17,14 @@ const instance = new Grid({
         {
             header: '신청자(학번)',
             name: 'stud_no'
+        },
+        {
+            header: '상담분야',
+            name: 'cns_field'
+        },
+        {
+            header: '상담사',
+            name: 'cns_no'
         },
         {
             header: '상담일자',
@@ -35,11 +43,7 @@ const instance = new Grid({
             name: 'aply_confirm'
         },
     ],
-    data: [
-        {
-			aply_no: 1,
-        }
-    ]
+    data: initData,
 });
 
 Grid.applyTheme('striped'); // Call API of static method

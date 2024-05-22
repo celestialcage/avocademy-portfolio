@@ -121,14 +121,18 @@
 						console.log(err);
 					})
 					
+				} else {
+					return false;
 				}
 			}
 			
 		  },
 		  clickDayName: function (dayNameInfo) {
 			// console.log('clickDayName', dayNameInfo.date);
-			let dateInput = document.getElementById("datepicker-autoclose");
-			dateInput.value = dayNameInfo.date;
+			// 날짜 다음날부터 눌러야 들어가게
+			if (moment(dayNameInfo.date).isSameOrAfter(moment().format('YYYY-MM-DD'))) {
+				document.getElementById("datepicker-autoclose").value = dayNameInfo.date;
+			}
 		  },
 		  selectDateTime: function (dateTimeInfo) {
 			calendar.clearGridSelections();

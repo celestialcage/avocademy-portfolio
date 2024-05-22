@@ -27,7 +27,8 @@
         },
         calendars: COUNSEL_CALENDARS,
         week: {
-            workweek: false, // 이거 주말에 하긴 힘드니까 일단은 주말포함 (다하면 true로 변경)
+            workweek: true, // 이거 주말에 하긴 힘드니까 일단은 주말포함 (다하면 true로 변경)
+			narrowWeekend: false, 
             eventView: true,
             taskView: false,
             hourStart: 9,

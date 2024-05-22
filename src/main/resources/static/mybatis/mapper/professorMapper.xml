@@ -28,12 +28,31 @@
 	</select>
 	
 	<insert id="registPsCounsel" parameterType="Map">
-		INSERT INTO psschedule (ps_no, ymd, hr) VALUES ((SELECT ps_no FROM professor WHERE ps_nm = #{psName}), #{selectedDate}, #{times})
+		INSERT INTO psschedule (ps_no, ymd, hr)
+    SELECT 
+        (SELECT ps_no FROM professor WHERE ps_nm = #{psName}), 
+        #{selectedDate}, 
+        #{times}
+    WHERE NOT EXISTS (
+        SELECT 1 
+        FROM psschedule 
+        WHERE ps_no = (SELECT ps_no FROM professor WHERE ps_nm = #{psName}) 
+        AND ymd = #{selectedDate} 
+        AND hr = #{times}
+    );
 	</insert>
 	
 	<select id="psCounselList" parameterType="String" resultType="ProfessorDTO">
 		SELECT s.stud_nm, p.pseq_no, p.ps_ymd, GET_CD_NM('CO0010', ps_hr) AS ps_hr, p.ps_status, p.ps_cn, p.ps_class, p.stud_no, p.psc_no FROM stu_user s 
 		JOIN pscounsel p ON s.stud_no = p.stud_no 
 		JOIN ps_user u ON s.scsbjt_cd = u.scsbjt_cd WHERE u.uname = #{uname}
+	</select>
+	
+	<update id="changeStatus" parameterType="Map">
+		UPDATE pscounsel SET ps_status = ${status} WHERE pseq_no= #{no}
+	</update>
+	
+	<select id="psTimeList" parameterType="Map" resultType="Map">
+		SELECT a.psc_no, a.ps_no, a.ymd, a.hr FROM psschedule a JOIN ps_user b ON a.ps_no = b.ps_no WHERE ymd = #{selectedDate} AND uname = #{uname}
 	</select>
 </mapper>

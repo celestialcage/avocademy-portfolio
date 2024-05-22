@@ -27,4 +27,8 @@ public interface CounselService {
 
 	List<PersonalDTO> findCslAppointments(int cns_no);
 
+	List<PersonalDTO> findAllScheduleList();
+
+	List<PersonalDTO> findCslScheduleList(int cns_no);
+
 }
