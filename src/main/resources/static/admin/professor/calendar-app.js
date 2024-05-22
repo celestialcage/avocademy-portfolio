@@ -28,9 +28,10 @@
 	  },
 	  calendars: COUNSEL_CALENDARS,
 	   month: {
-	     visibleWeeksCount: 4,
-	     workweek: true,
-	     dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+	     visibleWeeksCount: 0,
+				workweek: false,
+				narrowWeekend: true,
+				dayNames: ['일', '월', '화', '수', '목', '금', '토'],
 	   },
 	//  week: {
     //     workweek: false,

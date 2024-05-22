@@ -320,6 +320,28 @@ input:checked + .checkbox {
 	    	selectedDate = e.format('yyyy-mm-dd');
 	    	$('#selectedDate').val(selectedDate);
 	    	
+	    	// 해당 날짜에 따른 DB에서 교수상담스케쥴 시간 조회
+	    	$.ajax({
+	    		url: "/admin/psTimeList",
+	    		type: "post",
+	    		data: {
+	    			"selectedDate" : selectedDate
+	    		},
+	    		
+	    		success : function(response) {
+	    			console.log(response);
+	    			var alreadyTimes = response;
+	    			$('input[name="time"]').prop('checked', false).parent().show();
+	    			alreadyTimes.forEach(function(time){
+	    				$('input[name="time"][value="'+ time.hr + '"]').prop('checked', false).parent().hide();
+	    				console.log(time);
+	    			});
+	    		},
+	    		error : function(error) {
+	    			console.log(error)
+	    		}
+	    	});
+	    	
 	    	 // selectedDate에 날짜가 지정되면 시간 드래그 활성화
 		    $.fn.dragCheckbox = function () {
 		        var source = this;
@@ -362,10 +384,19 @@ input:checked + .checkbox {
 	    $(document).ready(function() {
 	        // 제출 버튼 클릭 시 모달 표시
 	        $('#submitBtn').click(function() {
+	        	
 	            var selectedTimes = [];
+	        	
+	        		
 	            $('input[name="time"]:checked').each(function() {
 	                selectedTimes.push($(this).next('label').text());
 	            });
+	            
+	            
+	            if(selectedDate == "[object HTMLInputElement]" || selectedTimes =="") {
+	        		alert("날짜와 시간을 선택해주세요.");
+	        		return false;
+	        	}
 
 	            var modalContent = '<p>날짜: ' + selectedDate + '</p>';
 	            modalContent += '<p>시간:</p><ul>';
