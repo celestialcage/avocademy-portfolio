@@ -3,6 +3,8 @@ package com.avocado.web.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -80,15 +82,16 @@ public class MyInfoController {
 
 	@GetMapping("/mail")
 	public String mail() {
-		  if(util.getSession().getAttribute("uid") != null) {
-		System.out.println("메일");
-			  return "mail";
-	      } else {
-	         return "redirect:/login?error=error";
-	      }
+		if (util.getSession().getAttribute("uid") != null) {
+			System.out.println("get메일");
+			return "mail";
+		} else {
+			return "redirect:/login?error=error";
+		}
 	}
 
-	
+	@PostMapping("/emailAuth")
+	public ResponseEntity<String> emailAuth(@RequestParam("email") String email) throws EmailException {
 
 	/*
 	 * @PostMapping("/mail") public String sendEmail(@RequestParam("email") String
@@ -144,3 +147,4 @@ public class MyInfoController {
 		return "myinfo/testList";
 	}
 }
+

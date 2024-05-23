@@ -9,8 +9,8 @@ import com.avocado.web.entity.UserDTO;
 @Mapper
 public interface MailDAO {
 
-	void setKey(UserDTO dto);
-
-	String getEmail(String email);
+//	void setKey(UserDTO dto);
+//
+//	String getEmail(String email);
 
 }
