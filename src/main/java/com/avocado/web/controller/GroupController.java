@@ -101,7 +101,7 @@ public class GroupController {
 			//스케줄번호 찾아오기
 			List<Integer> schdlNo = groupService.getSchedulNo(no);
 			
-			//신청테이블에 넣기
+			//신청테이블에 넣기-- 중복검사도 동일하게 여기서 진행... 리턴 메시지 여기서 넣기
 			for(int i = 0; i < schdlNo.size(); i++) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("schdno", schdlNo.get(i));
