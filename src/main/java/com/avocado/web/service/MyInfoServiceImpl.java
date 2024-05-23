@@ -116,4 +116,10 @@ public class MyInfoServiceImpl implements MyInfoService {
 	public List<CslSearchDTO> reservationList (int stud_no) {
 	     return myinfoDAO.reservationList(stud_no);
 	    }
+
+	@Override
+	public int count(int uno) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
