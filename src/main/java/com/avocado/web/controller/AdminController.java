@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.avocado.web.entity.CslSearchDTO;
 import com.avocado.web.entity.PersonalDTO;
 import com.avocado.web.service.CounselService;
 import com.avocado.web.util.Util;
@@ -84,18 +86,37 @@ public class AdminController {
 	}
 	
 	@GetMapping("/appointments")
-	public String appointments(Model model) {
+	public String appointments(@RequestParam(name="page", defaultValue = "1") String page, 
+			@RequestParam(name="stud_no", required = false) String stud_no, 
+			Model model) {
 		HttpSession session = util.getSession();
 		List<PersonalDTO> list;
-//		System.out.println(session.getAttribute("cns_no"));
-		if(session.getAttribute("cns_no") != null) {
-			int cns_no = Integer.valueOf(session.getAttribute("cns_no").toString());
-			// List<PersonalDTO> list = counselService.findCslAppointments(cns_no);
-			list = counselService.findCslScheduleList(cns_no);
-		} else {
-			list = counselService.findAllScheduleList();
+		int totalCount = 0;
+		CslSearchDTO searchDTO = new CslSearchDTO();
+		
+		searchDTO.setPage(util.str2Int(page));
+		
+		// 학생 검색했을 시
+		if(stud_no != null) {
+			searchDTO.setStud_no(stud_no);
 		}
+		
+		// 상담사번호 있을 때 -> 상담사 로그인일 때
+		if(session.getAttribute("cns_no") != null) {
+			searchDTO.setCns_no(Integer.valueOf(session.getAttribute("cns_no").toString()));
+			// List<PersonalDTO> list = counselService.findCslAppointments(cns_no);
+		} 
+//		else {
+//			// list = counselService.findAllScheduleList(searchDTO);
+//		}
+		
+		list = counselService.findCslScheduleList(searchDTO);
+		totalCount = counselService.findCsAppTotalCount(searchDTO);
+		
 		model.addAttribute("applyList", list);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("page", page);
+		model.addAttribute("stud_no", stud_no);
 //		System.out.println(session.getAttribute("uno"));
 //		System.out.println(session.getAttribute("uid"));
 		

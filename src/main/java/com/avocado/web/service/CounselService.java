@@ -3,6 +3,7 @@ package com.avocado.web.service;
 import java.util.List;
 import java.util.Map;
 
+import com.avocado.web.entity.CslSearchDTO;
 import com.avocado.web.entity.PersonalDTO;
 
 public interface CounselService {
@@ -27,8 +28,10 @@ public interface CounselService {
 
 	List<PersonalDTO> findCslAppointments(int cns_no);
 
-	List<PersonalDTO> findAllScheduleList();
+	List<PersonalDTO> findAllScheduleList(CslSearchDTO searchDTO);
 
-	List<PersonalDTO> findCslScheduleList(int cns_no);
+	List<PersonalDTO> findCslScheduleList(CslSearchDTO searchDTO);
+
+	int findCsAppTotalCount(CslSearchDTO searchDTO);
 
 }

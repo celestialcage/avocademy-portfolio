@@ -75,10 +75,10 @@
                     	</div>
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title mb-0">신청 목록</h5>
+                                <h5 class="card-title mb-0">Static Table</h5>
                             </div>
                             <table class="table">
-                                <thead class="thead-light">
+                                <thead>
                                     <tr>
                                         <th scope="col">
                                         	<label class="customcheckbox mb-3">
@@ -90,7 +90,6 @@
                                         <th scope="col">신청자(학번)</th>
                                         <th scope="col">상담일자</th>
                                         <th scope="col">상담시간</th>
-                                        <th scope="col">이전신청번호</th>
                                         <th scope="col">신청상태</th>
                                         <th scope="col">승인여부</th>
                                     </tr>
@@ -107,10 +106,6 @@
                                         <td th:text="${apply.stud_no}" class="stud_no align-middle"></td>
                                         <td th:text="${apply.dscsn_ymd}" class="dscsn_ymd align-middle"></td>
                                         <td th:text="${apply.dscsn_hr}" class="dscsn_hr align-middle"></td>
-                                        <td class="stud_no align-middle">
-                                        	<span th:if="${apply.aply_no_old == 0}">-</span>
-                                        	<span th:unless="${apply.aply_no_old == 0}">[[${apply.aply_no_old}]]</span>
-                                        </td>
                                         <td class="dscsn_stat align-middle"> [[${apply.dscsn_stat}]]
                                         	<div class="dropdown">
 											  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -131,6 +126,137 @@
                                         		th:id="|confirmBtn${apply.aply_no}|" 
                                         		class="confirmBtn btn btn-success text-white align-middle">취소</button>
                                      	</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-0">Static Table With Checkboxes</h5>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>
+                                                <label class="customcheckbox mb-3">
+                                                    <input type="checkbox" id="mainCheckbox" />
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </th>
+                                            <th scope="col">Rendering engine</th>
+                                            <th scope="col">Browser</th>
+                                            <th scope="col">Platform(s)</th>
+                                            <th scope="col">Engine version</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="customtable">
+                                        <tr>
+                                            <th>
+                                                <label class="customcheckbox">
+                                                    <input type="checkbox" class="listCheckbox" />
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </th>
+                                            <td>Trident</td>
+                                            <td>Internet Explorer 4.0</td>
+                                            <td>Win 95+</td>
+                                            <td>4</td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <label class="customcheckbox">
+                                                    <input type="checkbox" class="listCheckbox" />
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </th>
+                                            <td>Trident</td>
+                                            <td>Internet Explorer 5.0</td>
+                                            <td>Win 95+</td>
+                                            <td>5</td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <label class="customcheckbox">
+                                                    <input type="checkbox" class="listCheckbox" />
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </th>
+                                            <td>Trident</td>
+                                            <td>Internet Explorer 4.0</td>
+                                            <td>Win 95+</td>
+                                            <td>4</td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <label class="customcheckbox">
+                                                    <input type="checkbox" class="listCheckbox" />
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </th>
+                                            <td>Trident</td>
+                                            <td>Internet Explorer 5.0</td>
+                                            <td>Win 95+</td>
+                                            <td>5</td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <label class="customcheckbox">
+                                                    <input type="checkbox" class="listCheckbox" />
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </th>
+                                            <td>Trident</td>
+                                            <td>Internet Explorer 5.5</td>
+                                            <td>Win 95+</td>
+                                            <td>5.5</td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <label class="customcheckbox">
+                                                    <input type="checkbox" class="listCheckbox" />
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </th>
+                                            <td>Trident</td>
+                                            <td>Internet Explorer 6</td>
+                                            <td>Win 98+</td>
+                                            <td>6</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Collspan Table Example</h5>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">First</th>
+                                        <th scope="col">Last</th>
+                                        <th scope="col">Handle</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>@fat</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td colspan="2">Larry the Bird</td>
+                                        <td>@twitter</td>
                                     </tr>
                                 </tbody>
                             </table>

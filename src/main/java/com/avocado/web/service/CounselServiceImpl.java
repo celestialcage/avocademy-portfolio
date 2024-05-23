@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.avocado.web.entity.CslSearchDTO;
 import com.avocado.web.entity.PersonalDTO;
 import com.avocado.web.repository.CounselDAO;
 
@@ -67,13 +68,18 @@ public class CounselServiceImpl implements CounselService {
 	}
 
 	@Override
-	public List<PersonalDTO> findAllScheduleList() {
-		return counselDAO.findAllScheduleList();
+	public List<PersonalDTO> findAllScheduleList(CslSearchDTO searchDTO) {
+		return counselDAO.findAllScheduleList(searchDTO);
 	}
 
 	@Override
-	public List<PersonalDTO> findCslScheduleList(int cns_no) {
-		return counselDAO.findCslScheduleList(cns_no);
+	public List<PersonalDTO> findCslScheduleList(CslSearchDTO searchDTO) {
+		return counselDAO.findCslScheduleList(searchDTO);
+	}
+
+	@Override
+	public int findCsAppTotalCount(CslSearchDTO searchDTO) {
+		return counselDAO.findCsAppTotalCount(searchDTO);
 	}
 
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.avocado.web.entity.CounselorDTO;
+import com.avocado.web.entity.CslSearchDTO;
 import com.avocado.web.entity.PersonalDTO;
 import com.avocado.web.service.CounselService;
 import com.google.gson.Gson;
@@ -119,12 +120,14 @@ public class CounselDataController {
 	@PostMapping("/cs-schedule-list")
 	public List<PersonalDTO> csScheduleList(@RequestBody CounselorDTO cs) {
 		
+		CslSearchDTO searchDTO = new CslSearchDTO();
+		
 		List<PersonalDTO> list;
 		if (cs.getCns_no() == 0) {
-			list = counselService.findAllScheduleList();
-		} else {
-			list = counselService.findCslScheduleList(cs.getCns_no());
+			searchDTO.setCns_no(cs.getCns_no());
 		}
+		
+		list = counselService.findCslScheduleList(searchDTO);
 		
 		return list;
 	}
