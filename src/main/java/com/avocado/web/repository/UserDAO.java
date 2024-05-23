@@ -18,6 +18,12 @@ public interface UserDAO {
 
 	String getCounselorInfo(String uno);
 
+	boolean isExpired();
+
+	boolean isUsed();
+
+	void setUsed(boolean b);
+
 	
 }
 
