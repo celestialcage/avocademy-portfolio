@@ -80,6 +80,12 @@
                             <table class="table">
                                 <thead>
                                     <tr>
+                                        <th scope="col">
+                                        	<label class="customcheckbox mb-3">
+                                                <input type="checkbox" id="mainCheckbox" />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </th>
                                         <th scope="col">신청번호</th>
                                         <th scope="col">신청자(학번)</th>
                                         <th scope="col">상담일자</th>
@@ -90,12 +96,36 @@
                                 </thead>
                                 <tbody>
                                     <tr th:each="apply : ${applyList}">
+                                    	<th scope="row">
+                                    		<label class="customcheckbox">
+                                                <input type="checkbox" class="listCheckbox" />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                    	</th>
                                         <th scope="row" th:text="${apply.aply_no}" class="aply_no align-middle"></th>
                                         <td th:text="${apply.stud_no}" class="stud_no align-middle"></td>
                                         <td th:text="${apply.dscsn_ymd}" class="dscsn_ymd align-middle"></td>
                                         <td th:text="${apply.dscsn_hr}" class="dscsn_hr align-middle"></td>
-                                        <td th:text="${apply.dscsn_stat}" class="dscsn_stat align-middle"></td>
-                                        <td><button th:id="|confirmBtn${apply.aply_no}|" class="confirmBtn btn btn-success text-white align-middle">승인</button></td>
+                                        <td class="dscsn_stat align-middle"> [[${apply.dscsn_stat}]]
+                                        	<div class="dropdown">
+											  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+											    Dropdown button
+											  </button>
+											  <ul class="dropdown-menu">
+											    <li><a class="dropdown-item" href="#">Action</a></li>
+											    <li><a class="dropdown-item" href="#">Another action</a></li>
+											    <li><a class="dropdown-item" href="#">Something else here</a></li>
+											  </ul>
+											</div>
+                                        </td>
+                                        <td>
+                                        	<button th:if="${apply.dscsn_stat == '신청'}" 
+                                        		th:id="|confirmBtn${apply.aply_no}|" 
+                                        		class="confirmBtn btn btn-success text-white align-middle">승인</button>
+                                        	<button th:if="${apply.dscsn_stat == '예약'}" 
+                                        		th:id="|confirmBtn${apply.aply_no}|" 
+                                        		class="confirmBtn btn btn-success text-white align-middle">취소</button>
+                                     	</td>
                                     </tr>
                                 </tbody>
                             </table>
