@@ -9,9 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.avocado.web.entity.MyinfoDTO;
+import com.avocado.web.entity.UserDTO;
 import com.avocado.web.service.MyInfoServiceImpl;
+import com.avocado.web.util.SecureInfo;
 import com.avocado.web.util.Util;
 
 import jakarta.servlet.http.HttpSession;
@@ -46,13 +49,13 @@ public class MyInfoController {
 		int totalCount = myInfoService.count(uno);
 		// System.out.println("totalcount : " + totalCount);
 		int totalPage = 1;
-		
-		if(totalCount % post == 0) {
+
+		if (totalCount % post == 0) {
 			totalPage = totalCount / post;
 		} else {
 			totalPage = (totalCount / post) + 1;
 		}
-		
+
 		// 페이지가 1보다 작으면 0이거나 음수면 1로 돌리기
 		if (pageNo < 1) {
 			pageNo = 1;
@@ -72,29 +75,36 @@ public class MyInfoController {
 		
 		return "myinfo";
 	}
-	
-	@GetMapping("/esInfo")
-	public String esInfo() throws EmailException {
 
-		return "myInfo";   
-	}
-	
 	@GetMapping("/mail")
 	public String mail() {
-		return "mail";
+		  if(util.getSession().getAttribute("uid") != null) {
+		System.out.println("메일");
+			  return "mail";
+	      } else {
+	         return "redirect:/login?error=error";
+	      }
 	}
+
 	
+
 	@PostMapping("/mail")
-	public String mail(@RequestParam("email") String email, 
-					   @RequestParam("title")String title, 
-					   @RequestParam("content")String content) throws EmailException {
+	public String sendEmail(@RequestParam("email") String email, @RequestParam("key") String key) throws EmailException {
+
+		System.out.println("컨트롤러 email : " + email);
+//		System.out.println("컨트롤러 title : " + title);
+//		System.out.println("컨트롤러 content : " + content);
+		System.out.println("컨트롤러 key : " + key);
+
+		email = myInfoService.getEmail((String) util.getSession().getAttribute("uid"));
+		key = util.createKey();
 		
-		System.out.println("email : " + email);
-		System.out.println("title : " + title);
-		System.out.println("content : " + content);
-		
-		myInfoService.sendMail(email, title, content);
-		return "redirect:/mail";
+		UserDTO dto = new UserDTO();
+		dto.setUemail(email);
+		dto.setUkey(key);
+		dto.setUid((String)util.getSession().getAttribute("uid"));
+		secureInfo.sendEmail(email, key);
+		return "/mail";
 	}
 	
 	@GetMapping("/profileEdit")

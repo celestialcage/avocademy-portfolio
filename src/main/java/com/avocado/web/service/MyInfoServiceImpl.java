@@ -7,10 +7,13 @@ import java.util.Map;
 import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.avocado.web.entity.MyinfoDTO;
+import com.avocado.web.entity.UserDTO;
 import com.avocado.web.repository.MyinfoDAO;
 import com.avocado.web.util.SecureInfo;
+import com.avocado.web.util.Util;
 
 @Service
 public class MyInfoServiceImpl implements MyInfoService {
@@ -20,6 +23,9 @@ public class MyInfoServiceImpl implements MyInfoService {
 
 	@Autowired
 	private MyinfoDAO myinfoDAO;
+	
+	@Autowired
+	private Util util;
 
 	@Override
 	public List<MyinfoDTO> myinfo(int pageNo, int post, int uno) {
@@ -38,6 +44,14 @@ public class MyInfoServiceImpl implements MyInfoService {
 
 		return list;
 	}
+	
+	@Override
+	public int count(int uno) {
+		return myinfoDAO.count(uno);
+	}
+
+	@Override
+	public List<MyinfoDTO> getMyinfo(String uno) {
 
 	/*
 	 * @Override public void sendMail(String email, String title, String content)
@@ -68,6 +82,26 @@ public class MyInfoServiceImpl implements MyInfoService {
 	}
 
 
+	public void setkey(UserDTO dto) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	//메일 보내기
+	@Override
+	public void sendEmail(String email, String key) throws EmailException {
+		
+		System.out.println("서비스 email : " + email);
+		System.out.println("서비스 key : " + key);
+		
+	}
+
+	public String getEmail(String email) {
+		
+		return myinfoDAO.getEmail(email);
+	}
+
+	
 	@Override
 	public int count(int uno) {
 		return myinfoDAO.count(uno);
