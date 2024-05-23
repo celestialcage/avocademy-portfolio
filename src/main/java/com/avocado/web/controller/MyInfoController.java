@@ -23,6 +23,9 @@ public class MyInfoController {
 	private Util util;
 	
 	@Autowired
+	private SecureInfo secureInfo;
+	
+	@Autowired
 	private MyInfoServiceImpl myInfoService;
 
 	

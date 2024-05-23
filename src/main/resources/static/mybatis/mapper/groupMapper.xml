@@ -134,6 +134,25 @@
 		JOIN counselor c ON c.cns_no = p.cns_no 
 		WHERE p.prg_aprv = 1 
 	</select>
-
 	
+	<select id="programEntry" resultType="GroupDTO">
+		SELECT gp.prg_no, gp.PRG_NM, gp.prg_cd, GET_CD_NM('CO0020', gp.prg_cd) AS prg_cate, 
+			gp.PRG_NOPE, gp.REQ_END, MAX(gs.PRG_YMD) AS prg_end, COUNT(distinct ga.stud_no) AS prg_entry
+		FROM grprograms gp
+		JOIN grschedule gs ON gp.prg_no = gs.prg_no
+		JOIN graply ga ON gs.grsch_no  = ga.grsch_no
+		GROUP BY gp.prg_no, gp.PRG_NM, gp.prg_cd, gp.PRG_NOPE
+		ORDER BY gp.prg_no
+	</select>
+	
+	<select id="entryList" parameterType="String" resultType="Map">
+		SELECT gv.prg_no, ga.stud_no, s.stud_nm, s.uemail,
+    		(SELECT ccnm FROM commoncode WHERE CODE = s.scsbjt_cd) AS major
+		FROM groupSchedule_view gv
+		JOIN graply ga ON gv.grsch_no  = ga.grsch_no
+		JOIN stu_user s ON s.stud_no = ga.stud_no
+		WHERE gv.PRG_NO = #{no}
+		GROUP BY gv.prg_no, ga.stud_no
+		ORDER BY gv.prg_no;
+	</select>
 </mapper>

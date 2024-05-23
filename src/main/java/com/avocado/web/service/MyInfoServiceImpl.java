@@ -45,6 +45,8 @@ public class MyInfoServiceImpl implements MyInfoService {
 		return list;
 	}
 
+//	@Override
+//	public List<MyinfoDTO> getMyinfo(String uno) {
 
 	/*
 	 * @Override public void sendMail(String email, String title, String content)
@@ -64,6 +66,7 @@ public class MyInfoServiceImpl implements MyInfoService {
 	 * 
 	 * }
 	 */
+	
 	@Override
 	public List<MyinfoDTO> getMyinfo(int uno) {
 		return myinfoDAO.getMyinfo(uno);
@@ -76,7 +79,6 @@ public class MyInfoServiceImpl implements MyInfoService {
 
 
 	public void setkey(UserDTO dto) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -94,14 +96,14 @@ public class MyInfoServiceImpl implements MyInfoService {
 		return myinfoDAO.getEmail(email);
 	}
 
-	
 	@Override
-	public int count(int uno) {
-		return myinfoDAO.count(uno);
+	public void sendMail(String email, String title, String content) throws EmailException {
 	}
 
 	@Override
-	public void sendMail(String email, String title, String content) throws EmailException {
+	public List<MyinfoDTO> getMyinfo(String uno) {
+		
+		return null;
 	}
 
 
