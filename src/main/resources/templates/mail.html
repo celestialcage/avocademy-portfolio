@@ -98,15 +98,15 @@
 	// 비밀번호 변경
 	function resetPassword() {
 	    var newPassword = $('#newPassword').val();
-	    var email = $('#email').val();
+	    //var email = $('#email').val();
 
 	    $.ajax({
 	        url: '/resetPassword',
 	        type: 'post',
 	        data: {newPassword: newPassword },
 	        dataType: 'text',
-	        success: function(success) {
-	            if (success) {
+	        success: function(response) {
+	            if (response === "1") {
 	                // 비밀번호 변경이 성공한 경우
 	                Swal.fire("비밀번호 변경 완료", "비밀번호가 성공적으로 변경되었습니다.", "success");
 	            } else {

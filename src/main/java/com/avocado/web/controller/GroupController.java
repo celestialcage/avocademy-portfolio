@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.service.GroupService;
-import com.avocado.web.service.MailService;
-import com.avocado.web.service.MailServiceImpl;
+import com.avocado.web.service.MyInfoServiceImpl;
 import com.avocado.web.util.Util;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import jakarta.annotation.Resource;
@@ -36,7 +33,7 @@ public class GroupController {
 	private Util util;
 	
 	@Autowired
-	private MailServiceImpl mailService;
+	private MyInfoServiceImpl myInfoService;
 	
 	//프로그램 확인 페이지 (학생)
 	@GetMapping("")

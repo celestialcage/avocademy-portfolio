@@ -30,6 +30,13 @@ public interface MyinfoDAO {
 
 	List<CslSearchDTO> reservationList(int stud_no);
 
+	UserDTO verifyCode(String uid);
+	
+	void save(UserDTO user);
+
+	int resetPassword(Map<String, Object> params);
+
+
 
 
 }

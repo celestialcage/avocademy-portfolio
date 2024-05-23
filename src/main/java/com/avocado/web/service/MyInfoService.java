@@ -11,7 +11,6 @@ import com.avocado.web.entity.UserDTO;
 
 public interface MyInfoService {
 
-	void sendMail(String email, String title, String content) throws EmailException;
 
 	public List<MyinfoDTO> getMyinfo(int uno);
 	public List<MyinfoDTO> getMyinfo(String uno);
@@ -25,13 +24,13 @@ public interface MyInfoService {
 	String getEmail(String email);
 
 	void setKey(UserDTO dto);
-
-	boolean verifyCode(String inputCode, String uid);
-
 	
-
 //	void sendEmail(String email, String key) throws EmailException;
 
 	List<CslSearchDTO> reservationList(int stud_no);
+
+	boolean verifyCode(String inputCode, String uid);
+	
+	boolean resetPassword(String newPassword, String uid);
 
 }
