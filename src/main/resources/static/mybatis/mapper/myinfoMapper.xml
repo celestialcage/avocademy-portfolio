@@ -33,6 +33,18 @@
 		WHERE uid=#{uid} AND uemail=#{uemail}
 	</update>
 	
+	<select id="verifyCode" parameterType="UserDTO" resultType="UserDTO">
+		SELECT ukey
+		FROM user
+		WHERE uid = #{uid}
+		LIMIT 1
+	</select>
+
+	<update id="resetPassword" parameterType="map">
+		UPDATE user
+		SET upw = #{newPassword}
+		WHERE uid = #{uid}
+	</update>
 	
    <select id= "reservationList"  parameterType="String" resultType="CslSearchDTO">
       SELECT

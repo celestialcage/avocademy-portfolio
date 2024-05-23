@@ -22,7 +22,7 @@ public class MyInfoServiceImpl implements MyInfoService {
 
 	@Autowired
 	private MyinfoDAO myinfoDAO;
-	
+
 	@Autowired
 	private Util util;
 
@@ -38,7 +38,7 @@ public class MyInfoServiceImpl implements MyInfoService {
 		pageMap.put("pageNo", pageNo);
 		pageMap.put("post", post);
 		pageMap.put("uno", uno);
-		
+
 		List<MyinfoDTO> list = myinfoDAO.myinfo(pageMap);
 
 		return list;
@@ -65,7 +65,7 @@ public class MyInfoServiceImpl implements MyInfoService {
 	 * 
 	 * }
 	 */
-	
+
 	@Override
 	public List<MyinfoDTO> getMyinfo(int uno) {
 		return myinfoDAO.getMyinfo(uno);
@@ -86,44 +86,68 @@ public class MyInfoServiceImpl implements MyInfoService {
 //	}
 
 	@Override
-	public String getEmail(String email) {		
+	public String getEmail(String email) {
 		System.out.println("emailAuth>getEmail 서비스 : " + email);
 		return myinfoDAO.getEmail(email);
 	}
+
 	@Override
 	public void setKey(UserDTO dto) {
 		System.out.println("emailAuth>setKey 서비스");
-		 myinfoDAO.setKey(dto); // 데이터베이스에 키 저장
-		
+		myinfoDAO.setKey(dto); // 데이터베이스에 키 저장
+
 	}
 
 	@Override
 	public boolean verifyCode(String inputCode, String uid) {
 		System.out.println("verifyCode 서비스 오는지 보자" + inputCode);
-	
+
 		System.out.println("verifyCode 서비스 오는지 보자" + uid);
-		 UserDTO user = myinfoDAO.verifyCode(uid);
-		 
-        if (user != null && user.getUkey().equals(inputCode)) {
-        	 return true; // 코드가 일치하면 true 반환
-        } else {
-            return false; // 코드가 일치하지 않으면 false 반환
-        }
+		UserDTO user = myinfoDAO.verifyCode(uid);
+
+		if (user != null && user.getUkey().equals(inputCode)) {
+			return true; // 코드가 일치하면 true 반환
+		} else {
+			return false; // 코드가 일치하지 않으면 false 반환
+		}
 	}
 
+	@Override
+	public boolean resetPassword(String newPassword, String uid) {
 
+		 Map<String, Object> params = new HashMap<>();
+		    params.put("newPassword", newPassword);
+		    params.put("uid", uid);
+		    System.out.println("서비스 새비번1"+newPassword);
+		int rowsAffected  = myinfoDAO.resetPassword(params);
+		if (rowsAffected  > 0) {
+			System.out.println("서비스 새비번 성공"+newPassword);
+			// 사용자를 찾은 경우 새로운 비밀번호로 업데이트합니다.
 
-	public boolean resetPassword(String uid, String newPassword) {
-
-		UserDTO user = myinfoDAO.resetPassword(newPassword,uid);
-		if (user != null) {
-            // 사용자를 찾은 경우 새로운 비밀번호로 업데이트합니다.
-            user.setUpw(newPassword);
-            myinfoDAO.save(user);
-            return true;
-        } else {
-            // 사용자를 찾지 못한 경우 비밀번호 변경에 실패합니다.
-            return false;
-        }
+			return true;
+		} else {
+			System.out.println("서비스 새비번 실패"+newPassword);
+			// 사용자를 찾지 못한 경우 비밀번호 변경에 실패합니다.
+			return false;
+		}
 	}
+
+	@Override
+	public List<MyinfoDTO> getMyinfo(String uno) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int count(int uno) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<CslSearchDTO> reservationList(int stud_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
