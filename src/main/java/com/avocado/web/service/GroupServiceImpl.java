@@ -10,12 +10,16 @@ import org.springframework.stereotype.Service;
 
 import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.repository.GroupDAO;
+import com.avocado.web.util.Util;
 
 @Service("groupService")
 public class GroupServiceImpl implements GroupService {
 	
 	@Autowired
 	private GroupDAO groupDAO;
+	
+	@Autowired
+	private Util util;
 	
 	private GroupDTO setAprv(GroupDTO dto) {
 		LocalDate endDate = LocalDate.parse(dto.getPrg_end(), java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -153,6 +157,17 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public List<Map<String, Object>> entryList(String no) {
 		return groupDAO.entryList(no);
+	}
+
+	@Override
+	public String aplyNo() {
+		return groupDAO.aplyNo();
+	}
+
+	@Override
+	public void sendApplyEmail(String email) {
+		
+		
 	}
 
 

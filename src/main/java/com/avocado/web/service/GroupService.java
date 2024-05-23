@@ -44,6 +44,10 @@ public interface GroupService {
 	List<GroupDTO> programEntry();
 
 	List<Map<String, Object>> entryList(String no);
+
+	String aplyNo();
+
+	void sendApplyEmail(String email);
 	
 
 }
