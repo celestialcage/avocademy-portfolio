@@ -11,9 +11,9 @@ public interface MyInfoService {
 
 	void sendMail(String email, String title, String content) throws EmailException;
 
-	public List<MyinfoDTO> getMyinfo(String uno);
+	public List<MyinfoDTO> getMyinfo(int uno);
 
-	public List<MyinfoDTO> myinfo(int pageNo, int post);
+	public List<MyinfoDTO> myinfo(int pageNo, int post, int uno);
 
 	public int count(int uno);
 

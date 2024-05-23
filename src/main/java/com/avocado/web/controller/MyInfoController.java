@@ -17,36 +17,34 @@ import com.avocado.web.util.Util;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
+
 public class MyInfoController {
 
+	@Autowired
+	private Util util;
 	
 	@Autowired
 	private MyInfoServiceImpl myInfoService;
-	
-	@Autowired
-	private Util util;
 
-	private int totalCount;
 	
 	//마이페이지 이동
 	@GetMapping("/myInfo")
-	public String myInfo(Model model,@RequestParam(name = "bno", required = false, defaultValue = "1") int bno,
+	public String myInfo(Model model,
+			 @RequestParam(name = "bno", required = false, defaultValue = "1") int bno,
 			 @RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
              @RequestParam(name = "post",defaultValue = "10") int post) {
-		
 		
 		HttpSession session = util.getSession();
 		
 		int uno =  (int) (session.getAttribute("uno"));
+	
 		
-		
-		System.out.println(session.getAttribute("uname"));
-		System.out.println(session.getAttribute("uno"));
-		
-		
+		//System.out.println(session.getAttribute("uname"));
+		//System.out.println(session.getAttribute("uno"));
+
 		//총 글 갯수 확인해서 페이지 개수 계산!!!
 		int totalCount = myInfoService.count(uno);
-		System.out.println("totalcount : " + totalCount);
+		// System.out.println("totalcount : " + totalCount);
 		int totalPage = 1;
 		
 		if(totalCount % post == 0) {
@@ -66,11 +64,11 @@ public class MyInfoController {
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("pageNo", pageNo);
 		
-		List<MyinfoDTO> list = myInfoService.myinfo(pageNo, post);
+		List<MyinfoDTO> list = myInfoService.myinfo(pageNo, post, uno);
 		
 		// System.out.println(list);
 		
-		model.addAttribute("list", list);
+		model.addAttribute("list",list );
 		
 		return "myinfo";
 	}
@@ -97,5 +95,20 @@ public class MyInfoController {
 		
 		myInfoService.sendMail(email, title, content);
 		return "redirect:/mail";
+	}
+	
+	@GetMapping("/profileEdit")
+	public String profileEdit() {
+		return "myinfo/profileEdit";
+	}
+	
+	@GetMapping("/reservationList")
+	public String reservationList() {
+		return "myinfo/reservationList";
+	}
+	
+	@GetMapping("/testList")
+	public String testList() {
+		return "myinfo/testList";
 	}
 }

@@ -14,11 +14,10 @@ public interface MyinfoDAO {
 	
 	List<MyinfoDTO> myinfo(Map<String, Integer> pageMap);
 
-	List<MyinfoDTO> getMyinfo(Map<String, Integer> uno);
+	List<MyinfoDTO> getMyinfo(int uno);
 
 	int count(int uno);
 
-	List<MyinfoDTO> getMyinfo(String uno);
-
+	List<MyinfoDTO> getMyinfo(Map<String, Integer> uno);
 
 }
