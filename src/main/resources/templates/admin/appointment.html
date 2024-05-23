@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
     <link rel="stylesheet" href="/css/summernote/summernote-lite.css">
 </head>
-
 <body>
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
@@ -96,6 +95,7 @@
                                         <th scope="col">신청자(학번)</th>
                                         <th scope="col">상담일자</th>
                                         <th scope="col">상담시간</th>
+                                        <th scope="col">상담회차</th>
                                         <th scope="col">이전신청번호</th>
                                         <th scope="col">신청상태</th>
                                         <th scope="col">승인여부</th>
@@ -116,6 +116,7 @@
                                         <td class="stud_no align-middle">[[|${apply.cns_nm}(${apply.cns_field})|]]</td>
                                         <td class="stud_no align-middle">[[|${apply.stud_nm}(${apply.stud_no})|]]</td>
                                         <td th:text="${apply.dscsn_ymd}" class="dscsn_ymd align-middle"></td>
+                                        <td th:text="${apply.dscsn_hr}" class="dscsn_hr align-middle"></td>
                                         <td th:text="${apply.dscsn_hr}" class="dscsn_hr align-middle"></td>
                                         <td class="stud_no align-middle">
                                         	<span th:if="${apply.aply_no_old == 0}">-</span>
@@ -162,7 +163,7 @@
 				        	<div class="modal-dialog modal-xl">
 				        		<div class="modal-content">
 				        			<div class="modal-header">
-				        			<h5 class="modal-title" id="modalTitle">톺아보기</h5>
+				        			<h5 class="modal-title" id="modalTitle">상담 상세</h5>
 				        				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				        			</div>
 				        			<div class="modal-body">
@@ -172,7 +173,7 @@
 				        				</div>
 				        			</div>
 				        			<div class="modal-footer">
-				        				톺아보기 모달 닫기
+				        				<a id="updateLinkBtn" class="btn btn-light">코멘트 수정</a>
 				        			</div>
 				        		</div>
 				        	</div>
@@ -233,12 +234,27 @@
         dates.forEach(e => {
         		e.innerText = moment(e.innerText).format("YYYY-MM-DD");
         	});
-        
+
         function detail(no) {
-        	let detailModal = new bootstrap.Modal('#detail', {}); // {옵션}
-        	/* fetch('/appointment-detail?aply_no='+no, {
-        		
-        	}).then() */
+        	let detailEle = document.querySelector('#detail');
+        	let detailModal = new bootstrap.Modal(detailEle, {}); // {옵션}
+        	fetch('./appointment-detail?aply_no=' + no, {
+        		method: "GET", 
+        		headers: {"Content-Type": "application/json",}, 
+        	}).then(response => {
+        		if(!response.ok) {
+        			throw new Error(response.statusText);
+        		} else {
+        			return response.json();
+        		}
+        	}).then(data => {
+        		console.log(data.dscsn_cn);
+        		document.querySelector('#modalContent').innerHTML = data.dscsn_cn;
+        		document.querySelector('#updateLinkBtn').setAttribute("href", './update-comment@' + data.aply_no);
+        		detailModal.show();
+        	}).catch(error => {
+        		console.log(error);
+        	})
         }
     </script>
 
