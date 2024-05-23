@@ -84,47 +84,47 @@
                             <table class="table">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col">
+                                        <th scope="col" class="align-middle">
                                         	<label class="customcheckbox mb-3">
                                                 <input type="checkbox" id="mainCheckbox" />
                                                 <span class="checkmark"></span>
                                             </label>
                                         </th>
-                                        <th scope="col">신청번호</th>
-                                        <th scope="col">상담사(분야)</th>
-                                        <th scope="col">신청자(학번)</th>
-                                        <th scope="col">상담일자</th>
-                                        <th scope="col">상담시간</th>
-                                        <th scope="col">상담회차</th>
-                                        <th scope="col">이전신청번호</th>
-                                        <th scope="col">신청상태</th>
-                                        <th scope="col">승인여부</th>
-                                        <th scope="col">상세정보</th>
+                                        <th scope="col" class="align-middle text-center">신청번호</th>
+                                        <th scope="col" class="align-middle text-center">상담사(분야)</th>
+                                        <th scope="col" class="align-middle text-center">신청자(학번)</th>
+                                        <th scope="col" class="align-middle text-center">상담일자</th>
+                                        <th scope="col" class="align-middle text-center">상담시간</th>
+                                        <th scope="col" class="align-middle text-center">상담회차</th>
+                                        <!-- <th scope="col" class="align-middle text-center">이전신청번호</th> -->
+                                        <th scope="col" class="align-middle text-center">신청상태</th>
+                                        <th scope="col" class="align-middle text-center">승인여부</th>
+                                        <th scope="col" class="align-middle text-center">상세정보</th>
                                     </tr>
                                 </thead>
                                 
                                 <tbody>
                                 
                                     <tr th:each="apply : ${applyList}">
-                                    	<th scope="row">
+                                    	<th scope="row" class="align-middle">
                                     		<label class="customcheckbox">
                                                 <input type="checkbox" class="listCheckbox" />
                                                 <span class="checkmark"></span>
                                             </label>
                                     	</th>
-                                        <th scope="row" th:text="${apply.aply_no}" class="aply_no align-middle"></th>
-                                        <td class="stud_no align-middle">[[|${apply.cns_nm}(${apply.cns_field})|]]</td>
-                                        <td class="stud_no align-middle">[[|${apply.stud_nm}(${apply.stud_no})|]]</td>
-                                        <td th:text="${apply.dscsn_ymd}" class="dscsn_ymd align-middle"></td>
-                                        <td th:text="${apply.dscsn_hr}" class="dscsn_hr align-middle"></td>
-                                        <td th:text="${apply.dscsn_hr}" class="dscsn_hr align-middle"></td>
-                                        <td class="stud_no align-middle">
+                                        <th scope="row" th:text="${apply.aply_no}" class="aply_no align-middle text-center"></th>
+                                        <td class="stud_no align-middle text-center">[[|${apply.cns_nm}(${apply.cns_field})|]]</td>
+                                        <td class="stud_no align-middle text-center">[[|${apply.stud_nm}(${apply.stud_no})|]]</td>
+                                        <td th:text="${apply.dscsn_ymd}" class="dscsn_ymd align-middle text-center"></td>
+                                        <td th:text="${apply.dscsn_hr}" class="dscsn_hr align-middle text-center"></td>
+                                        <td th:text="${apply.dscsn_hr}" class="dscsn_hr align-middle text-center"></td>
+                                        <!-- <td class="stud_no align-middle text-center">
                                         	<span th:if="${apply.aply_no_old == 0}">-</span>
                                         	<span th:unless="${apply.aply_no_old == 0}">[[${apply.aply_no_old}]]</span>
-                                        </td>
-                                        <td class="dscsn_stat align-middle"> [[${apply.dscsn_stat}]]
+                                        </td> -->
+                                        <td class="dscsn_stat align-middle text-center">
                                         	<div class="dropdown">
-											  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+											  <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 											    Dropdown button
 											  </button>
 											  <ul class="dropdown-menu">
@@ -134,7 +134,10 @@
 											  </ul>
 											</div>
                                         </td>
-                                        <td class="app-confirm align-middle">
+                                        <td class="app-confirm align-middle text-center">
+                                        	<h5 th:if="${apply.dscsn_stat == '완료'}" class="badge" style="background-color:#cdb4db">완료</h5>
+                                        	<h5 th:if="${apply.dscsn_stat == '미진행'}" class="badge" style="background-color:#a2d2ff">미진행</h5>
+                                        	<h5 th:if="${apply.dscsn_stat == '취소'}" class="badge" style="background-color:#ffafcc">취소</h5>
                                         	<button th:if="${apply.dscsn_stat == '신청'}" 
                                         		th:id="|confirmBtn${apply.aply_no}|" 
                                         		class="confirmBtn btn btn-success text-white align-middle">승인</button>
@@ -142,11 +145,11 @@
                                         		th:id="|confirmBtn${apply.aply_no}|" 
                                         		class="confirmBtn btn btn-danger text-white align-middle">취소</button>
                                      	</td>
-                                     	<td class="dscsn_cn align-middle">
+                                     	<td class="dscsn_cn align-middle text-center">
                                      		<button th:if="${not #strings.isEmpty(apply.dscsn_cn)}" 
                                      			th:onclick="|detail('${apply.aply_no}')|" 
                                         		th:id="|detailBtn${apply.aply_no}|" 
-                                        		class="detailBtn btn btn-secondary text-white align-middle">상세페이지 보기</button>
+                                        		class="detailBtn btn btn-outline-primary align-middle">상세 보기</button>
                                      		<button th:unless="${not #strings.isEmpty(apply.dscsn_cn)}" 
                                      			th:onclick="|location.href='./comment@${apply.aply_no}'|"
                                         		th:id="|commentBtn${apply.aply_no}|" 
@@ -155,6 +158,19 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <nav aria-label="Page navigation example">
+							  <ul class="pagination justify-content-center">
+							    <li class="page-item disabled">
+							      <a class="page-link">Previous</a>
+							    </li>
+							    <li class="page-item"><a class="page-link" href="#">1</a></li>
+							    <li class="page-item"><a class="page-link" href="#">2</a></li>
+							    <li class="page-item"><a class="page-link" href="#">3</a></li>
+							    <li class="page-item">
+							      <a class="page-link" href="#">Next</a>
+							    </li>
+							  </ul>
+							</nav>
                             </th:block>
                         </div> <!-- 신청목록 끝 -->
                         

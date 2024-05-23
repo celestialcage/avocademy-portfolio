@@ -119,7 +119,7 @@
 		<where>
 			aply_no IS NOT NULL 
 			<if test="cns_no != null">
-				AND cns_no = #{cns_no}
+				AND cns_no = #{cns_no} 
 			</if>
 			<if test="stud_no != null">
 				AND stud_no = #{stud_no}

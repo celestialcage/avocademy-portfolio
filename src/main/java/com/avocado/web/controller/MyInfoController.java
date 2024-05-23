@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.avocado.web.entity.CslSearchDTO;
 import com.avocado.web.entity.MyinfoDTO;
 import com.avocado.web.service.MyInfoServiceImpl;
+import com.avocado.web.util.SecureInfo;
 import com.avocado.web.util.Util;
 
 import jakarta.servlet.http.HttpSession;

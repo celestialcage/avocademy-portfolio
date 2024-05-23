@@ -100,11 +100,6 @@ public class MyInfoServiceImpl implements MyInfoService {
 	public void sendMail(String email, String title, String content) throws EmailException {
 	}
 
-	@Override
-	public List<MyinfoDTO> getMyinfo(String uno) {
-		
-		return null;
-	}
 
 
 	@Override
@@ -116,4 +111,10 @@ public class MyInfoServiceImpl implements MyInfoService {
 	public List<CslSearchDTO> reservationList (int stud_no) {
 	     return myinfoDAO.reservationList(stud_no);
 	    }
+
+	@Override
+	public int count(int uno) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
