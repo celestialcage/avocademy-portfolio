@@ -2,10 +2,8 @@ const Grid = tui.Grid;
 
 Grid.setLanguage('ko');
 
-{
-	let params = {}; // 세션 cns_no만 넣자
-	const initData = postData('/cs-schedule-list', params).then(data => console.log(data));
-}
+let params = {}; // 세션 cns_no만 넣자
+const initData = postData('/cs-schedule-list', params).then(data => data);
 
 const instance = new Grid({
     el: document.getElementById('grid'),

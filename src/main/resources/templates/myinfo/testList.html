@@ -101,66 +101,12 @@ main {
                 </div>
             </div>
         </div>
-        <div class="table-container">
-        
-        <th:block th:if="${#lists.size(list) == 0}">작성하신 글이 없습니다</th:block>
-        	<th:block th:unless="${#lists.size(list) == 0}">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th class="col-1 text-center">번호</th>
-                        <th class="col-6 text-center">제목</th>
-                        <th class="col-2 text-center">날짜</th>
-                        <th class="col-2 text-center">답변상태</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="name : ${list}" 
-                    	th:onclick="|location.href='@{/online/detail(bno=${name.bno}, pageNo=${currentPage})}'|">
-                        <td class="text-center" th:text="${name.bno}"></td>
-                        <td class="text-center"><span th:text="${name.btitle}"></span></td>
-                        <td class="text-center" th:text="${name.bdate}"></td>
-                        <td class="text-center">
-                        	<span th:if="${name.commentYN == 0}" th:text="답변대기" class="badge text-bg-secondary"></span> 
-                            <span th:if="${name.commentYN == 1}" th:text="답변완료" class="badge text-bg-warning"></span>
-                       	</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            </th:block>
+        <div>
+           <h1>이건 무슨 페이지일까나</h1>
         </div>
         
         
     </div>
-        <nav aria-label="Page navigation example">
-				<ul class="pagination justify-content-center">
-					<li class="page-item" th:classappend="${param.pageNo == 1} ? ' disabled'">
-						<a class="page-link" th:href="@{/myInfo(pageNo=1)}" aria-label="Previous">
-							<span aria-hidden="true">&laquo;</span>
-						</a>
-					</li>
-					<li class="page-item">
-						<a class="page-link" th:href="@{/myInfo(pageNo=${pageNo - 1})}" aria-label="Previous">
-							<span aria-hidden="true">&lt;</span>
-						</a>
-					</li>
-					<th:block th:each="page : ${#numbers.sequence(1, totalPage)}">
-		    			<li class="page-item">
-		    				<a class="page-link" th:href="@{/myInfo(pageNo=${page})}" th:text="${page}">페이지번호들어가는곳</a>
-		    			</li>
-		    		</th:block>
-		    		<li class="page-item">
-						<a class="page-link" th:href="@{/myInfo(pageNo=${pageNo + 1})}" aria-label="Previous">
-							<span aria-hidden="true">&gt;</span>
-						</a>
-					</li>
-					<li class="page-item">
-						<a class="page-link" th:href="@{/myInfo(pageNo=${totalPage})}" aria-label="Next"> 
-							<span aria-hidden="true">&raquo;</span>
-						</a>
-					</li>
-				</ul>
-			</nav>
+        
 </body>
 </html>

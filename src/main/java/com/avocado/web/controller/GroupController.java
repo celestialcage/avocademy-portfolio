@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.service.GroupService;
+import com.avocado.web.service.MailService;
+import com.avocado.web.service.MailServiceImpl;
 import com.avocado.web.util.Util;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -32,6 +34,9 @@ public class GroupController {
 	
 	@Autowired
 	private Util util;
+	
+	@Autowired
+	private MailServiceImpl mailService;
 	
 	//프로그램 확인 페이지 (학생)
 	@GetMapping("")
@@ -110,6 +115,12 @@ public class GroupController {
 				}
 			}
 			//성공시
+			//메일 알림 보내기
+			//메일주소 찾기
+			String email = "hoxy910@gmail.com";
+			//신청번호 주인에게 메일링
+			groupService.sendApplyEmail(email);
+			
 			return successResponse("신청이 완료되었습니다.");
 			
 		} catch (Exception e) {
