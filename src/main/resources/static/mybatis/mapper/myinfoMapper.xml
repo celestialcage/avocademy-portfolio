@@ -2,37 +2,62 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.avocado.web.repository.MyinfoDAO">
 
-	
+
 	<select id="myinfo" resultType="MyinfoDTO" parameterType="Map">
-		SELECT bno, btitle, bcontent, bdate, secret, commentYN, comment, bdel, user.uname
-		FROM online 
-		JOIN user ON online.user_no = user.uno 
-		WHERE bdel = '1' 
-		ORDER BY bno DESC 
-		LIMIT #{pageNo}, #{post};  
+		SELECT
+		bno, btitle, bcontent, bdate, secret, commentYN, comment, bdel,
+		user.uname
+		FROM online
+		JOIN user ON online.user_no = user.uno
+		WHERE bdel
+		= '1'
+		ORDER BY bno DESC
+		LIMIT #{pageNo}, #{post};
 	</select>
-	 
-	 <select id="getMyinfo" parameterType="String" resultType="MyinfoDTO">
-        SELECT o.uid, o.btitle, o.bcontent, o.bdate, o.commentYN,o.bdel
-		FROM onlineview o 
+
+	<select id="getMyinfo" parameterType="String"
+		resultType="MyinfoDTO">
+		SELECT o.uid, o.btitle, o.bcontent, o.bdate,
+		o.commentYN,o.bdel
+		FROM
+		onlineview o
 		join user u on o.uid = u.uid
-		WHERE o.uid = (select uid from user where uid = #{uid})
+		WHERE
+		o.uid = (select uid from user where uid
+		= #{uid})
 		ORDER BY o.bdate DESC;
-    </select>
-    
-    <select id="count" parameterType="Integer" resultType="Integer">
-		select count(*) from online
+	</select>
+
+	<select id="count" parameterType="Integer" resultType="Integer">
+		select
+		count(*) from online
 		where user_no = #{uno} and bdel = "1" ;
 	</select>
-	
-		<select id = "getEmail" parameterType="String" resultType="String">
-		SELECT uemail FROM user WHERE uid=#{id}
+
+	<select id="getEmail" parameterType="String" resultType="String">
+		SELECT
+		uemail FROM user WHERE uid=#{id}
 	</select>
-	
+
 	<update id="setKey" parameterType="UserDTO">
-		UPDATE user SET ukey=#{ukey} WHERE uid=#{uid} AND uemail=#{uemail}
+		UPDATE user SET ukey=#{ukey}
+		WHERE uid=#{uid} AND uemail=#{uemail}
 	</update>
-	
-	
+
+	<select id="verifyCode" parameterType="UserDTO"
+		resultType="UserDTO">
+		SELECT ukey
+		FROM user
+		WHERE uid = #{uid}
+		LIMIT 1
+	</select>
+
+	<update id="resetPassword" parameterType="UserDTO">
+		UPDATE user
+		SET upw = #{newPassword}
+		WHERE uid = #{uid}
+	</update>
+
+
 
 </mapper>

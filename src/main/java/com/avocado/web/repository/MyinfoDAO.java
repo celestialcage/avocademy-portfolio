@@ -25,6 +25,17 @@ public interface MyinfoDAO {
 
 	String getEmail(String email);
 
+	
+	UserDTO verifyCode(String uid);
+	
+	void save(UserDTO user);
+
+	UserDTO resetPassword(String uid, String newPassword);
+
+//	int sendEmail(String email);
+
+
+
 
 
 

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.mail.EmailException;
 
 import com.avocado.web.entity.MyinfoDTO;
+import com.avocado.web.entity.UserDTO;
 
 public interface MyInfoService {
 
@@ -17,6 +18,14 @@ public interface MyInfoService {
 
 	public List<MyinfoDTO> getMyinfo(Map<String, Integer> uno);
 
-	void sendEmail(String email, String key) throws EmailException;
+	String getEmail(String email);
+
+	void setKey(UserDTO dto);
+
+	boolean verifyCode(String inputCode, String uid);
+
+	
+
+//	void sendEmail(String email, String key) throws EmailException;
 
 }

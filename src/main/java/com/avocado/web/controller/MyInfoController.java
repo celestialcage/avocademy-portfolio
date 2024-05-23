@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -79,34 +82,78 @@ public class MyInfoController {
 
 	@GetMapping("/mail")
 	public String mail() {
-		  if(util.getSession().getAttribute("uid") != null) {
-		System.out.println("메일");
-			  return "mail";
-	      } else {
-	         return "redirect:/login?error=error";
-	      }
+		if (util.getSession().getAttribute("uid") != null) {
+			System.out.println("get메일");
+			return "mail";
+		} else {
+			return "redirect:/login?error=error";
+		}
 	}
 
-	
+	@PostMapping("/emailAuth")
+	public ResponseEntity<String> emailAuth(@RequestParam("email") String email) throws EmailException {
 
-	@PostMapping("/mail")
-	public String sendEmail(@RequestParam("email") String email, @RequestParam("key") String key) throws EmailException {
+		// 세션에서 사용자 id가져오기
 
-		System.out.println("컨트롤러 email : " + email);
-//		System.out.println("컨트롤러 title : " + title);
-//		System.out.println("컨트롤러 content : " + content);
-		System.out.println("컨트롤러 key : " + key);
+		String uid = (String) util.getSession().getAttribute("uid");
 
-		email = myInfoService.getEmail((String) util.getSession().getAttribute("uid"));
-		key = util.createKey();
-		
-		UserDTO dto = new UserDTO();
-		dto.setUemail(email);
-		dto.setUkey(key);
-		dto.setUid((String)util.getSession().getAttribute("uid"));
-		secureInfo.sendEmail(email, key);
-		return "/mail";
+		if (uid != null) {
+
+			System.out.println("emailAuth 컨트롤러 email : " + email);
+
+			// 이메일 및 인증 키 생성
+			email = myInfoService.getEmail(uid);
+			String key = util.createKey();
+
+			System.out.println("emailAuth 컨트롤러 key : " + key);
+
+			// UserDTO 객체 생성 및 설정
+			UserDTO dto = new UserDTO();
+			dto.setUemail(email);
+			dto.setUkey(key);
+			dto.setUid(uid);
+
+			// 인증키를 데이터베이스에 저장
+			myInfoService.setKey(dto);
+
+			// 이메일 전송
+			secureInfo.sendEmail(email, key);
+
+			return ResponseEntity.ok("1"); // 성공적으로 처리되었을 때 "1" 반환
+		} else {
+			return ResponseEntity.ok("0"); // 실패했을 때 "0" 반환
+		}
 	}
 
-	
+	// 인증번호 인증
+	@PostMapping("/verifyCode")
+	public ResponseEntity<Boolean> verifyCode(@RequestParam("inputCode") String inputCode) {
+		//System.out.println("verifyCode 컨트롤러 오는지 보자" + inputCode);
+		String uid = (String) util.getSession().getAttribute("uid");
+		//System.out.println("verifyCode 컨트롤러 오는지 보자" + uid);
+		boolean isCodeCorrect = myInfoService.verifyCode(inputCode, uid);
+		//System.out.println(isCodeCorrect);
+		if (isCodeCorrect) {
+			return ResponseEntity.ok(true);
+
+		} else {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(false); // 코드가 일치하지 않는 경우
+		}
+	}
+
+	@PostMapping("/resetPassword")
+    public ResponseEntity<String> resetPassword(@RequestParam("newPassword") String newPassword) {
+       
+		String uid = (String) util.getSession().getAttribute("uid");
+		// 비밀번호 변경 서비스 호출
+		boolean success = myInfoService.resetPassword(uid, newPassword);
+	    if (success) {
+	        // 비밀번호 변경이 성공한 경우
+	        return ResponseEntity.ok("1");
+	    } else {
+	        // 비밀번호 변경이 실패한 경우
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("0");
+	    }
+	}
 }
+
