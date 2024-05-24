@@ -67,6 +67,11 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return professorDAO.psTimeList(map);
 	}
 
+	@Override
+	public List<Map<String, Object>> psTimeListAll(Map<String, Object> map) {
+		return professorDAO.psTimeListAll(map);
+	}
+
 	
 	
 

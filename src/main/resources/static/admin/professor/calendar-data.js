@@ -1,54 +1,15 @@
 let COUNSEL_CALENDARS = [
-    {
-      id: '1', // 1 블베빔
-      name: '심리 - 블베빔',
-      color: '#ffffff',
-      borderColor: '#9e5fff',
-      backgroundColor: '#9e5fff',
-      dragBackgroundColor: '#9e5fff',
-    },
-    {
-      id: '7', // 7 최행복
-      name: '취업 - 최행복',
-      color: '#ffffff',
-      borderColor: '#00a9ff',
-      backgroundColor: '#00a9ff',
-      dragBackgroundColor: '#00a9ff',
-    },
-    {
-      id: '2', // 2 크랜박
-      name: '취업 - 크랜박',
-      color: '#ffffff',
-      borderColor: '#DB473F',
-      backgroundColor: '#DB473F',
-      dragBackgroundColor: '#DB473F',
-    },
-    {
-      id: '3', // 3 라이미
-      name: '심리 - 라이미',
-      color: '#ffffff',
-      borderColor: '#03bd9e',
-      backgroundColor: '#03bd9e',
-      dragBackgroundColor: '#03bd9e',
-    },
-    {
-      id: '8', // 8 박지혜
-      name: '심리 - 박지혜',
-      color: '#ffffff',
-      borderColor: '#bbdc00',
-      backgroundColor: '#bbdc00',
-      dragBackgroundColor: '#bbdc00',
-    },
+    
   ];
 
 function getDBEvent(calendar, dbEle) {
     let id, calendarId, title, body, location, state, isReadOnly;
-    id = `${dbEle.scheduleNo}`;
-    calendarId = `${dbEle.counselorNo}`;
-    title = `${dbEle.cslField}) ${dbEle.cslName} 상담사 신청 가능`;
+    id = `${dbEle.psc_no}`;
+    calendarId = `${dbEle.ps_no}`;
+    title = `dd`;
     body = ``;
-    location = `${dbEle.cslOffice}호 사무실`;
-    state = dbEle.scheduleState == 0 ? `신청 열림` : `예약됨`;
+    location = ``;
+    state = ``;
     // isReadOnly = dbEle.scheduleState === 0 ? true : false;
     // let calendarId, start, end;
     let attendees = [];
@@ -66,11 +27,11 @@ function getDBEvent(calendar, dbEle) {
     //   };
 
     function getDBTime(event, dbEle) {
-        let startDate = moment(dbEle.scheduleDate); // db에서 가져온 날짜 (moment로)
-        let endDate = moment(dbEle.scheduleDate); // db에서 가져온 날짜.. (moment로)
+        let startDate = moment(dbEle.psc_ymd); // db에서 가져온 날짜 (moment로)
+        let endDate = moment(dbEle.psc_ymd); // db에서 가져온 날짜.. (moment로)
         // let diffDate = endDate.diff(startDate, 'days'); // 안필요할듯
     
-        startDate.hours(dbEle.scheduleTime);
+        startDate.hours(dbEle.psc_hr);
         // startDate.minutes(/* 여기다 db에서 minute 정보? 안쓰나? */);
         endDate = moment(startDate); // 같은 날이니까.
         event.start = startDate.toDate();
@@ -103,9 +64,9 @@ async function getDBEvents(viewName) {
 	let events = [];
     
     // db 통신 ajax (상담사 로그인 때)
-    let dbEvents = await getData('/cs-schedule', sessionCno).then(data => {
+    let dbEvents = await getData('/psTimeListAll').then(data => {
         data.schedules.forEach(e => {
-            e.scheduleDate = moment(e.scheduleDate, "YYYYMMDD").format('YYYY-MM-DD');
+            e.psc_ymd = moment(e.psc_ymd, "YYYYMMDD").format('YYYY-MM-DD');
         });
         
         return data.schedules;
