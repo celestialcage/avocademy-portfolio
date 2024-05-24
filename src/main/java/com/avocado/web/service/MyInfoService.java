@@ -10,7 +10,6 @@ import com.avocado.web.entity.MyinfoDTO;
 
 public interface MyInfoService {
 
-	void sendMail(String email, String title, String content) throws EmailException;
 
 	public List<MyinfoDTO> getMyinfo(int uno);
 	public List<MyinfoDTO> getMyinfo(String uno);
@@ -24,5 +23,6 @@ public interface MyInfoService {
 	void sendEmail(String email, String key) throws EmailException;
 
 	public List<GroupDTO> reservationList(String stud_no);
+
 
 }

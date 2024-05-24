@@ -21,7 +21,6 @@ public interface MyinfoDAO {
 	int count(int uno);
 
 	List<MyinfoDTO> getMyinfo(Map<String, Integer> uno);
-	
 	List<MyinfoDTO> getMyinfo(String uno);
 
 	void setKey(UserDTO dto);
@@ -30,6 +29,8 @@ public interface MyinfoDAO {
 
 	List<GroupDTO> reservationList(String stud_no);
 	
+
+//
 
 
 }

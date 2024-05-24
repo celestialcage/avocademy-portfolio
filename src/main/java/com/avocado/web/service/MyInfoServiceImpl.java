@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,7 @@ public class MyInfoServiceImpl implements MyInfoService {
 
 	@Autowired
 	private MyinfoDAO myinfoDAO;
-	
+
 	@Autowired
 	private Util util;
 
@@ -39,7 +38,7 @@ public class MyInfoServiceImpl implements MyInfoService {
 		pageMap.put("pageNo", pageNo);
 		pageMap.put("post", post);
 		pageMap.put("uno", uno);
-		
+
 		List<MyinfoDTO> list = myinfoDAO.myinfo(pageMap);
 
 		return list;
@@ -66,7 +65,7 @@ public class MyInfoServiceImpl implements MyInfoService {
 	 * 
 	 * }
 	 */
-	
+
 	@Override
 	public List<MyinfoDTO> getMyinfo(int uno) {
 		return myinfoDAO.getMyinfo(uno);
@@ -77,33 +76,21 @@ public class MyInfoServiceImpl implements MyInfoService {
 		return myinfoDAO.getMyinfo(uno);
 	}
 
+//	//메일 보내기
+//	@Override
+//	public void sendEmail(String email, String key) {
+//		
+//		System.out.println("emailAuth>sendEmail 서비스 : " + email);
+//		System.out.println("emailAuth>sendEmail 서비스 : " + key);
+//		
+//	}
 
-	public void setkey(UserDTO dto) {
-		
-	}
-
-	//메일 보내기
-	@Override
-	public void sendEmail(String email, String key) throws EmailException {
-		
-		System.out.println("서비스 email : " + email);
-		System.out.println("서비스 key : " + key);
-		
-	}
-
-	public String getEmail(String email) {
-		
-		return myinfoDAO.getEmail(email);
-	}
-
-	@Override
-	public void sendMail(String email, String title, String content) throws EmailException {
-	}
 
 
 	@Override
-	public List<MyinfoDTO> getMyinfo(String uno) {
-		return myinfoDAO.getMyinfo(uno);
+	public int count(int uno) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override

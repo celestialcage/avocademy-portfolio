@@ -98,7 +98,9 @@ public class AdminController {
 		int totalCount = 0;
 		CslSearchDTO searchDTO = new CslSearchDTO();
 		
-		searchDTO.setPage(util.str2Int(page));
+		int pageNo = util.str2Int(page);
+		searchDTO.setPage((pageNo-1) * 10); // 페이지 번호를 오프셋으로 변환
+		
 		
 		// 학생 검색했을 시
 		if(stud_no != null) {
@@ -136,11 +138,19 @@ public class AdminController {
 	
 	@GetMapping("/comment@{aply_no}")
 	public String commentAppointment(@PathVariable(name="aply_no") String aply_no, Model model) {
-		System.out.println(aply_no);
+		model.addAttribute("aply_no", aply_no);
+		return "admin/appointment-comment";
+	}
+	@GetMapping("/update-comment@{aply_no}")
+	public String updateComment(@PathVariable(name="aply_no") String aply_no, Model model) {
+		
+		PersonalDTO ps = new PersonalDTO();
+		ps = counselService.findCslSchedule(util.str2Int(aply_no));
 		
 		model.addAttribute("aply_no", aply_no);
+		model.addAttribute("dto", ps);
 		
-		return "admin/appointment-comment";
+		return "admin/appointment-update-comment";
 	}
 	
 	@PostMapping("/comment")
@@ -151,7 +161,7 @@ public class AdminController {
 		ps.setDscsn_cn(dscsn_cn);
 		int result = counselService.updateComment(ps);
 		
-		return "redirect:/admin/appointment@"+aply_no;
+		return "redirect:/admin/appointment";
 	}
 	
 }

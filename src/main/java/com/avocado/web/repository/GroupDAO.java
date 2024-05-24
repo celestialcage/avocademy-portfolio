@@ -50,4 +50,6 @@ public interface GroupDAO {
 
 	List<Map<String, Object>> entryList(String no);
 
+	String aplyNo();
+
 }

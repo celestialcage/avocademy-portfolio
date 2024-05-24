@@ -3,16 +3,20 @@ package com.avocado.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ibatis.javassist.expr.NewArray;
+import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.avocado.web.entity.CslSearchDTO;
 import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.entity.MyinfoDTO;
+import com.avocado.web.entity.UserDTO;
 import com.avocado.web.service.MyInfoServiceImpl;
 import com.avocado.web.util.SecureInfo;
 import com.avocado.web.util.Util;
@@ -82,34 +86,7 @@ public class MyInfoController {
 		return "myinfo";
 	}
 
-	@GetMapping("/mail")
-	public String mail() {
-		  if(util.getSession().getAttribute("uid") != null) {
-		System.out.println("메일");
-			  return "mail";
-	      } else {
-	         return "redirect:/login?error=error";
-	      }
-	}
 
-	
-
-	/*
-	 * @PostMapping("/mail") public String sendEmail(@RequestParam("email") String
-	 * email, @RequestParam("key") String key) throws EmailException {
-	 * 
-	 * System.out.println("컨트롤러 email : " + email); //
-	 * System.out.println("컨트롤러 title : " + title); //
-	 * System.out.println("컨트롤러 content : " + content);
-	 * System.out.println("컨트롤러 key : " + key);
-	 * 
-	 * email = myInfoService.getEmail((String)
-	 * util.getSession().getAttribute("uid")); key = util.createKey();
-	 * 
-	 * UserDTO dto = new UserDTO(); dto.setUemail(email); dto.setUkey(key);
-	 * dto.setUid((String)util.getSession().getAttribute("uid"));
-	 * secureInfo.sendEmail(email, key); return "/mail"; }
-	 */
 	
 	@GetMapping("/profileEdit")
 	public String profileEdit() {
@@ -148,3 +125,4 @@ public class MyInfoController {
 		return "myinfo/testList";
 	}
 }
+

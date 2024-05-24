@@ -52,6 +52,12 @@
 		VALUES (#{stud_no}, #{schdno})
 	</insert>
 	
+	<select id="aplyNo" resultType="String">
+		SELECT gaply_no
+		FROM graply
+		ORDER BY gaply_no DESC LIMIT 1;
+	</select>
+	
 	
 	
 	
