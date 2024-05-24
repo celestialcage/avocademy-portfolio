@@ -34,8 +34,4 @@ public interface CounselService {
 
 	int findCsAppTotalCount(CslSearchDTO searchDTO);
 
-	int updateComment(PersonalDTO ps);
-
-	PersonalDTO findCslSchedule(int str2Int);
-
 }

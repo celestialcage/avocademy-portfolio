@@ -46,10 +46,4 @@ public interface GroupDAO {
 
 	GroupDTO adminDetail(int no);
 
-	List<GroupDTO> programEntry();
-
-	List<Map<String, Object>> entryList(String no);
-
-	String aplyNo();
-
 }

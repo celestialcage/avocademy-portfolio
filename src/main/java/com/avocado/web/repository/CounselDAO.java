@@ -45,8 +45,4 @@ public interface CounselDAO {
 
 	int findCsAppTotalCount(CslSearchDTO searchDTO);
 
-	int updateComment(PersonalDTO ps);
-
-	PersonalDTO findCslSchedule(int aply_no);
-
 }
