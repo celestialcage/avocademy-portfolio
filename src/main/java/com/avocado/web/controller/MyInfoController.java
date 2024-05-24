@@ -149,7 +149,7 @@ public class MyInfoController {
     public ResponseEntity<String> resetPassword(@RequestParam("newPassword") String newPassword) {
        
 		String uid = (String) util.getSession().getAttribute("uid");
-		// 비밀번호 변경 서비스 호출
+		// 비밀번호 변경 서비스 호출...
 		boolean success = myInfoService.resetPassword(newPassword, uid);
 		System.out.println("컨트롤러 새비번1  "+newPassword);
 	    if (success) {

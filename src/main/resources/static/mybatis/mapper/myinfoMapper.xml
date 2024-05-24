@@ -5,7 +5,7 @@
 	<select id="myinfo" resultType="MyinfoDTO" parameterType="Map">
 		SELECT bno, btitle, bcontent, bdate, commentYN, comment, bdel
 		FROM onlineview
-		WHERE uno = #{uno} and bdel = '1' 
+		WHERE uno = #{uno} and bdel = '11' 
 		ORDER BY bno DESC 
 		LIMIT #{pageNo}, #{post};  
 	</select>

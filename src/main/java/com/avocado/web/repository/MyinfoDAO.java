@@ -36,7 +36,7 @@ public interface MyinfoDAO {
 
 	int resetPassword(Map<String, Object> params);
 
-
+//
 
 
 }

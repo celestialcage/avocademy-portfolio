@@ -25,7 +25,7 @@ public interface MyInfoService {
 
 	void setKey(UserDTO dto);
 	
-//	void sendEmail(String email, String key) throws EmailException;
+//	void sendEmail(String email, String key) throws.. EmailException;
 
 	List<CslSearchDTO> reservationList(int stud_no);
 

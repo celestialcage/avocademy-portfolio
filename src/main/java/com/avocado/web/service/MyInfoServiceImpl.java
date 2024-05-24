@@ -146,7 +146,7 @@ public class MyInfoServiceImpl implements MyInfoService {
 
 	@Override
 	public List<CslSearchDTO> reservationList(int stud_no) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub..
 		return null;
 	}
 
