@@ -12,19 +12,19 @@ import com.avocado.web.entity.UserDTO;
 
 @Repository
 @Mapper
-public interface MyinfoDAO {
+public interface MailDAO {
 	
-	List<MyinfoDTO> myinfo(Map<String, Integer> pageMap);
+	void setKey(UserDTO dto);
 
-	List<MyinfoDTO> getMyinfo(int uno);
-
-	int count(int uno);
-
-	List<MyinfoDTO> getMyinfo(Map<String, Integer> uno);
-	List<MyinfoDTO> getMyinfo(String uno);
+	String getEmail(String email);
 
 	List<CslSearchDTO> reservationList(int stud_no);
 
+	UserDTO verifyCode(String uid);
+	
+	void save(UserDTO user);
+
+	int resetPassword(Map<String, Object> params);
 
 //
 
