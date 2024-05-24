@@ -115,15 +115,18 @@ main {
 				                <th>장소</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr th:each="reservation : ${reservations}">
-								 <td th:text="${reservation.prgNo}"></td>
-					             <td th:text="${reservation.prgNm}"></td>
-					             <td th:text="${reservation.prgYmd}"></td>
-					             <td th:text="${reservation.prgHr}"></td>
-					             <td th:text="${reservation.prgPlace}"></td>
+						
+						[[${dto}]]
+						
+						 <!-- <tbody>
+							<tr th:each="a : ${reservationList}">
+								 <td th:text="${a.prgNo}"></td>
+					             <td th:text="${a.prgNm}"></td>
+					             <td th:text="${a.prgYmd}"></td>
+					             <td th:text="${a.prgHr}"></td>
+					             <td th:text="${a.prgPlace}"></td>
 							</tr>
-						</tbody>
+						</tbody> -->
 					</table>
 				</div>
 			</div>

@@ -32,8 +32,8 @@
 	</update>
 	
 	
-   <select id= "reservationList"  parameterType="String" resultType="CslSearchDTO">
-      SELECT
+   <select id= "reservationList"  parameterType="String" resultType="GroupDTO">
+		 SELECT
           gp.PRG_NO as prgNo,
             gp.PRG_NM as prgNm,
             gs.PRG_YMD as prgYmd,
@@ -45,7 +45,7 @@
         WHERE ga.stud_no = #{stud_no}
         GROUP BY gp.PRG_NO, gp.PRG_NM, gs.PRG_YMD, gs.PRG_HR, gp.PRG_PLACE
         ORDER BY gp.PRG_NO;
-      
+
    </select>
 
 

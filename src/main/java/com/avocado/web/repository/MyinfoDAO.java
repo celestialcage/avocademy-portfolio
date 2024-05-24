@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import com.avocado.web.entity.CslSearchDTO;
+import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.entity.MyinfoDTO;
 import com.avocado.web.entity.UserDTO;
 
@@ -28,8 +28,8 @@ public interface MyinfoDAO {
 
 	String getEmail(String email);
 
-	List<CslSearchDTO> reservationList(int stud_no);
-
+	List<GroupDTO> reservationList(String stud_no);
+	
 
 
 }

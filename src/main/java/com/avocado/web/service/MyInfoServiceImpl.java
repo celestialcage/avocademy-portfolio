@@ -8,7 +8,7 @@ import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.avocado.web.entity.CslSearchDTO;
+import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.entity.MyinfoDTO;
 import com.avocado.web.entity.UserDTO;
 import com.avocado.web.repository.MyinfoDAO;
@@ -100,12 +100,6 @@ public class MyInfoServiceImpl implements MyInfoService {
 	public void sendMail(String email, String title, String content) throws EmailException {
 	}
 
-	@Override
-	public List<MyinfoDTO> getMyinfo(String uno) {
-		
-		return null;
-	}
-
 
 	@Override
 	public List<MyinfoDTO> getMyinfo(String uno) {
@@ -113,7 +107,12 @@ public class MyInfoServiceImpl implements MyInfoService {
 	}
 
 	@Override
-	public List<CslSearchDTO> reservationList (int stud_no) {
+	public List<GroupDTO> reservationList (String stud_no) {
 	     return myinfoDAO.reservationList(stud_no);
 	    }
+
+	@Override
+	public int count(int uno) {
+		return myinfoDAO.count(uno);
+	}
 }

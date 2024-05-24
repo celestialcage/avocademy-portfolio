@@ -1,7 +1,9 @@
 package com.avocado.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.javassist.expr.NewArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,8 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.avocado.web.entity.CslSearchDTO;
+import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.entity.MyinfoDTO;
 import com.avocado.web.service.MyInfoServiceImpl;
+import com.avocado.web.util.SecureInfo;
 import com.avocado.web.util.Util;
 
 import jakarta.servlet.http.HttpSession;
@@ -121,18 +125,18 @@ public class MyInfoController {
 			// if문으로
 			session.getAttribute("stud_no");
 
-			CslSearchDTO dto = new CslSearchDTO();
+			List<GroupDTO> dto = new ArrayList<GroupDTO>();
 
 			if (session.getAttribute("stud_no") == null) {
 				return "redirect:/login";
 
 			} else {
 
-				int stud_no = (int) session.getAttribute("stud_no");
-
-				List<CslSearchDTO> reservationList = myInfoService.reservationList(stud_no);
-				model.addAttribute("reservationList", reservationList);
-				dto.setStud_no(session.getAttribute("stud_no").toString());
+				String stud_no = (String) session.getAttribute("stud_no");
+					
+				dto = myInfoService.reservationList(stud_no);
+				model.addAttribute("dto", dto);
+				//dto.setStud_no(stud_no);
 				return "myinfo/reservationList";
 
 			}

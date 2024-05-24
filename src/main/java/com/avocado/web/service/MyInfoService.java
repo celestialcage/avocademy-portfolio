@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.mail.EmailException;
 
-import com.avocado.web.entity.CslSearchDTO;
+import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.entity.MyinfoDTO;
 
 public interface MyInfoService {
@@ -23,6 +23,6 @@ public interface MyInfoService {
 
 	void sendEmail(String email, String key) throws EmailException;
 
-	List<CslSearchDTO> reservationList(int stud_no);
+	public List<GroupDTO> reservationList(String stud_no);
 
 }
