@@ -36,9 +36,6 @@ public interface ProfessorService {
 	List<Map<String, Object>> psTimeList(Map<String, Object> map);
 
 
-	List<Map<String, Object>> psTimeListAll(Map<String, Object> map);
-
-
 
 
 

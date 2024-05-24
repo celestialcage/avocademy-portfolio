@@ -6,8 +6,8 @@
 		enableDblClick: false,
 		enableClick: false,
 	  },
-	  useFormPopup: false,
-	  useDetailPopup: false,
+	  useFormPopup: true,
+	  useDetailPopup: true,
 	  usageStatistics: false, 
 	  defaultView: 'month',
 	  eventFilter: function (event) {
@@ -62,7 +62,7 @@
 			return "삭제";
 		},
 		allday: function (event) {
-		  return getEventTemplate(event, false);
+		  return getEventTemplate(event, true);
 		},
 		time: function (event) {
 		  return getEventTemplate(event, false);

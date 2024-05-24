@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.service.GroupService;
 import com.avocado.web.util.Util;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import jakarta.annotation.Resource;
@@ -178,6 +180,29 @@ public class GroupAdminController {
 	private @ResponseBody List<Map<String, Object>> grSchedule() {
 		List<Map<String, Object>> scheduleList = groupService.scheduleList();
 		return scheduleList;
+	}
+	
+	
+	//프로그램 참여자 확인
+	@GetMapping("/programEntry")
+	private String programEntry(Model model) {
+		List<GroupDTO> programEntry = groupService.programEntry();
+		model.addAttribute("programEntry", programEntry);
+		
+		return "admin/group/programEntry";
+	}
+	
+	//프로그램별 참여자 확인
+	@RequestMapping(value = "/programEntry", method = {RequestMethod.POST})
+	private @ResponseBody String programEntry(@RequestParam("no") String no){
+		
+		List<Map<String, Object>> entry = groupService.entryList(no);
+		System.out.println(entry);
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String json = gson.toJson(entry);
+		System.out.println(json);
+		return json;
 	}
 	
 	

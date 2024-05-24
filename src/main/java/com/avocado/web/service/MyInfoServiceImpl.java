@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.avocado.web.entity.CslSearchDTO;
+import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.entity.MyinfoDTO;
 import com.avocado.web.entity.UserDTO;
 import com.avocado.web.repository.MyinfoDAO;
@@ -85,58 +85,7 @@ public class MyInfoServiceImpl implements MyInfoService {
 //		
 //	}
 
-	@Override
-	public String getEmail(String email) {
-		System.out.println("emailAuth>getEmail 서비스 : " + email);
-		return myinfoDAO.getEmail(email);
-	}
 
-	@Override
-	public void setKey(UserDTO dto) {
-		System.out.println("emailAuth>setKey 서비스");
-		myinfoDAO.setKey(dto); // 데이터베이스에 키 저장
-
-	}
-
-	@Override
-	public boolean verifyCode(String inputCode, String uid) {
-		System.out.println("verifyCode 서비스 오는지 보자" + inputCode);
-
-		System.out.println("verifyCode 서비스 오는지 보자" + uid);
-		UserDTO user = myinfoDAO.verifyCode(uid);
-
-		if (user != null && user.getUkey().equals(inputCode)) {
-			return true; // 코드가 일치하면 true 반환
-		} else {
-			return false; // 코드가 일치하지 않으면 false 반환
-		}
-	}
-
-	@Override
-	public boolean resetPassword(String newPassword, String uid) {
-
-		 Map<String, Object> params = new HashMap<>();
-		    params.put("newPassword", newPassword);
-		    params.put("uid", uid);
-		    System.out.println("서비스 새비번1"+newPassword);
-		int rowsAffected  = myinfoDAO.resetPassword(params);
-		if (rowsAffected  > 0) {
-			System.out.println("서비스 새비번 성공"+newPassword);
-			// 사용자를 찾은 경우 새로운 비밀번호로 업데이트합니다.
-
-			return true;
-		} else {
-			System.out.println("서비스 새비번 실패"+newPassword);
-			// 사용자를 찾지 못한 경우 비밀번호 변경에 실패합니다.
-			return false;
-		}
-	}
-
-	@Override
-	public List<MyinfoDTO> getMyinfo(String uno) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public int count(int uno) {
@@ -145,9 +94,12 @@ public class MyInfoServiceImpl implements MyInfoService {
 	}
 
 	@Override
-	public List<CslSearchDTO> reservationList(int stud_no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public List<GroupDTO> reservationList (String stud_no) {
+	     return myinfoDAO.reservationList(stud_no);
+	    }
 
+	@Override
+	public int count(int uno) {
+		return myinfoDAO.count(uno);
+	}
 }

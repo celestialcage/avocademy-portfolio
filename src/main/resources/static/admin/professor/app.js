@@ -1,4 +1,4 @@
-/*const csNmInput = document.getElementById("csName");
+const csNmInput = document.getElementById("csName");
 const csLocInput = document.getElementById("csLoc");
 let sessionCno;
 const addSchBtn = document.querySelector('#addSchBtn');
@@ -49,9 +49,9 @@ function addSchedule() {
 		sch_ymd: ,
 		sch_hr: ,
 	};*/
-//}
+}
 
-/* addSchBtn.addEventListener("click", addSchedule);
-*/
+addSchBtn.addEventListener("click", addSchedule);
+
 
 

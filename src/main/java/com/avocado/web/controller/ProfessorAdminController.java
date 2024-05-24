@@ -78,7 +78,7 @@ public class ProfessorAdminController {
 	
 	// 교수 상담일정관리페이지
 	@GetMapping("/psCounselList")
-	public String psCounselList (Model model) {
+	private String psCounselList (Model model) {
 		HttpSession session = util.getSession();
 		List<ProfessorDTO> list = new ArrayList<ProfessorDTO>();
 		String uname = (String)(session.getAttribute("uname"));
@@ -118,19 +118,5 @@ public class ProfessorAdminController {
 		
 		return maps;
 	}
-	
-	@ResponseBody
-	@PostMapping ("/psTimeListAll")
-	public List<Map<String, Object>> psTimeListAll(HttpSession session)  {
-		
-		String uname = (String)session.getAttribute("uname");
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("uname", uname);
-		
-		List<Map<String, Object>> maps = professorService.psTimeListAll(map);
-		
-		return maps;
-	}
-	
-	
+
 }

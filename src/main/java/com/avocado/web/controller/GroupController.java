@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.service.GroupService;
+import com.avocado.web.service.MyInfoServiceImpl;
 import com.avocado.web.util.Util;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import jakarta.annotation.Resource;
@@ -32,6 +31,9 @@ public class GroupController {
 	
 	@Autowired
 	private Util util;
+	
+	@Autowired
+	private MyInfoServiceImpl myInfoService;
 	
 	//프로그램 확인 페이지 (학생)
 	@GetMapping("")
@@ -99,7 +101,7 @@ public class GroupController {
 			//스케줄번호 찾아오기
 			List<Integer> schdlNo = groupService.getSchedulNo(no);
 			
-			//신청테이블에 넣기
+			//신청테이블에 넣기-- 중복검사도 동일하게 여기서 진행... 리턴 메시지 여기서 넣기
 			for(int i = 0; i < schdlNo.size(); i++) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("schdno", schdlNo.get(i));
@@ -110,6 +112,12 @@ public class GroupController {
 				}
 			}
 			//성공시
+			//메일 알림 보내기
+			//메일주소 찾기
+			String email = "hoxy910@gmail.com";
+			//신청번호 주인에게 메일링
+			groupService.sendApplyEmail(email);
+			
 			return successResponse("신청이 완료되었습니다.");
 			
 		} catch (Exception e) {

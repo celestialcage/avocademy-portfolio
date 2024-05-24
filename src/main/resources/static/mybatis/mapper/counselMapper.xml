@@ -111,14 +111,15 @@
 	</select>
 	
 	<select id="findCslScheduleList" parameterType="CslSearchDTO" resultType="PersonalDTO">
-		SELECT aply_no, aply_no_old, GET_CNS_NM(cns_no) AS cns_nm, cns_no, 
+		SELECT aply_no, aply_no_old, 
+			GET_CNS_NM(cns_no) AS cns_nm, GET_CNS_FIELD_NM(cns_no) AS cns_field, cns_no, 
 			GET_STUD_NM(stud_no) AS stud_nm, stud_no, 
-			dscsn_ymd, dscsn_hr, dscsn_stat, sch_no 
+			dscsn_ymd, dscsn_hr, dscsn_stat, dscsn_cn, sch_no 
 		FROM csche_ply 
 		<where>
 			aply_no IS NOT NULL 
 			<if test="cns_no != null">
-				AND cns_no = #{cns_no}
+				AND cns_no = #{cns_no} 
 			</if>
 			<if test="stud_no != null">
 				AND stud_no = #{stud_no}
@@ -150,17 +151,7 @@
 	</select>
 	
 	<update id="updateComment" parameterType="PersonalDTO">
-		UPDATE caply SET dscsn_cn = #{dscsn_cn}, dscsn_stat='CS003' 
-		WHERE aply_no=#{aply_no}
-	</update>
-	
-	<update id="confirmApply" parameterType="PersonalDTO">
-		UPDATE caply SET dscsn_stat='CS002' 
-		WHERE aply_no=#{aply_no}
-	</update>
-	
-	<update id="cancelReservation" parameterType="PersonalDTO">
-		UPDATE caply SET dscsn_stat='CS005' 
-		WHERE aply_no=#{aply_no}
+		UPDATE caply SET dscsn_cn = #{dscsn_cn} 
+		WHERE aply_no = #{aply_no}
 	</update>
 </mapper>
