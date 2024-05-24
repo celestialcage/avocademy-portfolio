@@ -7,7 +7,6 @@ import java.util.Map;
 import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.avocado.web.entity.MyinfoDTO;
 import com.avocado.web.entity.UserDTO;
@@ -45,13 +44,7 @@ public class MyInfoServiceImpl implements MyInfoService {
 		return list;
 	}
 	
-	@Override
-	public int count(int uno) {
-		return myinfoDAO.count(uno);
-	}
-
-	@Override
-	public List<MyinfoDTO> getMyinfo(String uno) {
+	/*public List<MyinfoDTO> getMyinfo(String uno) {
 
 	/*
 	 * @Override public void sendMail(String email, String title, String content)
@@ -71,6 +64,8 @@ public class MyInfoServiceImpl implements MyInfoService {
 	 * 
 	 * }
 	 */
+	
+		
 	@Override
 	public List<MyinfoDTO> getMyinfo(int uno) {
 		return myinfoDAO.getMyinfo(uno);
@@ -109,6 +104,13 @@ public class MyInfoServiceImpl implements MyInfoService {
 
 	@Override
 	public void sendMail(String email, String title, String content) throws EmailException {
+	}
+	
+
+	@Override
+	public List<MyinfoDTO> getMyinfo(String u2no) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
