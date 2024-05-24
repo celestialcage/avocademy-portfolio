@@ -82,14 +82,4 @@ public class CounselServiceImpl implements CounselService {
 		return counselDAO.findCsAppTotalCount(searchDTO);
 	}
 
-	@Override
-	public int updateComment(PersonalDTO ps) {
-		return counselDAO.updateComment(ps);
-	}
-
-	@Override
-	public PersonalDTO findCslSchedule(int aply_no) {
-		return counselDAO.findCslSchedule(aply_no);
-	}
-
 }

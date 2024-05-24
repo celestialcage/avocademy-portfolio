@@ -307,7 +307,7 @@ input:checked + .checkbox {
     <script type="text/javascript">
 	    /*datwpicker*/
 	    jQuery('#datepicker-autoclose').datepicker({
-	    	format: 'yyyy-mm-dd',
+	    	format: 'yyyymmdd',
 	    	startDate: '-d',
 	    	calendarWeeks: true,
 	        autoclose: true,
@@ -317,7 +317,7 @@ input:checked + .checkbox {
 	    
 	    // 날짜 클릭 시 값 selectedDate에 저장
 	    .on('changeDate', function(e){
-	    	selectedDate = e.format('yyyy-mm-dd');
+	    	selectedDate = e.format('yyyymmdd');
 	    	$('#selectedDate').val(selectedDate);
 	    	
 	    	// 해당 날짜에 따른 DB에서 교수상담스케쥴 시간 조회
@@ -333,7 +333,7 @@ input:checked + .checkbox {
 	    			var alreadyTimes = response;
 	    			$('input[name="time"]').prop('checked', false).parent().show();
 	    			alreadyTimes.forEach(function(time){
-	    				$('input[name="time"][value="'+ time.hr + '"]').prop('checked', false).parent().hide();
+	    				$('input[name="time"][value="'+ time.psc_hr + '"]').prop('checked', false).parent().hide();
 	    				console.log(time);
 	    			});
 	    		},

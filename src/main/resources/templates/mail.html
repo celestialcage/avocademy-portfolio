@@ -13,113 +13,24 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script type="text/javascript">
-	//인증번호 전송
 	function emailAuth() {
-		
-		var email = $('#email').val(); // 이메일 입력 값 가져오기
 		$.ajax({
 			url : '/emailAuth',//1,0을 전송시켜보자 rest컨트롤러에 만들자
 			type : 'post',
-			data: { email : email }, // 서버에 전달할 데이터
 			dataType : 'text',
 			success : function(result) {
-				console.log("result",result); // 확인을 위해 result 값 출력
-				if (result == "1") {
+				if (result == 1) {
 					Swal.fire("전송했습니다.", "결과 : " + result, "success");
-					showverifyCode(); // 인증번호 입력 폼 표시
 
 				} else {
-					Swal.fire("Ooops", "문제가 발생했습니다: " + result, "info");
-					
+					Swal.fire("Ooops", "문제가 발생했습니다 : " + error, "info");
+
 				}
 			},
-			 error: function(request, status, error) {
-			      var errorMessage = "오류가 발생했습니다: " + request.responseText;
-			      
-			      Swal.fire("Ooops : 3", errorMessage, "error");
-			     
-			 }
+			error : function(request, status, error) {
+				Swal.fire("Ooops", "문제가 발생했습니다 : " + error, "Error");
+			}
 		});
-	}
-
-	
-	// 인증번호 확인 버튼 클릭 이벤트 핸들러
-	function verifyCode() {
-	    // 인증번호 확인 후 폼 변경
-	    showresetPassword();
-	}
-
-	// 폼 변경 함수
-	function showverifyCode() {
-	    $('#email').prop('disabled', true); // 이메일 입력 비활성화
-	    $('#verifyCode').show(); // 인증번호 입력 폼 표시
-	    $('#resetPassword').hide(); // 비밀번호 변경 폼 숨김
-	}
-
-	function showresetPassword() {
-	    $('#verifyCode').hide(); // 인증번호 입력 폼 숨김
-	    $('#resetPassword').show(); // 비밀번호 변경 폼 표시
-	}
-	
-	
-	//인증번호 확인
-	function verifyCode() {
-		const inputCode = $("#inputCode").val(); // 사용자가 입력한 인증번호
-		
-		
-		if (!inputCode || inputCode.trim() === '') { // 인증번호입력없이 확인하기를 눌렀을 경우 알림
-		    alert("인증번호를 입력해주세요.");
-		    return;
-		  }
-
-	    $.ajax({
-	        url: '/verifyCode',
-	        type: 'post',
-	        data: {inputCode : inputCode },
-	        dataType: 'text',
-	        success: function(isCodeCorrect) {
-	        	if (isCodeCorrect) {
-	        		Swal.fire("인증번호가 일치합니다.", "결과 : " + isCodeCorrect, "success");
-	                showresetPassword();
-	              } else {
-	            	  Swal.fire("Ooops", "인증번호가 일치 하지않습니다. " + isCodeCorrect, "info");
-	                $("#inputCode").focus();
-	              }
-	            },
-	            error: function(request, status, error) {
-	            	 var errorMessage = "오류가 발생했습니다: " + request.responseText;
-	            	Swal.fire("Ooops", errorMessage, "error");
-	            }
-	          });
-	        }
-	
-	
-	
-	// 비밀번호 변경
-	function resetPassword() {
-	    var newPassword = $('#newPassword').val();
-	    //var email = $('#email').val();
-
-	    $.ajax({
-	        url: '/resetPassword',
-	        type: 'post',
-	        data: {newPassword: newPassword },
-	        dataType: 'text',
-	        success: function(response) {
-	            if (response === "1") {
-	                // 비밀번호 변경이 성공한 경우
-	                Swal.fire("비밀번호 변경 완료", "비밀번호가 성공적으로 변경되었습니다.", "success");
-	            } else {
-	                // 비밀번호 변경이 실패한 경우
-	                Swal.fire("Ooops", "비밀번호 변경에 실패했습니다.", "info");
-	            }
-	        },
-	        error: function(request, status, error) {
-	            // 오류 발생 시
-	        	 var errorMessage = "오류가 발생했습니다: " + request.responseText;
-	            	Swal.fire("Ooops", errorMessage, "error");
-	        }
-	    });
 	}
 </script>
 
@@ -149,35 +60,30 @@ main {
 					<h2 class="text-center text-uppercase text-primary mb-4">mail</h2>
 					<div class="d-flex justify-content-center">
 						<div class="text-center">
-							<!-- <form action="/mail" method="post"> -->
-								<label for="email">Email:</label> 
-								<input type="email" id="email" name="email" required> <br>
-								<!--  <input type="hidden" id="key" name="key">  -->
+							<form action="/mail" method="post">
+								<label for="email">Email:</label> <input type="email" id="email"
+									name="email" required> <br>
+								 <input type="hidden" id="key" name="key">
 								<button onclick="emailAuth()">인증번호 요청하기</button>
-							<!-- </form> -->
-
-							<br>
-							<div id="verifyCode" style="display: none;">
-       						<input type="text" id="inputCode" placeholder="인증번호를 입력해주세요">
-        					<button onclick="verifyCode()">인증번호 확인</button>
-    						</div>
-
-							<br>
-
-							<form id="resetPassword" style="display: none;">
-								<label for="newPassword">새로운 비밀번호:</label> 
-								<input type="password" id="newPassword" name="newPassword" required>
-								<button type="button" onclick="resetPassword()">비밀번호 변경</button>
 							</form>
 
+							<br>
+
+							<form id="verificationForm" style="display: block;">
+								<label for="verificationCode">인증번호:</label> 
+								<input type="text" id="verificationCode" name="verificationCode" required>
+								<button type="button" onclick="verifyCode()">확인</button>
+							</form>
 							<div id="message" style="margin-top: 10px;"></div>
+
+
 
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
+		
 		<!-- 본문 끝 -->
 	</main>
 	<!-- FOOTER -->

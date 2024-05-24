@@ -11,16 +11,16 @@
 	</insert>
 	
 	<select id="psSchedule" parameterType="String" resultType="ProfessorDTO">
-		SELECT psc_no, ps_no, ymd, hr, GET_CD_NM('CO0010', hr) AS hr_nm FROM psschedule WHERE ps_no = (SELECT ps_no FROM professor WHERE user_no = (SELECT uno FROM user WHERE uname=#{uname}));
+		SELECT psc_no, ps_no, psc_ymd, psc_hr, GET_CD_NM('CO0010', psc_hr) AS hr_nm FROM psschedule WHERE ps_no = (SELECT ps_no FROM professor WHERE user_no = (SELECT uno FROM user WHERE uname=#{uname}));
 	</select>
 	
 	<select id="getAll" parameterType="Map" resultType="Map">
-    	SELECT psc_no, ps_no, ymd, hr, GET_CD_NM('CO0010', hr) AS hr_nm FROM psschedule WHERE ymd = #{selectedDate} AND psc_reserved = '0' 
+    	SELECT psc_no, ps_no, psc_ymd, psc_hr, GET_CD_NM('CO0010', psc_hr) AS hr_nm FROM psschedule WHERE psc_ymd = #{selectedDate} AND psc_reserved = '0' 
     	AND ps_no = (SELECT ps_no FROM professor WHERE scsbjt_cd = (SELECT scsbjt_cd FROM student WHERE user_no = (SELECT uno FROM user WHERE uname = #{uname})));
 	</select>
 	
 	<update id="pscReserved" parameterType="Map">
-		UPDATE psschedule SET psc_reserved = '1' WHERE ymd = #{date} AND hr = #{time} AND psc_no = #{psc_no};
+		UPDATE psschedule SET psc_reserved = '1' WHERE psc_ymd = #{date} AND psc_hr = #{time} AND psc_no = #{psc_no};
 	</update>
 	
 	<select id="professorInfo" parameterType="String" resultType="ProfessorDTO">
@@ -28,7 +28,7 @@
 	</select>
 	
 	<insert id="registPsCounsel" parameterType="Map">
-		INSERT INTO psschedule (ps_no, ymd, hr)
+		INSERT INTO psschedule (ps_no, psc_ymd, psc_hr)
     SELECT 
         (SELECT ps_no FROM professor WHERE ps_nm = #{psName}), 
         #{selectedDate}, 
@@ -37,8 +37,8 @@
         SELECT 1 
         FROM psschedule 
         WHERE ps_no = (SELECT ps_no FROM professor WHERE ps_nm = #{psName}) 
-        AND ymd = #{selectedDate} 
-        AND hr = #{times}
+        AND psc_ymd = #{selectedDate} 
+        AND psc_hr = #{times}
     );
 	</insert>
 	
@@ -53,6 +53,10 @@
 	</update>
 	
 	<select id="psTimeList" parameterType="Map" resultType="Map">
-		SELECT a.psc_no, a.ps_no, a.ymd, a.hr FROM psschedule a JOIN ps_user b ON a.ps_no = b.ps_no WHERE ymd = #{selectedDate} AND uname = #{uname}
+		SELECT a.psc_no, a.ps_no, a.psc_ymd, a.psc_hr FROM psschedule a JOIN ps_user b ON a.ps_no = b.ps_no WHERE psc_ymd = #{selectedDate} AND uname = #{uname}
+	</select>
+	
+	<select id="psTimeListAll" parameterType="Map" resultType="Map">
+		SELECT a.psc_no, a.ps_no, a.psc_ymd, a.psc_hr FROM psschedule a JOIN ps_user b ON a.ps_no = b.ps_no WHERE uname = #{uname}
 	</select>
 </mapper>

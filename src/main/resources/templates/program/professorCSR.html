@@ -324,7 +324,7 @@
     	  
       // full-calendar 생성하기      
       var calendar = new FullCalendar.Calendar(calendarEl, {
-        height: '700px', // calendar 높이 설정        
+        height: '400px', // calendar 높이 설정        
         expandRows: true, // 화면에 맞게 높이 재설정        
         //slotMinTime: '09:00', // Day 캘린더에서 시작 시간        
         //slotMaxTime: '17:50', // Day 캘린더에서 종료 시간        
@@ -352,10 +352,14 @@
         },
 		
         dateClick: function (info) {
-          var selectedDate = info.dateStr; // 클릭한 날짜 정보 획득
-          console.log(selectedDate);
-          //나루토 나씨 나모바지 스폰지밥씨 나모를 찾아서 나선환 어디갔어 줄여야해 건강에 안좋아 그치만 존중
+          var selectedDate1 = info.dateStr; // 클릭한 날짜 정보 획득
+          
+          console.log(selectedDate1);
+          
+          // 날짜 형식 yyyy-mm-dd -> yyyymmdd 로 변환하기
+          var selectedDate = selectedDate1.replace(/-/g, '');
 
+          console.log(selectedDate);
           var selectedTime;
           // 해당 날짜의 이벤트 정보 획득
 
@@ -390,7 +394,7 @@
                 $.each(timeList, function (index, time) {
                   // 각 시간별 라디오 버튼 생성
                   var radioId = 'time' + index; // 유니크한 ID 생성
-                  var radioBtn = $('<input type="radio" class="form-check-input" name="selectedTime" value="' + time.hr + '" id="' + radioId + '" required>');
+                  var radioBtn = $('<input type="radio" class="form-check-input" name="selectedTime" value="' + time.psc_hr + '" id="' + radioId + '" required>');
                   var label = $('<label class="form-check-label" for="' + radioId + '"><span>' + time.hr_nm + '</span></label>');
                   
                   

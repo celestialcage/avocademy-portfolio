@@ -33,6 +33,9 @@ public class MyInfoController {
 	
 	@Autowired
 	private MyInfoServiceImpl myInfoService;
+	
+	@Autowired
+	private SecureInfo secureInfo;
 
 	
 	//마이페이지 이동
