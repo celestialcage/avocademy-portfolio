@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.avocado.web.entity.CslSearchDTO;
 import com.avocado.web.entity.MyinfoDTO;
 import com.avocado.web.entity.UserDTO;
 
