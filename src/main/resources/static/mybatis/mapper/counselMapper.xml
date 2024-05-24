@@ -151,7 +151,17 @@
 	</select>
 	
 	<update id="updateComment" parameterType="PersonalDTO">
-		UPDATE caply SET dscsn_cn = #{dscsn_cn} 
-		WHERE aply_no = #{aply_no}
+		UPDATE caply SET dscsn_cn = #{dscsn_cn}, dscsn_stat='CS003' 
+		WHERE aply_no=#{aply_no}
+	</update>
+	
+	<update id="confirmApply" parameterType="PersonalDTO">
+		UPDATE caply SET dscsn_stat='CS002' 
+		WHERE aply_no=#{aply_no}
+	</update>
+	
+	<update id="cancelReservation" parameterType="PersonalDTO">
+		UPDATE caply SET dscsn_stat='CS005' 
+		WHERE aply_no=#{aply_no}
 	</update>
 </mapper>

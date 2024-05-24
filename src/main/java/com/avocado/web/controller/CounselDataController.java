@@ -131,4 +131,22 @@ public class CounselDataController {
 		
 		return list;
 	}
+	
+	// 승인 버튼 메소드
+	@PostMapping("appointment-confirm")
+	public String confirmApply(@RequestBody PersonalDTO ps) {
+		JsonObject json = new JsonObject();
+		int result = counselService.confirmApply(ps);
+		json.addProperty("result", result);
+		return json.toString();
+	}
+	
+	// 취소 버튼 메소드
+	@PostMapping("appointment-cancel")
+	public String cancelReservation(@RequestBody PersonalDTO ps) {
+		JsonObject json = new JsonObject();
+		int result = counselService.cancelReservation(ps);
+		json.addProperty("result", result);
+		return json.toString();
+	}
 }

@@ -38,4 +38,8 @@ public interface CounselService {
 
 	PersonalDTO findCslSchedule(int str2Int);
 
+	int confirmApply(PersonalDTO ps);
+
+	int cancelReservation(PersonalDTO ps);
+
 }
