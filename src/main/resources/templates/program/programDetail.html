@@ -23,6 +23,7 @@
   	margin: 15px;
   	padding: 10px;
   }
+  
   .pageText {
   	
   }
@@ -52,11 +53,12 @@
 			      			<h5 class="card-title mx-4" th:text="${detail.prg_nm}"></h5>
 			      			<hr>
 			      			<div class="programInfo">
-			      				<table class="table">
+			      				<table class="table text-center">
 			      					<thead>
 			      						<tr>
 			      							<th>정원</th>
-			      							<th colspan="2">일정</th>
+			      							<th>기간</th>
+			      							<th>일시</th>
 			      							<th>장소</th>
 			      						</tr>
 			      					</thead>
@@ -76,7 +78,9 @@
 			      		</div>
 			      	</div>
 			      </article>
-				  <button id="apply" th:attr="onclick=|programApply('${detail.prg_no}', '${detail.prg_nm}')|">신청하기</button>
+			      <div class="m-2">
+					  <button class="btn btn-outline-secondary" id="apply" th:attr="onclick=|programApply('${detail.prg_no}', '${detail.prg_nm}')|">신청하기</button>
+			      </div>
 			    </div>
 
 			</div>
