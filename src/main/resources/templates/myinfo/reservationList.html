@@ -4,7 +4,7 @@
 <th:block th:insert="~{./fragments.html :: headTag}"></th:block>
 
 <meta charset="UTF-8">
-<title>상담 예약 목록</title>
+<title>마이 페이지</title>
 
 <!-- 추가 script -->
 <link
@@ -62,70 +62,50 @@ main {
          <script defer src="/index/js/sidebars.js"></script>
 
 
-			<div class="flex-container">
-				<div class="menu">
-					<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary">
-						<a href="/counselingGuide"
-							class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-							<svg class="bi pe-none me-2" width="40" height="32">
-                        <use xlink:href="#bootstrap" /></svg> <span
-							class="fs-4">마이페이지</span>
-						</a>
-						<hr>
-						<div>
-							<ul class="nav nav-pills flex-column mb-auto">
-								<li class="nav-item"><a href="/myInfo"
-									class="nav-link link-body-emphasis"
-									th:classappend="${currentPage == 'myInfo'} ? 'active'"> <svg
-											class="bi pe-none me-2" width="16" height="16">
+    <div class="flex-container">
+        <div class="menu">
+            <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary">
+                <a href="/counselingGuide"
+                    class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                    <svg class="bi pe-none me-2" width="40" height="32">
+                        <use xlink:href="#bootstrap" /></svg> 
+                        <span class="fs-4">마이페이지</span>
+                </a>
+                <hr>
+                <div>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                        	<a href="/myInfo" class="nav-link link-body-emphasis" th:classappend="${currentPage == 'myInfo'} ? 'active'">
+                            	<svg class="bi pe-none me-2" width="16" height="16">
                                 	<use xlink:href="#home" /></svg> 내가 쓴 글 목록
-								</a></li>
-								<li class="nav-item"><a href="/reservationList"
-									class="nav-link link-body-emphasis"
-									th:classappend="${currentPage == 'reservationList'} ? 'active'">
-										<svg class="bi pe-none me-2" width="16" height="16">
-                               	 <use xlink:href="#speedometer2" /></svg> 상담
-										예약 목록
-								</a></li>
-								<li class="nav-item"><a href="/testList"
-									class="nav-link link-body-emphasis"
-									th:classappend="${currentPage == 'unknown'} ? 'active'"> <svg
-											class="bi pe-none me-2" width="16" height="16"></svg> ????
-								</a></li>
-								<li class="nav-item"><a href="/profileEdit"
-									class="nav-link link-body-emphasis"
-									th:classappend="${currentPage == 'profileEdit'} ? 'active'">
-										<svg class="bi pe-none me-2" width="16" height="16">
+                        	</a>
+                        </li>
+                        <li class="nav-item">
+                        	<a href="/reservationList" class="nav-link link-body-emphasis" th:classappend="${currentPage == 'reservationList'} ? 'active'">
+                            	<svg class="bi pe-none me-2" width="16" height="16">
+                               	 <use xlink:href="#speedometer2" /></svg> 상담 예약 목록
+                        	</a>
+                        </li>
+                        <li class="nav-item">
+                        	<a href="/testList" class="nav-link link-body-emphasis" th:classappend="${currentPage == 'unknown'} ? 'active'">
+                            	<svg class="bi pe-none me-2" width="16" height="16"></svg> ????
+                        	</a>
+                        </li>
+                        <li class="nav-item">
+                        	<a href="/profileEdit" class="nav-link link-body-emphasis" th:classappend="${currentPage == 'profileEdit'} ? 'active'">
+                            	<svg class="bi pe-none me-2" width="16" height="16">
                                 	<use xlink:href="#grid" /></svg> 개인정보 수정
-								</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div>
-					<h1>상담 예약 목록</h1>
+                        	</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+     <div>
+     	<h1>상담 예약 목록</h1>
+     </div>
+        </div>
 
-					<table>
-						<thead>
-							<tr>
-								<th>번호</th>
-				                <th>프로그램 이름</th>
-				                <th>예약 날짜</th>
-				                <th>시간</th>
-				                <th>장소</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="reservation : ${reservations}">
-								 <td th:text="${reservation.prgNo}"></td>
-					             <td th:text="${reservation.prgNm}"></td>
-					             <td th:text="${reservation.prgYmd}"></td>
-					             <td th:text="${reservation.prgHr}"></td>
-					             <td th:text="${reservation.prgPlace}"></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-	</body>
+
+</body>
 </html>

@@ -40,14 +40,6 @@ public interface GroupService {
 	void closePRG(int prg_no);
 
 	GroupDTO adminDetail(int no);
-
-	List<GroupDTO> programEntry();
-
-	List<Map<String, Object>> entryList(String no);
-
-	String aplyNo();
-
-	void sendApplyEmail(String email);
 	
 
 }

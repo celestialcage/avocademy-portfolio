@@ -102,9 +102,6 @@ main {
             </div>
         </div>
         <div class="table-container">
-        
-        <th:block th:if="${#lists.size(list) == 0}">작성하신 글이 없습니다</th:block>
-        	<th:block th:unless="${#lists.size(list) == 0}">
             <table class="table">
                 <thead>
                     <tr>
@@ -127,8 +124,6 @@ main {
                     </tr>
                 </tbody>
             </table>
-            
-            </th:block>
         </div>
         
         

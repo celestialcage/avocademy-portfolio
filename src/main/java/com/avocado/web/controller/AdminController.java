@@ -7,12 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.avocado.web.entity.CslSearchDTO;
 import com.avocado.web.entity.PersonalDTO;
@@ -89,8 +85,8 @@ public class AdminController {
 		return "admin/tui-calendar";
 	}
 	
-	@GetMapping("/appointment")
-	public String appointment(@RequestParam(name="page", defaultValue = "1") String page, 
+	@GetMapping("/appointments")
+	public String appointments(@RequestParam(name="page", defaultValue = "1") String page, 
 			@RequestParam(name="stud_no", required = false) String stud_no, 
 			Model model) {
 		HttpSession session = util.getSession();
@@ -126,42 +122,7 @@ public class AdminController {
 		model.addAttribute("page", util.str2Int(page));
 		model.addAttribute("stud_no", stud_no);
 		
-		return "admin/appointment";
-	}
-	
-	@GetMapping("/appointment-detail")
-	@ResponseBody
-	public PersonalDTO appointmentDetail(@RequestParam(name="aply_no") String aply_no) {
-		PersonalDTO ps = counselService.findCslSchedule(util.str2Int(aply_no));
-		return ps;
-	}
-	
-	@GetMapping("/comment@{aply_no}")
-	public String commentAppointment(@PathVariable(name="aply_no") String aply_no, Model model) {
-		model.addAttribute("aply_no", aply_no);
-		return "admin/appointment-comment";
-	}
-	@GetMapping("/update-comment@{aply_no}")
-	public String updateComment(@PathVariable(name="aply_no") String aply_no, Model model) {
-		
-		PersonalDTO ps = new PersonalDTO();
-		ps = counselService.findCslSchedule(util.str2Int(aply_no));
-		
-		model.addAttribute("aply_no", aply_no);
-		model.addAttribute("dto", ps);
-		
-		return "admin/appointment-update-comment";
-	}
-	
-	@PostMapping("/comment")
-	public String writeAppComment(@RequestParam(name="aply_no") String aply_no, @RequestParam(name="dscsn_cn") String dscsn_cn) {
-		// ajax로 dto.. 받아올것같다 아니었다
-		PersonalDTO ps = new PersonalDTO();
-		ps.setAply_no(util.str2Int(aply_no));
-		ps.setDscsn_cn(dscsn_cn);
-		int result = counselService.updateComment(ps);
-		
-		return "redirect:/admin/appointment";
+		return "admin/appointments";
 	}
 	
 }

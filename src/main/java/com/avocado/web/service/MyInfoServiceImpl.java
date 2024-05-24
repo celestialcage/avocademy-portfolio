@@ -149,5 +149,12 @@ public class MyInfoServiceImpl implements MyInfoService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+
+	@Override
+	public List<MyinfoDTO> getMyinfo(String u2no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
