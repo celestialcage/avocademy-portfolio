@@ -123,6 +123,7 @@ public class IndexController {
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("pageNo", pageNo);
 		
+		 // 페이지 번호와 한 페이지당 글 개수를 이용하여 목록을 가져옴
 		List<CommunityDTO> list = communityService.community(pageNo, post);
 		
 		//System.out.println("인덱스 컨트롤러 확인하자 : " +  list);
@@ -130,6 +131,12 @@ public class IndexController {
 		model.addAttribute("list", list);
 		model.addAttribute("pageNo", pageNo);
 		
+		// 각 게시물의 조회수 설정
+	    for (CommunityDTO count : list) {
+	        // 게시물의 조회수 설정
+	        int cread = communityService.getCount(count.getCno());
+	        count.setCread(cread);
+	    }
 				
 		return "community";
 	}
