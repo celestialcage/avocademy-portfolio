@@ -58,7 +58,17 @@
 		ORDER BY gaply_no DESC LIMIT 1;
 	</select>
 	
+	<select id="getTime" parameterType="Integer" resultType="Map">
+		SELECT prg_ymd, prg_hr 
+		FROM groupSchedule_view 
+		WHERE GRSCH_NO = #{scheNo}
+	</select>
 	
+	<select id="checkTotalSchdl" parameterType="Map" resultType="int">
+		SELECT COUNT(*) 
+		FROM totalSchedule
+		WHERE ymd=#{prg_ymd} AND hr=#{prg_hr}  AND stud_no = #{stud_no}
+	</select>
 	
 	
 	

@@ -197,7 +197,7 @@ public class GroupAdminController {
 	private @ResponseBody String programEntry(@RequestParam("no") String no){
 		
 		List<Map<String, Object>> entry = groupService.entryList(no);
-		System.out.println(entry);
+		//System.out.println(entry);
 		
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String json = gson.toJson(entry);

@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.avocado.web.entity.GroupDTO;
+import com.avocado.web.entity.MailDTO;
 import com.avocado.web.service.GroupService;
+import com.avocado.web.service.MailService;
+import com.avocado.web.service.MailServiceImpl;
 import com.avocado.web.service.MyInfoServiceImpl;
 import com.avocado.web.util.Util;
 import com.google.gson.JsonObject;
@@ -33,7 +36,7 @@ public class GroupController {
 	private Util util;
 	
 	@Autowired
-	private MyInfoServiceImpl myInfoService;
+	private MailServiceImpl mailService;
 	
 	//프로그램 확인 페이지 (학생)
 	@GetMapping("")
@@ -67,7 +70,7 @@ public class GroupController {
 	
 	//프로그램 신청(학생)
 	
-	//중복 스케줄 검사
+	//동일 프로그램 중복신청 여부 검사
 	@GetMapping("/programApply")
 	public @ResponseBody String programApply(@RequestParam("no") String no) {
 		
@@ -100,23 +103,38 @@ public class GroupController {
 		try {
 			//스케줄번호 찾아오기
 			List<Integer> schdlNo = groupService.getSchedulNo(no);
+			//전체 스케줄 중복검사
+			Map<String, Object> checkTime = null;
+			for (int i = 0; i < schdlNo.size(); i++) {
+				checkTime = groupService.getTime(schdlNo.get(i));
+				checkTime.put("stud_no", stud_no);
+				int checkCount = groupService.checkTotalSchedule(checkTime);
+				
+				//중복시 에러 리턴
+				if (checkCount > 0) {
+					return errorResponse("중복된 스케줄이 이미 존재합니다.");
+				}
+			}
 			
-			//신청테이블에 넣기-- 중복검사도 동일하게 여기서 진행... 리턴 메시지 여기서 넣기
+			//신청테이블에 넣기
 			for(int i = 0; i < schdlNo.size(); i++) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("schdno", schdlNo.get(i));
 				map.put("stud_no", stud_no);
 				int result = groupService.apply(map);
 				if (result == 0) {
-					return errorResponse("스케줄 번호 " + schdlNo + "에 대한 신청이 실패하였습니다.");
+					return errorResponse("스케줄 번호 " + schdlNo + "에 대한 신청이 실패하였습니다. 관리자에게 문의하세요.");
 				}
 			}
 			//성공시
 			//메일 알림 보내기
-			//메일주소 찾기
-			String email = "hoxy910@gmail.com";
-			//신청번호 주인에게 메일링
-			groupService.sendApplyEmail(email);
+			String uid = (String) session.getAttribute("uid");
+			GroupDTO gdto = groupService.programDetail(no);
+			MailDTO mdto = new MailDTO();
+			mdto.setEmail(mailService.getEmail(uid));
+			mdto.setCounselType("집단상담(" + gdto.getPrg_cd() + ") ");
+			mdto.setMessage(gdto.getPrg_schdl() + " 매주 " + gdto.getPrg_dow() + "요일 " + gdto.getPrg_hr() + "\n" + gdto.getPrg_nm() + " 프로그램 참여 예약이 완료되었습니다.");		
+			mailService.sendApplyEmail(mdto);
 			
 			return successResponse("신청이 완료되었습니다.");
 			
