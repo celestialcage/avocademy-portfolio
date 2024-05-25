@@ -29,6 +29,8 @@ public interface CommunityService {
 
 	int getCount(int cno);
 
+	void countUp(Integer cno);
+
 	
 
 

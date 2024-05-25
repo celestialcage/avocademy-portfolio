@@ -59,13 +59,19 @@
     </select>
     
     <update id="saveComment" parameterType="Map">
-		update community set comment = #{ccontent}
-		where CNO = #{cno} 
+		update community set cread = #{cread+1}
+		where cno = #{cno} 
 	</update>
 	
 	<select id="getCount" resultType="int">
-        SELECT count FROM community WHERE cno = #{cno}
+        SELECT cread FROM community WHERE cno = #{cno}
     </select>
+    
+    <!-- communityMapper.xml -->
+<update id="countUp">
+    UPDATE community SET cread = #{cread+1} WHERE cno = #{cno}
+</update>
+    
 	
     
     

@@ -70,14 +70,11 @@ public class CommunityController {
 		if (session.getAttribute("uname") == null) {
 			// return "redirect:/community";
 			return "redirect:/login";
-		} else if (detail.getUname().equals(session.getAttribute("uname"))
-				|| (int) session.getAttribute("ugrade") == 5) {
+		} else {
 			model.addAttribute("detail", detail);
 			System.out.println("디테일 컨트롤러 :" + detail);
 
 			return "community/detail";
-		} else {
-			return "redirect:/community";
 		}
 	}
 

@@ -171,6 +171,12 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityDAO.getCount(cno);
 	}
 
+	@Override
+	public void countUp(Integer cno) {
+		communityDAO.countUp(cno);
+		
+	}
+
 
 
 	

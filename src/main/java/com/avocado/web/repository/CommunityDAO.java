@@ -37,6 +37,8 @@ public interface CommunityDAO {
 	int getFileNo();
 
 	int getCount(int cno);
+
+	void countUp(Integer cno);
 	
 
 }
