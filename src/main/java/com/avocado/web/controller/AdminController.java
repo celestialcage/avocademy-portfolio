@@ -85,7 +85,7 @@ public class AdminController {
 		return "admin/tui-calendar";
 	}
 	
-	@GetMapping("/appointments")
+	@GetMapping("/appointment")
 	public String appointments(@RequestParam(name="page", defaultValue = "1") String page, 
 			@RequestParam(name="stud_no", required = false) String stud_no, 
 			Model model) {
@@ -122,7 +122,7 @@ public class AdminController {
 		model.addAttribute("page", util.str2Int(page));
 		model.addAttribute("stud_no", stud_no);
 		
-		return "admin/appointments";
+		return "admin/appointment";
 	}
 	
 }

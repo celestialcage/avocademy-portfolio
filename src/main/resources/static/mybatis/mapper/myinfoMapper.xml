@@ -2,36 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.avocado.web.repository.MyinfoDAO">
 
-	<select id="myinfo" resultType="MyinfoDTO" parameterType="Map">
-		SELECT bno, btitle,bcontent, bdate, secret, commentYN, comment, bdel, uname
-		FROM onlineview 
-		WHERE uno = #{uno} and bdel = '1' 
-		ORDER BY bno DESC 
-		LIMIT #{pageNo}, #{post};  
-	</select>
-	 
-	 <select id="getMyinfo" parameterType="String" resultType="MyinfoDTO">
-      SELECT o.uid, o.btitle, o.bcontent, o.bdate, o.commentYN,o.bdel
-		FROM onlineview o 
-		join user u on o.uid = u.uid
-		WHERE o.uid = (select uid from user where uid = {#uid})
-		ORDER BY o.bdate DESC;
-    </select>
+   <select id="myinfo" resultType="MyinfoDTO" parameterType="Map">
+      SELECT bno, btitle, bcontent, bdate, commentYN, comment, bdel
+      FROM onlineview
+      WHERE uno = #{uno} and bdel = '1' 
+      ORDER BY bno DESC 
+      LIMIT #{pageNo}, #{post};  
+   </select>
     
-    
-    <select id="count" parameterType="Integer" resultType="Integer">
-		select count(*) from online
-		where user_no = #{uno} and bdel = "1" ;
-	</select>
-	
-		<select id = "getEmail" parameterType="String" resultType="String">
-		SELECT uemail FROM user WHERE uid=#{id}
-	</select>
-	
-	<update id="setKey" parameterType="UserDTO">
-		UPDATE user SET ukey=#{ukey} WHERE uid=#{uid} AND uemail=#{uemail}
-	</update>
-	
-	
+  <select id="getMyinfo" parameterType="String" resultType="MyinfoDTO">
+      SELECT o.uid, o.btitle, o.bcontent, o.bdate, o.commentYN, o.bdel, u.uid
+      FROM onlineview o
+      join user u on o.uid = u.uid
+      WHERE o.uid = {#uid}
+      ORDER BY o.bdate DESC;
+   </select>
+
+   <select id="count" parameterType="Integer" resultType="Integer">
+      select
+      count(*) from online
+      where user_no = #{uno} and bdel = "1" ;
+   </select>
+   
+   <select id = "getEmail" parameterType="String" resultType="String">
+      SELECT uemail FROM user WHERE uid=#{id}
+   </select>
+
+   <update id="setKey" parameterType="UserDTO">
+      UPDATE user SET ukey=#{ukey}
+      WHERE uid=#{uid} AND uemail=#{uemail}
+   </update>
+   
+   <select id="verifyCode" parameterType="UserDTO" resultType="UserDTO">
+      SELECT ukey
+      FROM user
+      WHERE uid = #{uid}
+      LIMIT 1
+   </select>
+
+   <update id="resetPassword" parameterType="map">
+      UPDATE user
+      SET upw = #{newPassword}
+      WHERE uid = #{uid}
+   </update>
+   
+   <select id= "reservationList"  parameterType="String" resultType="CslSearchDTO">
+      SELECT
+          gp.PRG_NO as prgNo,
+            gp.PRG_NM as prgNm,
+            gs.PRG_YMD as prgYmd,
+            gs.PRG_HR as prgHr,
+            gp.PRG_PLACE as prgPlace
+        FROM graply ga
+        JOIN grschedule gs ON ga.grsch_no = gs.GRSCH_NO
+        JOIN grprograms gp ON gs.PRG_NO = gp.PRG_NO
+        WHERE ga.stud_no = #{stud_no}
+        GROUP BY gp.PRG_NO, gp.PRG_NM, gs.PRG_YMD, gs.PRG_HR, gp.PRG_PLACE
+        ORDER BY gp.PRG_NO;
+      
+   </select>
+
+
 
 </mapper>
