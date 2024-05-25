@@ -13,7 +13,7 @@ public interface ProfessorService {
 	int savePs(Map<String, Object> map);
 
 
-	List<ProfessorDTO> psSchedule(String uname);
+	List<ProfessorDTO> psSchedule(ProfessorDTO pf);
 
 	int pscReserved(Map<String, Object> map2);
 
@@ -21,7 +21,7 @@ public interface ProfessorService {
 	List<Map<String, Object>> getAll(Map<String, Object> map);
 
 
-	List<ProfessorDTO> professorInfo(String uname);
+	List<ProfessorDTO> professorInfo(int uno);
 
 
 	int registPsCounsel(Map<String, Object> map);
@@ -34,9 +34,6 @@ public interface ProfessorService {
 
 
 	List<Map<String, Object>> psTimeList(Map<String, Object> map);
-
-
-	List<Map<String, Object>> psTimeListAll(Map<String, Object> map);
 
 
 

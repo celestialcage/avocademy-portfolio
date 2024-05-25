@@ -1,6 +1,7 @@
 (function(Calendar) {
 	// const Calendar = tui.Calendar;
 	const container = document.getElementById('calendar');
+	
 	const options = {
 	  gridSelection: {
 		enableDblClick: false,
@@ -26,22 +27,20 @@
 	      },
 	    ],
 	  },
-	  calendars: COUNSEL_CALENDARS,
+	  calendars: [{
+      id: pno.value, // 1 블베빔
+      name: '지도교수',
+      color: '#ffffff',
+      borderColor: '#9e5fff',
+      backgroundColor: '#9e5fff',
+      dragBackgroundColor: '#9e5fff',
+    }],
 	   month: {
 	     visibleWeeksCount: 0,
-				workweek: false,
-				narrowWeekend: true,
-				dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+		workweek: false,
+		narrowWeekend: true,
+		dayNames: ['일', '월', '화', '수', '목', '금', '토'],
 	   },
-	//  week: {
-    //     workweek: false,
-	//	   narrowWeekend: true,
-	//      eventView: true,
-	//      taskView: false,
-	//      hourStart: 9, 
-	//      hourEnd: 18, 
-	//      dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-	//  },
 	  template: {
 		popupDetailTitle({ title }) {
 			return title;
@@ -62,7 +61,7 @@
 			return "삭제";
 		},
 		allday: function (event) {
-		  return getEventTemplate(event, false);
+		  return getEventTemplate(event, true);
 		},
 		time: function (event) {
 		  return getEventTemplate(event, false);

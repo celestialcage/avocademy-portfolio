@@ -117,27 +117,20 @@
                                         <td class="stud_no align-middle text-center">[[|${apply.stud_nm}(${apply.stud_no})|]]</td>
                                         <td th:text="${apply.dscsn_ymd}" class="dscsn_ymd align-middle text-center"></td>
                                         <td th:text="${apply.dscsn_hr}" class="dscsn_hr align-middle text-center"></td>
-                                        <td class="stud_no align-middle text-center">
-                                        	<span th:if="${apply.dscsn_nmtm == 0}">-</span>
-                                        	<span th:unless="${apply.dscsn_nmtm == 0}">[[${apply.dscsn_nmtm}]]</span>
-                                        </td>
+                                        <td th:text="${apply.dscsn_hr}" class="dscsn_hr align-middle text-center"></td>
                                         <!-- <td class="stud_no align-middle text-center">
                                         	<span th:if="${apply.aply_no_old == 0}">-</span>
                                         	<span th:unless="${apply.aply_no_old == 0}">[[${apply.aply_no_old}]]</span>
                                         </td> -->
                                         <td class="dscsn_stat align-middle text-center">
                                         	<div class="dropdown">
-											  <button class="btn btn-light dropdown-toggle" 
-											  		  type="button" style="width:90px" 
-											  		  data-bs-toggle="dropdown" 
-											  		  aria-expanded="false">
-											    신청&nbsp;&nbsp;&nbsp;
+											  <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+											    Dropdown button
 											  </button>
 											  <ul class="dropdown-menu">
-											    <li><a class="dropdown-item" href="#">예약</a></li>
-											    <li><a class="dropdown-item" href="#">완료</a></li>
-											    <li><a class="dropdown-item" href="#">미진행</a></li>
-											    <li><a class="dropdown-item" href="#">취소</a></li>
+											    <li><a class="dropdown-item" href="#">Action</a></li>
+											    <li><a class="dropdown-item" href="#">Another action</a></li>
+											    <li><a class="dropdown-item" href="#">Something else here</a></li>
 											  </ul>
 											</div>
                                         </td>
@@ -147,11 +140,9 @@
                                         	<h5 th:if="${apply.dscsn_stat == '취소'}" class="badge" style="background-color:#ffafcc">취소</h5>
                                         	<button th:if="${apply.dscsn_stat == '신청'}" 
                                         		th:id="|confirmBtn${apply.aply_no}|" 
-                                        		th:onclick="|confirmApply('${apply.aply_no}')|"
                                         		class="confirmBtn btn btn-success text-white align-middle">승인</button>
                                         	<button th:if="${apply.dscsn_stat == '예약'}" 
                                         		th:id="|confirmBtn${apply.aply_no}|" 
-                                        		th:onclick="|cancelReservation('${apply.aply_no}')|"
                                         		class="confirmBtn btn btn-danger text-white align-middle">취소</button>
                                      	</td>
                                      	<td class="dscsn_cn align-middle text-center">
@@ -167,35 +158,19 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            
-                            <!-- 페이징 -->
-                            <div class="pagingDiv">
                             <nav aria-label="Page navigation example">
 							  <ul class="pagination justify-content-center">
-							    <li class="page-item">
-							      <a class="page-link"
-							         th:href="${page - 10 < 1} ? './appointment?page=1' : './appointment?page=' + (page - 10)"
-							         th:attr="aria-label='Previous'"
-							         th:classappend="${page - 10 < 1} ? 'disabled' : ''">
-							      	<span aria-hidden="true">&laquo;</span>
-							      </a>
+							    <li class="page-item disabled">
+							      <a class="page-link">Previous</a>
 							    </li>
-							    <li th:each="p : ${#numbers.sequence(startPage, endPage)}"
-							    	th:classappend="${page == p} ? 'active' : ''" 
-							    	class="page-item">
-							    	<a class="page-link" 
-							    	   th:href="'./appointment?page=' + ${p}"
-							    	   th:text="${p}">1</a></li>
+							    <li class="page-item"><a class="page-link" href="#">1</a></li>
+							    <li class="page-item"><a class="page-link" href="#">2</a></li>
+							    <li class="page-item"><a class="page-link" href="#">3</a></li>
 							    <li class="page-item">
-							      <a class="page-link" 
-							         th:href="${page + 10 > totalPage} ? './appointment?page=' + totalPage : './appointment?page=' + (page + 10)"
-							         th:attr="aria-label='Next'">
-							         <span aria-hidden="true">&raquo;</span>
-							      </a>
+							      <a class="page-link" href="#">Next</a>
 							    </li>
 							  </ul>
-							</nav> 
-							</div><!-- 페이징 끝 -->
+							</nav>
                             </th:block>
                         </div> <!-- 신청목록 끝 -->
                         
