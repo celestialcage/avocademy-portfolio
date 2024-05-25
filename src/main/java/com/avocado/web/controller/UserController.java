@@ -73,7 +73,8 @@ public class UserController {
 	        //System.out.println("사용자 등급: " + role);
 	        
 	        //사용자 등급 따른 정보 추가
-	        String uno = (result.get("uno")).toString();	        
+	        String uno = (result.get("uno")).toString();	
+	        System.out.println(uno);
 	        
 			// 사용자의 등급에 따라 리다이렉트할 페이지 결정
 	        if (role != null) {
@@ -89,6 +90,8 @@ public class UserController {
 	            } else if (role == 5) {
 	            	
 	            } else if (role == 2) {
+	            	String ps_no = userService.getProfessorInfo(uno);
+	            	session.setAttribute("pno", ps_no);
 	            	return "redirect:/admin/professorAdmin"; // 지도교수관리자페이지로 리다이렉트
 	            }
 	            return "redirect:/admin/index"; // 관리자 페이지로 리다이렉트

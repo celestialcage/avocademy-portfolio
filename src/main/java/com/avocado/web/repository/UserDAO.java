@@ -24,6 +24,8 @@ public interface UserDAO {
 
 	void setUsed(boolean b);
 
+	String getProfessorInfo(String uno);
+
 	
 }
 

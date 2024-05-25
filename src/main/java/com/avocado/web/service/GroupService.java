@@ -3,6 +3,8 @@ package com.avocado.web.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.mail.EmailException;
+
 import com.avocado.web.entity.GroupDTO;
 
 public interface GroupService {
@@ -47,7 +49,9 @@ public interface GroupService {
 
 	String aplyNo();
 
-	void sendApplyEmail(String email);
+	Map<String, Object> getTime(Integer scheNo);
+
+	int checkTotalSchedule(Map<String, Object> checkTime);
 	
 
 }

@@ -98,6 +98,7 @@ public class IndexController {
 	
 	@GetMapping("/community") // 온라인 상담 가져온것
 	public String community(Model model, HttpSession session,
+			@RequestParam(name = "cno", required = false) Integer cno,
 			@RequestParam(name = "pageNo", required = false, defaultValue = "1") int pageNo) {
 				
 		// 한번에 보여주고 싶은 글 개수
@@ -123,6 +124,7 @@ public class IndexController {
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("pageNo", pageNo);
 		
+		 // 페이지 번호와 한 페이지당 글 개수를 이용하여 목록을 가져옴
 		List<CommunityDTO> list = communityService.community(pageNo, post);
 		
 		//System.out.println("인덱스 컨트롤러 확인하자 : " +  list);
@@ -130,6 +132,18 @@ public class IndexController {
 		model.addAttribute("list", list);
 		model.addAttribute("pageNo", pageNo);
 		
+		// 각 게시물의 조회수 설정
+	    for (CommunityDTO count :list ) {
+	        // 게시물의 조회수 설정
+	        int cread = communityService.getCount(count.getCno());
+	        count.setCread(cread);
+	    }
+	    // 사용자가 글을 조회한 경우에만 조회수 증가
+	    if (cno != null && session.getAttribute("cread" + cno) == null) {
+	        communityService.countUp(cno); // 조회수 증가
+	        session.setAttribute("cread" + cno, true); // 조회한 글의 번호 저장
+	    }
+	            
 				
 		return "community";
 	}

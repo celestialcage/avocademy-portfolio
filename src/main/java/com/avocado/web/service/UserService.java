@@ -11,6 +11,8 @@ public interface UserService {
 
 	String getCounselorInfo(String uno);
 
+	String getProfessorInfo(String uno);
+
 
 
 

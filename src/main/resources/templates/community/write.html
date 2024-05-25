@@ -22,6 +22,11 @@ main {
 	height: auto;
 	min-height: 600px;
 }
+
+.bold-red {
+    font-weight: bold;
+    color: red;
+}
 </style>
 </head>
 <body>
@@ -31,22 +36,20 @@ main {
 		<!-- 여기가 본문 -->
 		<div class="mainContents">
 			<h1>글쓰기</h1>
+			
 			<form method="post" action="/community/write" enctype="multipart/form-data">
+				<div th:if="${ugrade == 5}" class="input-group-text">
+        			<label for="isNotice">공지사항</label>
+       				<input class="form-check-input mt-0" type="checkbox" id="isNotice" name="isNotice" value="true">
+    			</div>
 				<input class="form-control my-2" name="ctitle" placeholder="제목을 입력해주세요.">
 				<textarea id="summernote" name="ccontent"></textarea>
 				<div class="mb-3">
 					<label for="formFile" class="form-label"></label> 
 					<input class="form-control" type="file" id="fileUp" name="fileUp">
 				</div>
-				<div class="input-group">
-					<div class="input-group-text">
-						<span class="me-2">비밀글 선택</span> <input
-							class="form-check-input mt-0" type="checkbox" name="secret"
-							value="true">
-					</div>
-					<input type="password" class="form-control" id="password"
-						name="password" placeholder="비밀글 비밀번호를 입력하세요...">
-				</div>
+				
+               
 				<button type="submit" class="btn btn-outline-dark my-3">작성하기</button>
 			</form>
 
@@ -129,6 +132,8 @@ main {
             }, */
         })
     });
+    
+    
 
 /*     // 이미지 업로드 함수 ajax 활용
     function uploadSummernoteImageFile(file, el, caption) {
@@ -152,6 +157,22 @@ main {
             },
         })
     } */
+    var isNoticeCheckbox = document.getElementById('isNotice');
+
+    function setNoticeTitleStyle() {
+        var titleInput = document.getElementById('ctitle');
+        if (isNoticeCheckbox.checked) {
+            titleInput.classList.add('bold-red');
+        } else {
+            titleInput.classList.remove('bold-red');
+        }
+    }
+
+    // 공지사항 선택 체크박스 변경 시 setNoticeTitleStyle 함수 호출
+    isNoticeCheckbox.addEventListener('change', setNoticeTitleStyle);
+
+    // 초기 페이지 로드 시 공지사항 체크박스의 초기 상태에 따라 스타일 설정
+    document.addEventListener('DOMContentLoaded', setNoticeTitleStyle);   
 </script>
 </body>
 </html>

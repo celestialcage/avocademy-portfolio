@@ -19,7 +19,7 @@ public interface CommunityService {
 
 	int deletecd(String cno);
 
-	Map<String, Object> write(Map<String, Object> map, FilesDTO dto, MultipartFile file);
+	Map<String, Object> write(Map<String, Object> map, FilesDTO dto, MultipartFile file, boolean isNotice);
 
 	String getFsn(int fno);
 
@@ -27,9 +27,11 @@ public interface CommunityService {
 
 	int saveComment(int uno, String cno, String ccontent);
 
+	int getCount(int cno);
 
+	void countUp(Integer cno);
 
-
+	
 
 
 }
