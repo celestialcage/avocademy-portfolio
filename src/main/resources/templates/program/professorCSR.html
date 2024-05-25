@@ -358,7 +358,10 @@
 
           var selectedTime;
           // 해당 날짜의 이벤트 정보 획득
-
+          
+          selectedDate = selectedDate.replaceAll("-", "");
+          console.log(selectedDate);
+			
           $('#selectedDate').val(selectedDate);
 
           // 날짜를 ajax로 보내 DB조회 후 시간 가져오기

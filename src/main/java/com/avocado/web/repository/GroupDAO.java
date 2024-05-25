@@ -52,4 +52,8 @@ public interface GroupDAO {
 
 	String aplyNo();
 
+	Map<String, Object> getTime(Integer scheNo);
+
+	int checkTotalSchdl(Map<String, Object> checkTime);
+
 }

@@ -20,4 +20,10 @@
 		WHERE user_no = #{uno}
 	</select>
 
+	<select id="getProfessorInfo" parameterType="String" resultType="String">
+		SELECT ps_no 
+		FROM professor 
+		WHERE user_no = #{uno}
+	</select>
+
 </mapper>

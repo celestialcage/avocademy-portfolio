@@ -3,9 +3,11 @@ package com.avocado.web.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.avocado.web.entity.MailDTO;
 import com.avocado.web.entity.UserDTO;
 import com.avocado.web.repository.MailDAO;
 import com.avocado.web.util.SecureInfo;
@@ -77,6 +79,11 @@ public class MailServiceImpl implements MailService {
 			// 사용자를 찾지 못한 경우 비밀번호 변경에 실패합니다.
 			return false;
 		}
+	}
+
+	@Override
+	public void sendApplyEmail(MailDTO dto) throws EmailException {
+		secureInfo.sendAplyEmail(dto);
 	}
 
 

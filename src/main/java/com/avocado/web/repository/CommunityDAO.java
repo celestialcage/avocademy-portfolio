@@ -35,6 +35,10 @@ public interface CommunityDAO {
 	int saveComment(Map<String, Object> comment);
 
 	int getFileNo();
+
+	int getCount(int cno);
+
+	void countUp(Integer cno);
 	
 
 }

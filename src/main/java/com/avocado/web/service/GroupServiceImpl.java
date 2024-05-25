@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.repository.GroupDAO;
+import com.avocado.web.util.SecureInfo;
 import com.avocado.web.util.Util;
 
 @Service("groupService")
@@ -20,6 +22,9 @@ public class GroupServiceImpl implements GroupService {
 	
 	@Autowired
 	private Util util;
+	
+	@Autowired
+	private SecureInfo secureInfo;
 	
 	private GroupDTO setAprv(GroupDTO dto) {
 		LocalDate endDate = LocalDate.parse(dto.getPrg_end(), java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -165,9 +170,13 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public void sendApplyEmail(String email) {
-		
-		
+	public Map<String, Object> getTime(Integer scheNo) {
+		return groupDAO.getTime(scheNo);
+	}
+
+	@Override
+	public int checkTotalSchedule(Map<String, Object> checkTime) {
+		return groupDAO.checkTotalSchdl(checkTime);
 	}
 
 

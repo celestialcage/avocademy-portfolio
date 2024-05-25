@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,14 +45,30 @@ public class ProfessorAdminController {
 		
 		List<ProfessorDTO> list = new ArrayList<ProfessorDTO>();
 		HttpSession session = util.getSession();
-		String uname = (String)(session.getAttribute("uname"));
-		list = professorService.professorInfo(uname);
+		// String uname = (String)(session.getAttribute("uname"));
+		int uno = (int) session.getAttribute("uno");
+		list = professorService.professorInfo(uno);
+//		for (ProfessorDTO e : list) {
+//			System.out.println(e.getPs_no());
+//			System.out.println(e.getUser_no());
+//			System.out.println(e.getPs_nm());
+//			System.out.println(e.getScsbjt_cd());
+//		}
 		
 		List<ProfessorDTO> list2 = new ArrayList<ProfessorDTO>();
-		list2 = professorService.psSchedule(uname);
+		//list2 = professorService.psSchedule(uno);
+//		System.out.println(list2);
+//		for (ProfessorDTO e : list2) {
+//			System.out.println(e.getPsc_no());
+//			System.out.println(e.getPs_no());
+//			System.out.println(e.getPsc_ymd());
+//			System.out.println(e.getPsc_hr());
+//			System.out.println(e.getHr_nm());
+//		}
+		
 		
 		model.addAttribute("list", list);
-		model.addAttribute("list2", list2);
+		//model.addAttribute("list2", list2);
 		
 		return "/admin/professor/registPsCounsel";
 	}
@@ -86,6 +103,17 @@ public class ProfessorAdminController {
 		model.addAttribute("list", list);
 		//System.out.println(list);
 		return "/admin/professor/psCounselList";
+	}
+	
+	// 캘린더 표시할 일정
+	@ResponseBody
+	@PostMapping("/psScheduleAjax")
+	public List<ProfessorDTO> psScheduleAjax(@RequestBody ProfessorDTO pf) {
+		
+		List<ProfessorDTO> list = professorService.psSchedule(pf);
+		System.out.println(list);
+		
+		return list;
 	}
 	
 	@ResponseBody

@@ -1,5 +1,8 @@
 package com.avocado.web.service;
 
+import org.apache.commons.mail.EmailException;
+
+import com.avocado.web.entity.MailDTO;
 import com.avocado.web.entity.UserDTO;
 
 public interface MailService {
@@ -14,5 +17,6 @@ public interface MailService {
 	boolean verifyCode(String inputCode, String uid);
 	
 	boolean resetPassword(String newPassword, String uid);
-
+	
+	void sendApplyEmail(MailDTO dto) throws EmailException;
 }

@@ -7,8 +7,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpEntity;
@@ -43,9 +41,9 @@ public class CommunityController {
 	@Resource(name = "communityService")
 	private CommunityService communityService;
 	
-
-
-	private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);
+	
+	
+	
 	//상세보기
 	@GetMapping("/detail")
 	public String detail(Model model, @RequestParam(name = "cno", required = false, defaultValue = "1") int cno,
@@ -72,24 +70,23 @@ public class CommunityController {
 		if (session.getAttribute("uname") == null) {
 			// return "redirect:/community";
 			return "redirect:/login";
-		} else if (detail.getUname().equals(session.getAttribute("uname"))
-				|| (int) session.getAttribute("ugrade") == 5) {
+		} else {
 			model.addAttribute("detail", detail);
 			System.out.println("디테일 컨트롤러 :" + detail);
 
 			return "community/detail";
-		} else {
-			return "redirect:/community";
 		}
 	}
 
 	//글쓰기
 	@GetMapping("/write")
-	public String write() {
+	public String write(Model model) {
 
 		HttpSession session = util.getSession();
 
 		if (session.getAttribute("uname") != null) {
+			  int ugrade = (int) session.getAttribute("ugrade");
+	            model.addAttribute("ugrade", ugrade);
 
 			return "community/write";
 		} else {
@@ -99,8 +96,12 @@ public class CommunityController {
 	
 	//글쓰기
 	@PostMapping("/write")
-	public String write(@RequestParam(name = "ctitle") String ctitle, @RequestParam(name = "ccontent") String ccontent,
-			HttpSession session, @RequestParam("fileUp") MultipartFile file, Model model) {
+	public String write(@RequestParam(name = "ctitle") String ctitle, 
+						@RequestParam(name = "ccontent") String ccontent,
+						@RequestParam(name = "isNotice", required = false) boolean isNotice,
+						@RequestParam("fileUp") MultipartFile file, 
+						HttpSession session, 
+						Model model) {
 		// System.out.println(ctitle + ccontent);
 		
 
@@ -113,13 +114,14 @@ public class CommunityController {
 			map.put("ccontent", ccontent);
 			map.put("uname", uname);
 			map.put("uno", session.getAttribute("uno"));
-
+			map.put("isNotice", isNotice ? 1:0); // 공지사항 체크 여부 추가
 			// System.out.println(map);
 
 			// dto 객체 생성
 			FilesDTO dto = new FilesDTO();
+			
 
-			communityService.write(map, dto, file);
+			communityService.write(map, dto, file,isNotice);
 
 			// 성공시 목록 페이지로 리디렉션
 			/* String url = "online"; */
