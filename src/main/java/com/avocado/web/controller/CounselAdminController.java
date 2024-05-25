@@ -55,7 +55,6 @@ public class CounselAdminController {
 		int pageNo = util.str2Int(page);
 		searchDTO.setPage((pageNo-1) * 10); // 페이지 번호를 오프셋으로 변환
 		
-		
 		// 학생 검색했을 시
 		if(stud_no != null) {
 			searchDTO.setStud_no(stud_no);
@@ -64,21 +63,22 @@ public class CounselAdminController {
 		// 상담사번호 있을 때 -> 상담사 로그인일 때
 		if(session.getAttribute("cns_no") != null) {
 			searchDTO.setCns_no(Integer.valueOf(session.getAttribute("cns_no").toString()));
-			// List<PersonalDTO> list = counselService.findCslAppointments(cns_no);
 		} 
-//		else {
-//			// list = counselService.findAllScheduleList(searchDTO);
-//		}
 		
 		list = counselService.findCslScheduleList(searchDTO);
 		totalCount = counselService.findCsAppTotalCount(searchDTO);
 		
+        int totalPage = (int) Math.ceil((double) totalCount / 10);
+        int startPage = Math.max(1, pageNo - 5);
+        int endPage = Math.min(startPage + 9, totalPage);
+		
 		model.addAttribute("applyList", list);
 		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("page", page);
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("page", util.str2Int(page));
 		model.addAttribute("stud_no", stud_no);
-//		System.out.println(session.getAttribute("uno"));
-//		System.out.println(session.getAttribute("uid"));
 		
 		return "admin/appointment";
 	}
