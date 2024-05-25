@@ -8,6 +8,11 @@
     <link href="/admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
     <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
     <link rel="stylesheet" href="/css/summernote/summernote-lite.css">
+    <style type="text/css">
+    .status:hover {
+    	cursor: pointer;
+    }
+    </style>
 </head>
 <body>
     <!-- ============================================================== -->
@@ -131,27 +136,41 @@
 											  		  type="button" style="width:90px" 
 											  		  data-bs-toggle="dropdown" 
 											  		  aria-expanded="false">
-											    신청&nbsp;&nbsp;&nbsp;
+											    [[${apply.dscsn_stat}]]
 											  </button>
 											  <ul class="dropdown-menu">
-											    <li><a class="dropdown-item" href="#">예약</a></li>
-											    <li><a class="dropdown-item" href="#">완료</a></li>
-											    <li><a class="dropdown-item" href="#">미진행</a></li>
-											    <li><a class="dropdown-item" href="#">취소</a></li>
+											    <li><span class="status dropdown-item" 
+											    		  th:onclick="|confirmApply('${apply.aply_no}')|"
+											    		  data-stat="CS001">신청</span></li>
+											    <li><span class="status dropdown-item" 
+											    		  th:onclick="|confirmApply('${apply.aply_no}')|"
+											    		  data-stat="CS002">예약</span></li>
+											    <li><span class="status dropdown-item" 
+											    		  th:onclick="|confirmApply('${apply.aply_no}')|"
+											    		  data-stat="CS003">완료</span></li>
+											    <li><span class="status dropdown-item" 
+											    		  th:onclick="|confirmApply('${apply.aply_no}')|"
+											    		  data-stat="CS004">미진행</span></li>
+											    <li><span class="status dropdown-item" 
+											    		  th:onclick="|cancelReservation('${apply.aply_no}')|"
+											    		  data-stat="CS005">취소</span></li>
 											  </ul>
 											</div>
                                         </td>
                                         <td class="app-confirm align-middle text-center">
-                                        	<h5 th:if="${apply.dscsn_stat == '완료'}" class="badge" style="background-color:#cdb4db">완료</h5>
-                                        	<h5 th:if="${apply.dscsn_stat == '미진행'}" class="badge" style="background-color:#a2d2ff">미진행</h5>
-                                        	<h5 th:if="${apply.dscsn_stat == '취소'}" class="badge" style="background-color:#ffafcc">취소</h5>
+                                        	<h5 th:if="${apply.dscsn_stat == '완료'}" 
+                                        		class="badge" style="background-color:#cdb4db">완료</h5>
+                                        	<h5 th:if="${apply.dscsn_stat == '미진행'}" 
+                                        		class="badge" style="background-color:#a2d2ff">미진행</h5>
+                                        	<h5 th:if="${apply.dscsn_stat == '취소'}" 
+                                        		class="badge" style="background-color:#ffafcc">취소</h5>
                                         	<button th:if="${apply.dscsn_stat == '신청'}" 
                                         		th:id="|confirmBtn${apply.aply_no}|" 
                                         		th:onclick="|confirmApply('${apply.aply_no}')|"
                                         		class="confirmBtn btn btn-success text-white align-middle">승인</button>
                                         	<button th:if="${apply.dscsn_stat == '예약'}" 
                                         		th:id="|confirmBtn${apply.aply_no}|" 
-                                        		th:onclick="|cancelReservation('${apply.aply_no}')|"
+                                        		th:onclick="|cancelReservation('${apply.aply_no}')|" 
                                         		class="confirmBtn btn btn-danger text-white align-middle">취소</button>
                                      	</td>
                                      	<td class="dscsn_cn align-middle text-center">

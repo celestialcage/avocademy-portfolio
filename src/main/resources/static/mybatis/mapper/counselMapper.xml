@@ -164,4 +164,17 @@
 		UPDATE caply SET dscsn_stat='CS005' 
 		WHERE aply_no=#{aply_no}
 	</update>
+
+	<update id="changeStatus" parameterType="PersonalDTO">
+		UPDATE caply SET dscsn_stat=#{dscsn_stat} 
+		WHERE aply_no=#{aply_no}
+	</update>
+	
+	<select id="checkLastCs" parameterType="PersonalDTO" resultType="PersonalDTO">
+		SELECT aply_no_old, dscsn_nmtm FROM caply WHERE aply_no=#{aply_no}
+	</select>
+	
+	<update id="setDscsn_nmtm" parameterType="PersonalDTO">
+		UPDATE caply SET dscsn_nmtm=#{dscsn_nmtm} WHERE aply_no=#{aply_no}
+	</update>
 </mapper>

@@ -53,4 +53,8 @@ public interface CounselDAO {
 
 	int cancelReservation(PersonalDTO ps);
 
+	PersonalDTO checkLastCs(PersonalDTO ps);
+
+	void setDscsn_nmtm(PersonalDTO ps);
+
 }

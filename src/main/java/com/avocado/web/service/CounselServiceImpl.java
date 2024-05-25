@@ -84,6 +84,19 @@ public class CounselServiceImpl implements CounselService {
 
 	@Override
 	public int updateComment(PersonalDTO ps) {
+		
+		// 지난 회차(aply_no_old) 존재하는지 확인, 상담 회차도 가져오기
+		PersonalDTO lastPs = counselDAO.checkLastCs(ps);
+		
+		// 없으면 1 세팅, 있으면 이전 회차 + 1 (없을때 0이어서 그냥,, 하면될듯)
+		if(lastPs.getAply_no_old() == 0) {
+			ps.setDscsn_nmtm(1);
+		} else {
+			ps.setDscsn_nmtm(lastPs.getDscsn_nmtm() + 1);
+		}
+		
+		counselDAO.setDscsn_nmtm(ps);
+		
 		return counselDAO.updateComment(ps);
 	}
 
