@@ -28,6 +28,8 @@ public interface MyinfoDAO {
 	String getEmail(String email);
 
 	List<GroupDTO> reservationList(String stud_no);
+
+	int countrd(String stud_no);
 	
 
 //

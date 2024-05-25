@@ -26,7 +26,8 @@
 }
 
 .card {
-	height: 450px;
+   /* height: 450px; */
+   margin-bottom: 20px
 }
 
 .card-header h3 {
@@ -156,49 +157,48 @@
         } */
     </script>
 	<script>
-    $(document).ready(function () {
-        $('#submit-comment').click(function () {
-            let commentContent = $('#Commenttext').val();
-            let postId = [['${detail.bno}']];
-            
+	$(document).ready(function () {
+	    $('#submit-comment').click(function () {
+	        let commentContent = $('#Commenttext').val();
+	        let postId = '[[${detail.bno}]]';
 
-            if (commentContent.trim() === "") {
-                Swal.fire({
-                    title: '오둥이',
-                    text: '댓글 내용을 입력하세요.',
-                    icon: 'error',
-                    confirmButtonText: '확인'
-                });
-                return;
-            }
+	        if (commentContent.trim() === "") {
+	            Swal.fire({
+	                title: '오둥이',
+	                text: '댓글 내용을 입력하세요.',
+	                icon: 'error',
+	                confirmButtonText: '확인'
+	            });
+	            return;
+	        }
 
-            $.ajax({
-                url: '/online/comment?bno=' + postId,
-                type: 'POST',
-                data: {
-                    content: commentContent
-                },
-                success: function (response) {
-                	alert("성공");
-                    Swal.fire({
-                        title: '성공',
-                        text: '댓글이 성공적으로 추가되었습니다.',
-                        icon: 'success',
-                        confirmButtonText: '확인'
-                    });
-                    location.href="/online/detail?bno=" + postId;
-                },
-                error: function (error) {
-                    Swal.fire({
-                        title: '오둥이',
-                        text: '댓글 추가에 실패했습니다.',
-                        icon: 'error',
-                        confirmButtonText: '확인'
-                    });
-                }
-            });
-        });
-    });
+	        $.ajax({
+	            url: '/online/comment?bno=' + encodeURIComponent(postId),
+	            type: 'POST',
+	            data: {
+	                content: commentContent
+	            },
+	            success: function (response) {
+	                Swal.fire({
+	                    title: '성공',
+	                    text: '댓글이 성공적으로 추가되었습니다.',
+	                    icon: 'success',
+	                    confirmButtonText: '확인'
+	                }).then(() => {
+	                	location.href = "/online/detail?bno=" + encodeURIComponent(postId);
+	                });
+	            },
+	            error: function (error) {
+	                Swal.fire({
+	                    title: '오둥이',
+	                    text: '댓글 추가에 실패했습니다.',
+	                    icon: 'error',
+	                    confirmButtonText: '확인'
+	                });
+	            }
+	        });
+	    });
+	});
 </script>
 
 </body>

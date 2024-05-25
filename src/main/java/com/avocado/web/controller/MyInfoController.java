@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.avocado.web.entity.CslSearchDTO;
 import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.entity.MyinfoDTO;
+import com.avocado.web.entity.OnlineDTO;
 import com.avocado.web.entity.UserDTO;
 import com.avocado.web.service.MyInfoServiceImpl;
 import com.avocado.web.util.SecureInfo;
@@ -49,7 +50,6 @@ public class MyInfoController {
 		
 		int uno =  (int) (session.getAttribute("uno"));
 	
-		
 		//System.out.println(session.getAttribute("uname"));
 		//System.out.println(session.getAttribute("uno"));
 
@@ -99,24 +99,19 @@ public class MyInfoController {
 			// 로그인확인 조건문 쓰기 세션에 로그인 되어있는지 확인
 			HttpSession session = util.getSession();
 
+			String stud_no = (String) session.getAttribute("stud_no");
+			
 			// if문으로
-			session.getAttribute("stud_no");
-
-			List<GroupDTO> dto = new ArrayList<GroupDTO>();
-
 			if (session.getAttribute("stud_no") == null) {
 				return "redirect:/login";
-
-			} else {
-
-				String stud_no = (String) session.getAttribute("stud_no");
+			}
 					
+			List<GroupDTO> dto = new ArrayList<GroupDTO>();
 				dto = myInfoService.reservationList(stud_no);
 				model.addAttribute("dto", dto);
-				//dto.setStud_no(stud_no);
+				//dto.setStud_no(stud_no)';
+				//System.out.println(stud_no);
 				return "myinfo/reservationList";
-
-			}
 
 		}
 	

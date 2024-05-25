@@ -43,6 +43,10 @@ main {
 	flex: 1; /* 테이블 컨테이너가 남은 공간을 차지하도록 설정 */
 	padding: 10px;
 }
+
+.love{
+	width: 100%;
+}
 </style>
 </head>
 <body>
@@ -87,11 +91,6 @@ main {
                                	 <use xlink:href="#speedometer2" /></svg> 상담
 										예약 목록
 								</a></li>
-								<li class="nav-item"><a href="/testList"
-									class="nav-link link-body-emphasis"
-									th:classappend="${currentPage == 'unknown'} ? 'active'"> <svg
-											class="bi pe-none me-2" width="16" height="16"></svg> ????
-								</a></li>
 								<li class="nav-item"><a href="/profileEdit"
 									class="nav-link link-body-emphasis"
 									th:classappend="${currentPage == 'profileEdit'} ? 'active'">
@@ -102,32 +101,33 @@ main {
 						</div>
 					</div>
 				</div>
-				<div>
+				<!-- <div class="mainContents"> -->
+				<div class="table-container">
 					<h1>상담 예약 목록</h1>
-
-					<table>
+					
+					<div class="love">
+					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th>번호</th>
-				                <th>프로그램 이름</th>
-				                <th>예약 날짜</th>
-				                <th>시간</th>
-				                <th>장소</th>
+								<th class="col-1 text-center">번호</th>
+				                <th class="col-5 text-center">프로그램 이름</th>
+				                <th class="col-2 text-center">예약 날짜</th>
+				                <th class="col-2 text-center">시간</th>
+				                <th class="col-2 text-center">장소</th>
 							</tr>
 						</thead>
 						
-						[[${dto}]]
-						
-						 <!-- <tbody>
-							<tr th:each="a : ${reservationList}">
-								 <td th:text="${a.prgNo}"></td>
-					             <td th:text="${a.prgNm}"></td>
-					             <td th:text="${a.prgYmd}"></td>
-					             <td th:text="${a.prgHr}"></td>
-					             <td th:text="${a.prgPlace}"></td>
+						 <tbody>
+							<tr th:each="a : ${dto}">
+								 <td class="text-center" th:text="${a.prg_no}"></td>
+					             <td class="text-center"  th:text="${a.prg_nm}"></td>
+					             <td class="text-center"  th:text="${a.prg_ymd}"></td>
+					             <td class="text-center"  th:text="${a.prg_hr}"></td>
+					             <td class="text-center"  th:text="${a.prg_place}"></td>
 							</tr>
-						</tbody> -->
+						</tbody>
 					</table>
+					</div>
 				</div>
 			</div>
 	</body>
