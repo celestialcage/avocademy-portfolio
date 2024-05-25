@@ -88,12 +88,6 @@ public class MyInfoServiceImpl implements MyInfoService {
 
 
 	@Override
-	public int count(int uno) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public List<GroupDTO> reservationList (String stud_no) {
 	     return myinfoDAO.reservationList(stud_no);
 	    }

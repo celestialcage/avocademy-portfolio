@@ -12,15 +12,12 @@ public interface MyInfoService {
 
 
 	public List<MyinfoDTO> getMyinfo(int uno);
-	public List<MyinfoDTO> getMyinfo(String uno);
 
 	public List<MyinfoDTO> myinfo(int pageNo, int post, int uno);
 
 	public int count(int uno);
 
 	public List<MyinfoDTO> getMyinfo(Map<String, Integer> uno);
-
-	void sendEmail(String email, String key) throws EmailException;
 
 	public List<GroupDTO> reservationList(String stud_no);
 
