@@ -29,10 +29,7 @@ public interface MyinfoDAO {
 
    String getEmail(String email);
 
-	List<GroupDTO> reservationList(String stud_no);
-
-	int countrd(String stud_no);
-	
+   int countrd(String stud_no);
 
    UserDTO verifyCode(String uid);
    
@@ -41,6 +38,5 @@ public interface MyinfoDAO {
    int resetPassword(Map<String, Object> params);
 
    List<GroupDTO> reservationList(String stud_no);
-
 
 }

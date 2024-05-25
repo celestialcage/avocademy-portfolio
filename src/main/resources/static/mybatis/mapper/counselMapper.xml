@@ -122,7 +122,7 @@
 				AND cns_no = #{cns_no} 
 			</if>
 			<if test="stud_no != null">
-				AND stud_no = #{stud_no}
+				AND stud_no = #{stud_no} 
 			</if>
 		</where>
 		ORDER BY STR_TO_DATE(dscsn_ymd, '%Y%m%d') DESC, STR_TO_DATE(dscsn_hr, '%H') DESC
@@ -151,7 +151,17 @@
 	</select>
 	
 	<update id="updateComment" parameterType="PersonalDTO">
-		UPDATE caply SET dscsn_cn = #{dscsn_cn} 
-		WHERE aply_no = #{aply_no}
+		UPDATE caply SET dscsn_cn = #{dscsn_cn}, dscsn_stat='CS003' 
+		WHERE aply_no=#{aply_no}
+	</update>
+	
+	<update id="confirmApply" parameterType="PersonalDTO">
+		UPDATE caply SET dscsn_stat='CS002' 
+		WHERE aply_no=#{aply_no}
+	</update>
+	
+	<update id="cancelReservation" parameterType="PersonalDTO">
+		UPDATE caply SET dscsn_stat='CS005' 
+		WHERE aply_no=#{aply_no}
 	</update>
 </mapper>

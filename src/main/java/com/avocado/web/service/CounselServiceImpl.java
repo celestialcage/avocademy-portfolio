@@ -92,4 +92,14 @@ public class CounselServiceImpl implements CounselService {
 		return counselDAO.findCslSchedule(aply_no);
 	}
 
+	@Override
+	public int confirmApply(PersonalDTO ps) {
+		return counselDAO.confirmApply(ps);
+	}
+
+	@Override
+	public int cancelReservation(PersonalDTO ps) {
+		return counselDAO.cancelReservation(ps);
+	}
+	
 }

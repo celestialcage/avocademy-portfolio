@@ -48,5 +48,9 @@ public interface CounselDAO {
 	int updateComment(PersonalDTO ps);
 
 	PersonalDTO findCslSchedule(int aply_no);
+	
+	int confirmApply(PersonalDTO ps);
+
+	int cancelReservation(PersonalDTO ps);
 
 }
