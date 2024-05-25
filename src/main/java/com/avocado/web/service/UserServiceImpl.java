@@ -32,6 +32,11 @@ public class UserServiceImpl implements UserService{
 		return userDAO.getCounselorInfo(uno);
 	}
 
+	@Override
+	public String getProfessorInfo(String uno) {
+		return userDAO.getProfessorInfo(uno);
+	}
+
 
 
 }

@@ -111,6 +111,7 @@ input:checked + .checkbox {
                                         <div class="card-body border-bottom">
                                             <h4 class="card-title mt-2">지도교수 상담 일정 등록</h4>
                                         </div>
+                                        <input type="hidden" th:value="${session.pno}" id="pno">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -289,6 +290,9 @@ input:checked + .checkbox {
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
+    <script type="text/javascript">
+    const pno = document.getElementById('pno');
+    </script>
     <th:block th:insert="~{./admin/thfragments/fragments.html :: jqueryScript}"></th:block>
     <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
@@ -302,7 +306,7 @@ input:checked + .checkbox {
     <script type="text/javascript" src="/admin/professor/utils.js"></script>
     <script type="text/javascript" src="/admin/professor/calendar-app.js"></script>
     <!-- <script type="text/javascript" src="/admin/professor/grid-app.js"></script> -->
-    <script type="text/javascript" src="/admin/professor/app.js"></script>
+    <!-- <script type="text/javascript" src="/admin/professor/app.js"></script> -->
     
     <script type="text/javascript">
 	    /*datwpicker*/
