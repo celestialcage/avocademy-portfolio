@@ -9,8 +9,8 @@
 
 	<insert id="write" parameterType="Map"> 
 		INSERT INTO community
-		(ctitle, ccontent, user_no2, fno) 
-		VALUES (#{ctitle}, #{ccontent}, #{uno}, #{fno});
+		(ctitle, ccontent, user_no2, fno, isNotice) 
+		VALUES (#{ctitle}, #{ccontent}, #{uno}, #{fno}, #{isNotice});
 	</insert>
 	
 	<select id="community" resultType="CommunityDTO" parameterType="Map">
@@ -18,7 +18,9 @@
 		FROM community join user 
 		on community.user_no2 = user.uno 
 		WHERE cdel = "1" 
-		ORDER BY cno DESC LIMIT #{pageNo}, #{post}; 
+		
+		ORDER BY isNotice DESC, cno DESC
+		LIMIT #{pageNo}, #{post}; 
 	</select>
 	
 	<select id="detail" parameterType="Integer" resultType="CommunityDTO"> 
@@ -46,8 +48,6 @@
 	</update>
 
 
-
-
 	<select id="getFsn" parameterType="int" resultType="java.lang.String">
     SELECT fsn 
     FROM files
@@ -62,6 +62,11 @@
 		update community set comment = #{ccontent}
 		where CNO = #{cno} 
 	</update>
+	
+	<select id="getCount" resultType="int">
+        SELECT count FROM community WHERE cno = #{cno}
+    </select>
+	
     
     
 </mapper>

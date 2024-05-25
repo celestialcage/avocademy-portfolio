@@ -56,7 +56,7 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public Map<String, Object> write(Map<String, Object> map, FilesDTO dto, MultipartFile file) {
+	public Map<String, Object> write(Map<String, Object> map, FilesDTO dto, MultipartFile file, boolean isNotice) {
 		// System.out.println("서비스 맵"+map);
 		// System.out.println("서비스_파일 타입: " + file.getName());
 		// System.out.println("서비스_파일 사이즈: " + file.getSize());
@@ -127,9 +127,11 @@ public class CommunityServiceImpl implements CommunityService {
 			map.put("fno", fileNo);
 			System.out.println("파일번호" +fileNo);
 		}
+		
+		map.put("isNotice", isNotice);
 		// 글 작성 정보 저장
 		int write = communityDAO.write(map);
-
+		System.out.println(isNotice);
 		result.put("write", write);
 
 		return result;
@@ -162,6 +164,15 @@ public class CommunityServiceImpl implements CommunityService {
 		
 		return communityDAO.saveComment(comment);
 	}
-    
+
+	@Override
+	public int getCount(int cno) {
+		
+		return communityDAO.getCount(cno);
+	}
+
+
+
+	
 
 }
