@@ -131,11 +131,38 @@ public class CounselDataController {
 		return list;
 	}
 	
+	// 신청 버튼 메소드
+	@PostMapping("apply-status")
+	public String statusApply(@RequestBody PersonalDTO ps) {
+		JsonObject json = new JsonObject();
+		int result = counselService.statusApply(ps);
+		json.addProperty("result", result);
+		return json.toString();
+	}
+
 	// 승인 버튼 메소드
 	@PostMapping("appointment-confirm")
 	public String confirmApply(@RequestBody PersonalDTO ps) {
 		JsonObject json = new JsonObject();
 		int result = counselService.confirmApply(ps);
+		json.addProperty("result", result);
+		return json.toString();
+	}
+	
+	// 완료 버튼 메소드
+	@PostMapping("appointment-complete")
+	public String completeAppointment(@RequestBody PersonalDTO ps) {
+		JsonObject json = new JsonObject();
+		int result = counselService.completeAppointment(ps);
+		json.addProperty("result", result);
+		return json.toString();
+	}
+	
+	// 미진행 버튼 메소드
+	@PostMapping("appointment-skip")
+	public String skipAppointment(@RequestBody PersonalDTO ps) {
+		JsonObject json = new JsonObject();
+		int result = counselService.skipAppointment(ps);
 		json.addProperty("result", result);
 		return json.toString();
 	}

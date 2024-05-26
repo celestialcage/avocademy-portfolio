@@ -42,4 +42,10 @@ public interface CounselService {
 
 	int cancelReservation(PersonalDTO ps);
 
+	int statusApply(PersonalDTO ps);
+
+	int completeAppointment(PersonalDTO ps);
+
+	int skipAppointment(PersonalDTO ps);
+
 }
