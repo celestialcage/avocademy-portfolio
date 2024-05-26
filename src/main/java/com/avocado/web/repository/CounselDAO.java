@@ -57,4 +57,10 @@ public interface CounselDAO {
 
 	void setDscsn_nmtm(PersonalDTO ps);
 
+	int statusApply(PersonalDTO ps);
+
+	int completeAppointment(PersonalDTO ps);
+
+	int skipAppointment(PersonalDTO ps);
+
 }

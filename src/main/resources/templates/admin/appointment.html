@@ -140,16 +140,16 @@
 											  </button>
 											  <ul class="dropdown-menu">
 											    <li><span class="status dropdown-item" 
-											    		  th:onclick="|confirmApply('${apply.aply_no}')|"
+											    		  th:onclick="|statusApply('${apply.aply_no}')|"
 											    		  data-stat="CS001">신청</span></li>
 											    <li><span class="status dropdown-item" 
 											    		  th:onclick="|confirmApply('${apply.aply_no}')|"
 											    		  data-stat="CS002">예약</span></li>
 											    <li><span class="status dropdown-item" 
-											    		  th:onclick="|confirmApply('${apply.aply_no}')|"
+											    		  th:onclick="|completeAppointment('${apply.aply_no}')|"
 											    		  data-stat="CS003">완료</span></li>
 											    <li><span class="status dropdown-item" 
-											    		  th:onclick="|confirmApply('${apply.aply_no}')|"
+											    		  th:onclick="|skipAppointment('${apply.aply_no}')|"
 											    		  data-stat="CS004">미진행</span></li>
 											    <li><span class="status dropdown-item" 
 											    		  th:onclick="|cancelReservation('${apply.aply_no}')|"
@@ -316,8 +316,71 @@
         	})
         }
         
+        function statusApply(no) {
+        	fetch('/apply-status', {
+        		method: 'POST',
+        		body: JSON.stringify({
+        			aply_no: no,
+        		}), 
+        		headers: {"Content-Type": "application/json",},
+        	}).then(res => {
+        		if(!res.ok) {
+        			throw new Error(res.statusText);
+        		} else {
+        			return res.json();
+        		}
+        	}).then(data => {
+        		console.log(data.result);
+        		location.reload(true);
+        	}).catch(err => {
+        		console.log(err);
+        	})
+        }
+        
         function confirmApply(no) {
         	fetch('/appointment-confirm', {
+        		method: 'POST',
+        		body: JSON.stringify({
+        			aply_no: no,
+        		}), 
+        		headers: {"Content-Type": "application/json",},
+        	}).then(res => {
+        		if(!res.ok) {
+        			throw new Error(res.statusText);
+        		} else {
+        			return res.json();
+        		}
+        	}).then(data => {
+        		console.log(data.result);
+        		location.reload(true);
+        	}).catch(err => {
+        		console.log(err);
+        	})
+        }
+
+        function completeAppointment(no) {
+        	fetch('/appointment-complete', {
+        		method: 'POST',
+        		body: JSON.stringify({
+        			aply_no: no,
+        		}), 
+        		headers: {"Content-Type": "application/json",},
+        	}).then(res => {
+        		if(!res.ok) {
+        			throw new Error(res.statusText);
+        		} else {
+        			return res.json();
+        		}
+        	}).then(data => {
+        		console.log(data.result);
+        		location.reload(true);
+        	}).catch(err => {
+        		console.log(err);
+        	})
+        }
+        
+        function skipAppointment(no) {
+        	fetch('/appointment-skip', {
         		method: 'POST',
         		body: JSON.stringify({
         			aply_no: no,

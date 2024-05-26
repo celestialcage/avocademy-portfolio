@@ -114,5 +114,20 @@ public class CounselServiceImpl implements CounselService {
 	public int cancelReservation(PersonalDTO ps) {
 		return counselDAO.cancelReservation(ps);
 	}
+
+	@Override
+	public int statusApply(PersonalDTO ps) {
+		return counselDAO.statusApply(ps);
+	}
+
+	@Override
+	public int completeAppointment(PersonalDTO ps) {
+		return counselDAO.completeAppointment(ps);
+	}
+
+	@Override
+	public int skipAppointment(PersonalDTO ps) {
+		return counselDAO.skipAppointment(ps);
+	}
 	
 }

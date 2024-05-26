@@ -165,8 +165,18 @@
 		WHERE aply_no=#{aply_no}
 	</update>
 
-	<update id="changeStatus" parameterType="PersonalDTO">
-		UPDATE caply SET dscsn_stat=#{dscsn_stat} 
+	<update id="statusApply" parameterType="PersonalDTO">
+		UPDATE caply SET dscsn_stat='CS001' 
+		WHERE aply_no=#{aply_no}
+	</update>
+	
+	<update id="completeAppointment" parameterType="PersonalDTO">
+		UPDATE caply SET dscsn_stat='CS003' 
+		WHERE aply_no=#{aply_no}
+	</update>
+	
+	<update id="skipAppointment" parameterType="PersonalDTO">
+		UPDATE caply SET dscsn_stat='CS004' 
 		WHERE aply_no=#{aply_no}
 	</update>
 	
