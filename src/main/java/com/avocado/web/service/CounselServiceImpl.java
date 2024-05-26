@@ -87,15 +87,23 @@ public class CounselServiceImpl implements CounselService {
 		
 		// 지난 회차(aply_no_old) 존재하는지 확인, 상담 회차도 가져오기
 		PersonalDTO lastPs = counselDAO.checkLastCs(ps);
+//		System.out.println(ps.getAply_no());
+//		System.out.println(lastPs.getDscsn_nmtm());
 		
-		// 없으면 1 세팅, 있으면 이전 회차 + 1 (없을때 0이어서 그냥,, 하면될듯)
-		if(lastPs.getAply_no_old() == 0) {
-			ps.setDscsn_nmtm(1);
-		} else {
-			ps.setDscsn_nmtm(lastPs.getDscsn_nmtm() + 1);
+		// 그러고보니 이미 상담 회차가 있으면 넣으면 안됨.
+		if(ps.getDscsn_nmtm() == 0) {
+			// 없으면 1 세팅, 있으면 이전 회차 + 1 (없을때 0이어서 그냥,, 하면될듯)
+			if(ps.getAply_no_old() == 0) {
+				ps.setDscsn_nmtm(1);
+			} else {
+				ps.setDscsn_nmtm(lastPs.getDscsn_nmtm() + 1);
+			}
+			
+//			System.out.println(ps.getAply_no_old());
+//			System.out.println(lastPs.getDscsn_nmtm());
+			int result = counselDAO.setDscsn_nmtm(ps);
+			System.out.println("상담 회차 세팅 결과: " + result);
 		}
-		
-		counselDAO.setDscsn_nmtm(ps);
 		
 		return counselDAO.updateComment(ps);
 	}

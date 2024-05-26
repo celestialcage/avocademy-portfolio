@@ -103,9 +103,11 @@ public class CounselDataController {
 		return json.toString();
 	}
 	
+	// 상담 신청
 	@PostMapping("/apply-schedule")
 	public String applyCsSchedule(@RequestBody PersonalDTO ps) {
 		JsonObject json = new JsonObject();
+//		System.out.println(ps.getAply_no_old());
 		
 		int result = counselService.applySchedule(ps);
 		String message = result == 0 ? "상담 신청 실패" : "상담 신청 성공";

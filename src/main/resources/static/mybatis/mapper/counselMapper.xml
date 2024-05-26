@@ -57,8 +57,8 @@
 	</delete>
 	
 	<insert id="applySchedule" parameterType="PersonalDTO">
-		INSERT INTO caply (stud_no, sch_no, dscsn_ymd, dscsn_hr) 
-		VALUES (#{stud_no}, #{sch_no}, 
+		INSERT INTO caply (stud_no, sch_no, aply_no_old, dscsn_ymd, dscsn_hr) 
+		VALUES (#{stud_no}, #{sch_no}, #{aply_no_old}, 
 			(SELECT sch_ymd FROM cschedule WHERE sch_no=#{sch_no}), 
 			(SELECT sch_hr FROM cschedule WHERE sch_no=#{sch_no})
 		)
@@ -114,7 +114,7 @@
 		SELECT aply_no, aply_no_old, 
 			GET_CNS_NM(cns_no) AS cns_nm, GET_CNS_FIELD_NM(cns_no) AS cns_field, cns_no, 
 			GET_STUD_NM(stud_no) AS stud_nm, stud_no, 
-			dscsn_ymd, dscsn_hr, dscsn_stat, dscsn_cn, sch_no 
+			dscsn_ymd, dscsn_hr, dscsn_stat, dscsn_cn, dscsn_nmtm, sch_no 
 		FROM csche_ply 
 		<where>
 			aply_no IS NOT NULL 
@@ -143,7 +143,7 @@
 	</select>
 	
 	<select id="findCslSchedule" parameterType="int" resultType="PersonalDTO">
-		SELECT GET_STUD_NM(stud_no) AS stud_nm, dscsn_ymd, dscsn_hr, 
+		SELECT GET_STUD_NM(stud_no) AS stud_nm, stud_no, dscsn_ymd, dscsn_hr, 
 			GET_CD_NM('CS', dscsn_stat) AS dscsn_stat, 
 			aply_no_old, dscsn_cn, dscsn_nmtm, aply_no 
 		FROM caply 
@@ -181,7 +181,7 @@
 	</update>
 	
 	<select id="checkLastCs" parameterType="PersonalDTO" resultType="PersonalDTO">
-		SELECT aply_no_old, dscsn_nmtm FROM caply WHERE aply_no=#{aply_no}
+		SELECT aply_no_old, dscsn_nmtm FROM caply WHERE aply_no=#{aply_no_old}
 	</select>
 	
 	<update id="setDscsn_nmtm" parameterType="PersonalDTO">

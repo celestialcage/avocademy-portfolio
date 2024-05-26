@@ -55,7 +55,7 @@ public interface CounselDAO {
 
 	PersonalDTO checkLastCs(PersonalDTO ps);
 
-	void setDscsn_nmtm(PersonalDTO ps);
+	int setDscsn_nmtm(PersonalDTO ps);
 
 	int statusApply(PersonalDTO ps);
 
