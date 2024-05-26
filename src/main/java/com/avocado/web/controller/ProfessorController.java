@@ -104,6 +104,22 @@ public class ProfessorController {
 			
 			return maps;
 		}
-	 
+		
+		@ResponseBody
+		@PostMapping("/checkSchedule")
+		public int checkSchedule(@RequestParam ("selectedDate") String selectedDate, 
+									@RequestParam("selectedTime") String selectedTime) {
+		HttpSession session = util.getSession();
+		int uno = (int)session.getAttribute("uno");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("selectedDate", selectedDate);
+		map.put("selectedTime", selectedTime);
+		map.put("uno", uno);
+		int result = professorService.checkSchedule(map);
+		
+		return result;
+		}
+		
 		
 }

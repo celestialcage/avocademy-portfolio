@@ -219,6 +219,32 @@
         </div>
       </form>
     </div>
+    
+    <!-- Confirmation Modal -->
+	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="confirmationModalLabel">상담 신청 확인</h5>
+	      </div>
+	      <div class="modal-body">
+	      	<th:block th:each="item1 : ${list}">
+	        <p>이름: <span th:text="${item1.stud_nm}"></span></p>
+	        <p>학번: <span th:text="${item1.stud_no}"></span></p>
+	        </th:block>
+	        <p>선택한 날짜: <span id="modalSelectedDate"></span></p>
+	        <p>선택한 시간: <span id="modalSelectedTime"></span></p>
+	        <p>상담을 신청하시겠습니까?</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+	        <button type="button" class="btn btn-primary" id="finalSubmitButton">신청</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+    
+    
   </div>
 		<!-- 본문 끝 -->
 	</main>
@@ -329,7 +355,53 @@
       });
       // 캘린더 랜더링      
       calendar.render();
-	
+		
+      // 최종으로 물어보는 모달
+      $('form').on('submit', function (event) {
+          event.preventDefault();
+          $('#modalSelectedDate').text($('#eventDate').text());
+          $('#modalSelectedTime').text($('input[name="selectedTime"]:checked').next('label').text());
+          $('#confirmModal').modal('show');
+        });
+      
+      $('.modal-footer .btn-secondary').click(function() {
+          $('#confirmModal').modal('hide');
+      });
+
+        // 모달에서 최종 신청 버튼 클릭 시 폼 제출
+        $('#finalSubmitButton').on('click', function () {
+        	
+        	var selectedDate = $('#selectedDate').val();
+            var selectedTime = $('input[name="selectedTime"]:checked').val();
+        	
+            
+        	
+        	// 해당 날짜, 해당 시간에 다른 스케쥴이 존재하는지 조회
+        	$.ajax ({
+        		type: "post",
+        		url: "/checkSchedule",
+        		dataType: "json",
+        		data: {
+        			"selectedDate" : selectedDate,
+        			"selectedTime" : selectedTime
+        		},
+        		success : function (response) {
+          			
+        			if(response == 0) {
+        			$('form')[0].submit();
+        			alert("상담이 예약되었습니다.")
+        			
+        		} else {
+        			alert("이미 예약된 다른 상담 일정이 있습니다.");
+        			$('#confirmationModal').modal('hide');
+        		}
+        		},
+        		error : function (error) {
+        			alert("ajax에러: " + error);
+        		}
+        	})
+        	
+        });
     	 
     });
   })();

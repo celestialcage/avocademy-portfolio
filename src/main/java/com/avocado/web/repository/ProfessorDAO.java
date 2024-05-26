@@ -48,5 +48,8 @@ public interface ProfessorDAO {
 	List<ProfessorDTO> studentList(int uno);
 
 
+	int checkSchedule(Map<String, Object> map);
+
+
 		
 }
