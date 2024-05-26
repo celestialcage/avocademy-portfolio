@@ -235,10 +235,11 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="./professorAdmin" aria-expanded="false"><i class="mdi mdi-human-greeting"></i><span
                                     class="hide-menu">지도교수상담관리</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-key"></i><span
-                                    class="hide-menu">관리자로그인</span></a>
-                        </li>
+						<th:block th:if="${session.uname ne null}">
+	                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+    	                            href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-key"></i><span
+    	                            	class="hide-menu">[[${session.uname}]]님</span></a></li>
+						</th:block>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
