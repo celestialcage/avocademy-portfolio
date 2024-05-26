@@ -4,6 +4,8 @@
 <head>
     <th:block th:insert="~{./admin/thfragments/fragments.html :: headTag}"></th:block>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js"></script>
+  	<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/admin/assets/extra-libs/multicheck/multicheck.css">
     <link href="/admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
@@ -25,6 +27,10 @@
 	
 	#contentModal.hidden {
 	  display: none;
+	}
+	.modal-body {
+  	max-height: calc(80vh - 100px); /* 모달 창 내부의 스크롤을 위해 높이를 제한 */
+  	overflow-y: auto; /* 세로 스크롤을 활성화 */
 	}
     </style>
 </head>
@@ -214,6 +220,7 @@
 	    	
 	    });     
 		
+	    
 		const contentModal = document.getElementById("contentModal");
 		const closeModal = document.getElementById("closeModal");
 		const confirmBtn = document.getElementById("confirmButton");
@@ -221,21 +228,35 @@
         $(document).on("click", "#confirmButton", function(){
        		let val = $("#aprV").val();
        		let no = $("#pno").val();  
+     		
        		if (val >= 2){
        			return false;
        		}
        		
-       		$.ajax({
-       			url: "./approveProgram",
-       			type: "POST",
-       			data: {"no" : no, "val" : val},
-       			dataType: "json"
-       		}).done(function (result){
-       			console.log(result);
-       	        $("#aprV").val(result.prg_aprv);
-       			check_approve();
-       		});
-        	
+       		Swal.fire({
+       			title : '프로그램 승인하기',
+       			text : '해당 프로그램을 승인하시겠습니까?',
+       			icon : 'question',
+       			showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '승인',
+				cancelButtonText: '취소',
+				showLoaderOnConfirm: true,
+       		}).then((apply)=>{
+       			if(apply.isConfirmed){
+		       		$.ajax({
+		       			url: "./approveProgram",
+		       			type: "POST",
+		       			data: {"no" : no, "val" : val},
+		       			dataType: "json"
+		       		}).done(function (result){
+		       			contentModal.classList.add('hidden');
+			       		window.location.href = "./programList";       				
+		       			
+		       		})
+       			}
+       		})       		
         });
 
         
@@ -296,7 +317,6 @@
 	    
 		closeModal.addEventListener('click', () => {
 			contentModal.classList.add('hidden');
-			window.location.href = "./programList";
 		})
         
     </script>

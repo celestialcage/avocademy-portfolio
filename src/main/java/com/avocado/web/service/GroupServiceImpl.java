@@ -44,13 +44,19 @@ public class GroupServiceImpl implements GroupService {
 		LocalDate reqEnd = LocalDate.parse(dto.getReq_end(), java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd"));
 		LocalDate today = LocalDate.now();
 		
-		if(endDate.isBefore(today)) {
-			dto.setReq_open("3");
-		} else if(reqEnd.isBefore(today)) {
+		if(dto.getPrg_nope() == dto.getPrg_entry()) {
 			dto.setReq_open("2");
 		} else {
-			dto.setReq_open("1");
+			
+			if(endDate.isBefore(today)) {
+				dto.setReq_open("3");
+			} else if(reqEnd.isBefore(today)) {
+				dto.setReq_open("2");
+			} else {
+				dto.setReq_open("1");
+			}			
 		}
+		
 		return dto;
 	}
 	
