@@ -70,8 +70,13 @@
 		              </div>
 		              <div class="dropdown-menu">
 		                <div class="dropdown-content">
+		                <input type="hidden" id="currentCsl">
 		                <th:block th:each="csl : ${counselors}">
-		                  <a href="#" class="dropdown-item" th:data-counsel-no="${csl.cns_no}" th:data-counsel-field="${csl.cns_field}" th:data-counsel-name="${csl.cns_nm}">[[${csl.cns_field}]] - [[${csl.cns_nm}]]</a>
+		                  <a href="#" class="dropdown-item" 
+		                  	 th:data-counsel-no="${csl.cns_no}" 
+		                  	 th:data-counsel-field="${csl.cns_field}" 
+		                  	 th:data-counsel-name="${csl.cns_nm}">
+		                  	 [[${csl.cns_field}]] - [[${csl.cns_nm}]]</a>
 		                </th:block>
 		                </div>
 		              </div>

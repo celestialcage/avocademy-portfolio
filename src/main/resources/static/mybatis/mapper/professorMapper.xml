@@ -24,7 +24,7 @@
 	</update>
 	
 	<select id="professorInfo" parameterType="int" resultType="ProfessorDTO">
-		SELECT ps_no, user_no, ps_nm, scsbjt_cd FROM professor WHERE user_no = #{uno};
+		SELECT ps_no, user_no, ps_nm, scsbjt_cd, GET_CD_NM('U01', scsbjt_cd) AS scsbjt_nm  FROM professor WHERE user_no = #{uno};
 	</select>
 	
 	<insert id="registPsCounsel" parameterType="Map">
@@ -54,5 +54,15 @@
 	
 	<select id="psTimeList" parameterType="Map" resultType="Map">
 		SELECT a.psc_no, a.ps_no, a.psc_ymd, a.psc_hr FROM psschedule a JOIN ps_user b ON a.ps_no = b.ps_no WHERE psc_ymd = #{selectedDate} AND uname = #{uname}
+	</select>
+	
+	<select id="studentList" parameterType="int" resultType="ProfessorDTO">
+		SELECT stud_nm, stud_no, uid, scsbjt_cd, GET_CD_NM('U01', scsbjt_cd) AS scsbjt_nm, uemail FROM stu_user 
+		WHERE scsbjt_cd = (SELECT scsbjt_cd FROM ps_user WHERE uno = #{uno}) 
+	</select>
+	
+	<select id="checkSchedule" parameterType="Map" resultType="int">
+		SELECT count(*) FROM totalSchedule WHERE 
+		ymd = #{selectedDate} AND hr = #{selectedTime} AND stud_no = (SELECT stud_no FROM stu_user WHERE uno = #{uno})
 	</select>
 </mapper>

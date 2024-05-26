@@ -1,20 +1,45 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
 
 <head>
     <th:block th:insert="~{./admin/thfragments/fragments.html :: headTag}"></th:block>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/admin/assets/extra-libs/multicheck/multicheck.css">
     <link href="/admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
-    <link rel="stylesheet" href="/css/summernote/summernote-lite.css">
+    <script type="text/javascript">
+    	
+    </script>
+    <style type="text/css">
+	
+#contentModal {
+	  min-width: 700px;
+	  min-height: 700px;
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  background: rgba(0, 0, 0, 0.5);
+	}
+	
+	#contentModal.hidden {
+	  display: none;
+	}
+	
+	#contentModal .modal-dialog {
+		min-width: 700px;
+		min-height: 400px;
+	}
+    </style>
 </head>
 
 <body>
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
-    <th:block th:insert="~{./admin/thfragments/fragments.html :: preloader}"></th:block>
+ 	<th:block th:insert="~{./admin/thfragments/fragments.html :: preloader}"></th:block>
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
@@ -44,7 +69,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">상담 코멘트 작성</h4>
+                        <h4 class="page-title">지도교수 관리 페이지</h4>
                         <div class="ms-auto text-end">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
@@ -64,41 +89,61 @@
             <!-- ============================================================== -->
             <div class="container-fluid">
                 <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
+
                 <div class="row">
-                    <div class="col-12">
-                    	<div class="card">
-                    		<div class="card-body">
-                                <h5 class="card-title mb-0">상담 정보 - [[${aply_no}]]번 신청건</h5>
+                    <div class="col-md-10">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-md-flex align-items-center">
+                                	<h4 class="card-title">학생 목록</h4>
+                                </div>
+                                <!-- table -->
+                                <div class="table-responsive">
+                                    <table id="zero_config" class="table table-striped table-bordered">
+                                    	<thead>
+                                    		<tr>
+                                    			<th>학생 이름</th>
+                                    			<th>학번</th>
+                                    			<th>학과</th>
+                                    			<th>이메일</th>
+                                    		</tr>
+                                    	</thead>
+                                    	<tbody id="stList">
+                                    		<tr th:each="a : ${list}" id="stTable">
+                                    			<td th:text="${a.stud_nm}" ></td>
+                                    			<td th:text="${a.stud_no}"></td>
+                                    			<td th:text="${a.scsbjt_nm}"></td>
+                                    			<td th:text="${a.uemail}"></td>
+                                    		</tr>
+                                    	</tbody>
+                                    </table>
+                                </div>
+                                    
+                                <!-- table -->
+
+
                             </div>
-                            <form action="./comment" method="post">
-                            <div class="m-3">
-	                            <div class="card-body">
-	                            	<input type="hidden" name="aply_no" th:value="${aply_no}">
-	                            	<input type="hidden" name="aply_no_old" th:value="${aply_no_old}">
-	                            	<input type="hidden" name="dscsn_nmtm" th:value="${dscsn_nmtm}">
-	                            	<textarea name="dscsn_cn" id="summernote"></textarea>
-	                            </div>
-	                            <div class="d-flex justify-content-end me-4">
-									<button type="submit" class="btn btn-warning btn-lg">저장</button>
-								</div>
-							</div>
-							</form>
-                    	</div>
-                        
+                        </div>
                     </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
+                <div class="modal hidden" id="contentModal">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title fs-5" id="modalTitle">상세보기</h5>
+				      </div>
+				      <div class="modal-body">
+				      	<div class="mt-2" id="modalContent">
+					       <p id="here">Modal body text goes here.</p>
+				      	</div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-primary" id="sub">승인</button>
+				        <button type="button" class="btn btn-secondary" id="closeModal">취소</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
@@ -123,46 +168,73 @@
     <!-- ============================================================== -->
     <th:block th:insert="~{./admin/thfragments/fragments.html :: jqueryScript}"></th:block>
     <!-- this page js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
     <script src="/admin/assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
     <script src="/admin/assets/extra-libs/multicheck/jquery.multicheck.js"></script>
     <script src="/admin/assets/extra-libs/DataTables/datatables.min.js"></script>
-    <!-- <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script> -->
-    <script type="text/javascript" src="/admin/custom/utils.js"></script>
-    <!-- <script type="text/javascript" src="/admin/custom/grid-app.js"></script> -->
-    <script type="text/javascript" src="/admin/custom/appointments-app.js"></script>
-    <script src="/js/summernote/summernote-lite.js"></script>
-	<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
     <script>
         /****************************************
          *       Basic Table                   *
          ****************************************/
-        $('#zero_config').DataTable();
+	    $('#zero_config').DataTable({
+	    	order:[0, 'desc'],
+	    	ordering:true
+	    });     
+		
+		const contentModal = document.getElementById("contentModal");
+		const closeModal = document.getElementById("closeModal");
+		
+		function showContent(no, a, b){
+			var pseq_no = no;
+			 $("#modalTitle").text(no);
+	         $("#modalContent").html("상담 종류: " + a+"<br><br>"+"상담 받을 내용: " + b);  // JSON 응답에서 content를 가져와서 모달 내용 업데이트
+	         contentModal.classList.remove('hidden');
+	         
+		}
+		
+		closeModal.addEventListener('click', () => {
+			contentModal.classList.add('hidden');
+		})
+		
+		// 상태변화 드롭다운 선택시  ajax로 보내기
+		$(document).ready(function(){
+			$('.status').on('change', function(){
+				var changeStatus = $(this).val();
+				var no = $(this).closest('tr').find('.no').text();
+				var statusTextElement = $(this).closest('tr').find('.statusText');
+				console.log(no);
+				
+				$.ajax({
+					url: '/admin/changeStatus',
+					type: 'post',
+					data: {
+						"status" : changeStatus,
+						"no" : no
+					},
+					success: function(response){
+						
+						// 상태 선택 시 화면에 바로 출력되게하기
+						var statusText = '';
+						switch(changeStatus) {
+						case '10': statusText = '신청';
+							break;
+						case '20': statusText = '확정';
+							break;
+						case '30': statusText = '완료';
+							break;
+						case '40': statusText = '미진행';
+							break;
+						}
+						statusTextElement.text(statusText);
+					},
+					
+					error: function(error) {
+						alert(error + "에러임다");
+					}
+				});
+			});
+		});
         
-        // 날짜 포맷... 으휴
-        let dates = document.querySelectorAll(".dscsn_ymd");
-        dates.forEach(e => {
-        		e.innerText = moment(e.innerText).format("YYYY-MM-DD");
-        	});
-        
-        	$('#summernote').summernote({
-        		  height: 600,                 // 에디터 높이
-        		  lang: 'ko-KR', // default: 'en-US'
-        		  placeholder: "write here...", 
-        		  fontNames : ['D2Coding', 'Arial Black', 'Comic Sans MS', 'Courier New'], // 폰트 나열
-        			  toolbar: [
-        			    // [groupName, [list of button]]
-        			    ['style', ['bold', 'italic', 'underline', 'clear']],
-        			    /* ['font', ['strikethrough', 'superscript', 'subscript']], */
-        			    ['fontname', ['fontname','fontsize', 'color']],
-        			    ['para', ['ul', 'ol', 'paragraph']],
-        			    /* ['height', ['height']] */
-        			    ['table', ['table','link', 'picture', 'video']],
-        			    ['view', ['fullscreen', 'codeview', 'help']]
-        			  ]
-        	});
     </script>
-
 </body>
 
 </html>

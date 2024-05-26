@@ -52,7 +52,7 @@
     };
 
     const cal = new Calendar(container, options);
-    let cno = !document.querySelector("#currentCsl").value ? 1 : document.querySelector("#currentCsl").value;
+    let cno = document.querySelector("#currentCsl").value;
 
     // Constants
     const CALENDAR_CSS_PREFIX = 'toastui-calendar-';
@@ -73,7 +73,12 @@
 	
 	// 신청용 정보
 	let schNo = document.querySelector("#schNo"); // 스케줄번호
+	let aplyNoOld =document.querySelector("#aplyNoOld");
 	let stNo = document.querySelector("#stNo");
+	let stName = document.querySelector("#stName");
+	
+	// 컨트롤러에서 모델에 붙여서 stNo, stName 값 넣기
+	
 	// 모달 내용
 	let csName = document.querySelector("#csName");
 	let csLoc = document.querySelector("#csLoc");
@@ -169,7 +174,7 @@
 		cal.on({
 		  clickEvent: function (eventInfo) {
 			console.log('clickEvent', eventInfo);
-			// 신청자명, 학번 => 세션
+			// 신청자명, 학번 => 이전신청에서 가져오기
 			// 상담사명, 상담실, 날짜, 시간단위 => 이벤트 정보
 			
 			schNo.value = eventInfo.event.id;
@@ -216,7 +221,7 @@
 	/*modalBtn.addEventListener("click", () => {
 		console.log("모달 버튼 클릭");
 	})*/
-    
+	
 
     // Init
     COUNSEL_CALENDARS.forEach((e) => {

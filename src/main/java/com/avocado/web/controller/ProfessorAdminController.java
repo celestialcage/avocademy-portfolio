@@ -146,5 +146,18 @@ public class ProfessorAdminController {
 		
 		return maps;
 	}
+	
+	// 담당 학생 리스트
+	@GetMapping("/studentList")
+	private String studentList (Model model) {
+		HttpSession session = util.getSession();
+		List<ProfessorDTO> list = new ArrayList<ProfessorDTO>();
+		int uno = (int)(session.getAttribute("uno"));
+		list = professorService.studentList(uno);
+		model.addAttribute("list", list);
+		//System.out.println(list);
+		return "/admin/professor/studentList";
+	}
+	
 
 }

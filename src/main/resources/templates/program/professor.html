@@ -3,22 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Avocado 상담</title>
-<script src="/index/assets/js/color-modes.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-<meta name="generator" content="Hugo 0.122.0">
-<link rel="canonical" href="https://getbootstrap.kr/docs/5.3/examples/carousel/">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-<link href="/index/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="/index/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<link rel="apple-touch-icon" href="/index/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-<link rel="icon" href="/index/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="/index/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-<link rel="manifest" href="/index/assets/img/favicons/manifest.json">
-<link rel="mask-icon" href="/index/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
-<link rel="icon" href="/index/assets/img/favicons/favicon.ico">
-<meta name="theme-color" content="#712cf9">
 
 <th:block th:insert="~{./fragments.html :: headTag}"></th:block>
 
@@ -34,82 +18,12 @@ main {
   	display:flex;
 }
 
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-
-      .b-example-divider {
-        width: 100%;
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-      }
-
-      .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-      }
-
-      .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-      }
-
-      .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
-      }
-
-      .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      .btn-bd-primary {
-        --bd-violet-bg: #712cf9;
-        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-
-        --bs-btn-font-weight: 600;
-        --bs-btn-color: var(--bs-white);
-        --bs-btn-bg: var(--bd-violet-bg);
-        --bs-btn-border-color: var(--bd-violet-bg);
-        --bs-btn-hover-color: var(--bs-white);
-        --bs-btn-hover-bg: #6528e0;
-        --bs-btn-hover-border-color: #6528e0;
-        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-        --bs-btn-active-color: var(--bs-btn-hover-color);
-        --bs-btn-active-bg: #5a23c8;
-        --bs-btn-active-border-color: #5a23c8;
-      }
-
-      .bd-mode-toggle {
-        z-index: 1500;
-      }
-
-      .bd-mode-toggle .dropdown-menu .active .bi {
-        display: block !important;
-      }
+        .programInfo {
+  	width: 100%;
+  	height: 100%;
+  	margin: 15px;
+  	padding: 10px;
+  }
 </style>
 
     
@@ -124,25 +38,56 @@ main {
 	
 	
 	<!-- 본문시작 -->
-	<div class="mainContents">
-	<th:block th:insert="~{./fragments.html :: counselSidebar}"></th:block>	
-		<div>
-		<h2>지도교수 상담이란?</h2>
-			학생이 지도교수와 대학생활, 대인관계, 학업, 진로, 취업 등의 내용으로 상담을 실시하며 스스로 삶의 목표를 설정하고 달성할 수 있도록 도와드립니다.
+		<div class="mainContents" style="width: 100%;">
+			<!-- =============사이드바============== -->
+			<th:block th:insert="~{./fragments.html :: counselSidebar}"></th:block>	
+			<div class="programInfo">	
+				<div class="pageText mb-5">
+			
+			      <article class="blog-post">
+			        <h1 class="my-2">지도교수 상담</h1>			
+			        <hr>
+			      </article>
+			      <article class="blog-post mb-4">
+					<h4 class="h4-tit01 m-2">지도교수 상담이란?</h4>
+					<p class="ms-4 mt-3">학생이 지도교수와 대학생활, 대인관계, 학업, 진로, 취업 등의 내용으로 상담을 실시하며 스스로 삶의 목표를 설정하고 달성할 수 있도록 도와드립니다.
+					</p>
+			      </article>
+			      <article class="blog-post mb-4">
+					
+			        <dl class="m-3">
+			          <dt class="my-2 ms-2">지도교수 상담 진행</dt>
+			          <dd class="ms-4 mb-3">- 전 학부 학생을 대상으로 50분씩 상담이 진행되며 한 학기당 필수적으로 1회 이상 상담을 실시하고 있습니다.</dd>
+			          <dt class="my-2 ms-2"></dt>
+			          <dd class="ms-4 mb-3">- 상담을 원하는 학생은 언제든지 신청할 수 있으며 지도교수의 일정 확인 후 상담이 진행됩니다.</dd>
+			        </dl>
+			      </article>
+			    </div>
+			    <div class="row my-1 mx-2">
+				    <div class="col-md-6">
+				      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative align-items-center bg-dark-subtle">
+				        <div class="col p-4 d-flex flex-column position-static">
+				          <h5 class="mb-0">지도교수 상담 신청하기</h5>
+				          <a th:href="@{/professorCSR}" class="icon-link gap-1 icon-link-hover stretched-link">
+				            <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+				          </a>
+				        </div>
+				        <div class="col-auto d-none d-lg-block">
+				          <svg class="bd-placeholder-img pd-1" width="180" height="150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+				          	<defs>
+							  <clipPath id="rounded-corners">
+							    <rect x="0" y="0" width="175" height="150" rx="15" ry="15" />
+							  </clipPath>
+							</defs>
+	 					    <image href="/img/aplyImg.jpg" x="0" y="0" width="175" height="150" clip-path="url(#rounded-corners)" />
+							<rect x="160" y="0" width="10" height="150" fill="transparent" />
+				          </svg>
+				        </div>
+				      </div>
+				    </div>
+			  	</div>
+			</div>
 		</div>
-		
-		<br>
-		
-		<div>
-		<h2>지도교수 상담 진행</h2>
-			<ul>
-				<li>전 학부 학생을 대상으로 50분씩 상담이 진행되며 한 학기당 필수적으로 1회 이상 상담을 실시하고 있습니다.</li>
-				<li>상담을 원하는 학생은 언제든지 신청할 수 있으며 지도교수의 일정 확인 후 상담이 진행됩니다.</li>
-			</ul>
-		</div>
-		
-		<button onclick="location.href='/professorCSR'" >지도교수 상담신청 바로가기</button> <!-- 로그인 안했으면 로그인창으로 보내기 추가 -->
-	</div>
 	<!-- 본문 끝 -->
 </main>	
 
