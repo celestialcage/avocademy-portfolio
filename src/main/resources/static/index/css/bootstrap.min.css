@@ -3841,7 +3841,7 @@ fieldset:disabled .btn {
   display: block;
 }
 .navbar {
-  --bs-navbar-padding-x: 0;
+  --bs-navbar-padding-x: ;
   --bs-navbar-padding-y: 0.5rem;
   --bs-navbar-color: rgba(var(--bs-emphasis-color-rgb), 0.65);
   --bs-navbar-hover-color: rgba(var(--bs-emphasis-color-rgb), 0.8);
@@ -3976,10 +3976,11 @@ fieldset:disabled .btn {
   .navbar-expand-sm .navbar-nav .dropdown-menu {
     position: absolute;
   }
-  .navbar-expand-sm .navbar-nav .nav-link {
+.navbar-expand-md .navbar-nav .nav-link {
+    --bs-navbar-nav-link-padding-x: 3rem; /* 원하는 패딩 값으로 수정 */
     padding-right: var(--bs-navbar-nav-link-padding-x);
     padding-left: var(--bs-navbar-nav-link-padding-x);
-  }
+}
   .navbar-expand-sm .navbar-nav-scroll {
     overflow: visible;
   }
@@ -4032,7 +4033,8 @@ fieldset:disabled .btn {
   }
   .navbar-expand-md .navbar-collapse {
     display: flex !important;
-    flex-basis: auto;
+    margin-right: auto; 
+    align-items: center; 
   }
   .navbar-expand-md .navbar-toggler {
     display: none;
@@ -7939,7 +7941,7 @@ fieldset:disabled .btn {
   margin-right: 3rem !important;
 }
 .me-auto {
-  margin-right: auto !important;
+  /* margin-right: auto !important; */
 }
 .mb-0 {
   margin-bottom: 0 !important;

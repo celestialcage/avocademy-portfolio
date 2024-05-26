@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
 <body>
 
-	<th:block th:fragment="headTag">		
+	<th:block th:fragment="headTag">
 		<script src="/index/assets/js/color-modes.js"></script>
-	    <meta charset="utf-8">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <meta name="description" content="">
-	    <meta name="generator" content="Hugo 0.122.0">
-	    <title>아보카대학교 상담센터</title>
-	    <!-- bootstrap -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="generator" content="Hugo 0.122.0">
+		<title>아보카데미 상담센터</title>
+		<!-- bootstrap -->
 		<link rel="canonical" href="https://getbootstrap.kr/docs/5.3/examples/carousel/">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-		<link href="/index/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">	
-	    <!-- Favicons -->
+		<link href="/index/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+		<!-- Favicons -->
 		<link rel="apple-touch-icon" href="/index/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
 		<link rel="icon" href="/index/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
 		<link rel="icon" href="/index/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
@@ -22,13 +24,14 @@
 		<link rel="icon" href="/index/assets/img/favicons/favicon.ico">
 		<meta name="theme-color" content="#712cf9">
 		<!-- Custom styles for this template -->
-  		<link href="/index/css/indexpage.css">
+		<link href="/index/css/indexpage.css">
 	</th:block>
 
 	<th:block th:fragment="menu">
-		<header data-bs-theme="dark" style="position:relative; height:80px;">
-			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" style="height: 80px;">
-				<div class="container">
+		<header data-bs-theme="dark" style="position: relative; height: 80px;">
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" style="height: 80px;  display: flex; justify-content: center;">
+				<div class="container" style="display: flex; justify-content: center;">
+					<img th:src="@{/img/아보카데미.png}" style="width: 75px; height: auto;">
 					<a class="navbar-brand" href="/main">아보카데미</a>
 					<button class="navbar-toggler" type="button"
 						data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -36,162 +39,168 @@
 						aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
-					<div class="collapse navbar-collapse" id="navbarCollapse">
-						<ul class="navbar-nav me-auto mb-2 mb-md-0">
-							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="/main">Home</a></li>
-							<li class="nav-item"><a class="nav-link" href="/centerInfo">센터 소개</a></li>
+					 <div class="collapse navbar-collapse text-center justify-content-center" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0 ">
+							<!-- <li class="nav-item"><a class="nav-link active"
+								aria-current="page" href="/main">Home</a></li> -->
+							<li class="nav-item"><a class="nav-link" href="/centerInfo">센터소개</a></li>
 							<li class="nav-item"><a class="nav-link" href="/counselingGuide">상담 안내</a></li>
 							<li class="nav-item"><a class="nav-link" href="/community">커뮤니티</a></li>
-							<li class="nav-item"><a class="nav-link" href="/online">온라인 상담</a></li>
-							
-    						<th:block th:if="${session.uname eq null}">
-    						<!-- session.uid가 null일 때, 즉 로그아웃 상태일 때는 로그인 링크를 보여줍니다. -->
-    						<li class="nav-item"><a class="nav-link" href="/login">로그인</a></li>
+							<li class="nav-item"><a class="nav-link" href="/online">온라인상담</a></li>
+
+							<th:block th:if="${session.uname eq null}">
+								<!-- session.uid가 null일 때, 즉 로그아웃 상태일 때는 로그인 링크를 보여줍니다. -->
+								<li class="nav-item"><a class="nav-link" href="/login">로그인</a></li>
 							</th:block>
 							<th:block th:if="${session.uname ne null}">
-							    <!-- session.uid가 null이 아닐 때, 즉 로그인 상태일 때는 사용자 이름과 로그아웃 링크를 보여줍니다. -->
-							    <li class="nav-item"><a class="nav-link" href="/myInfo">[[${session.uname}]]님</a></li>
-							    <li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
+								<!-- session.uid가 null이 아닐 때, 즉 로그인 상태일 때는 사용자 이름과 로그아웃 링크를 보여줍니다. -->
+								<li class="nav-item"><a class="nav-link" href="/myInfo">[[${session.uname}]]님</a></li>
+								<li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
 							</th:block>
-							</ul>
+						</ul>
 					</div>
 				</div>
 			</nav>
 		</header>
 	</th:block>
-	
-	<th:block th:fragment="headerImg">
-    <div class="container-fluid header_img"
-        style="background-image: url('/index/assets/img/headerImg(1).jpg'); position:relative; 
-        font-size: 6vw; text-align: center; color: white; text-shadow: 0.1vw 0.1vw grey;">
-        아보카대학교 상담센터
+
+<th:block th:fragment="headerImg">
+    <div class="container-fluid header_img" style="background-image: url('/index/assets/img/headerImg(3).jpg'); position: relative; height: 200px;">
     </div>
 </th:block>
 
 
 
 	<th:block th:fragment="footer">
-	  <footer class="container">
-	   <!-- <p>Session expires at: <span id="sessionTimeLeft"></span></p> -->
-	    <p class="float-end"><a href="#">Back to top</a></p>
-	    <p>&copy; Avocado Univercity, since 1924. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-	  </footer>
-	  
-	  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	  <script src="/index/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-	
-	
-  <script type="text/javascript"> 
-    // 페이지 로딩 시간 기록
-    localStorage.setItem('lastLoginTime', new Date().getTime());
+		<footer class="container">
+			<!-- <p>Session expires at: <span id="sessionTimeLeft"></span></p> -->
+			<p class="float-end">
+				<a href="#">Back to top</a>
+			</p>
+			<p>
+				&copy; Avocado Univercity, since 1924. &middot; <a href="#">Privacy</a>
+				&middot; <a href="#">Terms</a>
+			</p>
+		</footer>
 
-    // 세션 만료 시간 설정 (밀리초 단위) - 30분으로 변경
-    const sessionExpirationTime = 30 * 60 * 1000; // 30분
-    
-    // 세션 만료 여부 확인 함수
-    function checkSessionExpiration() {
-        let lastLoginTime = localStorage.getItem('lastLoginTime');
-        
-        if (lastLoginTime) {
-            let currentTime = new Date().getTime();
-            if (currentTime - lastLoginTime > sessionExpirationTime) {
-                logout();
-            }
-        }
-    }
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+			integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+			crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="/index/js/bootstrap.bundle.min.js"
+			crossorigin="anonymous"></script>
 
-    // 세션 만료까지 남은 시간 표시 함수
-    function updateSessionTimeLeft() {
-    	//console.log("함수가 호출되었습니다.");
-        let lastLoginTime = localStorage.getItem('lastLoginTime');
-        //console.log("Last Login Time from Storage: ", lastLoginTime); 
-        
-        // 사용자가 로그인한 경우에만 세션 남은 시간을 표시합니다.
-        if (lastLoginTime && isLoggedIn()) {
-            let currentTime = new Date().getTime();
-            //console.log("Test")
-            //console.log("Current Time: ", currentTime); // 현재 시간 로그 출력
-            //console.log("isLoggedIn(): ", isLoggedIn());
-            let timeDiff = sessionExpirationTime - (currentTime - lastLoginTime);
-            //console.log("Time Difference: ", timeDiff); // 남은 시간 로그 출력
-            if (timeDiff > 0) {
-            	//console.log("Session expired."); // 세션 만료 메시지 로그 출력
-                let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-                let seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-                //console.log("Minutes: ", minutes+"분", "Seconds: ", seconds); // 남은 분과 초 로그 출력
-                $('#sessionTimeLeft').text(minutes + "분 " + seconds + "초 남음");
-                //console.log("sessionTimeLeft:", minutes + "분 " + seconds + "초 남음");
-            } else {
-                $('#sessionTimeLeft').text("Session has expired");
-            }
-        } else {
-            $('#sessionTimeLeft').text(""); // 사용자가 로그인하지 않은 경우에는 세션 남은 시간을 숨깁니다.
-        }
-    }
-	// 페이지 로드 후 매 초마다 업데이트
-	$(document).ready(function () {
-	    updateSessionTimeLeft();
-	    setInterval(updateSessionTimeLeft, 1000);
-	    setInterval(checkSessionExpiration, 1000);
-	});
 
-	
-	//로그아웃 버튼 클릭
-	$('.logout').click(function(){
-		delCookie('loginCookie');
-		logout();
-	});
-	
-	// 로그인 여부 확인 함수
-	function isLoggedIn() {
-	    return sessionStorage.getItem('uid') !== null;
-	}
-    </script>
-    
-</th:block>
+		<script type="text/javascript">
+			// 페이지 로딩 시간 기록
+			localStorage.setItem('lastLoginTime', new Date().getTime());
 
-<th:block th:fragment="counselSidebarHead">
-	<link rel="stylesheet" href="/index/css/sidebars.css">
-	<script defer src="/index/js/sidebars.js"></script>
-</th:block>
+			// 세션 만료 시간 설정 (밀리초 단위) - 30분으로 변경
+			const sessionExpirationTime = 30 * 60 * 1000; // 30분
 
-<th:block th:fragment="counselSidebar">
-	<script defer src="/index/js/sidebars.js"></script>
-	  <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
-    <a href="/counselingGuide" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-      <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-      <span class="fs-4">상담 프로그램</span>
-    </a>
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
-        <a href="/personal" class="nav-link link-body-emphasis">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-          개인 상담
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/professor" class="nav-link link-body-emphasis">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-          지도교수 상담
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/group" class="nav-link link-body-emphasis">
-          <svg class="bi pe-none me-2" width="16" height="16"></svg>
-          집단 상담
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/test" class="nav-link link-body-emphasis">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-          심리 검사(준비중)
-        </a>
-      </li>
-    </ul>
-    <hr>
-    <!-- <div class="dropdown">
+			// 세션 만료 여부 확인 함수
+			function checkSessionExpiration() {
+				let lastLoginTime = localStorage.getItem('lastLoginTime');
+
+				if (lastLoginTime) {
+					let currentTime = new Date().getTime();
+					if (currentTime - lastLoginTime > sessionExpirationTime) {
+						logout();
+					}
+				}
+			}
+
+			// 세션 만료까지 남은 시간 표시 함수
+			function updateSessionTimeLeft() {
+				//console.log("함수가 호출되었습니다.");
+				let lastLoginTime = localStorage.getItem('lastLoginTime');
+				//console.log("Last Login Time from Storage: ", lastLoginTime); 
+
+				// 사용자가 로그인한 경우에만 세션 남은 시간을 표시합니다.
+				if (lastLoginTime && isLoggedIn()) {
+					let currentTime = new Date().getTime();
+					//console.log("Test")
+					//console.log("Current Time: ", currentTime); // 현재 시간 로그 출력
+					//console.log("isLoggedIn(): ", isLoggedIn());
+					let timeDiff = sessionExpirationTime
+							- (currentTime - lastLoginTime);
+					//console.log("Time Difference: ", timeDiff); // 남은 시간 로그 출력
+					if (timeDiff > 0) {
+						//console.log("Session expired."); // 세션 만료 메시지 로그 출력
+						let minutes = Math.floor((timeDiff % (1000 * 60 * 60))
+								/ (1000 * 60));
+						let seconds = Math
+								.floor((timeDiff % (1000 * 60)) / 1000);
+						//console.log("Minutes: ", minutes+"분", "Seconds: ", seconds); // 남은 분과 초 로그 출력
+						$('#sessionTimeLeft').text(
+								minutes + "분 " + seconds + "초 남음");
+						//console.log("sessionTimeLeft:", minutes + "분 " + seconds + "초 남음");
+					} else {
+						$('#sessionTimeLeft').text("Session has expired");
+					}
+				} else {
+					$('#sessionTimeLeft').text(""); // 사용자가 로그인하지 않은 경우에는 세션 남은 시간을 숨깁니다.
+				}
+			}
+			// 페이지 로드 후 매 초마다 업데이트
+			$(document).ready(function() {
+				updateSessionTimeLeft();
+				setInterval(updateSessionTimeLeft, 1000);
+				setInterval(checkSessionExpiration, 1000);
+			});
+
+			//로그아웃 버튼 클릭
+			$('.logout').click(function() {
+				delCookie('loginCookie');
+				logout();
+			});
+
+			// 로그인 여부 확인 함수
+			function isLoggedIn() {
+				return sessionStorage.getItem('uid') !== null;
+			}
+		</script>
+
+	</th:block>
+
+	<th:block th:fragment="counselSidebarHead">
+		<link rel="stylesheet" href="/index/css/sidebars.css">
+		<script defer src="/index/js/sidebars.js"></script>
+	</th:block>
+
+	<th:block th:fragment="counselSidebar">
+		<script defer src="/index/js/sidebars.js"></script>
+		<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary"
+			style="width: 280px;">
+			<a href="/counselingGuide"
+				class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+				<svg class="bi pe-none me-2" width="40" height="32">
+					<use xlink:href="#bootstrap" /></svg> <span class="fs-4">상담 프로그램</span>
+			</a>
+			<hr>
+			<ul class="nav nav-pills flex-column mb-auto">
+				<li class="nav-item"><a href="/personal"
+					class="nav-link link-body-emphasis"> <svg
+							class="bi pe-none me-2" width="16" height="16">
+							<use xlink:href="#home" /></svg> 개인 상담
+				</a></li>
+				<li class="nav-item"><a href="/professor"
+					class="nav-link link-body-emphasis"> <svg
+							class="bi pe-none me-2" width="16" height="16">
+							<use xlink:href="#speedometer2" /></svg> 지도교수 상담
+				</a></li>
+				<li class="nav-item"><a href="/group"
+					class="nav-link link-body-emphasis"> <svg
+							class="bi pe-none me-2" width="16" height="16"></svg> 집단 상담
+				</a></li>
+				<li class="nav-item"><a href="/test"
+					class="nav-link link-body-emphasis"> <svg
+							class="bi pe-none me-2" width="16" height="16">
+							<use xlink:href="#grid" /></svg> 심리 검사(준비중)
+				</a></li>
+			</ul>
+			<hr>
+			<!-- <div class="dropdown">
       <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
         <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
         <strong>mdo</strong>
@@ -204,36 +213,36 @@
         <li><a class="dropdown-item" href="#">Sign out</a></li>
       </ul>
     </div> -->
-  </div>
-	
-</th:block>
-<th:block th:fragment="introSidebar">
-	<script defer src="/index/js/sidebars.js"></script>
-	  <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
-    <a href="/counselingGuide" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-      <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-      <span class="fs-4">아보카 상담센터</span>
-    </a>
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
-        <a href="/centerInfo" class="nav-link link-body-emphasis">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-          센터 소개
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/location" class="nav-link link-body-emphasis">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-          찾아오시는 길
-        </a>
-      </li>
-    </ul>
-    <hr>
-    </div>
-</th:block>
-<!--커뮤니티 사이드바  -->
-<!-- <th:block th:fragment="communitySidebar">
+		</div>
+
+	</th:block>
+	<th:block th:fragment="introSidebar">
+		<script defer src="/index/js/sidebars.js"></script>
+		<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary"
+			style="width: 280px;">
+			<a href="/counselingGuide"
+				class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+				<svg class="bi pe-none me-2" width="40" height="32">
+					<use xlink:href="#bootstrap" /></svg> <span class="fs-4">아보카 상담센터</span>
+			</a>
+			<hr>
+			<ul class="nav nav-pills flex-column mb-auto">
+				<li class="nav-item"><a href="/centerInfo"
+					class="nav-link link-body-emphasis"> <svg
+							class="bi pe-none me-2" width="16" height="16">
+							<use xlink:href="#home" /></svg> 센터 소개
+				</a></li>
+				<li class="nav-item"><a href="/location"
+					class="nav-link link-body-emphasis"> <svg
+							class="bi pe-none me-2" width="16" height="16">
+							<use xlink:href="#speedometer2" /></svg> 찾아오시는 길
+				</a></li>
+			</ul>
+			<hr>
+		</div>
+	</th:block>
+	<!--커뮤니티 사이드바  -->
+	<!-- <th:block th:fragment="communitySidebar">
 <script defer src="/index/js/sidebars.js"></script>
     <style>
         
@@ -277,6 +286,6 @@
 
 
 	<th:block></th:block>
-	
+
 </body>
 </html>
