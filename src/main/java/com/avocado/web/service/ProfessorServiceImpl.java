@@ -67,6 +67,16 @@ public class ProfessorServiceImpl implements ProfessorService {
 		return professorDAO.psTimeList(map);
 	}
 
+	@Override
+	public List<ProfessorDTO> studentList(int uno) {
+		return professorDAO.studentList(uno);
+	}
+
+	@Override
+	public int checkSchedule(Map<String, Object> map) {
+		return professorDAO.checkSchedule(map);
+	}
+
 	
 	
 

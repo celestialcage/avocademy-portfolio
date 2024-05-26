@@ -95,40 +95,25 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-md-flex align-items-center">
-                                	<h4 class="card-title">상담일정관리</h4>
+                                	<h4 class="card-title">학생 목록</h4>
                                 </div>
                                 <!-- table -->
                                 <div class="table-responsive">
                                     <table id="zero_config" class="table table-striped table-bordered">
                                     	<thead>
                                     		<tr>
-                                    			<th>no</th>
-                                    			<th>학생</th>
-                                    			<th>상담날짜</th>
-                                    			<th>상담시간</th>
-                                    			<th>진행상태</th>
-                                    			<th>상태변경</th>
+                                    			<th>학생 이름</th>
+                                    			<th>학번</th>
+                                    			<th>학과</th>
+                                    			<th>이메일</th>
                                     		</tr>
                                     	</thead>
-                                    	<tbody id="psList">
-                                    		<tr th:each="a : ${list}" id="psTable">
-                                    			<td th:text="${a.pseq_no}" class="no" th:value="${a.pseq_no}"></td>
-                                    			<td th:attr="onclick=|showContent('${a.pseq_no}', '${a.ps_class}', '${a.ps_cn}')|" th:text="${a.stud_nm}"></td>
-                                    			<td th:attr="onclick=|showContent('${a.pseq_no}', '${a.ps_class}', '${a.ps_cn}')|" th:text="${a.ps_ymd}"></td>
-                                    			<td th:attr="onclick=|showContent('${a.pseq_no}', '${a.ps_class}', '${a.ps_cn}')|" th:text="${a.ps_hr}"></td>
-                                    			<td class="statusText" th:if="${a.ps_status} == '10'" th:text="신청"></td>
-                                    			<td class="statusText" th:if="${a.ps_status} == '20'" th:text="확정"></td>
-                                    			<td class="statusText" th:if="${a.ps_status} == '30'" th:text="완료"></td>
-                                    			<td class="statusText" th:if="${a.ps_status} == '40'" th:text="미진행"></td>
-                                    			<td>
-                                    				<select class="status">
-                                    					<option selected disabled>-선택-</option>
-                                    					<option value="10" th:text="신청"></option>
-                                    					<option value="20" th:text="확정"></option>
-                                    					<option value="30" th:text="완료"></option>
-                                    					<option value="40" th:text="미진행"></option>
-                                    				</select>
-                                    			</td>
+                                    	<tbody id="stList">
+                                    		<tr th:each="a : ${list}" id="stTable">
+                                    			<td th:text="${a.stud_nm}" ></td>
+                                    			<td th:text="${a.stud_no}"></td>
+                                    			<td th:text="${a.scsbjt_nm}"></td>
+                                    			<td th:text="${a.uemail}"></td>
                                     		</tr>
                                     	</tbody>
                                     </table>
@@ -153,6 +138,7 @@
 				      	</div>
 				      </div>
 				      <div class="modal-footer">
+				        <button type="button" class="btn btn-primary" id="sub">승인</button>
 				        <button type="button" class="btn btn-secondary" id="closeModal">취소</button>
 				      </div>
 				    </div>
@@ -200,7 +186,7 @@
 		function showContent(no, a, b){
 			var pseq_no = no;
 			 $("#modalTitle").text(no);
-	         $("#modalContent").html("상담 종류: <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + a+"<br><br>"+"상담 받을 내용: <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + b);  // JSON 응답에서 content를 가져와서 모달 내용 업데이트
+	         $("#modalContent").html("상담 종류: " + a+"<br><br>"+"상담 받을 내용: " + b);  // JSON 응답에서 content를 가져와서 모달 내용 업데이트
 	         contentModal.classList.remove('hidden');
 	         
 		}
