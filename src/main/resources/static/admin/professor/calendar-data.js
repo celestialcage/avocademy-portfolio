@@ -45,7 +45,7 @@ function getDBEvent(calendar, dbEle) {
     let id, calendarId, title, body, location, state, isReadOnly;
     id = `${dbEle.psc_no}`; // 필수 pk
     calendarId = `${dbEle.ps_no}`; // 필수 표시할 캘린더 번호 (교수번호 pno)
-    title = `예약`;
+    title = `예약됨`;
     body = ``;
     location = `사무실`;
     state = `예약됨`;
