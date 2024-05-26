@@ -45,7 +45,7 @@ function getDBEvent(calendar, dbEle) {
     let id, calendarId, title, body, location, state, isReadOnly;
     id = `${dbEle.scheduleNo}`;
     calendarId = `${dbEle.counselorNo}`;
-    title = `${dbEle.cslField}) ${dbEle.cslName} 상담사 신청 가능`;
+    title = `${dbEle.cslField}) ${dbEle.cslName}`;
     body = ``;
     location = `${dbEle.cslOffice}호 사무실`;
     state = !!dbEle.scheduleState ? dbEle.scheduleState : `신청 가능`;

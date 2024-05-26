@@ -137,5 +137,10 @@ public class CounselServiceImpl implements CounselService {
 	public int skipAppointment(PersonalDTO ps) {
 		return counselDAO.skipAppointment(ps);
 	}
+
+	@Override
+	public PersonalDTO findEmailInfo(int aply_no) {
+		return counselDAO.findEmailInfo(aply_no);
+	}
 	
 }

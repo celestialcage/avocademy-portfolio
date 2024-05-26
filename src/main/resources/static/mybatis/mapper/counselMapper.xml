@@ -187,4 +187,11 @@
 	<update id="setDscsn_nmtm" parameterType="PersonalDTO">
 		UPDATE caply SET dscsn_nmtm=#{dscsn_nmtm} WHERE aply_no=#{aply_no}
 	</update>
+	
+	<select id="findEmailInfo" parameterType="int" resultType="PersonalDTO">
+		SELECT GET_STUD_EMAIL(stud_no) AS stud_email, 
+			GET_CNS_NM(cns_no) AS cns_nm, 
+			dscsn_ymd, dscsn_hr 
+		FROM csche_ply WHERE aply_no=#{aply_no}
+	</select>
 </mapper>

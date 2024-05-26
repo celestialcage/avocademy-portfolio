@@ -48,4 +48,6 @@ public interface CounselService {
 
 	int skipAppointment(PersonalDTO ps);
 
+	PersonalDTO findEmailInfo(int aply_no);
+
 }

@@ -63,4 +63,6 @@ public interface CounselDAO {
 
 	int skipAppointment(PersonalDTO ps);
 
+	PersonalDTO findEmailInfo(int aply_no);
+
 }
