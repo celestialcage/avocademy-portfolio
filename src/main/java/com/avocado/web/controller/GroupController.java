@@ -103,15 +103,17 @@ public class GroupController {
 		try {
 			//스케줄번호 찾아오기
 			List<Integer> schdlNo = groupService.getSchedulNo(no);
+			System.out.println(schdlNo);
 			//전체 스케줄 중복검사
-			Map<String, Object> checkTime = null;
 			for (int i = 0; i < schdlNo.size(); i++) {
-				checkTime = groupService.getTime(schdlNo.get(i));
+				Map<String, Object> checkTime = groupService.getTime(schdlNo.get(i));
 				checkTime.put("stud_no", stud_no);
+				System.out.println(checkTime);
+				System.out.println(checkTime.get("prg_hr"));
+				System.out.println(checkTime.get("stud_no"));
 				int checkCount = groupService.checkTotalSchedule(checkTime);
-				
 				//중복시 에러 리턴
-				if (checkCount > 0) {
+				if (checkCount == 1) {
 					return errorResponse("중복된 스케줄이 이미 존재합니다.");
 				}
 			}
@@ -122,7 +124,7 @@ public class GroupController {
 				map.put("schdno", schdlNo.get(i));
 				map.put("stud_no", stud_no);
 				int result = groupService.apply(map);
-				if (result == 0) {
+				if (result > 0) {
 					return errorResponse("스케줄 번호 " + schdlNo + "에 대한 신청이 실패하였습니다. 관리자에게 문의하세요.");
 				}
 			}

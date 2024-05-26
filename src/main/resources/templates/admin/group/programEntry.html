@@ -101,6 +101,7 @@
 												<table id="entryTable" class="table">
 													<thead>
 														<tr>
+															<th>번호</th>
 															<th class="bootstrap-table-select2-filter">상담유형</th>
 															<th>프로그램 명</th>
 															<th>인원</th>
@@ -110,6 +111,7 @@
 													</thead>
 													<tbody>
 														<tr th:each="p : ${programEntry}">
+															<td th:text="${p.prg_no}"></td>
 															<td th:text="${p.prg_cate}"></td>
 															<td th:text="${p.prg_nm}"></td>
 															<td>[[${p.prg_entry}]]/[[${p.prg_nope}]]</td>
@@ -156,7 +158,7 @@
 				      	</div>
 				      </div>
 				      <div class="modal-footer">
-					  	<button type="button" class="btn btn-primary" id="mailButton">공지메일 전송</button>
+					  	<!-- <button type="button" class="btn btn-primary" id="mailButton">공지메일 전송</button> -->
 					    <button type="button" class="btn btn-secondary" id="closeModal">닫기</button>
 				      </div>
 				    </div>
