@@ -5,15 +5,59 @@
 " crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <th:block th:insert="~{./fragments.html :: headTag}"></th:block>   
   <!-- Custom styles for this template -->
+
+<style type="text/css">
+.mainContents {
+	margin: 0 auto;
+	height: auto;
+	min-height: 600px;
+}
+
+
+.loginBoxTitle {
+    color: #000000;
+    font-weight: bold;
+    font-size: 40px;
+    text-transform: uppercase;
+    padding: 5px;
+    margin-bottom: 25px;
+    background: linear-gradient(to right, #270a09, #8ca6ce);
+    background-clip: text; /* 표준 속성 추가 */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center; /* 텍스트를 가운데 정렬 */
+   
+}
+
+
+ input[type="text"],
+  input[type="password"] {
+   /*  width: 300px;*/
+    height: 50px; 
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .btn-primary {
+    width: 150px;
+    height: 40px;
+    background-color: #2ECC71;
+    background-color: #000000; /* 검정색 배경 */
+  border-color: #000000; /* 검정색 테두리 */
+  color: #ffffff; /* 흰색 글씨색 */
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 20px auto 0; /* 버튼을 아래로 더 내리기 위해 margin-top 추가 */
+    box-shadow: none; /* 기본 Bootstrap 파란색 그림자 제거 */
+  }
   
-	<style type="text/css">
-  	.mainContents {
-  		margin: 0 auto;
-  		height: auto;
-  		min-height: 600px;
-  		}
-  	</style>
-  	
+  input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+    text-align: center; /* placeholder 텍스트를 가운데 정렬 */
+}
+</style>
+
 <script type="text/javascript"> 	
 $(function(){
 	//로그인 버튼 클릭시 
@@ -100,7 +144,7 @@ $(function(){
          <div class="row">
             <div class="col-md-4 mx-auto">
                <form action="./login" method="post" id="loginForm">
-                  <h2 class="text-center text-uppercase text-primary mb-4">LOGIN</h2>
+                  <h2 class="loginBoxTitle">AVOCADO LOGIN</h2>
 
                   <div class="form-group">
                   <!-- <label id="id"></label> -->
@@ -124,7 +168,7 @@ $(function(){
                  <div class="mb-3 row">
                      <div class="col-sm-12">
                         <div class="form-group text-center">
-                           <button type="reset" class="btn btn-danger mr-2">초기화</button>
+                          
                            <button type="submit" class="btn btn-primary check">로그인</button>
                         </div>                       
                      </div>
