@@ -36,6 +36,9 @@ public interface ProfessorService {
 	List<Map<String, Object>> psTimeList(Map<String, Object> map);
 
 
+	List<ProfessorDTO> studentList(int uno);
+
+
 
 
 
