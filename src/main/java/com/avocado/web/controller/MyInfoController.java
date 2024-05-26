@@ -81,7 +81,7 @@ public class MyInfoController {
 		// System.out.println(list);
 		
 		model.addAttribute("list",list );
-		model.addAttribute("pageNo",pageNo );
+		//model.addAttribute("pageNo",pageNo );
 		
 		return "myinfo";
 	}
