@@ -64,6 +64,7 @@ main {
 
       <th:block th:fragment="counselSidebar">
          <script defer src="/index/js/sidebars.js"></script>
+         </th:block>
 
 
 			<div class="flex-container">
@@ -90,6 +91,13 @@ main {
 										<svg class="bi pe-none me-2" width="16" height="16">
                                	 <use xlink:href="#speedometer2" /></svg> 상담
 										예약 목록
+								</a></li>
+								
+								<li class="nav-item"><a href="/profileEdit"
+									class="nav-link link-body-emphasis"
+									th:classappend="${currentPage == 'reservationList'} ? 'active'">
+										<svg class="bi pe-none me-2" width="16" height="16">
+                               	 <use xlink:href="#speedometer3" /></svg> 개인정보 수정
 								</a></li>
 							</ul>
 						</div>
@@ -124,5 +132,8 @@ main {
 					</div>
 				</div>
 			</div>
+			</main>
+			<!-- FOOTER -->
+	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
 	</body>
 </html>

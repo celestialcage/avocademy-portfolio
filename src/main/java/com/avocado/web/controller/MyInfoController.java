@@ -67,7 +67,7 @@ public class MyInfoController {
 		// 페이지가 1보다 작으면 0이거나 음수면 1로 돌리기
 		if (pageNo < 1) {
 			pageNo = 1;
-			System.out.println(pageNo  + ": pageNo");
+			//System.out.println(pageNo  + ": pageNo");
 		}
 		// 페이지가 글의 총 개수보다 커지면 페이지는 글 최대 개수로 제한
 		if (pageNo > totalPage) {
@@ -114,10 +114,5 @@ public class MyInfoController {
 				return "myinfo/reservationList";
 
 		}
-	
-	@GetMapping("/testList")
-	public String testList() {
-		return "myinfo/testList";
-	}
 }
 

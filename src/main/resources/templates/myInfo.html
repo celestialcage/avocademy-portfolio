@@ -86,6 +86,12 @@ main {
                                	 <use xlink:href="#speedometer2" /></svg> 상담 예약 목록
                         	</a>
                         </li>
+                        <li class="nav-item"><a href="/profileEdit"
+									class="nav-link link-body-emphasis"
+									th:classappend="${currentPage == 'reservationList'} ? 'active'">
+										<svg class="bi pe-none me-2" width="16" height="16">
+                               	 <use xlink:href="#speedometer3" /></svg> 개인정보 수정
+								</a></li>
                     </ul>
                 </div>
             </div>
@@ -151,5 +157,7 @@ main {
 					</li>
 				</ul>
 			</nav>
+			<!-- FOOTER -->
+	<th:block th:insert="~{./fragments.html :: footer}"></th:block>
 </body>
 </html>
