@@ -42,22 +42,33 @@ let COUNSEL_CALENDARS = [
   ];
 
 function getDBEvent(calendar, dbEle) {
-    let id, calendarId, title, body, location, state, isReadOnly;
-    id = `${dbEle.psc_no}`; // 필수 pk
-    calendarId = `${dbEle.ps_no}`; // 필수 표시할 캘린더 번호 (교수번호 pno)
-    title = `예약됨`;
-    body = ``;
-    location = `사무실`;
-    state = `예약됨`;
+    let id, calendarId, title, body, location, state, isVisible;
+    id = dbEle.scheduleNo;
+    calendarId = `${dbEle.counselorNo}`;
+    title = `${dbEle.cslName}`;
+    body = `${dbEle.scheduleTime}:00 ~ ${dbEle.scheduleTime}:50`;
+    location = `상담사 ${dbEle.cslName} 사무실 ${dbEle.cslOffice}호`;
+    state = dbEle.scheduleState == 0 ? `신청 열림` : `예약됨`;
+    isVisible = !!dbEle.scheduleState ? false : true;
+    // let calendarId, start, end;
     let attendees = [];
+    let raw = {};
+    // var raw = {
+    //     memo: chance.sentence(),
+    //     creator: {
+    //       name: chance.name(),
+    //       avatar: chance.avatar(),
+    //       email: chance.email(),
+    //       phone: chance.phone(),
+    //     },
+    //   };
 
     function getDBTime(event, dbEle) {
-	// 여기 있는 변수 다 필수.
-        let startDate = moment(dbEle.psc_ymd); // db에서 가져온 날짜 (moment로)
-        let endDate = moment(dbEle.psc_ymd); // db에서 가져온 날짜.. (moment로)
+        let startDate = moment(dbEle.scheduleDate); // db에서 가져온 날짜 (moment로)
+        let endDate = moment(dbEle.scheduleDate); // db에서 가져온 날짜.. (moment로)
         // let diffDate = endDate.diff(startDate, 'days'); // 안필요할듯
     
-        startDate.hours(dbEle.psc_hr);
+        startDate.hours(dbEle.scheduleTime);
         // startDate.minutes(/* 여기다 db에서 minute 정보? 안쓰나? */);
         endDate = moment(startDate); // 같은 날이니까.
         event.start = startDate.toDate();
@@ -74,8 +85,8 @@ function getDBEvent(calendar, dbEle) {
         location: location, // 장소 -> db 상담사 정보
         state: state, // 일정 상태 -> db 예약 차면 Busy, 안 차면 Free
         attendees: attendees, // 참석자 -> db 상담사, db 학생
-        raw: {}, // 일정 상세.. 메모.. 일정 작성자
-        isVisible: true, // 관리자에서는 다 보여주기
+        raw: raw, // 일정 상세.. 메모.. 일정 작성자
+        isVisible: isVisible, // 관리자에서는 다 보여주기
         isReadOnly: true, // 수정 여부. Free일 경우에만? (어차피 새로 로드하는거같은데...)
     }
 
@@ -84,18 +95,24 @@ function getDBEvent(calendar, dbEle) {
     return event;
 }
 
-async function getDBEvents(viewName) {
+async function getDBEvents(viewName, cno) {
     // let i;
     let event;
 	let events = [];
     
-    // db 통신 ajax (상담사 로그인 때)
-    let dbEvents = await postData('./psScheduleAjax', {ps_no: pno.value}).then(data => {
-        data.forEach(e => {
-            e.psc_ymd = moment(e.psc_ymd, "YYYYMMDD").format('YYYY-MM-DD');
+    // db 통신 ajax
+    let dbEvents = await getData('/cs-schedule', cno).then(data => {
+		// 다음날부터 예약 가능 (근데 스케줄러 쓰면..? 그래도 상담사가 ok해야..)
+        let filteredSchedules = data.schedules
+			.filter(e => 
+				moment(e.scheduleDate).isSameOrAfter(moment().format('YYYY-MM-DD'))
+			);
+			
+		filteredSchedules.forEach(e => {
+            e.scheduleDate = moment(e.scheduleDate, "YYYYMMDD").format('YYYY-MM-DD');
         });
-        
-        return data;
+
+        return filteredSchedules;
     })
 	.then(dbList => {
 		dbList.forEach(dbEle => {
@@ -107,8 +124,4 @@ async function getDBEvents(viewName) {
     .catch(error => console.log(error));
 
     return dbEvents;
-}
-
-function changeDBSchedule(change) {
-
 }

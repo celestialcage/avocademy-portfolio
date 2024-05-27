@@ -62,7 +62,7 @@ public class ProfessorController {
 						@RequestParam("selectedDate") String date,
 						@RequestParam("selectedTime") String time,
 						@RequestParam("selectedPscNo") int psc_no) {
-		System.out.println("학번: " + studentNumber + " 문제: " + value + " 상담내용: " + content + " 신청날짜: " + date + " 시간: " +time + " 스케쥴 넘버 : " + psc_no);
+		System.out.println("학번: " + studentNumber + " 문제: " + value + " 상담내용: " + content + " 신청날짜: " + date + " 시간: " + time + " 스케쥴 넘버 : " + psc_no);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("studentNumber", studentNumber);
 		map.put("value", value);
@@ -104,6 +104,22 @@ public class ProfessorController {
 			
 			return maps;
 		}
-	 
+		
+		@ResponseBody
+		@PostMapping("/checkSchedule")
+		public int checkSchedule(@RequestParam ("selectedDate") String selectedDate, 
+									@RequestParam("selectedTime") String selectedTime) {
+		HttpSession session = util.getSession();
+		int uno = (int)session.getAttribute("uno");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("selectedDate", selectedDate);
+		map.put("selectedTime", selectedTime);
+		map.put("uno", uno);
+		int result = professorService.checkSchedule(map);
+		
+		return result;
+		}
+		
 		
 }

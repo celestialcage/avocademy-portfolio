@@ -8,6 +8,11 @@
     <link href="/admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
     <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
     <link rel="stylesheet" href="/css/summernote/summernote-lite.css">
+    <style type="text/css">
+    .status:hover {
+    	cursor: pointer;
+    }
+    </style>
 </head>
 <body>
     <!-- ============================================================== -->
@@ -115,34 +120,58 @@
                                         <th scope="row" th:text="${apply.aply_no}" class="aply_no align-middle text-center"></th>
                                         <td class="stud_no align-middle text-center">[[|${apply.cns_nm}(${apply.cns_field})|]]</td>
                                         <td class="stud_no align-middle text-center">[[|${apply.stud_nm}(${apply.stud_no})|]]</td>
-                                        <td th:text="${apply.dscsn_ymd}" class="dscsn_ymd align-middle text-center"></td>
+                                        <td th:text="${apply.dscsn_ymd}" class="dscsn_ymd align-middle text-center"
+                                        	data-date="${apply.dscsn_ymd}" data-time="${apply.dscsn_hr}"></td>
                                         <td th:text="${apply.dscsn_hr}" class="dscsn_hr align-middle text-center"></td>
-                                        <td th:text="${apply.dscsn_hr}" class="dscsn_hr align-middle text-center"></td>
+                                        <td class="stud_no align-middle text-center">
+                                        	<span th:if="${apply.dscsn_nmtm == 0}">-</span>
+                                        	<span th:unless="${apply.dscsn_nmtm == 0}">[[${apply.dscsn_nmtm}]]</span>
+                                        </td>
                                         <!-- <td class="stud_no align-middle text-center">
                                         	<span th:if="${apply.aply_no_old == 0}">-</span>
                                         	<span th:unless="${apply.aply_no_old == 0}">[[${apply.aply_no_old}]]</span>
                                         </td> -->
                                         <td class="dscsn_stat align-middle text-center">
                                         	<div class="dropdown">
-											  <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											    Dropdown button
+											  <button class="btn btn-light dropdown-toggle" 
+											  		  type="button" style="width:90px" 
+											  		  data-bs-toggle="dropdown" 
+											  		  aria-expanded="false">
+											    [[${apply.dscsn_stat}]]
 											  </button>
 											  <ul class="dropdown-menu">
-											    <li><a class="dropdown-item" href="#">Action</a></li>
-											    <li><a class="dropdown-item" href="#">Another action</a></li>
-											    <li><a class="dropdown-item" href="#">Something else here</a></li>
+											    <li><span class="status dropdown-item" 
+											    		  th:onclick="|statusApply('${apply.aply_no}')|"
+											    		  data-stat="CS001">신청</span></li>
+											    <li><span class="status dropdown-item" 
+											    		  th:onclick="|confirmApply('${apply.aply_no}')|"
+											    		  data-stat="CS002">예약</span></li>
+											    <li><span class="status dropdown-item" 
+											    		  th:onclick="|completeAppointment('${apply.aply_no}')|"
+											    		  data-stat="CS003">완료</span></li>
+											    <li><span class="status dropdown-item" 
+											    		  th:onclick="|skipAppointment('${apply.aply_no}')|"
+											    		  data-stat="CS004">미진행</span></li>
+											    <li><span class="status dropdown-item" 
+											    		  th:onclick="|cancelReservation('${apply.aply_no}')|"
+											    		  data-stat="CS005">취소</span></li>
 											  </ul>
 											</div>
                                         </td>
                                         <td class="app-confirm align-middle text-center">
-                                        	<h5 th:if="${apply.dscsn_stat == '완료'}" class="badge" style="background-color:#cdb4db">완료</h5>
-                                        	<h5 th:if="${apply.dscsn_stat == '미진행'}" class="badge" style="background-color:#a2d2ff">미진행</h5>
-                                        	<h5 th:if="${apply.dscsn_stat == '취소'}" class="badge" style="background-color:#ffafcc">취소</h5>
+                                        	<h5 th:if="${apply.dscsn_stat == '완료'}" 
+                                        		class="badge" style="background-color:#cdb4db">완료</h5>
+                                        	<h5 th:if="${apply.dscsn_stat == '미진행'}" 
+                                        		class="badge" style="background-color:#a2d2ff">미진행</h5>
+                                        	<h5 th:if="${apply.dscsn_stat == '취소'}" 
+                                        		class="badge" style="background-color:#ffafcc">취소</h5>
                                         	<button th:if="${apply.dscsn_stat == '신청'}" 
                                         		th:id="|confirmBtn${apply.aply_no}|" 
+                                        		th:onclick="|confirmApply('${apply.aply_no}')|"
                                         		class="confirmBtn btn btn-success text-white align-middle">승인</button>
                                         	<button th:if="${apply.dscsn_stat == '예약'}" 
                                         		th:id="|confirmBtn${apply.aply_no}|" 
+                                        		th:onclick="|cancelReservation('${apply.aply_no}')|" 
                                         		class="confirmBtn btn btn-danger text-white align-middle">취소</button>
                                      	</td>
                                      	<td class="dscsn_cn align-middle text-center">
@@ -158,19 +187,55 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <nav aria-label="Page navigation example">
-							  <ul class="pagination justify-content-center">
-							    <li class="page-item disabled">
-							      <a class="page-link">Previous</a>
-							    </li>
-							    <li class="page-item"><a class="page-link" href="#">1</a></li>
-							    <li class="page-item"><a class="page-link" href="#">2</a></li>
-							    <li class="page-item"><a class="page-link" href="#">3</a></li>
-							    <li class="page-item">
-							      <a class="page-link" href="#">Next</a>
-							    </li>
-							  </ul>
-							</nav>
+                            <!-- 페이징 -->
+							<div class="pagingDiv">
+							    <nav aria-label="Page navigation example">
+							        <ul class="pagination justify-content-center">
+							            <!-- Previous Button -->
+							            <li class="page-item">
+							                <a class="page-link"
+							                   th:if="${page - 10 < 1}"
+							                   th:href="'./appointment?page=1'"
+							                   th:attr="aria-label='Previous'"
+							                   th:classappend="disabled">
+							                    <span aria-hidden="true">&laquo;</span>
+							                </a>
+							                <a class="page-link"
+							                   th:unless="${page - 10 < 1}"
+							                   th:href="'./appointment?page=' + (${page - 10})"
+							                   th:attr="aria-label='Previous'">
+							                    <span aria-hidden="true">&laquo;</span>
+							                </a>
+							            </li>
+							            
+							            <!-- Page Numbers -->
+							            <li th:each="p : ${#numbers.sequence(startPage, endPage)}"
+							                th:classappend="${page == p} ? 'active' : ''"
+							                class="page-item">
+							                <a class="page-link"
+							                   th:href="'./appointment?page=' + ${p}"
+							                   th:text="${p}">1</a>
+							            </li>
+							            
+							            <!-- Next Button -->
+							            <li class="page-item">
+							                <a class="page-link"
+							                   th:if="${page + 10 > totalPage}"
+							                   th:href="'./appointment?page=' + ${totalPage}"
+							                   th:attr="aria-label='Next'">
+							                    <span aria-hidden="true">&raquo;</span>
+							                </a>
+							                <a class="page-link"
+							                   th:unless="${page + 10 > totalPage}"
+							                   th:href="'./appointment?page=' + (${page + 10})"
+							                   th:attr="aria-label='Next'">
+							                    <span aria-hidden="true">&raquo;</span>
+							                </a>
+							            </li>
+							        </ul>
+							    </nav>
+							</div><!-- 페이징 끝 -->
+
                             </th:block>
                         </div> <!-- 신청목록 끝 -->
                         
@@ -188,7 +253,8 @@
 					        				본문내용
 				        				</div>
 				        			</div>
-				        			<div class="modal-footer">
+				        			<div class="modal-footer d-flex justify-content-between">
+				        				<a id="applySeriesLinkBtn" class="btn btn-light">상담 이어서 예약</a>
 				        				<a id="updateLinkBtn" class="btn btn-light">코멘트 수정</a>
 				        			</div>
 				        		</div>
@@ -240,80 +306,41 @@
     <!-- <script type="text/javascript" src="/admin/custom/grid-app.js"></script> -->
     <script type="text/javascript" src="/admin/custom/appointments-app.js"></script>
     <script>
-        /****************************************
-         *       Basic Table                   *
-         ****************************************/
-        $('#zero_config').DataTable();
         
-        // 날짜 포맷... 으휴
-        let dates = document.querySelectorAll(".dscsn_ymd");
-        dates.forEach(e => {
-        		e.innerText = moment(e.innerText).format("YYYY-MM-DD");
-        	});
+       document.addEventListener('DOMContentLoaded', function() {
+           // 날짜 포맷팅
+           let dates = document.querySelectorAll(".dscsn_ymd");
+           dates.forEach(e => {
+               e.innerText = moment(e.innerText).format("YYYY-MM-DD");
+           });
 
-        function detail(no) {
-        	let detailEle = document.querySelector('#detail');
-        	let detailModal = new bootstrap.Modal(detailEle, {}); // {옵션}
-        	fetch('./appointment-detail?aply_no=' + no, {
-        		method: "GET", 
-        		headers: {"Content-Type": "application/json",}, 
-        	}).then(response => {
-        		if(!response.ok) {
-        			throw new Error(response.statusText);
-        		} else {
-        			return response.json();
-        		}
-        	}).then(data => {
-        		console.log(data.dscsn_cn);
-        		document.querySelector('#modalContent').innerHTML = data.dscsn_cn;
-        		document.querySelector('#updateLinkBtn').setAttribute("href", './update-comment@' + data.aply_no);
-        		detailModal.show();
-        	}).catch(error => {
-        		console.log(error);
-        	})
-        }
+        // 버튼 활성화/비활성화 처리
+           let rows = document.querySelectorAll("tr");
+           rows.forEach(row => {
+               let dateElement = row.querySelector('.dscsn_ymd');
+               let timeElement = row.querySelector('.dscsn_hr');
+               let commentBtn = row.querySelector('.commentBtn');
+
+               if (dateElement && commentBtn) {
+                   let date = dateElement.innerText;
+                   let time = timeElement.innerText;
+                   
+                   // 상담 일자와 시간
+                   let appointmentDateTime = moment(date + ' ' + time, "YYYY-MM-DD HH");
+                   console.log(appointmentDateTime);
+
+                   // 현재 시간과 상담 일자/시간 비교
+                   if (appointmentDateTime.isAfter(moment())) {
+                       // 미래일 경우 버튼 비활성화
+                       commentBtn.disabled = true;
+                   } else {
+                       // 과거일 경우 버튼 활성화
+                       commentBtn.disabled = false;
+                   }
+               }
+           });
+       });
         
-        function confirmApply(no) {
-        	fetch('/appointment-confirm', {
-        		method: 'POST',
-        		body: JSON.stringify({
-        			aply_no: no,
-        		}), 
-        		headers: {"Content-Type": "application/json",},
-        	}).then(res => {
-        		if(!res.ok) {
-        			throw new Error(res.statusText);
-        		} else {
-        			return res.json();
-        		}
-        	}).then(data => {
-        		console.log(data.result);
-        		location.reload(true);
-        	}).catch(err => {
-        		console.log(err);
-        	})
-        }
-        
-        function cancelReservation(no) {
-        	fetch('/appointment-cancel', {
-        		method: 'POST',
-        		body: JSON.stringify({
-        			aply_no: no,
-        		}), 
-        		headers: {"Content-Type": "application/json",},
-        	}).then(res => {
-        		if(!res.ok) {
-        			throw new Error(response.statusText);
-        		} else {
-        			return res.json();
-        		}
-        	}).then(data => {
-        		console.log(data.result);
-        		location.reload(true);
-        	}).catch(err => {
-        		console.log(err);
-        	})
-        }
     </script>
 
 </body>

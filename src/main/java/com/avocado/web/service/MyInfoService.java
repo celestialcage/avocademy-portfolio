@@ -3,8 +3,6 @@ package com.avocado.web.service;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.mail.EmailException;
-
 import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.entity.MyinfoDTO;
 

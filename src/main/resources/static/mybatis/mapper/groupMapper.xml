@@ -36,7 +36,7 @@
 	<select id="getSchedulNo" parameterType="String" resultType="Integer">
 		SELECT grsch_no 
 		FROM grschedule 
-		WHERE prg_no = #{prg_no}
+		WHERE prg_no = #{no}
 	</select>
 	
 	<select id="checkSchedul" parameterType="Map" resultType="int">
@@ -58,7 +58,7 @@
 		ORDER BY gaply_no DESC LIMIT 1;
 	</select>
 	
-	<select id="getTime" parameterType="Integer" resultType="Map">
+	<select id="getTime" parameterType="int" resultType="Map">
 		SELECT prg_ymd, prg_hr 
 		FROM groupSchedule_view 
 		WHERE GRSCH_NO = #{scheNo}
@@ -66,8 +66,8 @@
 	
 	<select id="checkTotalSchdl" parameterType="Map" resultType="int">
 		SELECT COUNT(*) 
-		FROM totalSchedule
-		WHERE ymd=#{prg_ymd} AND hr=#{prg_hr}  AND stud_no = #{stud_no}
+		FROM totalSchedule 
+		WHERE ymd=#{PRG_YMD} AND hr=#{PRG_HR} AND stud_no=#{stud_no}
 	</select>
 	
 	
@@ -152,13 +152,12 @@
 	</select>
 	
 	<select id="programEntry" resultType="GroupDTO">
-		SELECT gp.prg_no, gp.PRG_NM, gp.prg_cd, GET_CD_NM('CO0020', gp.prg_cd) AS prg_cate, 
-			gp.PRG_NOPE, gp.REQ_END, MAX(gs.PRG_YMD) AS prg_end, COUNT(distinct ga.stud_no) AS prg_entry
-		FROM grprograms gp
-		JOIN grschedule gs ON gp.prg_no = gs.prg_no
-		JOIN graply ga ON gs.grsch_no  = ga.grsch_no
-		GROUP BY gp.prg_no, gp.PRG_NM, gp.prg_cd, gp.PRG_NOPE
-		ORDER BY gp.prg_no
+		SELECT v.prg_no, v.PRG_NM, v.prg_cd, GET_CD_NM('CO0020', v.prg_cd) AS prg_cate, 
+			v.PRG_NOPE, v.REQ_END, MAX(v.PRG_YMD) AS prg_end, COUNT(distinct a.stud_no) AS prg_entry
+		FROM groupSchedule_view v
+		LEFT JOIN graply a ON v.grsch_no  = a.grsch_no
+		GROUP BY v.prg_no, v.PRG_NM, v.prg_cd, v.PRG_NOPE
+		ORDER BY v.prg_no DESC
 	</select>
 	
 	<select id="entryList" parameterType="String" resultType="Map">
@@ -169,6 +168,6 @@
 		JOIN stu_user s ON s.stud_no = ga.stud_no
 		WHERE gv.PRG_NO = #{no}
 		GROUP BY gv.prg_no, ga.stud_no
-		ORDER BY gv.prg_no;
+		ORDER BY ga.stud_no;
 	</select>
 </mapper>

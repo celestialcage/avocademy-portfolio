@@ -16,22 +16,20 @@
 		where user_no = #{uno} and bdel = "1" ;
 	</select>
 	
-
-	
-   <select id= "reservationList"  parameterType="String" resultType="GroupDTO">
-		 SELECT
-          gp.PRG_NO as prgNo,
-            gp.PRG_NM as prgNm,
-            gs.PRG_YMD as prgYmd,
-            gs.PRG_HR as prgHr,
-            gp.PRG_PLACE as prgPlace
-        FROM graply ga
-        JOIN grschedule gs ON ga.grsch_no = gs.GRSCH_NO
-        JOIN grprograms gp ON gs.PRG_NO = gp.PRG_NO
-        WHERE ga.stud_no = #{stud_no}
-        GROUP BY gp.PRG_NO, gp.PRG_NM, gs.PRG_YMD, gs.PRG_HR, gp.PRG_PLACE
-        ORDER BY gp.PRG_NO;
-
-   </select>
+    <select id="reservationList"  parameterType="String" resultType="GroupDTO">
+		SELECT
+		    gs.PRG_NO as prg_no,
+		    gs.PRG_NM as prg_nm,
+		    gs.PRG_YMD as prg_ymd,
+		    gs.PRG_HR as prg_hr,
+		    gs.PRG_PLACE as prg_place
+		FROM groupSchedule_view gs
+		JOIN graply gr ON gr.grsch_no = gs.GRSCH_NO
+		WHERE gr.stud_no = #{stud_no}
+		GROUP BY gs.PRG_NO, gs.PRG_NM, gs.PRG_YMD, gs.PRG_HR, gs.PRG_PLACE
+		ORDER BY gs.PRG_NO;
+   </select> 
+   
+   
 
 </mapper>

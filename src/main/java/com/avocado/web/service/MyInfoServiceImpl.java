@@ -44,27 +44,7 @@ public class MyInfoServiceImpl implements MyInfoService {
 		return list;
 	}
 
-//	@Override
-//	public List<MyinfoDTO> getMyinfo(String uno) {
 
-	/*
-	 * @Override public void sendMail(String email, String title, String content)
-	 * throws EmailException {
-	 * 
-	 * SimpleEmail mail = new SimpleEmail();// 전송할 메인 mail.setCharset("UTF-8");
-	 * mail.setDebug(true); mail.setHostName((String)
-	 * secureInfo.mailInfo().get("smtp-mail.outlook.com"));// 보내는 서버 설정 = 고정
-	 * mail.setAuthentication((String) secureInfo.mailInfo().get("emailAddr"),
-	 * (String) secureInfo.mailInfo().get("pw"));// 보내는 사람 인증 = 고정
-	 * mail.setSmtpPort(587);// 사용할 port번호 mail.setStartTLSEnabled(true);// 인증방법 =
-	 * 고정 mail.setFrom((String) secureInfo.mailInfo().get("emailAddr"), (String)
-	 * secureInfo.mailInfo().get("name")); mail.addTo(email);// 받는사람
-	 * mail.setSubject(title);// 제목 mail.setMsg(content);// 내용 text
-	 * 
-	 * mail.send();
-	 * 
-	 * }
-	 */
 
 	@Override
 	public List<MyinfoDTO> getMyinfo(int uno) {
@@ -75,17 +55,6 @@ public class MyInfoServiceImpl implements MyInfoService {
 	public List<MyinfoDTO> getMyinfo(Map<String, Integer> uno) {
 		return myinfoDAO.getMyinfo(uno);
 	}
-
-//	//메일 보내기
-//	@Override
-//	public void sendEmail(String email, String key) {
-//		
-//		System.out.println("emailAuth>sendEmail 서비스 : " + email);
-//		System.out.println("emailAuth>sendEmail 서비스 : " + key);
-//		
-//	}
-
-
 
 	@Override
 	public List<GroupDTO> reservationList (String stud_no) {

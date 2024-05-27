@@ -3,14 +3,18 @@ package com.avocado.web.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.mail.EmailException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.avocado.web.entity.CounselorDTO;
 import com.avocado.web.entity.CslSearchDTO;
+import com.avocado.web.entity.MailDTO;
 import com.avocado.web.entity.PersonalDTO;
 import com.avocado.web.service.CounselService;
+import com.avocado.web.util.SecureInfo;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -19,6 +23,9 @@ import jakarta.annotation.Resource;
 
 @RestController
 public class CounselDataController {
+	
+	@Autowired
+	private SecureInfo secureInfo;
 	
 	@Resource(name = "counselService")
 	private CounselService counselService;
@@ -103,9 +110,11 @@ public class CounselDataController {
 		return json.toString();
 	}
 	
+	// 상담 신청
 	@PostMapping("/apply-schedule")
 	public String applyCsSchedule(@RequestBody PersonalDTO ps) {
 		JsonObject json = new JsonObject();
+//		System.out.println(ps.getAply_no_old());
 		
 		int result = counselService.applySchedule(ps);
 		String message = result == 0 ? "상담 신청 실패" : "상담 신청 성공";
@@ -129,5 +138,68 @@ public class CounselDataController {
 		list = counselService.findCslScheduleList(searchDTO);
 		
 		return list;
+	}
+	
+	// 신청 버튼 메소드
+	@PostMapping("apply-status")
+	public String statusApply(@RequestBody PersonalDTO ps) {
+		JsonObject json = new JsonObject();
+		int result = counselService.statusApply(ps);
+		json.addProperty("result", result);
+		return json.toString();
+	}
+
+	// 승인 버튼 메소드
+	@PostMapping("appointment-confirm")
+	public String confirmApply(@RequestBody PersonalDTO ps) throws EmailException {
+		JsonObject json = new JsonObject();
+		int result = counselService.confirmApply(ps);
+		
+		// 승인 메일
+		MailDTO mailDTO = new MailDTO();
+		PersonalDTO detail = counselService.findEmailInfo(ps.getAply_no());
+		StringBuilder sb = new StringBuilder();
+		sb.append(detail.getCns_nm());
+		sb.append(" 상담사 신청 건이 예약되었습니다. \n 일시 - ");
+		sb.append(detail.getDscsn_ymd());
+		sb.append(" ");
+		sb.append(detail.getDscsn_hr());
+		sb.append(":00");
+		String message = sb.toString();
+		System.out.println(message);
+		System.out.println(detail.getStud_email());
+		mailDTO.setMessage(message);
+		mailDTO.setEmail(detail.getStud_email());
+		secureInfo.sendApplyEmail(mailDTO);
+		
+		json.addProperty("result", result);
+		return json.toString();
+	}
+	
+	// 완료 버튼 메소드
+	@PostMapping("appointment-complete")
+	public String completeAppointment(@RequestBody PersonalDTO ps) {
+		JsonObject json = new JsonObject();
+		int result = counselService.completeAppointment(ps);
+		json.addProperty("result", result);
+		return json.toString();
+	}
+	
+	// 미진행 버튼 메소드
+	@PostMapping("appointment-skip")
+	public String skipAppointment(@RequestBody PersonalDTO ps) {
+		JsonObject json = new JsonObject();
+		int result = counselService.skipAppointment(ps);
+		json.addProperty("result", result);
+		return json.toString();
+	}
+	
+	// 취소 버튼 메소드
+	@PostMapping("appointment-cancel")
+	public String cancelReservation(@RequestBody PersonalDTO ps) {
+		JsonObject json = new JsonObject();
+		int result = counselService.cancelReservation(ps);
+		json.addProperty("result", result);
+		return json.toString();
 	}
 }

@@ -37,5 +37,17 @@ public interface CounselService {
 	int updateComment(PersonalDTO ps);
 
 	PersonalDTO findCslSchedule(int str2Int);
+	
+	int confirmApply(PersonalDTO ps);
+
+	int cancelReservation(PersonalDTO ps);
+
+	int statusApply(PersonalDTO ps);
+
+	int completeAppointment(PersonalDTO ps);
+
+	int skipAppointment(PersonalDTO ps);
+
+	PersonalDTO findEmailInfo(int aply_no);
 
 }

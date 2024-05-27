@@ -153,7 +153,6 @@
 				      	</div>
 				      </div>
 				      <div class="modal-footer">
-				        <button type="button" class="btn btn-primary" id="sub">승인</button>
 				        <button type="button" class="btn btn-secondary" id="closeModal">취소</button>
 				      </div>
 				    </div>
@@ -201,7 +200,7 @@
 		function showContent(no, a, b){
 			var pseq_no = no;
 			 $("#modalTitle").text(no);
-	         $("#modalContent").html("상담 종류: " + a+"<br><br>"+"상담 받을 내용: " + b);  // JSON 응답에서 content를 가져와서 모달 내용 업데이트
+	         $("#modalContent").html("상담 종류: <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + a+"<br><br>"+"상담 받을 내용: <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + b);  // JSON 응답에서 content를 가져와서 모달 내용 업데이트
 	         contentModal.classList.remove('hidden');
 	         
 		}

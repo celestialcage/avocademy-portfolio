@@ -19,6 +19,12 @@
   		min-height: 600px;
   		display: flex;
   	}
+  	.programInfo {
+    height: 100%;
+    width: 100%;
+    margin: 15px;
+    padding: 10px;
+}
   	</style>
 </head>
 <body>	
@@ -27,59 +33,59 @@
 		<th:block th:insert="~{./fragments.html :: headerImg}"></th:block>
 
 		<!-- 여기가 본문 -->
-		<div class="mainContents">
-		
-		<!-- =============사이드바============== -->
-		<th:block th:insert="~{./fragments.html :: counselSidebar}"></th:block>	
-		
-		<div>
-				<div class="con_box">
-					<div class="cont_guide">
-					  <p class="text01">개인상담</p>
-					  <p class="text02">개인상담은 대학생활 및 일상생활에서 발생하는 혼자 해결하기 어려운 주제를 상담 전문 선생님과 1:1 상담을 통해 해소하기 위한 심층적인 상담서비스입니다.</p>
-					  <ul>
-					    <li>개인상담은 주 1회, 약 50분간 진행되며 상담의 총 횟수는 문제의 심각성에 따라 달라질 수 있습니다.</li>
-					    <li>상담내용 및 사적 정보는 비밀로 유지됩니다.</li>
-					  </ul>
+		<div class="mainContents" style="width: 100%;">
+			<!-- =============사이드바============== -->
+			<th:block th:insert="~{./fragments.html :: counselSidebar}"></th:block>	
+			<div class="programInfo">	
+				<div class="pageText mb-5">
+			
+			      <article class="blog-post">
+			        <h1 class="my-2">개인 상담</h1>			
+			        <hr>
+			      </article>
+			      <article class="blog-post mb-4">
+					<h4 class="h4-tit01 m-2">개인 상담이란?</h4>
+					<p class="ms-4 mt-3">개인 상담은 대학생활 및 일상생활에서 발생하는 혼자 해결하기 어려운 주제를 상담 전문 선생님과 1:1 상담을 통해 해소하기 위한 심층적인 상담서비스입니다.</p>
+			      </article>
+			      <article class="blog-post mb-4">
+					<h4 class="h4-tit01 m-2">상담 절차</h4>
+					<div class="col-11 p-3" style="width: 100%; height: auto;">
+						<img alt="counsel" src="/img/counsel.png" style="width: 100%; height: auto;">
 					</div>
-					
-					<div class="cont_area cont01">
-					  <p class="title">개인상담 영역</p>
-					  <div class="img_wrap">
-					    <img src="" alt="">
-					  </div>
-					</div>
-					
-					<div class="cont_area cont02">
-					  <p class="title">상담절차</p>
-					  <div>
-					    <ul>
-					      <li>
-					        <span>01</span>
-					        <p>신청서 작성</p>
-					      </li>
-					      <li>
-					        <span>02</span>
-					        <p>접수면접 및 심리검사</p>
-					      </li>
-					      <li>
-					        <span>03</span>
-					        <p>개인상담 진행</p>
-					      </li>
-					    </ul>
-					    <div>
-					      <div>
-					        <p class="text01">개인상담 신청</p>
-					        <p class="text02">상담 전문가 선생님과 1:1 면담을 통해 자신을 이해하고 해결책을 모색하며 내면이 성숙해가는 과정입니다.</p>
-					      </div>
-					      <a href="./personal/apply" target="_blank"><span>상담 신청하기</span></a>
-					    </div>
-					  </div>
-					</div></div>
+			        <dl class="m-3">
+			          <dt class="my-2 ms-2"></dt>
+			          <dd class="ms-4 mb-3">- 개인 상담은 주 1회, 약 50분간 진행되며 상담의 총 횟수는 문제의 심각성에 따라 달라질 수 있습니다.</dd>
+			          <dt class="my-2 ms-2"></dt>
+			          <dd class="ms-4 mb-3">- 상담 내용 및 사적 정보는 비밀로 유지됩니다.</dd>
+			          <dt class="my-2 ms-2"></dt>
+			          <dd class="ms-4 mb-3">- 상담 전문가 선생님과 1:1 면담을 통해 자신을 이해하고 해결책을 모색하며 내면이 성숙해가는 과정입니다.</dd>
+			        </dl>
+			      </article>
+			    </div>
+			    <div class="row my-1 mx-2">
+				    <div class="col-md-6">
+				      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative align-items-center bg-dark-subtle">
+				        <div class="col p-4 d-flex flex-column position-static">
+				          <h5 class="mb-0">개인 상담 신청하기</h5>
+				          <a th:href="@{/personal/apply}" class="icon-link gap-1 icon-link-hover stretched-link">
+				            <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+				          </a>
+				        </div>
+				        <div class="col-auto d-none d-lg-block">
+				          <svg class="bd-placeholder-img pd-1" width="180" height="150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+				          	<defs>
+							  <clipPath id="rounded-corners">
+							    <rect x="0" y="0" width="175" height="150" rx="15" ry="15" />
+							  </clipPath>
+							</defs>
+	 					    <image href="/img/aplyImg.jpg" x="0" y="0" width="175" height="150" clip-path="url(#rounded-corners)" />
+							<rect x="160" y="0" width="10" height="150" fill="transparent" />
+				          </svg>
+				        </div>
+				      </div>
+				    </div>
+			  	</div>
 			</div>
-		
-		
-		
 		</div>
 		<!-- 본문 끝 -->
 	</main>

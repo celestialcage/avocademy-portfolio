@@ -92,7 +92,7 @@ public class UserController {
 	            } else if (role == 2) {
 	            	String ps_no = userService.getProfessorInfo(uno);
 	            	session.setAttribute("pno", ps_no);
-	            	return "redirect:/admin/professorAdmin"; // 지도교수관리자페이지로 리다이렉트
+	            	return "redirect:/admin/registPsCounsel"; // 지도교수관리자페이지로 리다이렉트
 	            }
 	            return "redirect:/admin/index"; // 관리자 페이지로 리다이렉트
 	        }

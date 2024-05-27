@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" href="/index/tuicalendar/css/calendar-app.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.css"/>
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.css"/>
+	<link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />
+    <th:block th:insert="~{./admin/thfragments/fragments.html :: headTag}"></th:block>
+    <!-- <link href="/index/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"> -->	
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="/admin/assets/extra-libs/multicheck/multicheck.css">
+    <link href="/admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" /> -->
+	<style type="text/css">
+	.calendar-wrapper {
+  		height: 600px;
+  	}
+  	.modal {
+  	  z-index: 52;
+  	}
+  	.modal-backdrop {
+	  z-index: 51;  
+	}
+	</style>
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <th:block th:insert="~{./admin/thfragments/fragments.html :: preloader}"></th:block>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+        data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <th:block th:insert="~{./admin/thfragments/fragments.html :: topbarHeader}"></th:block>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <th:block th:insert="~{./admin/thfragments/fragments.html :: leftSidebar}"></th:block>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">상담 상세</h4>
+                        <div class="ms-auto text-end">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="card-body border-bottom">
+				<h4 class="card-title my-3">상담 예약</h4>
+			</div>
+			<div class="card-body mt-3">
+			<button id="modalBtn" type="button" data-bs-toggle="modal" data-bs-target="#applyModal" style="display:none"></button>
+	<!-- =================================캘린더 메뉴==================================== -->
+				<div id="calendarMenu">
+					<!-- 여기 드롭다운으로 -->
+					<nav class="navbar d-flex justify-content-between align-items-center">
+					<div class="dropdown">
+	      			<div class="dropdown-trigger" style="visibility:hidden">
+		                <button class="button is-rounded" aria-haspopup="true" aria-controls="dropdown-menu">
+		                  <span class="button-text"></span>
+		                  <span class="dropdown-icon toastui-calendar-icon toastui-calendar-ic-dropdown-arrow"></span>
+		                </button>
+		              </div>
+		              <div class="dropdown-menu">
+		                <div class="dropdown-content">
+		                <input type="hidden" id="currentCsl" th:value="${session.cns_no}">
+		                </div>
+		              </div>
+		            </div>
+				<span class="calendar-render-range"></span>
+				<span>
+					<button type="button" id="todayBtn" class="calendar-btn calendar-move-today">Today</button>
+					<button type="button" id="prevBtn" class="calendar-btn calendar-move-day">
+						<i class="calendar-icon ic-arrow-line-left"></i>
+					</button>
+					<button type="button" id="nextBtn" class="calendar-btn calendar-move-day">
+						<i class="calendar-icon ic-arrow-line-right"></i>
+					</button>
+				</span>
+				</nav>
+			</div> <!-- 캘린더 메뉴 끝 -->
+<!-- =================================캘린더 위치==================================== -->
+			<div id="calendar" class="calendar-wrapper"></div>
+			
+	
+			<!-- Modal -->
+			<div class="modal fade" id="applyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h1 class="modal-title fs-5" id="exampleModalLabel">이어지는 상담 예약하기</h1>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+                                <div class="card-body">
+                                    <h4 class="card-title">이어지는 상담 신청</h4>
+                                    <input type="hidden" id="schNo">
+                                    <input type="hidden" id="aplyNoOld" th:value="${param.aply_no}">
+                                    <div class="form-group row">
+                                        <label for="stName"
+                                            class="col-sm-3 text-end control-label col-form-label">신청자명</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="stName"
+                                                placeholder="신청자 이름" th:value="${detail.stud_nm}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="stNo"
+                                            class="col-sm-3 text-end control-label col-form-label">학번</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="stNo"
+                                                placeholder="신청자 학번" th:value="${detail.stud_no}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="fname"
+                                            class="col-sm-3 text-end control-label col-form-label">상담사명</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="csName"
+                                                placeholder="상담사 이름" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="csLoc"
+                                            class="col-sm-3 text-end control-label col-form-label">상담실</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="csLoc"
+                                                placeholder="상담실 정보" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="csDate"
+                                            class="col-sm-3 text-end control-label col-form-label">날짜</label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+			                                    <input type="text" class="form-control" id="csDate"
+			                                        placeholder="yyyy-mm-dd" readonly>
+			                                    <div class="input-group-append">
+			                                        <span class="input-group-text h-100"><i class="fa fa-calendar"></i></span>
+			                                    </div>
+			                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="csTime"
+                                            class="col-sm-3 text-end control-label col-form-label">시간</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="csTime"
+                                                placeholder="상담 시간" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			        <button type="button" id="applyBtn" class="btn btn-success text-white">신청하기</button>
+			      </div>
+			    </div>
+			  </div>
+			</div> <!-- 모달 끝 -->
+			</div> <!-- 캘린더 card-body 끝 -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <th:block th:insert="~{./admin/thfragments/fragments.html :: footer}"></th:block>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <th:block th:insert="~{./admin/thfragments/fragments.html :: jqueryScript}"></th:block>
+    <!-- this page js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
+    <script src="/admin/assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+    <script src="/admin/assets/extra-libs/multicheck/jquery.multicheck.js"></script>
+    <script src="/admin/assets/extra-libs/DataTables/datatables.min.js"></script>
+    <script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.js"></script>
+    <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
+    <!-- <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script> -->
+    <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.js"></script>
+    <script type="text/javascript" src="/admin/custom/counsel/calendar-data.js"></script>
+    <script type="text/javascript" src="/admin/custom/utils.js"></script>
+    <script type="text/javascript" src="/admin/custom/counsel/calendar-app.js"></script>
+    <!-- <script type="text/javascript" src="/admin/custom/grid-app.js"></script> -->
+    <script type="text/javascript" src="/admin/custom/counsel/app.js"></script>
+    <script type="text/javascript" src="/admin/custom/appointments-app.js"></script>
+    <script>
+        /****************************************
+         *       Basic Table                   *
+         ****************************************/
+        $('#zero_config').DataTable();
+        
+        // 날짜 포맷... 으휴
+        let dates = document.querySelectorAll(".dscsn_ymd");
+        dates.forEach(e => {
+        		e.innerText = moment(e.innerText).format("YYYY-MM-DD");
+        	});
+    </script>
+
+</body>
+
+</html>

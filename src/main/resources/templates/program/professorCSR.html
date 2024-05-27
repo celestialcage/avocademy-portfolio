@@ -6,21 +6,6 @@
   <meta charset="UTF-8">
   <title>Avocado 상담</title>
   <script src="/index/assets/js/color-modes.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-  <meta name="generator" content="Hugo 0.122.0">
-  <meta name="theme-color" content="#712cf9">
-  <link rel="canonical" href="https://getbootstrap.kr/docs/5.3/examples/carousel/">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-  <link href="/index/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-  <script src="/index/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-  <link rel="apple-touch-icon" href="/index/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-  <link rel="icon" href="/index/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-  <link rel="icon" href="/index/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-  <link rel="manifest" href="/index/assets/img/favicons/manifest.json">
-  <link rel="mask-icon" href="/index/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
-  <link rel="icon" href="/index/assets/img/favicons/favicon.ico">
 
   <!-- jquery CDN -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -48,82 +33,11 @@
   		min-height: 600px;
   		display: flex;
   	}
-  
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
-
+  	
     @media (min-width: 768px) {
       .bd-placeholder-img-lg {
         font-size: 3.5rem;
       }
-    }
-
-    .b-example-divider {
-      width: 100%;
-      height: 3rem;
-      background-color: rgba(0, 0, 0, .1);
-      border: solid rgba(0, 0, 0, .15);
-      border-width: 1px 0;
-      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-    }
-
-    .b-example-vr {
-      flex-shrink: 0;
-      width: 1.5rem;
-      height: 100vh;
-    }
-
-    .bi {
-      vertical-align: -.125em;
-      fill: currentColor;
-    }
-
-    .nav-scroller {
-      position: relative;
-      z-index: 2;
-      height: 2.75rem;
-      overflow-y: hidden;
-    }
-
-    .nav-scroller .nav {
-      display: flex;
-      flex-wrap: nowrap;
-      padding-bottom: 1rem;
-      margin-top: -1px;
-      overflow-x: auto;
-      text-align: center;
-      white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .btn-bd-primary {
-      --bd-violet-bg: #712cf9;
-      --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-
-      --bs-btn-font-weight: 600;
-      --bs-btn-color: var(--bs-white);
-      --bs-btn-bg: var(--bd-violet-bg);
-      --bs-btn-border-color: var(--bd-violet-bg);
-      --bs-btn-hover-color: var(--bs-white);
-      --bs-btn-hover-bg: #6528e0;
-      --bs-btn-hover-border-color: #6528e0;
-      --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-      --bs-btn-active-color: var(--bs-btn-hover-color);
-      --bs-btn-active-bg: #5a23c8;
-      --bs-btn-active-border-color: #5a23c8;
-    }
-
-    .bd-mode-toggle {
-      z-index: 1500;
-    }
-
-    .bd-mode-toggle .dropdown-menu .active .bi {
-      display: block !important;
     }
 
     label {
@@ -274,7 +188,7 @@
           <div class="form-group">
             <label>추가상담내용 <small class="text-muted">(있다면 구체적으로)</small></label>
             <div class="">
-              <textarea class="form-control" name="content"></textarea>
+              <textarea class="form-control" name="content" placeholder="내용을 입력하세요."></textarea>
             </div>
           </div>
 
@@ -300,11 +214,37 @@
         </div>
         <div class="border-top">
           <div class="card-body">
-            <button type="submit" class="btn btn-primary">신청하기</button>
+            <button type="submit" class="btn btn-secondary">신청하기</button>
           </div>
         </div>
       </form>
     </div>
+    
+    <!-- Confirmation Modal -->
+	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="confirmationModalLabel">상담 신청 확인</h5>
+	      </div>
+	      <div class="modal-body">
+	      	<th:block th:each="item1 : ${list}">
+	        <p>이름: <span th:text="${item1.stud_nm}"></span></p>
+	        <p>학번: <span th:text="${item1.stud_no}"></span></p>
+	        </th:block>
+	        <p>선택한 날짜: <span id="modalSelectedDate"></span></p>
+	        <p>선택한 시간: <span id="modalSelectedTime"></span></p>
+	        <p>상담을 신청하시겠습니까?</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+	        <button type="button" class="btn btn-primary" id="finalSubmitButton">신청</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+    
+    
   </div>
 		<!-- 본문 끝 -->
 	</main>
@@ -324,7 +264,7 @@
     	  
       // full-calendar 생성하기      
       var calendar = new FullCalendar.Calendar(calendarEl, {
-        height: '700px', // calendar 높이 설정        
+        height: '400px', // calendar 높이 설정        
         expandRows: true, // 화면에 맞게 높이 재설정        
         //slotMinTime: '09:00', // Day 캘린더에서 시작 시간        
         //slotMaxTime: '17:50', // Day 캘린더에서 종료 시간        
@@ -345,7 +285,7 @@
         locale: 'ko', // 한국어 설정        
         fixedWeekCount: false, // 해당 달에 포함된 일주일 외 저번 달이나 다음 달의 주는 표시되지 않게 하기
 
-        // 과거 날짜 없애버리기~! & 오늘부터 ㄷㅈ한달까지만 보이게하기
+        // 과거 날짜 없애버리기~! & 오늘부터 한달까지만 보이게하기
         validRange: {
           start: Date.now(),
           end: Date.now() + 2592000000,
@@ -353,8 +293,6 @@
 		
         dateClick: function (info) {
           var selectedDate = info.dateStr; // 클릭한 날짜 정보 획득
-          console.log(selectedDate);
-          //나루토 나씨 나모바지 스폰지밥씨 나모를 찾아서 나선환 어디갔어 줄여야해 건강에 안좋아 그치만 존중
 
           var selectedTime;
           // 해당 날짜의 이벤트 정보 획득
@@ -373,7 +311,6 @@
               "selectedDate": selectedDate
             },
             success: function (response) {
-              console.log('되네요', response);
               // 콜랩스 열기
               $('#eventDetails').collapse('show');
 			
@@ -393,7 +330,7 @@
                 $.each(timeList, function (index, time) {
                   // 각 시간별 라디오 버튼 생성
                   var radioId = 'time' + index; // 유니크한 ID 생성
-                  var radioBtn = $('<input type="radio" class="form-check-input" name="selectedTime" value="' + time.hr + '" id="' + radioId + '" required>');
+                  var radioBtn = $('<input type="radio" class="form-check-input" name="selectedTime" value="' + time.psc_hr + '" id="' + radioId + '" required>');
                   var label = $('<label class="form-check-label" for="' + radioId + '"><span>' + time.hr_nm + '</span></label>');
                   
                   
@@ -418,7 +355,53 @@
       });
       // 캘린더 랜더링      
       calendar.render();
-	
+		
+      // 최종으로 물어보는 모달
+      $('form').on('submit', function (event) {
+          event.preventDefault();
+          $('#modalSelectedDate').text($('#eventDate').text());
+          $('#modalSelectedTime').text($('input[name="selectedTime"]:checked').next('label').text());
+          $('#confirmModal').modal('show');
+        });
+      
+      $('.modal-footer .btn-secondary').click(function() {
+          $('#confirmModal').modal('hide');
+      });
+
+        // 모달에서 최종 신청 버튼 클릭 시 폼 제출
+        $('#finalSubmitButton').on('click', function () {
+        	
+        	var selectedDate = $('#selectedDate').val();
+            var selectedTime = $('input[name="selectedTime"]:checked').val();
+        	
+            
+        	
+        	// 해당 날짜, 해당 시간에 다른 스케쥴이 존재하는지 조회
+        	$.ajax ({
+        		type: "post",
+        		url: "/checkSchedule",
+        		dataType: "json",
+        		data: {
+        			"selectedDate" : selectedDate,
+        			"selectedTime" : selectedTime
+        		},
+        		success : function (response) {
+          			
+        			if(response == 0) {
+        			$('form')[0].submit();
+        			alert("상담이 예약되었습니다.")
+        			
+        		} else {
+        			alert("이미 예약된 다른 상담 일정이 있습니다.");
+        			$('#confirmationModal').modal('hide');
+        		}
+        		},
+        		error : function (error) {
+        			alert("일정을 다시 확인해주세요.");
+        		}
+        	})
+        	
+        });
     	 
     });
   })();
