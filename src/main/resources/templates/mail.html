@@ -27,6 +27,8 @@
 				if (result == "1") {
 					Swal.fire("전송했습니다.", "결과 : " + result, "success");
 					showverifyCode(); // 인증번호 입력 폼 표시
+					
+	                
 
 				} else {
 					Swal.fire("Ooops", "문제가 발생했습니다: " + result, "info");
@@ -53,12 +55,15 @@
 	function showverifyCode() {
 	    $('#email').prop('disabled', true); // 이메일 입력 비활성화
 	    $('#verifyCode').show(); // 인증번호 입력 폼 표시
-	    $('#resetPassword').hide(); // 비밀번호 변경 폼 숨김
+	    $('#email').hide(); // 이메일 폼 숨김
+	    $('#emailAuthBtn').hide(); // 인증번호 요청하기 버튼 숨김
+	   
 	}
 
 	function showresetPassword() {
 	    $('#verifyCode').hide(); // 인증번호 입력 폼 숨김
 	    $('#resetPassword').show(); // 비밀번호 변경 폼 표시
+
 	}
 	
 	
@@ -179,19 +184,17 @@ main {
         <div class="col-md-4 mx-auto">
         <br>
            <h2 class="text-center text-uppercase mb-4" style="color: #000000;">비밀번호 변경</h2>
-           <p style="color: #000000; text-align: center; font-size: 1.2rem;">비밀번호 재설정을 위해 이메일로 전송된 인증번호를 입력해주세요.</p>
+           <p style="color: #000000; text-align: center; font-size: 1.2rem;">이메일을 입력하여 인증번호를 받아 <br>비밀번호를 변경할 수 있습니다. </p>
             <div class="d-flex justify-content-center">
                 <div class="text-center">
 							<!-- <form action="/mail" method="post"> -->
-								<label for="email">Email:</label> 
-								<input type="email" id="email" name="email" required> <br>
-								<!--  <input type="hidden" id="key" name="key">  -->
-								<button onclick="emailAuth()">인증번호 요청하기</button>
-							<!-- </form> -->
-
+								<!-- <label for="email">Email:</label>  -->
+									<br>
+								<input type="email" id="email" name="email" placeholder="이메일을 입력해주세요" style="color: white;" required> <br>							
+								<button id="emailAuthBtn" onclick="emailAuth()">인증번호 요청하기</button>			
 							<br>
 							<div id="verifyCode" style="display: none;">
-       						<input type="text" id="inputCode" placeholder="인증번호를 입력해주세요">
+       						<input type="text" id="inputCode" placeholder="인증번호를 입력해주세요" style="color: white;">
         					<button onclick="verifyCode()">인증번호 확인</button>
     						</div>
 

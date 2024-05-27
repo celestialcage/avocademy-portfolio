@@ -24,7 +24,7 @@ public class MailServiceImpl implements MailService {
 
 	@Autowired
 	private Util util;
-
+	
 //	//메일 보내기
 //	@Override
 //	public void sendEmail(String email, String key) {
@@ -63,7 +63,8 @@ public class MailServiceImpl implements MailService {
 
 	@Override
 	public boolean resetPassword(String newPassword, String uid) {
-
+		
+		
 		 Map<String, Object> params = new HashMap<>();
 		    params.put("newPassword", newPassword);
 		    params.put("uid", uid);
