@@ -53,7 +53,7 @@ public class MailController {
 			email = mailService.getEmail(uid);
 			String key = util.createKey();
 
-			System.out.println("emailAuth 컨트롤러 key : " + key);
+			//System.out.println("emailAuth 컨트롤러 key : " + key);
 
 			// UserDTO 객체 생성 및 설정
 			UserDTO dto = new UserDTO();
@@ -76,11 +76,11 @@ public class MailController {
 	// 인증번호 인증
 	@PostMapping("/verifyCode")
 	public ResponseEntity<Boolean> verifyCode(@RequestParam("inputCode") String inputCode) {
-		System.out.println("verifyCode 컨트롤러 오는지 보자" + inputCode);
+		//System.out.println("verifyCode 컨트롤러 오는지 보자" + inputCode);
 		String uid = (String) util.getSession().getAttribute("uid");
-		System.out.println("verifyCode 컨트롤러 오는지 보자" + uid);
+		//System.out.println("verifyCode 컨트롤러 오는지 보자" + uid);
 		boolean isCodeCorrect = mailService.verifyCode(inputCode, uid);
-		System.out.println(isCodeCorrect);
+		//System.out.println(isCodeCorrect);
 		if (isCodeCorrect) {
 			return ResponseEntity.ok(true);
 
@@ -95,18 +95,18 @@ public class MailController {
 		String uid = (String) util.getSession().getAttribute("uid");
 		String encryptKey = secureInfo.getEncryptKey(); // SecureInfo 클래스에서 암호화 키를 가져옵니다.
 		  
-		
+		 //System.out.println("컨트롤러 Encrypt Key: " + encryptKey);
 
 		 // 비밀번호 변경 서비스를 호출하여 암호화된 비밀번호를 데이터베이스에 저장합니다.
 		boolean success = mailService.resetPassword(newPassword, uid);
 		System.out.println("컨트롤러 새비번1  "+newPassword);
 	    if (success) {
 	        // 비밀번호 변경이 성공한 경우
-	    	System.out.println("컨트롤러 새비번 성공"+newPassword);
+	    	//System.out.println("컨트롤러 새비번 성공"+newPassword);
 	        return ResponseEntity.ok("1");
 	    } else {
 	        // 비밀번호 변경이 실패한 경우
-	    	System.out.println("컨트롤러 새비번 실패"+newPassword);
+	    	//System.out.println("컨트롤러 새비번 실패"+newPassword);
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("0");
 	    }
 	}

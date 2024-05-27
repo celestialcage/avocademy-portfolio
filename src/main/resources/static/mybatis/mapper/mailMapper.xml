@@ -17,9 +17,9 @@
 		LIMIT 1
 	</select>
 
-	<update id="resetPassword" parameterType="map">
+	<update id="resetPassword" parameterType="Map">
 		UPDATE user
-		SET upw = AES_ENCRYPT(#{newPassword}, #{encryptKey})
+		SET upw = HEX(AES_ENCRYPT(#{newPassword}, #{encryptKey}))
 		WHERE uid = #{uid}
 	</update>
 	

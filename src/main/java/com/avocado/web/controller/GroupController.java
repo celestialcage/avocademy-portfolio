@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.avocado.web.entity.GroupDTO;
 import com.avocado.web.entity.MailDTO;
 import com.avocado.web.service.GroupService;
-import com.avocado.web.service.MailService;
 import com.avocado.web.service.MailServiceImpl;
-import com.avocado.web.service.MyInfoServiceImpl;
 import com.avocado.web.util.Util;
 import com.google.gson.JsonObject;
 

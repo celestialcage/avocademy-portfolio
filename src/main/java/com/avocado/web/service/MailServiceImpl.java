@@ -64,11 +64,17 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public boolean resetPassword(String newPassword, String uid) {
 		
-		
+		 // 암호화 키 가져오기
+	    String encryptKey = secureInfo.getEncryptKey();
+	    //System.out.println("컨트롤러 Encrypt Key: " + encryptKey);
+	    
 		 Map<String, Object> params = new HashMap<>();
 		    params.put("newPassword", newPassword);
 		    params.put("uid", uid);
-		    System.out.println("서비스 새비번1"+newPassword);
+		    params.put("encryptKey", encryptKey);
+		    //System.out.println("서비스 Encrypt Key: " + encryptKey);
+		    //System.out.println("서비스 새비번1"+newPassword);
+		    //System.out.println(params);
 		int rowsAffected  = mailDAO.resetPassword(params);
 		if (rowsAffected  > 0) {
 			System.out.println("서비스 새비번 성공"+newPassword);
