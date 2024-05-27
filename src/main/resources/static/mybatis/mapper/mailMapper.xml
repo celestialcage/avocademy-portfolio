@@ -19,9 +19,11 @@
 
 	<update id="resetPassword" parameterType="map">
 		UPDATE user
-		SET upw = #{newPassword} =AES_DECRYPT(UNHEX(upw),#{encryptKey}
+		SET upw = AES_ENCRYPT(#{newPassword}, #{encryptKey})
 		WHERE uid = #{uid}
 	</update>
+	
+	
 	
 
 </mapper>

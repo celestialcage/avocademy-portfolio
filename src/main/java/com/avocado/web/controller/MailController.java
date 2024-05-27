@@ -1,26 +1,18 @@
 package com.avocado.web.controller;
 
-import java.util.List;
-
 import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.avocado.web.entity.CslSearchDTO;
-import com.avocado.web.entity.MyinfoDTO;
 import com.avocado.web.entity.UserDTO;
 import com.avocado.web.service.MailServiceImpl;
-import com.avocado.web.service.MyInfoServiceImpl;
 import com.avocado.web.util.SecureInfo;
 import com.avocado.web.util.Util;
-
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 
@@ -101,7 +93,11 @@ public class MailController {
     public ResponseEntity<String> resetPassword(@RequestParam("newPassword") String newPassword) {
        
 		String uid = (String) util.getSession().getAttribute("uid");
-		// 비밀번호 변경 서비스 호출...
+		String encryptKey = secureInfo.getEncryptKey(); // SecureInfo 클래스에서 암호화 키를 가져옵니다.
+		  
+		
+
+		 // 비밀번호 변경 서비스를 호출하여 암호화된 비밀번호를 데이터베이스에 저장합니다.
 		boolean success = mailService.resetPassword(newPassword, uid);
 		System.out.println("컨트롤러 새비번1  "+newPassword);
 	    if (success) {
