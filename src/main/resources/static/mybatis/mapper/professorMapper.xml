@@ -16,7 +16,8 @@
 	
 	<select id="getAll" parameterType="Map" resultType="Map">
     	SELECT psc_no, ps_no, psc_ymd, psc_hr, GET_CD_NM('CO0010', psc_hr) AS hr_nm FROM psschedule WHERE psc_ymd = #{selectedDate} AND psc_reserved = '0' 
-    	AND ps_no = (SELECT ps_no FROM professor WHERE scsbjt_cd = (SELECT scsbjt_cd FROM student WHERE user_no = (SELECT uno FROM user WHERE uname = #{uname})));
+    	AND ps_no = (SELECT ps_no FROM professor WHERE scsbjt_cd = (SELECT scsbjt_cd FROM student WHERE user_no = (SELECT uno FROM user WHERE uname = #{uname}))) 
+    	ORDER BY psc_hr ASC;
 	</select>
 	
 	<update id="pscReserved" parameterType="Map">
