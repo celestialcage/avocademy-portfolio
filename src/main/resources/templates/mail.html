@@ -134,7 +134,38 @@ main {
 	height: auto;
 	min-height: 600px;
 }
+
+
+        main {
+            display: row;
+        }
+        .mainContents {
+            margin: 0 auto;
+            height: auto;
+            min-height: 600px;
+        }
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            background-color: #808080; /* 회색 입력란 */
+            color: #ffffff; /* 흰색 텍스트 */
+            border: none;
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        button {
+            background-color: #808080; /* 회색 버튼 */
+            color: #ffffff; /* 흰색 텍스트 */
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #404040; /* 어두운 회색으로 호버 효과 변경 */
+        }
 </style>
+
 </head>
 <body>
 	<main class="container">
@@ -143,12 +174,14 @@ main {
 
 		<!-- 여기가 본문 -->
 
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4 mx-auto">
-					<h2 class="text-center text-uppercase text-primary mb-4">mail</h2>
-					<div class="d-flex justify-content-center">
-						<div class="text-center">
+	<div class="container">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+        <br>
+           <h2 class="text-center text-uppercase mb-4" style="color: #000000;">비밀번호 변경</h2>
+           <p style="color: #000000; text-align: center; font-size: 1.2rem;">비밀번호 재설정을 위해 이메일로 전송된 인증번호를 입력해주세요.</p>
+            <div class="d-flex justify-content-center">
+                <div class="text-center">
 							<!-- <form action="/mail" method="post"> -->
 								<label for="email">Email:</label> 
 								<input type="email" id="email" name="email" required> <br>
