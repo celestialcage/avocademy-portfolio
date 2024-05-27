@@ -9,17 +9,75 @@
 	</script>
   
   	<!-- 추가 css -->
-	<style type="text/css">
-	main {
-  		display:row;
-  	}
-  	.mainContents {
-  		margin: 0 auto;
-  		height: auto;
-  		min-height: 600px;
-  		display: flex;
-  	}
-  	</style>
+<style>
+   main {
+        display:row;
+     }
+     .mainContents {
+        margin: 0 auto;
+        height: auto;
+        min-height: 600px;
+        display: flex;
+     }
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .profile img {
+            border-radius: 50%;
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .profile-text {
+            max-width: 500px;
+        }
+
+        .profile-text h2 {
+            margin: 0 0 10px;
+            font-size: 24px;
+        }
+
+        .profile-text p {
+            margin: 0 0 10px;
+            color: #555;
+        }
+
+        .profile-text button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .profile-text button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>	
 	<main class="container">
@@ -31,49 +89,33 @@
 		
 		<!-- =============사이드바============== -->
 		<th:block th:insert="~{./fragments.html :: introSidebar}"></th:block>	
-		
-		<div>
-				<div class="con_box">
-					<div class="cont_guide">
-					  <p class="text01">우리 센터는...</p>
-					  <p class="text02">avocado</p>
-					  <ul>
-					    <li>상담센터</li>
-					    <li>상담내용 및 사적 정보는 비밀로 유지됩니다.</li>
-					  </ul>
-					</div>
-					
-					<div class="cont_area cont01">
-					  <p class="title">상담 영역</p>
-					  <div class="img_wrap">
-					    <img src="" alt="">
-					  </div>
-					</div>
-					
-					<div class="cont_area cont02">
-					  <p class="title">상담절차</p>
-					  <div>
-					    <ul>
-					      <li>
-					        <span>01</span>
-					        <p>신청서 작성</p>
-					      </li>
-					      <li>
-					        <span>02</span>
-					        <p>접수면접 및 심리검사</p>
-					      </li>
-					      <li>
-					        <span>03</span>
-					        <p>상담 진행</p>
-					      </li>
-					    </ul>
-					  </div>
-					</div></div>
-			</div>
-		
-		
-		
-		</div>
+ <div class="container">
+        <div class="header">
+        <hr>
+        
+            <h3>학생상담센터에서는 대학생활에 대한 어려움, 대인관계에서의 문제, 진로와 적성에 관한 고민, 성(性)에 관련된 불편감이나 양성 불평등 문제 등 삶의 모든 부분에서 겪는 고민들을 전문적 상담으로 도움받으실 수 있습니다.</h3>
+        </div>
+        
+        <div class="profile">
+            <div class="profile-text">
+                <h2>개인상담</h2>
+                <p>대학생활 및 일상생활에서 발생하는 혼자 해결하기 어려운 주제를 상담 전문 선생님과 1:1 상담을 통해 해소하기 위한 심층적인 상담서비스입니다.</p>
+            </div>
+        </div>
+
+        <div class="profile">
+            <div class="profile-text">
+                <h2>집단상담</h2>
+                <p>비슷한 관심사를 가진 사람들이 모여 상호작용을 통해 문제를 해결하고, 자신의 문제를 다른 사람의 경험을 통해 해결할 수 있는 상담서비스입니다.</p>
+            </div>
+        </div>
+        
+         <div class="profile">
+            <div class="profile-text">
+                <h2>지도교수 상담</h2>
+                <p>학생이 지도교수와 대학생활, 대인관계, 학업, 진로, 취업 등의 내용으로 상담을 통해 문제를 해결하도록 도와드립니다.</p>
+              
+            </div>
 		<!-- 본문 끝 -->
 	</main>
 	<!-- FOOTER -->

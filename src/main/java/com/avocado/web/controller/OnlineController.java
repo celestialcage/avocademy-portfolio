@@ -37,9 +37,9 @@ public class OnlineController {
 	@GetMapping("/detail")
 	public String detail(Model model, @RequestParam(name = "bno", required = false, defaultValue = "1") int bno,
 			HttpSession session) {
-		System.out.println(bno);
+		//System.out.println(bno);
 		OnlineDTO detail = onlineService.detail(bno);
-		System.out.println(detail.toString());
+		//System.out.println(detail.toString());
 
 		// 세션에 로그인이 안되어있는 상태에서 session.get 하면 null 반환되고
 		// null 이랑 equals 연산을 하다보니 null 오류가 발생
@@ -77,7 +77,7 @@ public class OnlineController {
 	@PostMapping("/write")
 	public String write(@RequestParam(name = "btitle") String btitle, @RequestParam(name = "bcontent") String bcontent,
 			HttpSession session) {
-		System.out.println(btitle + bcontent);
+		//System.out.println(btitle + bcontent);
 		// 글 작성 로직 실행
 
 		// 로그인 검사해주세요
@@ -91,7 +91,7 @@ public class OnlineController {
 			map.put("uname", uname);
 			map.put("uno", session.getAttribute("uno"));
 
-			System.out.println(map);
+			//System.out.println(map);
 
 			int result = onlineService.write(map);
 
@@ -109,7 +109,7 @@ public class OnlineController {
 
 	@PostMapping("/deletecd")
 	public String deletecd(@RequestParam(name = "bno") String bno, HttpSession session) {
-		System.out.println("삭제 : " + bno);
+		//System.out.println("삭제 : " + bno);
 		int result = onlineService.deletecd(bno);
 		return "redirect:/online";
 	}
@@ -122,8 +122,8 @@ public class OnlineController {
 			@RequestParam(name="content") String content, Model model) {
 		int uno = (int) session.getAttribute("uno");
 		
-		System.out.println("글번호 : " + bno);
-		System.out.println("글번호 : " + content);
+		//System.out.println("글번호 : " + bno);
+		//System.out.println("글번호 : " + content);
 		
 		int result = onlineService.saveComment(uno, bno, content);
 		

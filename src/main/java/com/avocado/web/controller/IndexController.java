@@ -88,7 +88,7 @@ public class IndexController {
 		
 		List<OnlineDTO> list = onlineService.online(pageNo, post);
 		
-		System.out.println(list);
+		//System.out.println(list);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("pageNo", pageNo);
