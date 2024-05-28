@@ -36,7 +36,7 @@ public class ProfessorAdminController {
 	private String professorAdmin() {
 		
 		
-		return "/admin/professor/professorAdmin";
+		return "admin/professor/professorAdmin";
 	}
 	
 	// 지도교수일정등록 들어갔을때 교수 정보 및 스케쥴 가져오기
@@ -70,7 +70,7 @@ public class ProfessorAdminController {
 		model.addAttribute("list", list);
 		//model.addAttribute("list2", list2);
 		
-		return "/admin/professor/registPsCounsel";
+		return "admin/professor/registPsCounsel";
 	}
 	
 	// 교수 상담일정 등록하기
@@ -90,7 +90,7 @@ public class ProfessorAdminController {
 		}
 		
 		
-		return "redirect:registPsCounsel";
+		return "redirect:/registPsCounsel";
 	}
 	
 	// 교수 상담일정관리페이지
@@ -102,7 +102,7 @@ public class ProfessorAdminController {
 		list = professorService.psCounselList(uname);
 		model.addAttribute("list", list);
 		//System.out.println(list);
-		return "/admin/professor/psCounselList";
+		return "admin/professor/psCounselList";
 	}
 	
 	// 캘린더 표시할 일정
@@ -156,7 +156,7 @@ public class ProfessorAdminController {
 		list = professorService.studentList(uno);
 		model.addAttribute("list", list);
 		//System.out.println(list);
-		return "/admin/professor/studentList";
+		return "admin/professor/studentList";
 	}
 	
 
